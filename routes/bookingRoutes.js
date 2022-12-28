@@ -3,7 +3,7 @@ const bookingController = require('./../controllers/bookingController');
 const authController = require('./../controllers/authController');
 
 const router = express.Router();
-
+// test
 router.use(authController.protect); // To protect all the following routes
 
 router.get('/checkout-session/:tourId', bookingController.getCheckoutSession);
