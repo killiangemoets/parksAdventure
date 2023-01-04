@@ -15,6 +15,9 @@
   "license": "ISC",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
+    "@mapbox/polyline": "^1.1.1",
+    "@turf/buffer": "^6.5.0",
+    "@turf/collect": "^6.5.0",
     "axios": "^1.2.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
@@ -38,6 +41,7 @@
     "sharp": "^0.31.3",
     "slugify": "^1.6.5",
     "stripe": "^11.5.0",
+    "turf": "^3.0.14",
     "validator": "^13.7.0",
     "xss-clean": "^0.1.1"
   },

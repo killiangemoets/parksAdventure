@@ -4,6 +4,7 @@ const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
+const mongoose = require('mongoose');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the current booked tour
@@ -57,3 +58,31 @@ exports.getBooking = factory.getOne(Booking);
 exports.getAllBookings = factory.getAll(Booking);
 exports.updateBooking = factory.updateOne(Booking);
 exports.deleteBooking = factory.deleteOne(Booking);
+
+exports.getAvailabilities = catchAsync(async (req, res, next) => {
+  const tourId = req.params.tourId;
+
+  const bookings = await Booking.aggregate([
+    {
+      $match: {
+        tour: mongoose.Types.ObjectId(tourId),
+      },
+    },
+    {
+      $group: {
+        _id: '$date',
+        nBookings: { $sum: 1 },
+        nPeople: { $sum: '$people' },
+      },
+    },
+  ]);
+
+  const { maxGroupSize, startDates } = await Tour.findById(tourId);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: { bookings, maxGroupSize, startDates },
+    },
+  });
+});

@@ -152,6 +152,12 @@ tourSchema.virtual('reviews', {
   localField: '_id', // this _id, which is what is called in the local model (i.e. the tour model), is called tour in the foreign model (i.e. the review model)
 });
 
+tourSchema.virtual('bookings', {
+  ref: 'Booking',
+  foreignField: 'tour', // we specify the tour field from the review model
+  localField: '_id', // this _id, which is what is called in the local model (i.e. the tour model), is called tour in the foreign model (i.e. the review model)
+});
+
 // Pre-save hook:
 // This function will be called before a document is saved to thedatabase
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()

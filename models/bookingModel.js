@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Tour = require('./tourModel');
 
 const bookingSchema = new mongoose.Schema({
   tour: {
@@ -11,10 +12,23 @@ const bookingSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'Booking must belong to a User!'],
   },
-  price: {
-    type: Number,
-    required: [true, 'Booking mut have a price.'],
+  date: {
+    type: Date,
+    required: [true, 'Booking must have a date!'],
   },
+  unitPrice: {
+    type: Number,
+    required: [true, 'Booking mut have a unit price.'],
+  },
+  people: {
+    type: Number,
+    required: [true, 'Booking mut have a number of people.'],
+  },
+  totalPrice: {
+    type: Number,
+    required: [true, 'Booking mut have a total price.'],
+  },
+
   createdAt: {
     type: Date,
     default: Date.now(),

@@ -20,4 +20,8 @@ router
   .patch(bookingController.updateBooking)
   .delete(bookingController.deleteBooking);
 
+router
+  .route('/availabilities/:tourId')
+  .get(bookingController.getAvailabilities);
+
 module.exports = router;

@@ -126,7 +126,11 @@ exports.getAllTours = factory.getAll(Tour);
 //   //   });
 //   // }
 // });
-exports.getTour = factory.getOne(Tour, { path: 'reviews' });
+// exports.getTour = factory.getOne(Tour, { path: 'reviews' });
+exports.getTour = factory.getOne(Tour, [
+  { path: 'reviews' },
+  { path: 'bookings' },
+]);
 
 // exports.createTour = catchAsync(async (req, res, next) => {
 //   const newTour = await Tour.create(req.body);

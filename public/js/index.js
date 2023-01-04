@@ -1,16 +1,21 @@
 // import '@babel/polyfill'; // We include it to polufill some of the features of JavaScript (to make it works on old browsers)
 import { login, logout } from './login.js';
+import { signup } from './signup.js';
 import { displayMap } from './mapbox.js';
 import { updateSettings } from './updateSettings.js';
 import { bookTour } from './stripe.js';
+import { renderNumPeopleInput } from './reservation.js';
 
 // DOM ELEMENTS
 const mapBox = document.getElementById('map');
 const loginForm = document.querySelector('.form--login');
+const signupForm = document.querySelector('.form--signup');
 const logOutBtn = document.querySelector('.nav__el--logout');
 const userDataForm = document.querySelector('.form-user-data');
 const userPasswordForm = document.querySelector('.form-user-password');
 const bookBtn = document.getElementById('book-tour');
+const confirmReservationBtn = document.getElementById('confirm-reservation');
+const popup = document.querySelector('.popup-blur');
 
 // DELEGATION
 if (mapBox) {
@@ -24,6 +29,17 @@ if (loginForm) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
+  });
+}
+
+if (signupForm) {
+  signupForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('fullname').value;
+    const email = document.getElementById('newemail').value;
+    const password = document.getElementById('newpassword').value;
+    const passwordConfirm = document.getElementById('confirmpassword').value;
+    signup(name, email, password, passwordConfirm);
   });
 }
 
@@ -70,8 +86,30 @@ if (userPasswordForm) {
 
 if (bookBtn) {
   bookBtn.addEventListener('click', (e) => {
+    // e.target.textContent = 'Processing...';
+    // const { tourId } = e.target.dataset;
+    // bookTour(tourId);
+    popup.classList.remove('hidden');
+  });
+}
+
+if (confirmReservationBtn) {
+  confirmReservationBtn.addEventListener('click', (e) => {
     e.target.textContent = 'Processing...';
     const { tourId } = e.target.dataset;
     bookTour(tourId);
+  });
+}
+
+if (popup) {
+  popup.addEventListener('click', (e) => {
+    if (e.target.className === 'popup-blur') popup.classList.add('hidden');
+  });
+  const { bookingsStr, maxGroupSize } = popup.dataset;
+  const selectedDate = document.querySelector('#dates').value;
+  renderNumPeopleInput(selectedDate, JSON.parse(bookingsStr), maxGroupSize);
+  document.querySelector('#dates').addEventListener('input', function () {
+    const selectedDate = document.querySelector('#dates').value;
+    renderNumPeopleInput(selectedDate, JSON.parse(bookingsStr), maxGroupSize);
   });
 }

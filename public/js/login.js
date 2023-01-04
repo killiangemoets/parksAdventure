@@ -32,7 +32,10 @@ export const logout = async () => {
       method: 'GET',
       url: '/api/v1/users/logout',
     });
-    if (res.data.status === 'success') location.reload(true); // reload from the server and not from browser cache (to update the navbar)
+    if (res.data.status === 'success') {
+      location.reload(true); // reload from the server and not from browser cache (to update the navbar)
+      location.assign('/');
+    }
   } catch (err) {
     showAlert('error', 'Error logging out! Try again.');
   }
