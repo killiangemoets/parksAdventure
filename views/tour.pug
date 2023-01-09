@@ -103,7 +103,7 @@ block content
                     //- input#date.form__input.reservation__input(type='date', required)
                     select#dates.reservation__input(name="select-number", required)
                         each date in tour.startDates
-                            option(value=`${date}`)= `${date.toLocaleString('en-us', {month: 'long', year: 'numeric'})}`
+                            option(value=`${date}`)= `${date.toLocaleString('en-us', {day: 'numeric', month: 'long', year: 'numeric'})}`
                 .form__group.ma-bt-md
                     label.form__label.reservation__label(for='number-of-hikers') Number of Hikers 
                     select#number-of-hikers.reservation__input(name="select-number", required)
@@ -123,5 +123,5 @@ block content
                         p.summary_element 4 
                         p.summary_element =  
                         p.summary_element.summary_bold € 960
-            button.btn.btn--green#confirm-reservation(data-tour-id=`${tour.id}`) Book Now  
+            button.btn.btn--green#confirm-reservation(data-tour-id=`${tour.id}`) Book Now!  
 

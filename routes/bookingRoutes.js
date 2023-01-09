@@ -6,7 +6,10 @@ const router = express.Router();
 // test
 router.use(authController.protect); // To protect all the following routes
 
-router.get('/checkout-session/:tourId', bookingController.getCheckoutSession);
+router.get(
+  '/checkout-session/:tourId/:date/:numPeople',
+  bookingController.getCheckoutSession
+);
 
 router.use(authController.restrictTo('admin', 'lead-guide'));
 router

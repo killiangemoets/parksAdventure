@@ -97,7 +97,10 @@ if (confirmReservationBtn) {
   confirmReservationBtn.addEventListener('click', (e) => {
     e.target.textContent = 'Processing...';
     const { tourId } = e.target.dataset;
-    bookTour(tourId);
+    const date = document.querySelector('#dates').value;
+    const numPeople = document.querySelector('#number-of-hikers').value;
+
+    bookTour(tourId, date, numPeople);
   });
 }
 
