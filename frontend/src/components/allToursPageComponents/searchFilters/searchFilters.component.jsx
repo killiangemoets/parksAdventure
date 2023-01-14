@@ -17,7 +17,7 @@ const SearchFilter = () => {
           <Button buttonType="empty">Advanced Tours</Button>
           <Button buttonType="empty">Mountain Tours</Button>
           <Button buttonType="empty">Desert Tours</Button>
-          <Button buttonType="empty">10Day+ Tours</Button>
+          <Button buttonType="empty">10Days+ Tours</Button>
         </Categories>
         <Filters>
           <Button>
