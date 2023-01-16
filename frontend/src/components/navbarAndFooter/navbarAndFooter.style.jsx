@@ -32,9 +32,9 @@ export const NavBarLink = styled(Link)`
   font-size: 1.6rem;
   text-transform: uppercase;
   color: #fbf3e5;
+  transition: all 0.3s;
 
   &:hover {
-    color: #f6e6cb;
     color: #cc704b;
   }
 `;
@@ -43,13 +43,10 @@ export const SignUpLink = styled(NavBarLink)`
   padding: 1.2rem 2.8rem;
   border: solid 1px #faf2e5;
   border-radius: 10rem;
-  transition: all 0.3s;
 
   &:hover {
-    background-color: #faf2e5;
     background-color: #cc704b;
     border: solid 1px #cc704b;
-    color: #506044;
     color: #fbf3e5;
 
     text-shadow: none;

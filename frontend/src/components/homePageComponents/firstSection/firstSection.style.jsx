@@ -12,7 +12,6 @@ export const FirstSecContainer = styled.div`
 
 export const FirstSecTitle = styled.h2`
   color: #506044;
-  /* color: #CC704B; */
   background-image: -webkit-gradient(
     linear,
     left top,
@@ -24,6 +23,7 @@ export const FirstSecTitle = styled.h2`
   -webkit-background-clip: text;
   color: transparent;
   font-size: 3.6rem;
+
   letter-spacing: 2px;
 `;
 

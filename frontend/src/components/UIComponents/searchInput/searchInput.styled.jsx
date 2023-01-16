@@ -39,6 +39,6 @@ export const Input = styled.input`
 
 export const ButtonWrapper = styled.div`
   position: absolute;
-  top: 8%;
+  top: 7%;
   right: 0.8%;
 `;

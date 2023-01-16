@@ -1,4 +1,5 @@
 import { GreenOpacity } from "../../../routes/home/home.style";
+import StarsRating from "../../UIComponents/starsRating/starsRating.component";
 import {
   CurrentDot,
   Dot,
@@ -10,10 +11,8 @@ import {
   ReviewsSecPicture,
   ReviewsSecTitle,
   ReviewsSecWrapper,
-  ReviewStars,
   ReviewTitle,
   ReviewUser,
-  Star,
   UserName,
   UserPicture,
 } from "./reviewsSection.style";
@@ -29,13 +28,7 @@ const ReviewsSection = () => {
           <ReviewsSecTitle>Our Top Reviews</ReviewsSecTitle>
           <Review>
             <ReviewTitle>Banff National Park Experience - 3 days</ReviewTitle>
-            <ReviewStars>
-              <Star></Star>
-              <Star></Star>
-              <Star></Star>
-              <Star></Star>
-              <Star></Star>
-            </ReviewStars>
+            <StarsRating hiddenValue={true} />
             <ReviewDescription>
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at
               corporis aut debitis tempore? Nam quod voluptatibus, eos obcaecati

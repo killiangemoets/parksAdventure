@@ -2,10 +2,7 @@ import styled from "styled-components";
 
 import reviewsSectionBackground from "../../../assets/reviews-section-bg.webp";
 
-import { ReactComponent as StarSVG } from "../../../assets/star-solid.svg";
-
 export const ReviewsSecContainer = styled.div`
-  /* margin: 7.2rem 0; */
   padding: 0rem 0rem;
   display: flex;
   align-items: center;
@@ -14,16 +11,9 @@ export const ReviewsSecContainer = styled.div`
   background-color: rgba(159, 192, 136, 0.3);
 `;
 export const ReviewsSecWrapper = styled.div`
-  /* max-width: 130rem; */
   width: 100vw;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
-  /* gap: 7.2rem; */
-  /* background-color: rgba(159, 192, 136, 0.3); */
-  /* background-color: #c5d9b8; */
-  /* background-color: #e2ecdb; */
-  /* background-color: #ecf2e7; */
 `;
 
 export const ReviewsSecPicture = styled.div`
@@ -80,18 +70,6 @@ export const ReviewTitle = styled.h4`
   letter-spacing: 1px;
 `;
 
-export const ReviewStars = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-`;
-
-export const Star = styled(StarSVG)`
-  width: 2rem;
-  height: 2rem;
-`;
-
 export const ReviewDescription = styled.p`
   width: 60%;
   min-width: 38rem;
@@ -142,6 +120,7 @@ export const Dot = styled.div`
   height: 1rem;
   border-radius: 10rem;
   background-color: #aaa;
+  cursor: pointer;
 `;
 
 export const CurrentDot = styled(Dot)`

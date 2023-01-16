@@ -1,4 +1,4 @@
-import Button from "../button/button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
   ButtonWrapper,
   Glass,
@@ -12,7 +12,7 @@ const SearchInput = () => {
       <Glass />
       <Input placeholder="tour name, location, ..." />
       <ButtonWrapper>
-        <Button buttonType="input">Search</Button>
+        <Button buttonType={BUTTON_TYPE_CLASSES.input}>Search</Button>
       </ButtonWrapper>
     </SearchInputContainer>
   );

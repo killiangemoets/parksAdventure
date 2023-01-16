@@ -1,3 +1,25 @@
-import styled from "styled-components";
+import TourCard from "../../UIComponents/tourCard/tourCard.component";
+import { ToursCardsContainer, ToursCardsWrapper } from "./toursCards.style";
 
-export const ToursCardsContainer = styled.div``;
+const ToursCards = () => {
+  return (
+    <ToursCardsContainer>
+      <ToursCardsWrapper>
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+        <TourCard />
+      </ToursCardsWrapper>
+    </ToursCardsContainer>
+  );
+};
+
+export default ToursCards;

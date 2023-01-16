@@ -1,4 +1,7 @@
-import Button from "../../UIComponents/button/button.component";
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../UIComponents/button/button.component";
+
 import {
   Categories,
   FilterIcon,
@@ -13,11 +16,21 @@ const SearchFilter = () => {
     <SearchFiltersContainer>
       <SearchFiltersWrapper>
         <Categories>
-          <Button buttonType="empty">Family Tours</Button>
-          <Button buttonType="empty">Advanced Tours</Button>
-          <Button buttonType="empty">Mountain Tours</Button>
-          <Button buttonType="empty">Desert Tours</Button>
-          <Button buttonType="empty">10Days+ Tours</Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+            Family Tours
+          </Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+            Advanced Tours
+          </Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+            Mountain Tours
+          </Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+            Desert Tours
+          </Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+            10Days+ Tours
+          </Button>
         </Categories>
         <Filters>
           <Button>

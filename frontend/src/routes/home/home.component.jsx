@@ -2,7 +2,7 @@ import FirstSection from "../../components/homePageComponents/firstSection/first
 import MainHeader from "../../components/homePageComponents/mainHeader/mainHeader.component";
 import ReviewsSection from "../../components/homePageComponents/reviewsSection/reviewsSection.component";
 import SecondSection from "../../components/homePageComponents/secondSection/secondSection.component";
-import ThirdSection from "../../components/thirdSection/thirdSection.component";
+import ThirdSection from "../../components/homePageComponents/thirdSection/thirdSection.component";
 import { HomeComponentContainer } from "./home.style";
 
 const Home = () => {

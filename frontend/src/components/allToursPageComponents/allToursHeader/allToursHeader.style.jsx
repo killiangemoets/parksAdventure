@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GreenOpacity } from "../../../routes/home/home.style";
 import allToursHeaderBackground from "../../../assets/alltours-header-bg.webp";
 
 export const AllToursHeaderContainer = styled.div`
@@ -11,10 +12,7 @@ export const AllToursHeaderContainer = styled.div`
   background-size: cover;
   position: relative;
 `;
-export const AllToursHeaderWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: rgba(159, 192, 136, 0.16);
+export const AllToursHeaderWrapper = styled(GreenOpacity)`
   display: flex;
   /* align-items: center; */
   justify-content: center;
