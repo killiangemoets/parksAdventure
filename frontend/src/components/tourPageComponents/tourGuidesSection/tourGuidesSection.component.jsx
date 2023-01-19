@@ -22,7 +22,11 @@ const TourGuidesSection = () => {
           position="Tour Guide"
           name="Kate Morrison"
         />
-        <TourGuide position="Tour Guide" name="Peter Parker" />
+        <TourGuide
+          pictureUrl={"images/user.jpg"}
+          position="Tour Guide"
+          name="Peter Parker"
+        />
       </TourGuides>
     </TourGuidesSectionContainer>
   );

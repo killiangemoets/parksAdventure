@@ -21,7 +21,7 @@ export const QuickFactName = styled.p`
 `;
 
 export const QuickFactInfo = styled.p`
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;

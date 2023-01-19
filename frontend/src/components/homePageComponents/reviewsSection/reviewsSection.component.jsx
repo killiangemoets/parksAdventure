@@ -1,4 +1,5 @@
 import { GreenOpacity } from "../../../routes/home/home.style";
+import ProfilePicture from "../../UIComponents/profilePicture/profilePicture.component";
 import StarsRating from "../../UIComponents/starsRating/starsRating.component";
 import {
   CurrentDot,
@@ -14,7 +15,6 @@ import {
   ReviewTitle,
   ReviewUser,
   UserName,
-  UserPicture,
 } from "./reviewsSection.style";
 
 const ReviewsSection = () => {
@@ -37,7 +37,7 @@ const ReviewsSection = () => {
               impedit quas harum maiores.
             </ReviewDescription>
             <ReviewUser>
-              <UserPicture></UserPicture>
+              <ProfilePicture pictureUrl={"images/user.jpg"} />
               <UserName>Lucas Scott</UserName>
             </ReviewUser>
           </Review>

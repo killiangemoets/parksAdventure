@@ -91,13 +91,6 @@ export const ReviewUser = styled.div`
   gap: 1rem;
 `;
 
-export const UserPicture = styled.div`
-  width: 6rem;
-  height: 6rem;
-  border-radius: 100rem;
-  background-color: #aaa;
-`;
-
 export const UserName = styled.h5`
   min-width: 38rem;
   font-size: 1.4rem;

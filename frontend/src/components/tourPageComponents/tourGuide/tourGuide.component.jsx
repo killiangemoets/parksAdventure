@@ -1,4 +1,6 @@
-import ProfilePicture from "../../UIComponents/userPicture/userPicture.component";
+import ProfilePicture, {
+  PROFILE_PICTURE_TYPE_CLASSES,
+} from "../../UIComponents/profilePicture/profilePicture.component";
 import {
   TourGuideContainer,
   TourGuideInfos,
@@ -10,7 +12,10 @@ const TourGuide = ({ pictureUrl, position, name }) => {
   return (
     <TourGuideContainer>
       <TourGuideInfos>
-        <ProfilePicture pictureUrl={pictureUrl} />
+        <ProfilePicture
+          pictureUrl={pictureUrl}
+          pictureSize={PROFILE_PICTURE_TYPE_CLASSES.small}
+        />
         <TourGuideType>{position}</TourGuideType>
       </TourGuideInfos>
       <TourGuideName>{name}</TourGuideName>

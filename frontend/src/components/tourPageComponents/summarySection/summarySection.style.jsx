@@ -8,7 +8,8 @@ export const SummarySectionContainer = styled.div`
 `;
 
 export const AboutTour = styled.p`
-  font-size: 1.7rem;
-  line-height: 2.8rem;
+  font-size: 1.4rem;
+  line-height: 2.2rem;
   text-align: justify;
+  letter-spacing: 1px;
 `;

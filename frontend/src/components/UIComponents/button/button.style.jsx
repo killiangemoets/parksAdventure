@@ -33,6 +33,7 @@ export const InvertedButton = styled(BaseButton)`
   transition: all 0.5s;
 
   &:hover {
+    border: solid 2px #cc704b;
     background-color: #cc704b;
     color: #fff;
   }
@@ -41,6 +42,10 @@ export const InvertedButton = styled(BaseButton)`
 export const InputButton = styled(BaseButton)`
   border: 1px solid #ccc;
   padding: 1.1rem 3.6rem;
+
+  &:hover {
+    border: 1px solid #ccc;
+  }
 `;
 
 export const EmptyButton = styled.button`
