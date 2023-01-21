@@ -38,19 +38,19 @@ const TourBooking = () => {
         <Picture1>
           <ProfilePicture
             pictureUrl={"images/desert.jpg"}
-            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.large}
+            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.extraLarge}
           />
         </Picture1>
         <Picture2>
           <ProfilePicture
             pictureUrl={"images/canadianRockies.jpg"}
-            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.large}
+            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.extraLarge}
           />
         </Picture2>
         <Picture3>
           <ProfilePicture
             pictureUrl={"images/family.jpg"}
-            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.large}
+            pictureSize={PROFILE_PICTURE_TYPE_CLASSES.extraLarge}
           />
         </Picture3>
       </TourBookingBox>

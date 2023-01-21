@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 import { ReactComponent as StarSVG } from "../../../assets/star-solid.svg";
+import { ReactComponent as HalfStarSVG } from "../../../assets/star-half-stroke-regular.svg";
+import { ReactComponent as EmptyStarSVG } from "../../../assets/star-regular.svg";
 
 export const StarsRatingContainer = styled.div`
   display: flex;
@@ -18,6 +20,26 @@ export const StarsContainer = styled.div`
 export const StarIcon = styled(StarSVG)`
   width: 2rem;
   height: 2rem;
+
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const HalfStarIcon = styled(HalfStarSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const EmptyStarIcon = styled(EmptyStarSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
+  }
 `;
 
 export const RatingData = styled.div`

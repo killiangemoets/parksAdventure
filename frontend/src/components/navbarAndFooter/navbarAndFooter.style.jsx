@@ -12,7 +12,7 @@ export const NavBarContainer = styled.div`
   justify-content: space-between;
   padding: 0 4rem;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
 `;
 
 export const NavBarLogoContainer = styled(Link)`
@@ -54,7 +54,7 @@ export const SignUpLink = styled(NavBarLink)`
 `;
 
 export const FooterContainer = styled.div`
-  width: 100vw;
+  /* width: 100%; */
   height: 8rem;
   display: flex;
   align-items: center;

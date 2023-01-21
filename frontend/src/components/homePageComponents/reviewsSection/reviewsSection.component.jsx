@@ -1,5 +1,7 @@
 import { GreenOpacity } from "../../../routes/home/home.style";
-import ProfilePicture from "../../UIComponents/profilePicture/profilePicture.component";
+import ProfilePicture, {
+  PROFILE_PICTURE_TYPE_CLASSES,
+} from "../../UIComponents/profilePicture/profilePicture.component";
 import StarsRating from "../../UIComponents/starsRating/starsRating.component";
 import {
   CurrentDot,

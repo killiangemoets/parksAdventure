@@ -5,14 +5,13 @@ import {
   DurationIcon,
   GroupIcon,
   LocationIcon,
-  StartingPoint,
-  StopOvergPoint,
 } from "./infoIcon.style";
 
 export const ICON_TYPE_CLASSES = {
   location: "location",
   difficulty: "difficulty",
   duration: "duration",
+  group: "group",
   locationBigGreen: "locationBigGreen",
   locationBigOrange: "locationBigOrange",
 };

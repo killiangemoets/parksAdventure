@@ -2,15 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import InfoIcon, { ICON_TYPE_CLASSES } from "../infoIcon/infoIcon.component";
 import StarsRating from "../starsRating/starsRating.component";
 import {
-  DifficultyIcon,
-  GroupIcon,
   Info,
   InfoText,
-  PositionIcon,
   Price,
-  TentIcon,
   TourCardContainer,
   TourContent,
   TourDescription,
@@ -49,19 +46,19 @@ const TourCard = () => {
         </TourDescription>
         <TourInfos>
           <Info>
-            <PositionIcon />
+            <InfoIcon iconType={ICON_TYPE_CLASSES.location} />
             <InfoText>Miami, USA</InfoText>
           </Info>
           <Info>
-            <TentIcon />
+            <InfoIcon iconType={ICON_TYPE_CLASSES.duration} />
             <InfoText>7 days</InfoText>
           </Info>
           <Info>
-            <DifficultyIcon />
+            <InfoIcon iconType={ICON_TYPE_CLASSES.difficulty} />
             <InfoText>Medium</InfoText>
           </Info>
           <Info>
-            <GroupIcon />
+            <InfoIcon iconType={ICON_TYPE_CLASSES.group} />
             <InfoText>15 people</InfoText>
           </Info>
         </TourInfos>

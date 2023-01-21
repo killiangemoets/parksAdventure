@@ -29,6 +29,20 @@ export const MediumProfilePicture = styled.div`
 `;
 
 export const LargeProfilePicture = styled.div`
+  width: 10rem;
+  height: 10rem;
+  border-radius: 100rem;
+  background-color: #aaa;
+
+  img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 100rem;
+    object-fit: cover;
+  }
+`;
+
+export const ExtraLargeProfilePicture = styled.div`
   width: 14rem;
   height: 14rem;
   border-radius: 100rem;

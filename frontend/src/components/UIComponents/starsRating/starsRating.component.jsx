@@ -6,6 +6,8 @@ import {
   StarsRatingContainer,
   RatingValue,
   LinkNumRatings,
+  HalfStarIcon,
+  EmptyStarIcon,
 } from "./starsRating.style";
 
 const StarsRating = ({ hiddenValue = false, linkOnReviews = false }) => {
@@ -16,11 +18,12 @@ const StarsRating = ({ hiddenValue = false, linkOnReviews = false }) => {
         <StarIcon />
         <StarIcon />
         <StarIcon />
-        <StarIcon />
+        <HalfStarIcon />
+        {/* <EmptyStarIcon /> */}
       </StarsContainer>
       {!hiddenValue && (
         <RatingData>
-          <RatingValue>4.9</RatingValue>
+          <RatingValue>4.8</RatingValue>
           {!linkOnReviews ? (
             <NumRatings>(6)</NumRatings>
           ) : (

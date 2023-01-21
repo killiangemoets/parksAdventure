@@ -1,4 +1,4 @@
-import TourBooking from "../../components/tourPageComponents/tookBooking/tourBooking.component";
+import TourBooking from "../../components/tourPageComponents/tourBooking/tourBooking.component";
 import TourGallery from "../../components/tourPageComponents/tourGallery/tourGallery.component";
 import TourHeader from "../../components/tourPageComponents/tourHeader/tourHeader.component";
 import TourItinerary from "../../components/tourPageComponents/tourItinerary/tourItinerary.component";

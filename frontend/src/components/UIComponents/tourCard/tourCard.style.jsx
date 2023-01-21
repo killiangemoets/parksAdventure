@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-import { ReactComponent as PositionSVG } from "../../../assets/location-dot-solid.svg";
-import { ReactComponent as TentSVG } from "../../../assets/campground-solid.svg";
-import { ReactComponent as DifficultySVG } from "../../../assets/arrow-up-right-dots-solid.svg";
-import { ReactComponent as GroupSVG } from "../../../assets/users-solid.svg";
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
 
 import TourBackground from "../../../assets/tour-bg.jpg";
@@ -157,23 +153,6 @@ export const Info = styled.div`
 export const InfoText = styled.p`
   font-size: 1.2rem;
   letter-spacing: 0.4px;
-`;
-
-export const PositionIcon = styled(PositionSVG)`
-  width: 2rem;
-  height: 2rem;
-`;
-export const TentIcon = styled(TentSVG)`
-  width: 2rem;
-  height: 2rem;
-`;
-export const DifficultyIcon = styled(DifficultySVG)`
-  width: 2rem;
-  height: 2rem;
-`;
-export const GroupIcon = styled(GroupSVG)`
-  width: 2rem;
-  height: 2rem;
 `;
 
 export const TourFooter = styled.div`

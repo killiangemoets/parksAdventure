@@ -11,12 +11,14 @@ import {
   SignUpLink,
 } from "./navbarAndFooter.style";
 import { Outlet } from "react-router-dom";
+import roundLogo from "../../assets/logo_hike_round.png";
+import longLogo from "../../assets/logoHikeLong.png";
 
-const Navigation = () => {
+export const Navigation = () => {
   return (
     <NavBarContainer>
       <NavBarLogoContainer to="/">
-        <img src="images/logo_hike_round.png" alt="hiking tour logo" />
+        <img src={roundLogo} alt="hiking tour logo" />
       </NavBarLogoContainer>
       <LinksContainer>
         <NavBarLink to="/">Home</NavBarLink>
@@ -30,14 +32,11 @@ const Navigation = () => {
   );
 };
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <FooterContainer>
       <FooterLogo>
-        <img
-          src="images/logoHikeLong.png"
-          alt="Logo National Parks Hiking Tours"
-        />
+        <img src={longLogo} alt="Logo National Parks Hiking Tours" />
       </FooterLogo>
       <Copyright>&copy; Made by Killian Gemoets</Copyright>
       <FooterNavigation>
@@ -49,12 +48,12 @@ const Footer = () => {
   );
 };
 
-const NavbarAndFooter = () => {
+const NavbarAndFooter = ({ hideFooter = false }) => {
   return (
     <>
       <Navigation />
       <Outlet />
-      <Footer />
+      {!hideFooter && <Footer />}
     </>
   );
 };
