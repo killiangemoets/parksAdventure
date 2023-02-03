@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { FirstSecTitle } from "../../homePageComponents/firstSection/firstSection.style";
+
 import {
   NumRatings,
   RatingData,
   RatingValue,
-  StarIcon,
 } from "../../UIComponents/starsRating/starsRating.style";
 
 export const TourHeaderContainer = styled.div`
@@ -17,11 +16,6 @@ export const TourHeaderContainer = styled.div`
     width: 24rem;
     padding: 1.4rem 3.2rem;
     font-size: 2rem;
-  }
-
-  & ${StarIcon} {
-    width: 2rem;
-    height: 2rem;
   }
 
   & ${RatingData} {
@@ -58,12 +52,10 @@ export const TourHeaderLeft = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-`;
 
-export const TourTitle = styled(FirstSecTitle)`
-  text-transform: uppercase;
-  font-size: 3.6rem;
-  line-height: 3.6rem;
+  h1 {
+    line-height: 3.6rem;
+  }
 `;
 
 export const TourHeaderRight = styled.div`

@@ -3,6 +3,7 @@ import ProfilePicture, {
   PROFILE_PICTURE_TYPE_CLASSES,
 } from "../../UIComponents/profilePicture/profilePicture.component";
 import {
+  EditButtons,
   ReviewContainer,
   ReviewContent,
   ReviewDate,
@@ -12,19 +13,24 @@ import {
   ReviewText,
 } from "./review.style";
 
+import UserImg from "../../../assets/user.jpg";
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../UIComponents/button/button.component";
+
 const Reviewer = () => {
   return (
     <ReviewerContainer>
       <ProfilePicture
         pictureSize={PROFILE_PICTURE_TYPE_CLASSES.small}
-        pictureUrl={"images/user.jpg"}
+        pictureUrl={UserImg}
       />
       <ReviewerName>Jack Harlow</ReviewerName>
     </ReviewerContainer>
   );
 };
 
-const Review = () => {
+const Review = ({ hideEditButtons = true }) => {
   return (
     <ReviewContainer>
       <ReviewInfos>
@@ -43,6 +49,12 @@ const Review = () => {
           libero! :)
         </ReviewText>
       </ReviewContent>
+      {!hideEditButtons && (
+        <EditButtons>
+          <Button buttonType={BUTTON_TYPE_CLASSES.empty}>Edit</Button>
+          <Button buttonType={BUTTON_TYPE_CLASSES.empty}>Delete</Button>
+        </EditButtons>
+      )}
     </ReviewContainer>
   );
 };

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const ProfileColumnContainer = styled.div`
@@ -18,7 +19,7 @@ export const ProfileColumnContainer = styled.div`
   height: 100vh;
 `;
 
-export const ProfileSectionContainer = styled.div`
+export const ProfileSectionContainer = styled(Link)`
   display: flex;
   align-items: center;
   gap: 2rem;

@@ -1,10 +1,12 @@
 import {
   BigGreenLocationIcon,
   BigOrangeLocationIcon,
+  DateIcon,
   DifficultyIcon,
   DurationIcon,
   GroupIcon,
   LocationIcon,
+  TimeIcon,
 } from "./infoIcon.style";
 
 export const ICON_TYPE_CLASSES = {
@@ -14,6 +16,8 @@ export const ICON_TYPE_CLASSES = {
   group: "group",
   locationBigGreen: "locationBigGreen",
   locationBigOrange: "locationBigOrange",
+  date: "date",
+  time: "time",
 };
 
 const getIcon = (iconType) =>
@@ -24,6 +28,8 @@ const getIcon = (iconType) =>
     [ICON_TYPE_CLASSES.group]: GroupIcon,
     [ICON_TYPE_CLASSES.locationBigGreen]: BigGreenLocationIcon,
     [ICON_TYPE_CLASSES.locationBigOrange]: BigOrangeLocationIcon,
+    [ICON_TYPE_CLASSES.date]: DateIcon,
+    [ICON_TYPE_CLASSES.time]: TimeIcon,
   }[iconType]);
 
 const InfoIcon = ({ iconType }) => {

@@ -1,12 +1,14 @@
 import Button from "../../UIComponents/button/button.component";
 import StarsRating from "../../UIComponents/starsRating/starsRating.component";
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../UIComponents/title/title.component";
 import {
   Price,
   TourHeaderContainer,
   TourHeaderLeft,
   TourHeaderRight,
   TourHeaderWrapper,
-  TourTitle,
 } from "./tourHeader.style";
 
 const TourHeader = () => {
@@ -14,7 +16,7 @@ const TourHeader = () => {
     <TourHeaderContainer>
       <TourHeaderWrapper>
         <TourHeaderLeft>
-          <TourTitle>The Forest Hiker</TourTitle>
+          <Title titleType={TITLE_TYPE_CLASSES.main}>The Forest Hiker</Title>
           <StarsRating linkOnReviews={true} />
         </TourHeaderLeft>
         <TourHeaderRight>

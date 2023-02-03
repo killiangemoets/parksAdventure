@@ -4,6 +4,8 @@ import { ReactComponent as PositionSVG } from "../../../assets/location-dot-soli
 import { ReactComponent as TentSVG } from "../../../assets/campground-solid.svg";
 import { ReactComponent as DifficultySVG } from "../../../assets/arrow-up-right-dots-solid.svg";
 import { ReactComponent as GroupSVG } from "../../../assets/users-solid.svg";
+import { ReactComponent as CalendarSVG } from "../../../assets/calendar-regular.svg";
+import { ReactComponent as ClockSVG } from "../../../assets/clock-regular.svg";
 
 export const LocationIcon = styled(PositionSVG)`
   width: 2rem;
@@ -51,6 +53,21 @@ export const BigOrangeLocationIcon = styled(PositionSVG)`
   width: 2.4rem;
   height: 2.4rem;
 
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const DateIcon = styled(CalendarSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
+  }
+`;
+export const TimeIcon = styled(ClockSVG)`
+  width: 2rem;
+  height: 2rem;
   .path {
     fill: #cc704b;
   }

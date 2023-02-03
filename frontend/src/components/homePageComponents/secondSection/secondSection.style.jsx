@@ -31,24 +31,6 @@ export const SecondSecTitlesContainer = styled.div`
   gap: 1.2rem;
 `;
 
-export const SecondSecMainTitle = styled.h2`
-  /* color: #cc704b; */
-  /* color: #e0a993; */
-  /* color: #7a432d; */
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#d17e5d),
-    to(#a35a3c)
-  );
-  background-image: linear-gradient(to right, #d17e5d, #a35a3c);
-  -webkit-background-clip: text;
-  color: transparent;
-  font-size: 3.6rem;
-  letter-spacing: 2px;
-`;
-
 export const SecondSecSecondTitle = styled.h3`
   color: #fff;
   font-size: 2.2rem;
@@ -73,7 +55,18 @@ export const SecondSecElement = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
+  &:hover {
+    h4 {
+      color: #cc704b !important;
+    }
+  }
 `;
+
+// const overElementTitleStyles = css`
+//   top: -14px;
+//   font-size: 12px;
+//   color: ${mainColor};
+// `;
 
 export const ElementTitle = styled.h4`
   font-size: 2em;
@@ -84,9 +77,9 @@ export const ElementTitle = styled.h4`
   color: #fff;
   transition: all 0.3s;
 
-  &:hover {
+  /* &:hover {
     color: #cc704b; // to update later bc need to be when over the whole element, same for picture
-  }
+  } */
 `;
 
 export const ElementIconContainer = styled.div`

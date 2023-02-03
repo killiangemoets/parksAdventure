@@ -33,7 +33,7 @@ const ItineraryLine = () => {
       <Line />
       <ItineraryPoint
         type={ITINERARY_POINT_TYPE_CLASSES.stopOverPoint}
-        name="Day 5: The Rock Viewpooint"
+        name="Day 5: The Rock Viewpoint"
       />
       <Line />
       <ItineraryPoint

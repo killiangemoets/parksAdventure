@@ -18,6 +18,13 @@ export const SettingsWrapper1 = styled(SettingsWrapper2)`
   padding-bottom: 6.4rem;
 `;
 
+export const SettingsForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6.4rem;
+`;
+
 export const SettingsInputs = styled.div`
   display: flex;
   flex-direction: column;

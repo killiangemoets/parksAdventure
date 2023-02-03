@@ -1,16 +1,20 @@
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../UIComponents/title/title.component";
 import {
   ElementIconContainer,
   ElementTitle,
   FirstSecContainer,
   FirstSecElement,
   FirstSectionContentWrapper,
-  FirstSecTitle,
 } from "./firstSection.style";
 
 const FirstSection = () => {
   return (
     <FirstSecContainer>
-      <FirstSecTitle>Unique Hiking Tours</FirstSecTitle>
+      <Title titleType={TITLE_TYPE_CLASSES.homeSection}>
+        Unique Hiking Tours
+      </Title>
       <FirstSectionContentWrapper>
         <FirstSecElement>
           <ElementTitle>

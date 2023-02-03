@@ -4,13 +4,14 @@ import { Input } from "../searchInput/searchInput.styled";
 export const TextInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.2rem;
+  gap: 1rem;
 `;
 
 export const Label = styled.label`
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.4px;
+  margin-left: 0.2rem;
 `;
 
 export const TextInputEl = styled(Input)`

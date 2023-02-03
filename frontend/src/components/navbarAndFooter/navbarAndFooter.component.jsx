@@ -22,11 +22,10 @@ export const Navigation = () => {
       </NavBarLogoContainer>
       <LinksContainer>
         <NavBarLink to="/">Home</NavBarLink>
-        <NavBarLink to="/about-us">About us</NavBarLink>
         <NavBarLink to="/alltours">All tours</NavBarLink>
         <NavBarLink to="/contact">Contact</NavBarLink>
-        <NavBarLink to="login">Login</NavBarLink>
-        <SignUpLink to="signup">Sign up</SignUpLink>
+        <NavBarLink to="/login">Login</NavBarLink>
+        <SignUpLink to="/signup">Sign up</SignUpLink>
       </LinksContainer>
     </NavBarContainer>
   );
@@ -48,12 +47,12 @@ export const Footer = () => {
   );
 };
 
-const NavbarAndFooter = ({ hideFooter = false }) => {
+const NavbarAndFooter = () => {
   return (
     <>
       <Navigation />
       <Outlet />
-      {!hideFooter && <Footer />}
+      <Footer />
     </>
   );
 };

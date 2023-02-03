@@ -1,8 +1,9 @@
 import { GreenOpacity } from "../../../routes/home/home.style";
-import ProfilePicture, {
-  PROFILE_PICTURE_TYPE_CLASSES,
-} from "../../UIComponents/profilePicture/profilePicture.component";
+import ProfilePicture from "../../UIComponents/profilePicture/profilePicture.component";
 import StarsRating from "../../UIComponents/starsRating/starsRating.component";
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../UIComponents/title/title.component";
 import {
   CurrentDot,
   Dot,
@@ -12,7 +13,6 @@ import {
   ReviewsSecContainer,
   ReviewsSecContent,
   ReviewsSecPicture,
-  ReviewsSecTitle,
   ReviewsSecWrapper,
   ReviewTitle,
   ReviewUser,
@@ -27,7 +27,9 @@ const ReviewsSection = () => {
           <GreenOpacity />
         </ReviewsSecPicture>
         <ReviewsSecContent>
-          <ReviewsSecTitle>Our Top Reviews</ReviewsSecTitle>
+          <Title titleType={TITLE_TYPE_CLASSES.homeSection}>
+            Our Top Reviews
+          </Title>
           <Review>
             <ReviewTitle>Banff National Park Experience - 3 days</ReviewTitle>
             <StarsRating hiddenValue={true} />

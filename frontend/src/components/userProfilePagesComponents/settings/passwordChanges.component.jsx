@@ -6,6 +6,7 @@ import Title, {
 import {
   SaveButtonContainer,
   SettingsContainer,
+  SettingsForm,
   SettingsInputs,
   SettingsWrapper2,
 } from "./settings.style";
@@ -15,32 +16,34 @@ const PasswordChange = () => {
     <SettingsContainer>
       <SettingsWrapper2>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Password Change</Title>
-        <SettingsInputs>
-          <TextInput
-            label="Current password"
-            placeholder="••••••••"
-            required
-            minlength="8"
-            type="password"
-          />
-          <TextInput
-            label="New password"
-            placeholder="••••••••"
-            required
-            minlength="8"
-            type="password"
-          />
-          <TextInput
-            label="Confirm password"
-            placeholder="••••••••"
-            required
-            minlength="8"
-            type="password"
-          />
-        </SettingsInputs>
-        <SaveButtonContainer>
-          <Button>Update Password</Button>
-        </SaveButtonContainer>
+        <SettingsForm>
+          <SettingsInputs>
+            <TextInput
+              label="Current password"
+              placeholder="••••••••"
+              required
+              minlength="8"
+              type="password"
+            />
+            <TextInput
+              label="New password"
+              placeholder="••••••••"
+              required
+              minlength="8"
+              type="password"
+            />
+            <TextInput
+              label="Confirm password"
+              placeholder="••••••••"
+              required
+              minlength="8"
+              type="password"
+            />
+          </SettingsInputs>
+          <SaveButtonContainer>
+            <Button>Update Password</Button>
+          </SaveButtonContainer>
+        </SettingsForm>
       </SettingsWrapper2>
     </SettingsContainer>
   );

@@ -1,12 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import mainHeaderBackground from "../../../assets/main-header-bg.jpg";
+import mainHeaderBackground1 from "../../../assets/hikingImg/clemence-bergougnoux-zLIrNgNzPYs-unsplash.jpg";
 import mainLogo from "../../../assets/logo_hike_long_white.png";
 
 export const MainHeaderContainer = styled.div`
   width: 100vw;
   height: calc(100vh - 8rem);
-  background: url(${mainHeaderBackground}) no-repeat left center;
+  background: url(${mainHeaderBackground1}) no-repeat left center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -20,7 +20,7 @@ export const MainHeaderContentContainer = styled.div`
   left: 12rem;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
   justify-content: center;
   gap: 2rem;
 `;
@@ -43,4 +43,16 @@ export const MainHeaderText = styled.h3`
   letter-spacing: 4.8px;
   font-weight: 500;
   text-transform: uppercase;
+
+  @keyframes my-animation {
+    0% {
+      background: red;
+    }
+    50% {
+      background: blue;
+    }
+    100% {
+      background: green;
+    }
+  }
 `;

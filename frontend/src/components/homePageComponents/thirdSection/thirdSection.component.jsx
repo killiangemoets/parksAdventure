@@ -1,6 +1,8 @@
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../UIComponents/title/title.component";
 import {
   ElementText,
-  ElementTitle,
   ThirdSecContainer,
   ThirdSecElement,
   ThirdSecImageContent,
@@ -14,7 +16,9 @@ const ThirdSection = () => {
       <ThirdSecWrapper>
         <ThirdSecElement>
           <ThirdSecTextContent>
-            <ElementTitle>Why Canadian Rockies?</ElementTitle>
+            <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
+              Why Canadian Rockies?
+            </Title>
             <ElementText>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
               mollitia tempore nesciunt pariatur, consequuntur ut nulla
@@ -41,7 +45,9 @@ const ThirdSection = () => {
             <img src="images/desert.jpg" alt="desert" />
           </ThirdSecImageContent>
           <ThirdSecTextContent>
-            <ElementTitle>Why Hiking in the Desert?</ElementTitle>
+            <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
+              Why Hiking in the Desert?
+            </Title>
             <ElementText>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Ipsaaliquam molestiae facilis. Lorem ipsum dolor sit amet
@@ -63,9 +69,9 @@ const ThirdSection = () => {
         </ThirdSecElement>
         <ThirdSecElement>
           <ThirdSecTextContent>
-            <ElementTitle>
+            <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
               Why Taking Your Family on a Hiking Tour With Us?
-            </ElementTitle>
+            </Title>
             <ElementText>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa?
               <br />

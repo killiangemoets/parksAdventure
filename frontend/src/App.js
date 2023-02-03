@@ -8,6 +8,11 @@ import Tour from "./routes/tour/tour.component";
 import UserProfile from "./components/userProfilePagesComponents/userProfile/userProfile.component";
 import UserSettings from "./routes/userSettings/userSettings.component";
 import UserWishList from "./routes/userWhishList/userWishList.component";
+import UserBookings from "./routes/userBookings/userBookings.component";
+import UserReviews from "./routes/userReviews/userReviews.component";
+import UserBookingDetails from "./routes/userBookingDetails/userBookingDetails.component";
+import Signup from "./routes/signup/signup.component";
+import Login from "./routes/login/login.component";
 
 function App() {
   return (
@@ -16,17 +21,21 @@ function App() {
         <Route index element={<Home />} />
         <Route path="alltours" element={<AllTours />} />
         <Route path="tour" element={<Tour />} />
-        <Route path="*" element={<Navigate to="/" />}></Route>
+        <Route path="signup" element={<Signup />} />
+        <Route path="login" element={<Login />} />
       </Route>
-      <Route path="/" element={<NavbarAndFooter hideFooter={true} />}>
-        <Route path="profile/" element={<UserProfile />}>
-          <Route index element={<Navigate to="/profile/settings" />} />
-          <Route path="settings" element={<UserSettings />} />
-          <Route path="wishlist" element={<UserWishList />} />
-          <Route path="*" element={<Navigate to="/" />}></Route>
+      <Route path="profile/" element={<UserProfile />}>
+        <Route index element={<Navigate to="/profile/wishlist" />} />
+        <Route path="wishlist" element={<UserWishList />} />
+        <Route path="settings" element={<UserSettings />} />
+        <Route path="reviews" element={<UserReviews />} />
+        <Route path="bookings/">
+          <Route index element={<UserBookings />} />
+          <Route path="details" element={<UserBookingDetails />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />}></Route>
       </Route>
+      <Route path="*" element={<Navigate to="/" />}></Route>
     </Routes>
   );
 }

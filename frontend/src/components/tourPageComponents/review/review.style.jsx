@@ -49,3 +49,19 @@ export const ReviewerName = styled.p`
   font-size: 1.4rem;
   letter-spacing: 1px;
 `;
+
+export const EditButtons = styled.div`
+  display: flex;
+  gap: 1.8rem;
+  justify-content: flex-end;
+  margin-top: -1rem;
+
+  button {
+    min-width: 2rem;
+    padding: 0;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;

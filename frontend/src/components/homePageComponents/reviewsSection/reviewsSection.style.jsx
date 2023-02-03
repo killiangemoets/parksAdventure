@@ -14,6 +14,10 @@ export const ReviewsSecWrapper = styled.div`
   width: 100vw;
   display: flex;
   justify-content: center;
+
+  h2 {
+    font-size: 3.2rem;
+  }
 `;
 
 export const ReviewsSecPicture = styled.div`
@@ -36,24 +40,6 @@ export const ReviewsSecContent = styled.div`
   justify-content: space-between;
   /* gap: 4.8rem; */
   /* padding-right: 3.2rem; */
-`;
-
-export const ReviewsSecTitle = styled.h2`
-  font-size: 3.2rem;
-  letter-spacing: 2px;
-  font-weight: 700;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#d17e5d),
-    to(#a35a3c)
-  );
-  background-image: linear-gradient(to right, #d17e5d, #a35a3c);
-  -webkit-background-clip: text;
-  color: transparent;
-  -webkit-background-clip: text;
-  color: transparent;
 `;
 
 export const Review = styled.div`

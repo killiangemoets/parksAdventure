@@ -8,23 +8,17 @@ export const FirstSecContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 7.2rem;
-`;
 
-export const FirstSecTitle = styled.h2`
-  color: #506044;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    right top,
-    from(#738069),
-    to(#48563d)
-  );
-  background-image: linear-gradient(to right, #738069, #48563d);
-  -webkit-background-clip: text;
-  color: transparent;
-  font-size: 3.6rem;
-
-  letter-spacing: 2px;
+  h2 {
+    background-image: -webkit-gradient(
+      linear,
+      left top,
+      right top,
+      from(#738069),
+      to(#48563d)
+    );
+    background-image: linear-gradient(to right, #738069, #48563d);
+  }
 `;
 
 export const FirstSectionContentWrapper = styled.div`
@@ -50,6 +44,7 @@ export const ElementTitle = styled.h4`
   /* letter-spacing: 2px; */
   text-align: center;
   color: #506044;
+  white-space: pre-line;
   /* color: #CC704B; */
 `;
 

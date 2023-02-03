@@ -12,21 +12,26 @@ import {
   TourThirdImage,
 } from "./tourGallery.style";
 
+import pic1 from "../../../assets/canadianRockies.jpg";
+import pic2 from "../../../assets/reviews-section-bg.webp";
+import pic3 from "../../../assets/family.jpg";
+import pic4 from "../../../assets/main-header-bg.jpg";
+
 const TourGallery = () => {
   return (
     <TourGalleryContainer>
       <TourGalleryGrid>
         <TourMainImage>
-          <img src="images/canadianRockies.jpg" alt="Tour 1" />
+          <img src={pic1} alt="Tour 1" />
         </TourMainImage>
         <TourSecondImage>
-          <img src="images/reviews-section-bg.webp" alt="Tour 4" />
+          <img src={pic2} alt="Tour 4" />
         </TourSecondImage>
         <TourThirdImage>
-          <img src="images/family.jpg" alt="Tour 2" />
+          <img src={pic2} alt="Tour 2" />
         </TourThirdImage>
         <TourFourthImage>
-          <img src="images/main-header-bg.jpg" alt="Tour 3" />
+          <img src={pic4} alt="Tour 3" />
         </TourFourthImage>
         <TourGalleryButtons>
           <Button buttonType={BUTTON_TYPE_CLASSES.gallery}>
