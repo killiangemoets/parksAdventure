@@ -6,12 +6,20 @@ import mainLogo from "../../../assets/logo_hike_long_white.png";
 export const MainHeaderContainer = styled.div`
   width: 100vw;
   height: calc(100vh - 8rem);
-  background: url(${mainHeaderBackground1}) no-repeat left center;
+  background: no-repeat left center;
+  /* background: url(${mainHeaderBackground1}) no-repeat left center; */
+  /* background-image: ${({ bgImageUrl }) =>
+    `url(${bgImageUrl}) no-repeat left center`}; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const MainHeaderContentContainer = styled.div`

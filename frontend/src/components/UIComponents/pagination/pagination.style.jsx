@@ -40,7 +40,7 @@ export const LeftPageIcon = styled(LeftArrowSVG)`
 `;
 
 export const PaginationContainer = styled.div`
-  padding: 6.4rem;
+  /* padding: 6.4rem; */
   padding-top: 8rem;
   display: flex;
   align-items: center;

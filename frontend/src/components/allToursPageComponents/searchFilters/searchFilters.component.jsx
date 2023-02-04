@@ -11,7 +11,7 @@ import {
   SortIcon,
 } from "./searchFilters.style";
 
-const SearchFilter = () => {
+const SearchFilter = ({ handleOpenFilters }) => {
   return (
     <SearchFiltersContainer>
       <SearchFiltersWrapper>
@@ -33,7 +33,7 @@ const SearchFilter = () => {
           </Button>
         </Categories>
         <Filters>
-          <Button>
+          <Button onClick={handleOpenFilters}>
             <FilterIcon />
             Filters
           </Button>

@@ -2,12 +2,73 @@ import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
 import {
-  ElementIconContainer,
-  ElementTitle,
+  BackText,
+  BackTitle,
   FirstSecContainer,
   FirstSecElement,
+  FirstSecElementBack,
+  FirstSecElementFront,
+  FirstSecElementInner,
   FirstSectionContentWrapper,
+  FrontTitle,
 } from "./firstSection.style";
+
+import rangerImg from "../../../assets/aboutCards/ranger.jpg";
+import viewImg from "../../../assets/aboutCards/views.jpg";
+import mapImg from "../../../assets/aboutCards/fullyPlan.jpg";
+import { GreenOpacity } from "../../../routes/home/home.style";
+
+export const FlipCard = ({ title, imageUrl, text, highlight }) => {
+  const cutIndex1 = text.indexOf(highlight);
+  const cutIndex2 = cutIndex1 + highlight.length;
+  const textWithHighlight = (
+    <>
+      {text.slice(0, cutIndex1)}
+      <span>{text.slice(cutIndex1, cutIndex2)}</span>
+      {text.slice(cutIndex2)}
+    </>
+  );
+  return (
+    <FirstSecElement>
+      <FirstSecElementInner>
+        <FirstSecElementFront
+          style={{
+            backgroundImage: `url(${imageUrl})`,
+          }}
+        >
+          <GreenOpacity>
+            <FrontTitle>{title}</FrontTitle>
+          </GreenOpacity>
+        </FirstSecElementFront>
+        <FirstSecElementBack>
+          <BackTitle>{title}</BackTitle>
+          <BackText>{textWithHighlight}</BackText>
+        </FirstSecElementBack>
+      </FirstSecElementInner>
+    </FirstSecElement>
+  );
+};
+
+const elements = [
+  {
+    title: "Certified Tour Rangers",
+    imageUrl: rangerImg,
+    text: "All our tours are insured by the security of our certified rangers.",
+    highlight: "our certified rangers",
+  },
+  {
+    title: "Exceptional Views",
+    imageUrl: viewImg,
+    text: "All of our tours provide you with breathtaking views.",
+    highlight: "breathtaking views",
+  },
+  {
+    title: "Fully Planned Tours",
+    imageUrl: mapImg,
+    text: "All our tours are 100% planned and the instructions are easy to follow.",
+    highlight: "instructions are easy to follow",
+  },
+];
 
 const FirstSection = () => {
   return (
@@ -16,33 +77,14 @@ const FirstSection = () => {
         Unique Hiking Tours
       </Title>
       <FirstSectionContentWrapper>
-        <FirstSecElement>
-          <ElementTitle>
-            Certified
-            <br /> Tour Guides
-          </ElementTitle>
-          <ElementIconContainer>
-            <img src="images/guideIcon.png" alt="tour guide icon" />
-          </ElementIconContainer>
-        </FirstSecElement>
-        <FirstSecElement>
-          <ElementTitle>
-            Exceptionnal
-            <br /> Views
-          </ElementTitle>
-          <ElementIconContainer>
-            <img src="images/viewpointIcon.png" alt="viewpoint icon" />
-          </ElementIconContainer>
-        </FirstSecElement>
-        <FirstSecElement>
-          <ElementTitle>
-            Fully Planned <br />
-            Tours
-          </ElementTitle>
-          <ElementIconContainer>
-            <img src="images/mapIcon.png" alt="map icon" />
-          </ElementIconContainer>
-        </FirstSecElement>
+        {elements.map((el) => (
+          <FlipCard
+            title={el.title}
+            imageUrl={el.imageUrl}
+            text={el.text}
+            highlight={el.highlight}
+          />
+        ))}
       </FirstSectionContentWrapper>
     </FirstSecContainer>
   );

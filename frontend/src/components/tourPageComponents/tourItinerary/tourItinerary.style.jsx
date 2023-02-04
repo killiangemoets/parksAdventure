@@ -41,8 +41,9 @@ export const ItineraryMapContainer = styled.div`
 
 export const ItineraryCaptionContainer = styled.div`
   display: flex;
-  margin-left: 0.4rem;
+  /* margin-left: 0.4rem; */
   gap: 3.2rem;
-  /* background-color: #fdfaf5; */
-  /* padding: 2rem; */
+  margin-top: -4rem;
+  background-color: #fdfaf5;
+  padding: 2rem 0.4rem;
 `;

@@ -71,7 +71,8 @@ export const GalleryButton = styled(InvertedButton)`
   border-radius: 8px;
   padding: 0.8rem 1.2rem;
   background-color: rgba(250, 242, 229, 0.4);
-  .stroke {
+  .stroke,
+  .path {
     fill: #cc704b;
     transition: all 0.3s;
   }

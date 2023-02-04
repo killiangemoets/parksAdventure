@@ -1,25 +1,64 @@
+import { useEffect, useState } from "react";
 import { GreenOpacity } from "../../../routes/home/home.style";
+import Carousel from "../../UIComponents/carousel/carousel.component";
 import ProfilePicture from "../../UIComponents/profilePicture/profilePicture.component";
 import StarsRating from "../../UIComponents/starsRating/starsRating.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
+import TopReview from "../topReview/topReview.component";
 import {
-  CurrentDot,
-  Dot,
-  Review,
-  ReviewDescription,
-  ReviewsCarousel,
   ReviewsSecContainer,
   ReviewsSecContent,
   ReviewsSecPicture,
   ReviewsSecWrapper,
-  ReviewTitle,
-  ReviewUser,
-  UserName,
 } from "./reviewsSection.style";
 
+const reviewsData = [
+  {
+    title: "Banff National Park Experience - 3 days",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem. Ullam dignissimos, quia repudiandae impedit quas harum maiores.eum quas autem. Ullam dignissimos, quia repudiandae impedit quas harummaiores.",
+    name: "Lucas Scott",
+    profilePicture: "images/user.jpg",
+    rate: "4",
+  },
+  {
+    title: "Rocky mountains- 7 days",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem. Ullam dignissimos, quia repudiandae impedit quas harum maiores.eum quas autem. Ullam dignissimos, quia repudiandae impedit quas harummaiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptatibus quia hic ipsam fugiat nemo consectetur error, quo molestias aut placeat voluptatem labore? Maiores eligendi atque omnis est ab quam.",
+    name: "Nathan Scott",
+    profilePicture: "images/user.jpg",
+    rate: "4",
+  },
+  {
+    title: "Great Smoky Mountains National Park - 4 days",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus!.",
+    name: "Tom Saywer",
+    profilePicture: "images/user.jpg",
+    rate: "4",
+  },
+  {
+    title: "Jasper Nation Park - 2 days",
+    description:
+      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem!.",
+    name: "David Goggins",
+    profilePicture: "images/user.jpg",
+    rate: "4",
+  },
+];
+
 const ReviewsSection = () => {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const reviewsEl = reviewsData.map((reviewData) => (
+      <TopReview review={reviewData} />
+    ));
+    setReviews(reviewsEl);
+  }, []);
+
   return (
     <ReviewsSecContainer>
       <ReviewsSecWrapper>
@@ -30,31 +69,7 @@ const ReviewsSection = () => {
           <Title titleType={TITLE_TYPE_CLASSES.homeSection}>
             Our Top Reviews
           </Title>
-          <Review>
-            <ReviewTitle>Banff National Park Experience - 3 days</ReviewTitle>
-            <StarsRating hiddenValue={true} />
-            <ReviewDescription>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at
-              corporis aut debitis tempore? Nam quod voluptatibus, eos obcaecati
-              eum quas autem. Ullam dignissimos, quia repudiandae impedit quas
-              harum maiores. eum quas autem. Ullam dignissimos, quia repudiandae
-              impedit quas harum maiores.
-            </ReviewDescription>
-            <ReviewUser>
-              <ProfilePicture pictureUrl={"images/user.jpg"} />
-              <UserName>Lucas Scott</UserName>
-            </ReviewUser>
-          </Review>
-          <ReviewsCarousel>
-            <Dot></Dot>
-            <CurrentDot></CurrentDot>
-            <Dot></Dot>
-            <Dot></Dot>
-            <Dot></Dot>
-            <Dot></Dot>
-            <Dot></Dot>
-            <Dot></Dot>
-          </ReviewsCarousel>
+          <Carousel elements={reviews} />
         </ReviewsSecContent>
       </ReviewsSecWrapper>
     </ReviewsSecContainer>

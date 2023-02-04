@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
@@ -11,11 +12,31 @@ import {
 } from "./thirdSection.style";
 
 const ThirdSection = () => {
+  const checkBoxes = () => {
+    const triggerBottom = (window.innerHeight / 5) * 4;
+
+    const boxes = document.querySelectorAll(".box");
+
+    boxes.forEach((box, i) => {
+      const boxTop = box.getBoundingClientRect().top;
+      if (boxTop < triggerBottom) {
+        box.classList.add("show");
+      } else if (boxTop > triggerBottom + 200) {
+        box.classList.remove("show");
+      }
+    });
+  };
+
+  useEffect(() => {
+    checkBoxes();
+    window.addEventListener("scroll", checkBoxes);
+  }, []);
+
   return (
     <ThirdSecContainer>
       <ThirdSecWrapper>
         <ThirdSecElement>
-          <ThirdSecTextContent>
+          <ThirdSecTextContent className="box box-left">
             <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
               Why Canadian Rockies?
             </Title>
@@ -36,15 +57,15 @@ const ThirdSection = () => {
               nobis accusantium quod corporis, soluta provident repudiandae!
             </ElementText>
           </ThirdSecTextContent>
-          <ThirdSecImageContent>
+          <ThirdSecImageContent className="box box-right">
             <img src="images/canadianRockies.jpg" alt="canadian rockies" />
           </ThirdSecImageContent>
         </ThirdSecElement>
         <ThirdSecElement>
-          <ThirdSecImageContent>
+          <ThirdSecImageContent className="box box-left">
             <img src="images/desert.jpg" alt="desert" />
           </ThirdSecImageContent>
-          <ThirdSecTextContent>
+          <ThirdSecTextContent className="box box-right">
             <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
               Why Hiking in the Desert?
             </Title>
@@ -68,7 +89,7 @@ const ThirdSection = () => {
           </ThirdSecTextContent>
         </ThirdSecElement>
         <ThirdSecElement>
-          <ThirdSecTextContent>
+          <ThirdSecTextContent className="box box-left">
             <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
               Why Taking Your Family on a Hiking Tour With Us?
             </Title>
@@ -91,7 +112,7 @@ const ThirdSection = () => {
               optio vero laboriosam quam officiis.
             </ElementText>
           </ThirdSecTextContent>
-          <ThirdSecImageContent>
+          <ThirdSecImageContent className="box box-right">
             <img src="images/family.jpg" alt="Family hiking" />
           </ThirdSecImageContent>
         </ThirdSecElement>

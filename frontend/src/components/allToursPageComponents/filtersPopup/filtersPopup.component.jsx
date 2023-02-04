@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -15,13 +16,23 @@ import {
   SelectFilter,
 } from "./filtersPopup.style";
 
-const FiltersPopup = () => {
+const FiltersPopup = ({ handleOpenFilters }) => {
+  const popupRef = useRef(null);
+
+  const handleClickOnOverlay = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target))
+      handleOpenFilters(false);
+  };
+
   return (
-    <Overlay>
-      <FiltersPopupContainer>
+    <Overlay onClick={handleClickOnOverlay}>
+      <FiltersPopupContainer ref={popupRef}>
         <FiltersPopupTitleSection>
           <FiltersPopupTitle>Filters</FiltersPopupTitle>
-          <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.empty}
+            onClick={() => handleOpenFilters(false)}
+          >
             <CloseIcon />
           </Button>
         </FiltersPopupTitleSection>
@@ -48,7 +59,9 @@ const FiltersPopup = () => {
           </FilterElement>
         </Filters>
         <ButtonSection>
-          <Button>Show 23 results</Button>
+          <Button onClick={() => handleOpenFilters(false)}>
+            Show 23 results
+          </Button>
         </ButtonSection>
       </FiltersPopupContainer>
     </Overlay>
