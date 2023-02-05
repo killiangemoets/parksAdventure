@@ -2,10 +2,14 @@ import { useRef } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
+import CheckBoxes from "../../UIComponents/checkBoxes/checkBoxes.component";
+import SliderInput from "../../UIComponents/sliderInput/sliderInput.component";
+import SliderSteps from "../../UIComponents/sliderSteps/sliderSteps.component";
 import {
   ButtonSection,
   CloseIcon,
   Filter,
+  FilterCheckBoxes,
   FilterElement,
   Filters,
   FiltersPopupContainer,
@@ -13,7 +17,6 @@ import {
   FiltersPopupTitleSection,
   FilterTitle,
   Overlay,
-  SelectFilter,
 } from "./filtersPopup.style";
 
 const FiltersPopup = ({ handleOpenFilters }) => {
@@ -39,23 +42,42 @@ const FiltersPopup = ({ handleOpenFilters }) => {
         <Filters>
           <FilterElement>
             <FilterTitle>Price</FilterTitle>
-            <Filter></Filter>
+            <Filter>
+              <SliderInput min={0} max={200} />
+            </Filter>
           </FilterElement>
           <FilterElement>
             <FilterTitle>Duration</FilterTitle>
-            <Filter></Filter>
+            <Filter>
+              <SliderInput min={0} max={5} />
+            </Filter>
           </FilterElement>
           <FilterElement>
             <FilterTitle>Group Size</FilterTitle>
-            <Filter></Filter>
+            <Filter>
+              <SliderInput min={0} max={50} />
+            </Filter>
           </FilterElement>
           <FilterElement>
             <FilterTitle>Difficulty</FilterTitle>
-            <SelectFilter></SelectFilter>
+            <Filter>
+              <SliderSteps steps={["Family", "Medium", "Hard", "Expert"]} />
+            </Filter>
           </FilterElement>
           <FilterElement>
             <FilterTitle>Category</FilterTitle>
-            <SelectFilter></SelectFilter>
+            <FilterCheckBoxes>
+              <CheckBoxes
+                options={[
+                  "Mountain",
+                  "Desert",
+                  "Snow",
+                  "Cities",
+                  "Sea",
+                  "Lakes",
+                ]}
+              />
+            </FilterCheckBoxes>
           </FilterElement>
         </Filters>
         <ButtonSection>

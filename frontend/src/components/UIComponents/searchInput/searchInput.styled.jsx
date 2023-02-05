@@ -25,7 +25,7 @@ export const Input = styled.input`
   border-radius: 999px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.32);
   transition: all 0.3s;
-  border: 1px solid #ccc;
+  border: 1px solid #aaa;
 
   &::placeholder {
     color: #aaa;
@@ -33,12 +33,13 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5);
+    border: 1px solid #cc704b;
+    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
   }
 `;
 
 export const ButtonWrapper = styled.div`
   position: absolute;
-  top: 7%;
+  top: 8%;
   right: 0.8%;
 `;

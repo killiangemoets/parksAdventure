@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { GreenOpacity } from "../../../routes/home/home.style";
 
 export const FirstSecContainer = styled.div`
   padding: 7.2rem 6.4rem;
@@ -74,6 +75,10 @@ export const FirstSecElementFront = styled.div`
   align-items: center;
   justify-content: center;
   gap: 3.6rem;
+
+  & ${GreenOpacity} {
+    border-radius: 12px;
+  }
 `;
 
 export const FirstSecElementBack = styled.div`

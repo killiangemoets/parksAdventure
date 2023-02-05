@@ -12,6 +12,7 @@ import FiltersPopup from "../../components/allToursPageComponents/filtersPopup/f
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import { useRef } from "react";
+import Pagination2 from "../../components/UIComponents/pagination/pagination2.component";
 
 const AllTours = () => {
   const tourCardsResultRef = useRef(null);
@@ -21,6 +22,8 @@ const AllTours = () => {
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const checkScroll = () => {
+    if (!tourCardsResultRef.current) return;
+
     const tourCardsTop = tourCardsResultRef.current.getBoundingClientRect().top;
     const tourCardsBottom =
       tourCardsResultRef.current.getBoundingClientRect().bottom;
@@ -60,7 +63,8 @@ const AllTours = () => {
       <AllToursResults>
         <AllToursResultsLeft mapOpen={mapOpen} ref={tourCardsResultRef}>
           <ToursCards mapOpen={mapOpen} />
-          <Pagination />
+          {/* <Pagination /> */}
+          <Pagination2 />
         </AllToursResultsLeft>
         <ToursMap
           fix={fix}

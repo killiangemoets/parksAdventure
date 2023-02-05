@@ -11,16 +11,19 @@ import {
   TourHeaderWrapper,
 } from "./tourHeader.style";
 
-const TourHeader = () => {
+const TourHeader = ({ handleScrollToBooking, handleScrollToReviews }) => {
   return (
     <TourHeaderContainer>
       <TourHeaderWrapper>
         <TourHeaderLeft>
           <Title titleType={TITLE_TYPE_CLASSES.main}>The Forest Hiker</Title>
-          <StarsRating linkOnReviews={true} />
+          <StarsRating
+            linkOnReviews={true}
+            handleLinkTo={handleScrollToReviews}
+          />
         </TourHeaderLeft>
         <TourHeaderRight>
-          <Button>Book Now</Button>
+          <Button onClick={handleScrollToBooking}>Book Now</Button>
           <Price>
             <span>From $497</span> per person
           </Price>

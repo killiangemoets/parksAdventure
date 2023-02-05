@@ -67,7 +67,7 @@ export const Filters = styled.div`
 `;
 export const FilterElement = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 2.8rem;
 `;
 export const FilterTitle = styled.h2`
@@ -79,15 +79,18 @@ export const FilterTitle = styled.h2`
   text-transform: uppercase;
 `;
 export const Filter = styled.div`
-  height: 2rem;
-  width: 30rem;
-  background-color: #506044;
+  /* height: 2rem; */
+  min-width: 30rem;
+
+  /* background-color: #506044; */
 `;
-export const SelectFilter = styled.div`
-  height: 2rem;
-  width: 30rem;
-  background-color: #506044;
+
+export const FilterCheckBoxes = styled(Filter)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
 export const ButtonSection = styled.div`
   padding: 1rem 6.4rem 4.8rem 6.4rem;
   display: flex;

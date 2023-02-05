@@ -18,9 +18,9 @@ import {
   TourBookingContainer,
 } from "./tourBooking.style";
 
-const TourBooking = () => {
+const TourBooking = ({ forwardRef }) => {
   return (
-    <TourBookingContainer>
+    <TourBookingContainer ref={forwardRef}>
       <TourBookingBox>
         <Titles>
           <Title titleType={TITLE_TYPE_CLASSES.section}>

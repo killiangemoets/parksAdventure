@@ -6,16 +6,36 @@ import TourReviews from "../../components/tourPageComponents/tourReviews/tourRev
 import TourRecommandations from "../../components/tourPageComponents/tourRecommandations/tourRecommandations.component";
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
 import { TourContainer } from "./tour.style";
+import { useRef } from "react";
 
 const Tour = () => {
+  const bookingRef = useRef([]);
+  const reviewsRef = useRef(null);
+
+  const handleScrollToBooking = () => {
+    window.scrollTo({
+      top: bookingRef.current.offsetTop - 120,
+      behavior: "smooth",
+    });
+  };
+  const handleScrollToReviews = () => {
+    window.scrollTo({
+      top: reviewsRef.current.offsetTop - 80,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <TourContainer>
-      <TourHeader />
+      <TourHeader
+        handleScrollToBooking={handleScrollToBooking}
+        handleScrollToReviews={handleScrollToReviews}
+      />
       <TourGallery />
       <TourInfos />
       <TourItinerary />
-      <TourBooking />
-      <TourReviews />
+      <TourBooking forwardRef={bookingRef} />
+      <TourReviews forwardRef={reviewsRef} />
       <TourRecommandations />
     </TourContainer>
   );

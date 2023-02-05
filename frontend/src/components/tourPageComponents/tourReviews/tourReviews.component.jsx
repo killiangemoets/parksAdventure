@@ -11,9 +11,9 @@ import {
   TourReviewsContainer,
 } from "./tourReviews.style";
 
-const TourReviews = () => {
+const TourReviews = ({ forwardRef }) => {
   return (
-    <TourReviewsContainer>
+    <TourReviewsContainer ref={forwardRef}>
       <Title titleType={TITLE_TYPE_CLASSES.section}>
         Customer Reviews <Info />
       </Title>

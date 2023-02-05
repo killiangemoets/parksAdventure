@@ -10,7 +10,11 @@ import {
   EmptyStarIcon,
 } from "./starsRating.style";
 
-const StarsRating = ({ hiddenValue = false, linkOnReviews = false }) => {
+const StarsRating = ({
+  hiddenValue = false,
+  linkOnReviews = false,
+  handleLinkTo = () => {},
+}) => {
   return (
     <StarsRatingContainer>
       <StarsContainer>
@@ -27,7 +31,7 @@ const StarsRating = ({ hiddenValue = false, linkOnReviews = false }) => {
           {!linkOnReviews ? (
             <NumRatings>(6)</NumRatings>
           ) : (
-            <LinkNumRatings>(6 reviews)</LinkNumRatings>
+            <LinkNumRatings onClick={handleLinkTo}>(6 reviews)</LinkNumRatings>
           )}
         </RatingData>
       )}

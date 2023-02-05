@@ -1,6 +1,8 @@
+import { useState } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
+import DropdownInput from "../../UIComponents/dropdownInput/dropdownInput.component";
 
 import {
   Categories,
@@ -12,6 +14,14 @@ import {
 } from "./searchFilters.style";
 
 const SearchFilter = ({ handleOpenFilters }) => {
+  const sortPossibilites = ["Popularity", "Pricing", "Rating", "Last Minute"];
+
+  const [currentSort, setCurrentSort] = useState(sortPossibilites[0]);
+
+  const handleDropDownSelect = (value) => {
+    setCurrentSort(value);
+  };
+
   return (
     <SearchFiltersContainer>
       <SearchFiltersWrapper>
@@ -37,10 +47,15 @@ const SearchFilter = ({ handleOpenFilters }) => {
             <FilterIcon />
             Filters
           </Button>
-          <Button>
+          {/* <Button>
             <SortIcon />
             Sort
-          </Button>
+          </Button> */}
+          <DropdownInput
+            list={sortPossibilites}
+            current={currentSort}
+            handler={handleDropDownSelect}
+          />
         </Filters>
       </SearchFiltersWrapper>
     </SearchFiltersContainer>
