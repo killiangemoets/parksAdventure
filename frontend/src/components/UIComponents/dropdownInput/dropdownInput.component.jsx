@@ -5,7 +5,6 @@ import {
   DropdownButtonLeft,
   DropdownIcon,
   DropdownInputContainer,
-  SortIcon,
 } from "./dropdownInput.style";
 
 // type DropdownInputProps = {
@@ -16,7 +15,13 @@ import {
 // };
 
 // const DropdownInput: FC<DropdownInputProps> = ({
-const DropdownInput = ({ current, list, handler }) => {
+const DropdownInput = ({
+  children,
+  current = "",
+  list = [],
+  handler = () => {},
+  buttonType = undefined,
+}) => {
   const [openDropdown, setOpenDropdown] = useState(false);
   //   const dropdownInput = useRef<HTMLDivElement>(null);
   const dropdownInput = useRef(null);
@@ -38,12 +43,13 @@ const DropdownInput = ({ current, list, handler }) => {
   return (
     <DropdownInputContainer ref={dropdownInput}>
       <Button
+        buttonType={buttonType}
         onClick={() => {
           setOpenDropdown(!openDropdown);
         }}
       >
         <DropdownButtonLeft>
-          <SortIcon />
+          {children}
           <p>{current}</p>
         </DropdownButtonLeft>
         <DropdownIcon />

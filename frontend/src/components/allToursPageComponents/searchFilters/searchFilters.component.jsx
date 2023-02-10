@@ -55,7 +55,9 @@ const SearchFilter = ({ handleOpenFilters }) => {
             list={sortPossibilites}
             current={currentSort}
             handler={handleDropDownSelect}
-          />
+          >
+            <SortIcon />
+          </DropdownInput>
         </Filters>
       </SearchFiltersWrapper>
     </SearchFiltersContainer>

@@ -48,6 +48,9 @@ export const InputButton = styled(BaseButton)`
 `;
 
 export const EmptyButton = styled.button`
+  min-width: 0rem;
+  width: auto;
+  height: auto;
   padding: 0;
   font-size: 1.8rem;
   letter-spacing: 1px;
@@ -83,5 +86,16 @@ export const GalleryButton = styled(InvertedButton)`
   &:hover {
     color: #cc704b;
     background-color: rgba(250, 242, 229, 0.6);
+  }
+`;
+
+export const LightButton = styled(BaseButton)`
+  background-color: #faf2e5;
+  border: solid 2px #faf2e5;
+  color: #aaa;
+
+  &:hover {
+    background-color: #faf2e5;
+    border: solid 2px #faf2e5;
   }
 `;

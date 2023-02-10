@@ -1,4 +1,4 @@
-import DatesInput from "../../UIComponents/datesInput/datesInput.component";
+import RangeDateInput from "../../UIComponents/rangeDateInput/rangeDateInput.component";
 import SearchInput from "../../UIComponents/searchInput/searchInput.component";
 import {
   AllToursHeaderContainer,
@@ -17,7 +17,7 @@ const AllToursHeader = () => {
         <AllToursHeaderContent>
           <AllToursHeaderInputs>
             <SearchInput />
-            <DatesInput />
+            <RangeDateInput />
           </AllToursHeaderInputs>
 
           <AllToursTitles>

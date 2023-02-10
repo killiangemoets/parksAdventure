@@ -10,7 +10,7 @@ export const TourBookingContainer = styled.div`
 
 export const TourBookingBox = styled.div`
   position: relative;
-  overflow: hidden;
+  /* overflow: hidden; */
   padding: 3.2rem 2.4rem 3.2rem 20.4rem;
   border-radius: 12px;
   /* background-color: #506044; */
@@ -46,40 +46,31 @@ export const SecondTitle = styled.h3`
   color: #fff;
 `;
 
-export const Inputs = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-
-  button {
-    width: 20rem;
-    height: 5.2rem;
-  }
-`;
-
-export const BookButton = styled.div`
-  button {
-    width: 100%;
-  }
+export const TourBookingPictures = styled.div`
+  position: absolute;
+  width: 18rem;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 `;
 
 export const Picture1 = styled.div`
   position: absolute;
   z-index: 2;
-  top: calc(50%-7.5rem);
+  top: calc(50% - 7rem);
   left: -4.8rem;
 `;
 
 export const Picture2 = styled.div`
   position: absolute;
   z-index: 1;
-  top: calc(50%-7.5rem);
+  top: calc(50% - 7rem);
   left: -1rem;
 `;
 
 export const Picture3 = styled.div`
   position: absolute;
-  top: calc(50%-7.5rem);
+  top: calc(50% - 7rem);
   left: 2.8rem;
 `;

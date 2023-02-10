@@ -2,7 +2,7 @@ import React from "react";
 // import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { RangeDatePickerElement, SpaceElement } from "./datesInput.style";
+import { RangeDatePickerElement } from "./rangeDateInput.style";
 import { ConfigProvider } from "antd";
 
 dayjs.extend(customParseFormat);
@@ -24,7 +24,7 @@ const rangePresets = [
   { label: "Next Month", value: [dayjs().add(30, "d"), dayjs().add(60, "d")] },
 ];
 
-const DatesInput = () => (
+const RangeDateInput = () => (
   <ConfigProvider
     theme={{
       components: {
@@ -35,7 +35,8 @@ const DatesInput = () => (
           colorTextPlaceholder: "#aaa",
           borderRadiusSM: "999px",
           colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-          colorBgElevated: "#faf2e5",
+          // colorBgElevated: "#faf2e5",
+          colorBgElevated: "#fdfaf5",
         },
       },
     }}
@@ -43,8 +44,9 @@ const DatesInput = () => (
     <RangeDatePickerElement
       presets={rangePresets}
       disabledDate={disabledDate}
+      format="DD/MM/YYYY"
     />
   </ConfigProvider>
 );
 
-export default DatesInput;
+export default RangeDateInput;
