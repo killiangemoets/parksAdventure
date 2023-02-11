@@ -1,6 +1,5 @@
 import AllToursHeader from "../../components/allToursPageComponents/allToursHeader/allToursHeader.component";
-import Pagination from "../../components/UIComponents/pagination/pagination.component";
-import SearchFilter from "../../components/allToursPageComponents/searchFilters/searchFilters.component";
+import SearchFilters from "../../components/allToursPageComponents/searchFilters/searchFilters.component";
 import ToursCards from "../../components/allToursPageComponents/toursCards/toursCards.component";
 import ToursMap from "../../components/allToursPageComponents/toursMap/toursMap.component";
 import {
@@ -8,18 +7,16 @@ import {
   AllToursResults,
   AllToursResultsLeft,
 } from "./allTours.style";
-import FiltersPopup from "../../components/allToursPageComponents/filtersPopup/filtersPopup.component";
 import { useState } from "react";
 import { useLayoutEffect } from "react";
 import { useRef } from "react";
-import Pagination2 from "../../components/UIComponents/pagination/pagination2.component";
+import Pagination from "../../components/UIComponents/pagination/pagination.component";
 
 const AllTours = () => {
   const tourCardsResultRef = useRef(null);
   const [fix, setFix] = useState(false);
   const [reduceHeight, setReduceHeight] = useState(false);
   const [mapOpen, setMapOpen] = useState(false);
-  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const checkScroll = () => {
     if (!tourCardsResultRef.current) return;
@@ -51,20 +48,15 @@ const AllTours = () => {
     setMapOpen(!mapOpen);
   };
 
-  const handleOpenFilters = (state = undefined) => {
-    const newState = state ?? !filtersOpen;
-    setFiltersOpen(newState);
-  };
-
   return (
     <AllToursContainer>
       <AllToursHeader />
-      <SearchFilter handleOpenFilters={handleOpenFilters} />
+      <SearchFilters />
       <AllToursResults>
         <AllToursResultsLeft mapOpen={mapOpen} ref={tourCardsResultRef}>
           <ToursCards mapOpen={mapOpen} />
           {/* <Pagination /> */}
-          <Pagination2 />
+          <Pagination />
         </AllToursResultsLeft>
         <ToursMap
           fix={fix}
@@ -73,7 +65,6 @@ const AllTours = () => {
           mapOpen={mapOpen}
         />
       </AllToursResults>
-      {filtersOpen && <FiltersPopup handleOpenFilters={handleOpenFilters} />}
     </AllToursContainer>
   );
 };

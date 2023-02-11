@@ -24,6 +24,19 @@ export const AuthenticationLink = styled(Link)`
   }
 `;
 
+export const AuthenticationLinkSmall = styled(AuthenticationLink)`
+  font-weight: 500;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+  border-bottom: none;
+  border-bottom: solid 1px rgba(204, 112, 75, 0);
+
+  &:hover {
+    color: #cc704b;
+    border-bottom: solid 1px #cc704b;
+  }
+`;
+
 export const AuthenticationCard = styled.div`
   padding: 5.2rem 6.8rem;
   background-color: #fefdfa;

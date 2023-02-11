@@ -8,6 +8,7 @@ import {
   AuthenticationContainer,
   AuthenticationForm,
   AuthenticationLink,
+  AuthenticationLinkSmall,
 } from "./authentication.style";
 
 export const LoginCard = () => {
@@ -34,6 +35,7 @@ export const LoginCard = () => {
           <Button>LOGIN</Button>
         </AuthenticationForm>
       </AuthenticationCard>
+      <AuthenticationLinkSmall>Forgot password?</AuthenticationLinkSmall>
       <AuthenticationLink>Need to create an account?</AuthenticationLink>
     </AuthenticationContainer>
   );

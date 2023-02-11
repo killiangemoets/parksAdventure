@@ -44,3 +44,14 @@ export const ReviewsWrapper = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+export const ReviewsModalText = styled.div`
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  text-align: justify;
+  letter-spacing: 1px;
+  max-width: 46rem;
+
+  /* font-weight: 400; */
+  /* letter-spacing: 0.4px; */
+`;

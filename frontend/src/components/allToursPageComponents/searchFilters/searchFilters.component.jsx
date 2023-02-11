@@ -3,6 +3,7 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
 import DropdownInput from "../../UIComponents/dropdownInput/dropdownInput.component";
+import FiltersPopup from "../filtersPopup/filtersPopup.component";
 
 import {
   Categories,
@@ -13,13 +14,19 @@ import {
   SortIcon,
 } from "./searchFilters.style";
 
-const SearchFilter = ({ handleOpenFilters }) => {
+const SearchFilters = () => {
   const sortPossibilites = ["Popularity", "Pricing", "Rating", "Last Minute"];
 
   const [currentSort, setCurrentSort] = useState(sortPossibilites[0]);
+  const [filtersOpen, setFiltersOpen] = useState(false);
 
   const handleDropDownSelect = (value) => {
     setCurrentSort(value);
+  };
+
+  const handleOpenFilters = (state = undefined) => {
+    const newState = state ?? !filtersOpen;
+    setFiltersOpen(newState);
   };
 
   return (
@@ -60,8 +67,9 @@ const SearchFilter = ({ handleOpenFilters }) => {
           </DropdownInput>
         </Filters>
       </SearchFiltersWrapper>
+      {filtersOpen && <FiltersPopup handleOpenFilters={handleOpenFilters} />}
     </SearchFiltersContainer>
   );
 };
 
-export default SearchFilter;
+export default SearchFilters;

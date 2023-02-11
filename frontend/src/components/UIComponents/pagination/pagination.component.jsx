@@ -1,32 +1,26 @@
 import { useState } from "react";
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import {
-  CurrentPage,
-  LeftPageIcon,
-  PaginationContainer,
-  RightPageIcon,
-  ThreeDots,
-} from "./pagination.style";
+// import type { PaginationProps } from "antd";
+import { PaginationContainer, PaginationElement } from "./pagination.style";
 
 const Pagination = () => {
+  const [current, setCurrent] = useState(8);
+
+  //   const onChange: PaginationProps["onChange"] = (page) => {
+  const onChange = (page) => {
+    console.log(page);
+    setCurrent(page);
+  };
+
   return (
     <PaginationContainer>
-      <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
-        <LeftPageIcon />
-      </Button>
-      <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>1</Button>
-
-      <ThreeDots>...</ThreeDots>
-      <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>4</Button>
-      {/* <Button>5</Button> */}
-      <CurrentPage>5</CurrentPage>
-      <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>6</Button>
-      <ThreeDots>...</ThreeDots>
-      <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>16</Button>
-
-      <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
-        <RightPageIcon />
-      </Button>
+      <PaginationElement
+        current={current}
+        onChange={onChange}
+        total={600}
+        defaultPageSize={16}
+        defaultCurrent={1}
+        showSizeChanger={false}
+      />
     </PaginationContainer>
   );
 };

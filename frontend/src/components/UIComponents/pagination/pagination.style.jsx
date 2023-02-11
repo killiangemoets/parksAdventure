@@ -1,80 +1,99 @@
 import styled from "styled-components";
 
-import { ReactComponent as RightArrowSVG } from "../../../assets/chevron-right-solid.svg";
-import { ReactComponent as LeftArrowSVG } from "../../../assets/chevron-left-solid.svg";
-
-export const RightPageIcon = styled(RightArrowSVG)`
-  width: 2.2rem;
-  height: 2.2rem;
-  transition: all 0.3s;
-
-  .path {
-    fill: #cc704b;
-    transition: all 0.3s;
-  }
-  &:hover {
-    width: 2.4rem;
-    height: 2.4rem;
-    .path {
-      fill: #b86544;
-    }
-  }
-`;
-
-export const LeftPageIcon = styled(LeftArrowSVG)`
-  width: 2.2rem;
-  height: 2.2rem;
-  transition: all 0.3s;
-
-  .path {
-    fill: #cc704b;
-    transition: all 0.3s;
-  }
-  &:hover {
-    width: 2.4rem;
-    height: 2.4rem;
-    .path {
-      fill: #b86544;
-    }
-  }
-`;
+import { Pagination } from "antd";
 
 export const PaginationContainer = styled.div`
-  /* padding: 6.4rem; */
   padding-top: 8rem;
+`;
+
+export const PaginationElement = styled(Pagination)`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1.8rem;
+  gap: 1rem;
 
-  button {
-    min-width: 0px;
+  .ant-pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 4.8rem;
     width: 4.8rem;
-    padding: 0;
-    text-align: center;
+    border: 2px solid #cc704b;
+    border-radius: 999px;
+    transition: all 0.3s !important;
+
+    a {
+      transition: all 0.3s !important;
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #cc704b;
+    }
+
+    &:hover {
+      background-color: #cc704b !important;
+      a {
+        color: #faf2e5;
+      }
+    }
   }
-`;
 
-export const ThreeDots = styled.p`
-  font-size: 24px;
-  color: #cc704b;
-`;
+  .ant-pagination-item-active {
+    background-color: #cc704b;
+    border-radius: 999px;
+    border-color: #cc704b;
 
-export const CurrentPage = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 1.8rem;
-  letter-spacing: 1px;
-  background-color: #cc704b;
-  color: #faf2e5;
-  border-radius: 999px;
-  border: none;
-  gap: 1rem;
-  height: 4.8rem;
-  width: 4.8rem;
-  padding: 0;
-  text-align: center;
+    a {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #faf2e5;
+    }
+
+    &:hover {
+      border-color: #cc704b;
+      a {
+        color: #faf2e5;
+      }
+    }
+  }
+
+  .ant-pagination-item-link {
+    .anticon {
+      svg {
+        width: 2.2rem;
+        height: 2.2rem;
+        transition: all 0.3s;
+        fill: #cc704b;
+      }
+    }
+
+    &:hover {
+      .anticon svg {
+        width: 2.4rem;
+        height: 2.4rem;
+        fill: #b86544;
+      }
+    }
+  }
+
+  :where(.css-dev-only-do-not-override-ixblex).ant-pagination
+    .ant-pagination-jump-prev
+    .ant-pagination-item-container
+    .ant-pagination-item-ellipsis,
+  :where(.css-dev-only-do-not-override-ixblex).ant-pagination
+    .ant-pagination-jump-next
+    .ant-pagination-item-container
+    .ant-pagination-item-ellipsis {
+    color: #cc704b !important;
+  }
+
+  :where(.css-dev-only-do-not-override-ixblex).ant-pagination
+    .ant-pagination-prev
+    .ant-pagination-item-link,
+  :where(.css-dev-only-do-not-override-ixblex).ant-pagination
+    .ant-pagination-next
+    .ant-pagination-item-link {
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
 `;
