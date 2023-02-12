@@ -30,7 +30,7 @@ const SearchFilters = () => {
   };
 
   const handleOpenFilters = (state: boolean): void => {
-    // const newState = state ?? !filtersOpen;
+    document.body.style.overflowY = state ? "hidden" : "scroll";
     setFiltersOpen(state);
   };
 

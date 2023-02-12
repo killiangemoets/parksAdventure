@@ -29,7 +29,12 @@ const ToursMap: FC<ToursMapProps> = ({
     handleOpenMap();
   };
   return (
-    <ToursMapContainer fix={fix} reduceHeight={reduceHeight} mapOpen={mapOpen}>
+    <ToursMapContainer
+      fix={fix}
+      reduceHeight={reduceHeight}
+      mapOpen={mapOpen}
+      // className="search-map"
+    >
       <ToursMapWrapper>
         <ToursMapButtonWrapper>
           <Button

@@ -1,9 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import { ConfigProvider, Slider } from "antd";
 import { SliderStepsContainer } from "./sliderSteps.style";
-import type { SliderMarks } from "antd/es/slider";
-
-// const marks: SliderMarks = {
 
 export type SliderStepsProps = {
   steps: string[] | number[];

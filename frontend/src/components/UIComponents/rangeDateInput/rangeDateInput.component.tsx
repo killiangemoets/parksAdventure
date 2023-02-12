@@ -4,6 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { RangeDatePickerElement } from "./rangeDateInput.style";
 import { ConfigProvider } from "antd";
+import { inherits } from "util";
 
 dayjs.extend(customParseFormat);
 
@@ -24,17 +25,15 @@ const rangePresets: {
 const RangeDateInput = () => (
   <ConfigProvider
     theme={{
+      hashed: false,
       components: {
         DatePicker: {
           colorPrimary: "#cc704b",
-          // fontSize: "1.6rem",
           fontSize: 16,
           colorText: "#333",
           colorTextPlaceholder: "#aaa",
-          // borderRadiusSM: "999px",
           borderRadiusSM: 999,
           colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-          // colorBgElevated: "#faf2e5",
           colorBgElevated: "#fdfaf5",
         },
       },
@@ -44,6 +43,7 @@ const RangeDateInput = () => (
       presets={rangePresets}
       disabledDate={disabledDate}
       format="DD/MM/YYYY"
+      className="range-date-picker"
     />
   </ConfigProvider>
 );

@@ -9,21 +9,25 @@ export const ReservationInfoSectionContainer = styled.div`
 `;
 export const ReservationInfoSectionWrapper = styled.div`
   width: 100%;
-  max-width: 110rem;
+  max-width: 120rem;
   display: flex;
-  flex-direction: column;
-  gap: 9.6rem;
+  /* align-items: center; */
+  justify-content: space-between;
+  /* justify-content: center; */
+  /* flex-direction: column; */
+  /* gap: 9.6rem; */
+  gap: 3.2rem;
 `;
 
 export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  margin-left: 4.8rem;
+  /* margin-left: 4.8rem; */
 
   h2 {
     margin-bottom: 1.2rem;
-    margin-left: -4.8rem;
+    /* margin-left: -4.8rem; */
   }
 `;
 
@@ -39,7 +43,8 @@ export const InfoTitle = styled.h4`
   text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 1px;
-  width: 16.2rem;
+  /* width: 16.2rem; */
+  width: 12rem;
 `;
 
 export const ReservationInfoTitle = styled(InfoTitle)`

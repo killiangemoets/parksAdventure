@@ -6,8 +6,12 @@ import { ReactComponent as EmptyStarSVG } from "../../../assets/star-regular.svg
 
 export const StarsRatingContainer = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 1rem;
+
+  .ant-rate {
+    color: #cc704b;
+  }
 `;
 
 export const StarsContainer = styled.div`
@@ -21,9 +25,9 @@ export const StarIcon = styled(StarSVG)`
   width: 2rem;
   height: 2rem;
 
-  .path {
+  /* .path {
     fill: #cc704b;
-  }
+  } */
 `;
 
 export const HalfStarIcon = styled(HalfStarSVG)`
@@ -47,6 +51,7 @@ export const RatingData = styled.div`
   align-items: flex-end;
   justify-content: center;
   gap: 0.4rem;
+  margin-bottom: 0.28rem;
 `;
 
 export const RatingValue = styled.p`

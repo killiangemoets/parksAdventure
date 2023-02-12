@@ -16,10 +16,11 @@ export const UserBookingDetailsContainer = styled.div`
 
   & ${RatingData} {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center; */
+    /* justify-content: center; */
     gap: 0.6rem;
-    margin-top: 0px;
+    /* margin-top: 0px; */
+    margin-bottom: 0rem;
   }
 
   & ${RatingValue} {
