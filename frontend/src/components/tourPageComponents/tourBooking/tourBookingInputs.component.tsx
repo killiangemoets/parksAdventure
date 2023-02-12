@@ -18,7 +18,7 @@ const TourBookingInputs = () => {
     { id: "adult", title: "Adult", subtitle: "(16+ years)", value: 0 },
     { id: "kid", title: "Kid", subtitle: "(4-15 years)", value: 0 },
   ]);
-  const [label, setLabel] = useState<string>("Add people");
+  const [label, setLabel] = useState<React.ReactNode>(<p>Add People</p>);
 
   const handleDropDownEdit = (newState: CountInputState[]): void => {
     setcurrentCountInputs(newState);
@@ -28,7 +28,13 @@ const TourBookingInputs = () => {
       else if (cur.value > 0) return acc + `, ${cur.title} x ${cur.value}`;
       else return acc;
     }, "");
-    setLabel(newLabel.length ? newLabel : "Add people");
+    setLabel(
+      newLabel.length ? (
+        <p style={{ color: "#333" }}>{newLabel}</p>
+      ) : (
+        <p>Add people</p>
+      )
+    );
   };
 
   return (

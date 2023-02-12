@@ -23,4 +23,5 @@ export const DropdownCountsButtonLeft = styled.div`
 export const DropdownCountsIcon = styled(DropdownSVG)`
   width: 2rem;
   height: 2rem;
+  color: #aaa;
 `;
