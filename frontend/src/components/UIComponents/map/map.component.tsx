@@ -1,11 +1,13 @@
 import React, { useRef, useEffect, useState } from "react";
+// import process from "process";
 
 import mapboxgl from "mapbox-gl";
 // eslint-disable-line import/no-webpack-loader-syntax
 import { MapContainer } from "./map.style";
 
-mapboxgl.accessToken =
-  "pk.eyJ1Ijoia2lsbGlhbmdlbW9ldHMiLCJhIjoiY2xkM2ZrcTJuMDFhMzN3bXMwNWEwZ3RlcSJ9.j5VfhZYQRk9zAaY5Nk2HZQ";
+mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_TOKEN
+  ? process.env.REACT_APP_MAP_BOX_TOKEN
+  : "";
 
 const Map = () => {
   const mapContainer = useRef<HTMLDivElement | null>(null);

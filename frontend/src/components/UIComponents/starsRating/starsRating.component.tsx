@@ -1,3 +1,4 @@
+import { ConfigProvider, Rate } from "antd";
 import { FC } from "react";
 import {
   NumRatings,
@@ -15,23 +16,37 @@ export type StarsRatingProps = {
   hiddenValue?: boolean;
   linkOnReviews?: boolean;
   handleLinkTo?: () => void;
+  readonly?: boolean;
 };
 
 const StarsRating: FC<StarsRatingProps> = ({
   hiddenValue = false,
   linkOnReviews = false,
   handleLinkTo = () => {},
+  readonly = true,
 }) => {
   return (
     <StarsRatingContainer>
-      <StarsContainer>
-        <StarIcon />
+      {/* <StarsContainer>
         <StarIcon />
         <StarIcon />
         <StarIcon />
         <HalfStarIcon />
-        {/* <EmptyStarIcon /> */}
-      </StarsContainer>
+        <EmptyStarIcon />
+      </StarsContainer> */}
+      {/* <Rate character={<StarIcon />} allowHalf disabled defaultValue={3.8} /> */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Rate: {
+              colorFillContent: "#ddd",
+            },
+          },
+        }}
+      >
+        <Rate allowHalf disabled={readonly} defaultValue={3.8} />
+      </ConfigProvider>
+
       {!hiddenValue && (
         <RatingData>
           <RatingValue>4.8</RatingValue>

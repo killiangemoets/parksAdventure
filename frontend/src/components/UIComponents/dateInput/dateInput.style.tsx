@@ -16,9 +16,7 @@ export const DatePickerElement = styled(DatePicker)`
     border: 1px solid #aaa;
   }
 
-  :where(.css-dev-only-do-not-override-zln5ut).ant-picker
-    .ant-picker-input
-    > input {
+  .ant-picker-input > input {
     font-size: 1.6rem;
     font-family: inherit;
     color: #333;
@@ -38,24 +36,19 @@ export const DatePickerElement = styled(DatePicker)`
     height: 1.6rem;
   }
 
-  &:focus {
-    /* outline: none; */
-    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
-  }
-
-  :where(.css-dev-only-do-not-override-zln5ut).ant-picker-range
-    .ant-picker-clear {
+  .ant-picker-clear {
     background: none !important;
     color: #cc704b !important;
     transition: all 0.3s !important;
     opacity: 1 !important;
+    transform: translateX(1.2rem) translateY(-0.82rem);
 
     &:hover {
       color: #b86544 !important;
     }
   }
 
-  :where(.css-dev-only-do-not-override-zln5ut).ant-picker .ant-picker-suffix {
-    margin-right: 0.2rem !important;
+  .ant-picker-suffix {
+    margin-right: 1rem !important;
   }
 `;

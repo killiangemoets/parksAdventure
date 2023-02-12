@@ -16,17 +16,17 @@ const DateInput = () => {
   return (
     <ConfigProvider
       theme={{
+        hashed: false,
         components: {
           DatePicker: {
             colorPrimary: "#cc704b",
             colorLink: "#cc704b",
             colorLinkHover: "#b86544",
-            // fontSize: "1.6rem",
+            fontSize: 16,
             colorText: "#333",
             colorTextPlaceholder: "#aaa",
-            // borderRadiusSM: "999px",
+            borderRadiusSM: 999,
             colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-            // colorBgElevated: "#faf2e5",
             colorBgElevated: "#fdfaf5",
           },
         },

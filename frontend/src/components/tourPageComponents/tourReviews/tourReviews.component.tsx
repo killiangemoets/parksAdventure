@@ -22,6 +22,7 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleOpenModal = (state: boolean): void => {
+    document.body.style.overflowY = state ? "hidden" : "scroll";
     setModalOpen(state);
   };
 

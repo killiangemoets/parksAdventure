@@ -16,15 +16,13 @@ export const RangeDatePickerElement = styled(RangePicker)`
     border: 1px solid #aaa;
   }
 
-  :where(.css-dev-only-do-not-override-jvfo5o).ant-picker
-    .ant-picker-input
-    > input {
-    font-size: 1.6rem;
-    font-family: inherit;
-    color: #333;
+  input {
+    font-size: 1.6rem !important;
+    font-family: inherit !important;
+    color: #333 !important;
 
     &::placeholder {
-      color: #aaa;
+      color: #aaa !important;
     }
 
     &:focus {
@@ -38,13 +36,7 @@ export const RangeDatePickerElement = styled(RangePicker)`
     height: 1.6rem;
   }
 
-  &:focus {
-    /* outline: none; */
-    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
-  }
-
-  :where(.css-dev-only-do-not-override-jvfo5o).ant-picker-range
-    .ant-picker-clear {
+  .ant-picker-clear {
     background: none !important;
     color: #cc704b !important;
     transition: all 0.3s !important;
@@ -55,7 +47,7 @@ export const RangeDatePickerElement = styled(RangePicker)`
     }
   }
 
-  :where(.css-dev-only-do-not-override-jvfo5o).ant-picker .ant-picker-suffix {
+  .ant-picker-suffix {
     margin-right: 0.2rem !important;
   }
 `;

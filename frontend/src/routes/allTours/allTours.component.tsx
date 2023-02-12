@@ -25,16 +25,28 @@ const AllTours = () => {
     const tourCardsBottom =
       tourCardsResultRef.current.getBoundingClientRect().bottom;
 
+    // const tourCards = document.querySelector(".tour-cards");
+    // const searchMap = document.querySelector(".search-map");
+    // console.log({ tourCards, searchMap });
+    // if (!tourCards || !searchMap) return;
+    // const tourCardsTop = tourCards.getBoundingClientRect().top;
+    // const tourCardsBottom = tourCards.getBoundingClientRect().bottom;
+
     if (tourCardsTop <= 80) {
       setFix(true);
+      // searchMap.classList.add("fix");
     } else {
       setFix(false);
+      // searchMap.classList.remove("fix");
     }
     if (tourCardsBottom < window.innerHeight) {
       setReduceHeight(true);
       setFix(false);
+      // searchMap.classList.add("move-bottom");
+      // searchMap.classList.remove("fix");
     } else {
       setReduceHeight(false);
+      // searchMap.classList.remove("move-bottom");
     }
   };
 
@@ -53,7 +65,11 @@ const AllTours = () => {
       <AllToursHeader />
       <SearchFilters />
       <AllToursResults>
-        <AllToursResultsLeft mapOpen={mapOpen} ref={tourCardsResultRef}>
+        <AllToursResultsLeft
+          mapOpen={mapOpen}
+          ref={tourCardsResultRef}
+          // className="tour-cards"
+        >
           <ToursCards mapOpen={mapOpen} />
           <Pagination />
         </AllToursResultsLeft>
