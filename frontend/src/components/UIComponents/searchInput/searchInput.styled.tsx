@@ -16,7 +16,8 @@ export const Glass = styled(GlassSVG)`
 
 export const Input = styled.input`
   width: 52rem;
-  padding: 1.4rem 5rem;
+  padding: 0 5rem;
+  height: 5.2rem;
   font-size: 1.6rem;
   font-family: inherit;
   color: inherit;

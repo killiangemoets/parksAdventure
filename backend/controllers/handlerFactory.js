@@ -20,7 +20,7 @@ exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
-      runValidators: true, // Thanks to that, the validators run again when we upadate a tour( for example that a tour must have at least 10 characters)
+      runValidators: true, // The validators run again when we upadate a tour
     });
 
     if (!doc) {
@@ -39,7 +39,6 @@ exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const newDoc = await Model.create(req.body);
 
-    //   201 for created
     res.status(201).json({
       status: 'success',
       data: {
@@ -51,7 +50,6 @@ exports.createOne = (Model) =>
 exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    // if (popOptions) query = query.populate(popOptions);
     if (popOptions && popOptions.length > 0) {
       popOptions.forEach((popOption) => {
         query = query.populate(popOption);
@@ -78,13 +76,12 @@ exports.getAll = (Model) =>
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
-    const features = new APIFeatures(Model.find(filter), req.query)
+    const features = new APIFeatures(Model.find(filter), req.query, next)
       .filter()
       .sort()
       .limitFields()
       .paginate();
 
-    // const doc = await features.query.explain();
     const doc = await features.query;
 
     // SEND RESPONSE

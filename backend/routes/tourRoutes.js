@@ -1,55 +1,35 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
-// const reviewController = require('./../controllers/reviewController');
 const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
 
-// In a param middleware function we also have access to a 4th argument: the value of the parameter in question
-// router.param('id', tourController.checkID);
-
-// ?limit=5&sort=-ratingAvarage,price -> Let's say that this is a request that is done all the time and we want to provide a route that is simple and easy to memorize for the user.
-//We will create a middleware to prefill the req.query
-
 router
-  .route('/top-5-cheap')
-  .get(tourController.aliasTopTour, tourController.getAllTours);
-
-router.route('/tour-stats').get(tourController.getTourStats);
-router
-  .route('/monthly-plan/:year')
+  .route('/top-recommandations')
   .get(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide', 'guide'),
-    tourController.getMonthlyPlan
+    tourController.requiredFields,
+    tourController.aliasTopRecommandations,
+    tourController.getAllTours
   );
 
 router
-  .route('/tours-within/:distance/center/:latlng/unit/:unit')
-  .get(tourController.getToursWithin);
-// /tours-within?distance=233&center=-40,45&unit=mi
-// /tours-within/233/center/-40,45/unit/mi (cleaner)
-
-router.route('/distances/:latlng/unit/:unit').get(tourController.getDistances);
-
-// We want to give the access to all the tours only to the users who logged in
-router
   .route('/')
-  .get(tourController.getAllTours)
+  .get(tourController.requiredFields, tourController.getAllTours)
   .post(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
     tourController.createTour
   );
+
 router
   .route('/:id')
   .get(tourController.getTour)
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    tourController.uploadTourImages,
-    tourController.resizeTourImages,
+    // tourController.uploadTourImages,
+    // tourController.resizeTourImages,
     tourController.updateTour
   )
   .delete(
@@ -58,17 +38,17 @@ router
     tourController.deleteTour
   );
 
-// POST /tour/2321n17H2/reviews
-// GET /tour/2321n17H2/reviews
-// GET /tour/2321n17H2/reviews/1725733ga
-// router
-//   .route('/:tourId/reviews')
-//   .post(
-//     authController.protect,
-//     authController.restrictTo('user'),
-//     reviewController.createReview
-//   );
+// TO KEEP ??
+// router.use('/:tourId/reviews', reviewRouter);
 
-router.use('/:tourId/reviews', reviewRouter);
+// MIGHT BE USEFUL FOR ADMIN
+router.route('/tour-stats').get(tourController.getTourStats);
+router
+  .route('/monthly-plan/:year')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
+    tourController.getMonthlyPlan
+  );
 
 module.exports = router;

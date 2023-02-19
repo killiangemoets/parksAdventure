@@ -7,7 +7,7 @@ const { htmlToText } = require('html-to-text');
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
-    this.firstName = user.name.split(' ')[0];
+    this.firstname = user.firstname;
     this.url = url;
     this.from = `The Natour Agency <${process.env.EMAIL_FROM}>`;
   }
@@ -35,11 +35,10 @@ module.exports = class Email {
     });
   }
 
-  // Send the actual email
   async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
-      firstName: this.firstName,
+      firstname: this.firstname,
       url: this.url,
       subject,
     });
@@ -50,10 +49,15 @@ module.exports = class Email {
       to: this.to,
       subject,
       html,
-      text: htmlToText(html), // we convert the html to text
+      text: htmlToText(html), // convert the html to text
     };
+
     // 3) Create a transport and send email
     await this.newTransport().sendMail(mailOptions);
+  }
+
+  async sendEmailVerification() {
+    await this.send('welcome', 'Welcome to the Natours Family!');
   }
 
   async sendWelcome() {
@@ -63,31 +67,7 @@ module.exports = class Email {
   async sendPasswordReset() {
     await this.send(
       'passwordReset',
-      'Your password reset token (valid for only 10 minutes'
+      `Your password reset token (valid for only ${process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN} minutes)`
     );
   }
 };
-
-// const setEmail = async (options) => {
-// 1) Create a transporter
-// const transporter = nodemailer.createTransport({
-//   host: process.env.EMAIL_HOST,
-//   port: process.env.EMAIL_PORT,
-//   auth: {
-//     user: process.env.EMAIL_USERNAME,
-//     pass: process.env.EMAIL_PASSWORD,
-//   },
-// });
-// 2) Define the email options
-// const mailOptions = {
-//   from: 'The Natour Agency <info@natour.com>',
-//   to: options.email,
-//   subject: options.subject,
-//   text: options.message,
-//   // html:
-// };
-// 3) Send the email
-// await transporter.sendMail(mailOptions);
-// };
-
-// module.exports = setEmail;

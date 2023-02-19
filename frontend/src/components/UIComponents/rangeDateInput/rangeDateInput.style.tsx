@@ -5,6 +5,7 @@ const { RangePicker } = DatePicker;
 export const RangeDatePickerElement = styled(RangePicker)`
   width: 30.8rem;
   padding: 1.4rem 3.2rem;
+  height: 5.2rem;
   background-color: #faf2e5;
   border-radius: 999px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.32);

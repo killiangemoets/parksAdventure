@@ -91,11 +91,13 @@ export const GalleryButton = styled(InvertedButton)`
 
 export const LightButton = styled(BaseButton)`
   background-color: #faf2e5;
-  border: solid 2px #faf2e5;
+  /* border: solid 2px #faf2e5; */
+  border: 1px solid #aaa;
   color: #aaa;
 
   &:hover {
     background-color: #faf2e5;
-    border: solid 2px #faf2e5;
+    /* border: solid 2px #faf2e5; */
+    border: 1px solid #aaa;
   }
 `;

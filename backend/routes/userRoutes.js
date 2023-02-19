@@ -8,20 +8,21 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
+router.patch('/emailVerification/:token', authController.verifyEmail);
+
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
 
-router.use(authController.protect);
 // /!\ This will protect all the routes that come after this middleware, because middlewares run in sequence
+router.use(authController.protect);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);
 
-// We use .single bc here we only want to update one single image. Into single we pass the name of the field in the form that is going to hold the image to upload
 router.patch(
   '/updateMe',
-  userController.uploadUserPhoto,
-  userController.resizeUserPhoto,
+  // userController.uploadUserPhoto,
+  // userController.resizeUserPhoto,
   userController.updateMe
 );
 

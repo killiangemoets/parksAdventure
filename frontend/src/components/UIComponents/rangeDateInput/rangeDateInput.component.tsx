@@ -30,6 +30,7 @@ const RangeDateInput = () => (
         DatePicker: {
           colorPrimary: "#cc704b",
           fontSize: 16,
+          // lineHeight: 1.375,
           colorText: "#333",
           colorTextPlaceholder: "#aaa",
           borderRadiusSM: 999,

@@ -14,7 +14,6 @@ const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHanlder = require('./controllers/errorController');
-const viewRouter = require('./routes/viewRoutes');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -39,102 +38,8 @@ app.use(cors()); // To allow everyone
 app.options('*', cors());
 // app.options('/api/v1/tours/:id', cors());
 
-// Serving static files
-// app.use(express.static(`${__dirname}/public`));
-app.use(express.static(path.join(__dirname, 'public')));
-
 // Set security HTTP headers
-app.use(
-  helmet({
-    crossOriginEmbedderPolicy: false,
-  })
-);
-
-// Further HELMET configuration for Security Policy (CSP)
-const scriptSrcUrls = [
-  'https://api.tiles.mapbox.com/',
-  'https://api.mapbox.com/',
-  'https://*.cloudflare.com',
-  'https://js.stripe.com',
-];
-const styleSrcUrls = [
-  'https://api.mapbox.com/',
-  'https://api.tiles.mapbox.com/',
-  'https://fonts.googleapis.com/',
-  'https://www.myfonts.com/fonts/radomir-tinkov/gilroy/*',
-];
-const connectSrcUrls = [
-  'https://*.mapbox.com/',
-  'https://*.cloudflare.com',
-  'https://*.stripe.com',
-  'http://127.0.0.1:3000',
-];
-
-const fontSrcUrls = ['fonts.googleapis.com', 'fonts.gstatic.com'];
-
-app.use(
-  helmet.contentSecurityPolicy({
-    directives: {
-      defaultSrc: [],
-      connectSrc: ["'self'", ...connectSrcUrls],
-      scriptSrc: ["'self'", ...scriptSrcUrls],
-      styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-      workerSrc: ["'self'", 'blob:'],
-      frameSrc: ['https://*.stripe.com'],
-      objectSrc: [],
-      imgSrc: ["'self'", 'blob:', 'data:'],
-      fontSrc: ["'self'", ...fontSrcUrls],
-    },
-  })
-);
-// app.use(
-//   helmet({
-//     contentSecurityPolicy: {
-//       directives: {
-//         defaultSrc: ["'self'", 'data:', 'blob:', 'https:', 'ws:'],
-//         baseUri: ["'self'"],
-//         fontSrc: ["'self'", 'https:', 'data:'],
-//         scriptSrc: [
-//           "'self'",
-//           'https:',
-//           'http:',
-//           'blob:',
-//           'https://*.mapbox.com',
-//           'https://js.stripe.com',
-//           'https://m.stripe.network',
-//           'https://*.cloudflare.com',
-//         ],
-//         frameSrc: ["'self'", 'https://js.stripe.com'],
-//         objectSrc: ["'none'"],
-//         styleSrc: ["'self'", 'https:', "'unsafe-inline'"],
-//         workerSrc: [
-//           "'self'",
-//           'data:',
-//           'blob:',
-//           'https://*.tiles.mapbox.com',
-//           'https://api.mapbox.com',
-//           'https://events.mapbox.com',
-//           'https://m.stripe.network',
-//         ],
-//         childSrc: ["'self'", 'blob:'],
-//         imgSrc: ["'self'", 'data:', 'blob:'],
-//         formAction: ["'self'"],
-//         connectSrc: [
-//           "'self'",
-//           "'unsafe-inline'",
-//           'data:',
-//           'blob:',
-//           'https://*.stripe.com',
-//           'https://*.mapbox.com',
-//           'https://*.cloudflare.com/',
-//           'https://bundle.js:*',
-//           'ws://127.0.0.1:*/',
-//         ],
-//         upgradeInsecureRequests: [],
-//       },
-//     },
-//   })
-// );
+app.use(helmet());
 
 // Development logging
 if (process.env.NODE_ENV == 'development') {
@@ -204,7 +109,6 @@ app.use((req, res, next) => {
 
 // 3) ROUTES
 // It's called MOUNTING the router, i.e mounting a new router on a route.
-app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

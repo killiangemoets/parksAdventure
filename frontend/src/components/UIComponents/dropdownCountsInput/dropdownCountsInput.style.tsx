@@ -10,6 +10,7 @@ export const DropdownCountsInputContainer = styled.div`
     /* font-size: 1.6rem; */
     font-size: 1.6rem;
     letter-spacing: 0px;
+    height: 5.2rem;
   }
 `;
 
