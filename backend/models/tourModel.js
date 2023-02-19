@@ -44,6 +44,10 @@ const tourSchema = new mongoose.Schema(
         message: 'Difficulty is either family, medium, difficult or expert',
       },
     },
+    category: {
+      type: String,
+      required: [true, 'A tour must have a category'],
+    },
     ratingsAverage: {
       type: Number,
       default: 4.5,
@@ -93,7 +97,7 @@ const tourSchema = new mongoose.Schema(
     availabilities: [
       {
         date: {
-          type: String,
+          type: Date,
           required: [true, 'An availability must have a date'],
         },
         price: {

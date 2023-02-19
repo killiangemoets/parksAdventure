@@ -9,8 +9,8 @@ const reviewSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      min: 0,
-      max: 5,
+      min: [0, 'A rate cannot be below 0'],
+      max: [5, 'A rate cannot be higher than 5'],
       required: [true, 'A review need a rating'],
     },
     createdAt: {
@@ -36,7 +36,7 @@ const reviewSchema = new mongoose.Schema(
 
 // Each combination of tour and user has always to be unique
 reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
-tourSchema.index({ createdAt: 1 });
+reviewSchema.index({ createdAt: 1 });
 
 reviewSchema.pre(/^find/, function (next) {
   // this.populate({

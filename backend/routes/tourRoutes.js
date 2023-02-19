@@ -38,17 +38,18 @@ router
     tourController.deleteTour
   );
 
-// TO KEEP ??
-// router.use('/:tourId/reviews', reviewRouter);
-
+/*
 // MIGHT BE USEFUL FOR ADMIN
 router.route('/tour-stats').get(tourController.getTourStats);
 router
-  .route('/monthly-plan/:year')
-  .get(
-    authController.protect,
-    authController.restrictTo('admin', 'lead-guide', 'guide'),
-    tourController.getMonthlyPlan
+.route('/monthly-plan/:year')
+.get(
+  authController.protect,
+  authController.restrictTo('admin', 'lead-guide', 'guide'),
+  tourController.getMonthlyPlan
   );
+*/
+
+router.use('/:tourId/reviews', reviewRouter);
 
 module.exports = router;

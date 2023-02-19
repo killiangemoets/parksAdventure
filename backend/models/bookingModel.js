@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Tour = require('./tourModel');
+const AppError = require('./../utils/appError');
 
 const bookingSchema = new mongoose.Schema({
   tour: {
@@ -16,19 +16,31 @@ const bookingSchema = new mongoose.Schema({
     type: Date,
     required: [true, 'Booking must have a date!'],
   },
-  unitPrice: {
+  price: {
     type: Number,
     required: [true, 'Booking mut have a unit price.'],
   },
-  people: {
+  kidPrice: {
     type: Number,
-    required: [true, 'Booking mut have a number of people.'],
+    validate: {
+      validator: function (val) {
+        return val <= this.price;
+      },
+      message: `Kid price ({VALUE}) cannot be higher than the normal price`,
+    },
+  },
+  adults: {
+    type: Number,
+    default: 0,
+  },
+  kids: {
+    type: Number,
+    default: 0,
   },
   totalPrice: {
     type: Number,
     required: [true, 'Booking mut have a total price.'],
   },
-
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -37,6 +49,17 @@ const bookingSchema = new mongoose.Schema({
     type: Boolean,
     default: true,
   },
+});
+
+bookingSchema.pre('save', function (next) {
+  if (!this.kidPrice) this.kidPrice = this.price;
+
+  if (!this.kids && !this.adults)
+    return next(
+      new AppError('A booking must have a number of adults or kids!', 400)
+    );
+
+  next();
 });
 
 bookingSchema.pre(/^find/, function (next) {

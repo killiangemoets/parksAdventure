@@ -21,6 +21,7 @@ router.get('/me', userController.getMe, userController.getUser);
 
 router.patch(
   '/updateMe',
+  userController.uploadUserPhotoToCloudinary,
   // userController.uploadUserPhoto,
   // userController.resizeUserPhoto,
   userController.updateMe
