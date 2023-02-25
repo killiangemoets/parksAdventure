@@ -14,12 +14,20 @@ import {
 } from "./filtersPopup.style";
 
 export type FiltersPopupProps = {
-  handleOpenFilters: ModalProps["handleOpen"];
+  handleCloseFilters: ModalProps["handleClose"];
+  filtersOpen: ModalProps["open"];
 };
 
-const FiltersPopup: FC<FiltersPopupProps> = ({ handleOpenFilters }) => {
+const FiltersPopup: FC<FiltersPopupProps> = ({
+  handleCloseFilters,
+  filtersOpen,
+}) => {
   return (
-    <Modal title={"Filters"} handleOpen={handleOpenFilters}>
+    <Modal
+      title={"Filters"}
+      handleClose={handleCloseFilters}
+      open={filtersOpen}
+    >
       <Filters>
         <FilterElement>
           <FilterTitle>Price</FilterTitle>
@@ -55,9 +63,7 @@ const FiltersPopup: FC<FiltersPopupProps> = ({ handleOpenFilters }) => {
         </FilterElement>
       </Filters>
       <ButtonSection>
-        <Button onClick={() => handleOpenFilters(false)}>
-          Show 23 results
-        </Button>
+        <Button onClick={() => handleCloseFilters()}>Show 23 results</Button>
       </ButtonSection>
     </Modal>
   );

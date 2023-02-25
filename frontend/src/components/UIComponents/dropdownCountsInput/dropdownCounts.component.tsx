@@ -1,7 +1,8 @@
 import { FC } from "react";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import CountInput from "../countInput/countInput.component";
 import {
-  CountInput,
+  // CountInput,
   CountInputElement,
   CountInputInfos,
   CountInputSubTitle,
@@ -26,26 +27,37 @@ const DropdownCounts: FC<DropdownCountsProps> = ({
   countInputsState,
   handler,
 }) => {
-  const handleClick = (id: CountInputState["id"], type: string) => {
-    const newCountInputsState = countInputsState.map((countInput) => {
-      return {
-        ...countInput,
-        value:
-          countInput.id === id
-            ? type === "minus"
-              ? countInput.value - 1 < 0
-                ? 0
-                : countInput.value - 1
-              : countInput.value + 1
-            : countInput.value,
-      };
-    });
-    handler(newCountInputsState);
-  };
+  // const handleClick = (id: CountInputState["id"], type: string): void => {
+  //   const newCountInputsState = countInputsState.map((countInput) => {
+  //     return {
+  //       ...countInput,
+  //       value:
+  //         countInput.id === id
+  //           ? type === "minus"
+  //             ? countInput.value - 1 < 0
+  //               ? 0
+  //               : countInput.value - 1
+  //             : countInput.value + 1
+  //           : countInput.value,
+  //     };
+  //   });
+  //   handler(newCountInputsState);
+  // };
 
-  const handleWrite = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let value: number = +event.target.value;
-    const { name: id } = event.target;
+  // const handleWrite = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  //   let value: number = +event.target.value;
+  //   const { name: id } = event.target;
+  //   if (value < 0 || !value) value = 0;
+  //   const newCountInputsState = countInputsState.map((countInput) => {
+  //     return {
+  //       ...countInput,
+  //       value: countInput.id === id ? +value : countInput.value,
+  //     };
+  //   });
+  //   handler(newCountInputsState);
+  // };
+
+  const handleUpdate = (value: number, id: string): void => {
     if (value < 0 || !value) value = 0;
     const newCountInputsState = countInputsState.map((countInput) => {
       return {
@@ -65,7 +77,7 @@ const DropdownCounts: FC<DropdownCountsProps> = ({
               <CountInputTitle>{countInput.title}</CountInputTitle>
               <CountInputSubTitle>{countInput.subtitle}</CountInputSubTitle>
             </CountInputInfos>
-            <CountInput>
+            {/* <CountInput>
               <Button
                 buttonType={BUTTON_TYPE_CLASSES.empty}
                 onClick={() => {
@@ -89,7 +101,12 @@ const DropdownCounts: FC<DropdownCountsProps> = ({
               >
                 <Plus />
               </Button>
-            </CountInput>
+            </CountInput> */}
+            <CountInput
+              value={countInput.value}
+              name={countInput.id.toString()}
+              updateValue={handleUpdate}
+            />
           </CountInputElement>
         );
       })}

@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
   CloseIcon,
@@ -12,24 +12,33 @@ import {
 export type ModalProps = {
   title: string;
   children: React.ReactNode;
-  handleOpen: (value: boolean) => void;
+  handleClose: () => void;
+  open: boolean;
 };
 
-const Modal: FC<ModalProps> = ({ title, children, handleOpen }) => {
+const Modal: FC<ModalProps> = ({ title, children, handleClose, open }) => {
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickOnOverlay = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (popupRef.current && !popupRef.current.contains(e.target as Node))
-      handleOpen(false);
+      handleClose();
   };
+
+  useEffect(() => {
+    document.body.style.overflowY = open ? "hidden" : "scroll";
+  }, [open]);
+
   return (
-    <Overlay onClick={handleClickOnOverlay}>
+    <Overlay
+      onClick={handleClickOnOverlay}
+      style={{ display: open ? "flex" : "none" }}
+    >
       <ModalContainer ref={popupRef}>
         <ModalTitleSection>
           <ModalTitle>{title}</ModalTitle>
           <Button
             buttonType={BUTTON_TYPE_CLASSES.empty}
-            onClick={() => handleOpen(false)}
+            onClick={() => handleClose()}
           >
             <CloseIcon />
           </Button>

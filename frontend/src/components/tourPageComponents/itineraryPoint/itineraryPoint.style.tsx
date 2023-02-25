@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { ReactComponent as CloseSVG } from "../../../assets/x-solid.svg";
 
 export const PointContainer = styled.div`
   display: flex;
@@ -16,4 +17,21 @@ export const PointName = styled.div`
 
 export const StartPointName = styled(PointName)`
   color: #506044;
+`;
+
+export const CloseIcon = styled(CloseSVG)`
+  width: 1.4rem;
+  height: 1.4rem;
+  cursor: pointer;
+  .path {
+    fill: #bbb;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    .path {
+      fill: #333;
+      fill: #cc704b;
+    }
+  }
 `;

@@ -7,11 +7,16 @@ import {
   DropdownInputContainer,
 } from "./dropdownInput.style";
 
+export type Info = {
+  id: string;
+  value: string | React.ReactNode;
+};
+
 export type DropdownInputProps = {
   children?: React.ReactNode;
-  current: string;
-  list: string[];
-  handler: (value: string) => void;
+  current: Info;
+  list: Info[];
+  handler: (info: Info) => void;
   buttonType?: BUTTON_TYPE_CLASSES;
 };
 
@@ -47,7 +52,7 @@ const DropdownInput: FC<DropdownInputProps> = ({
       >
         <DropdownButtonLeft>
           {children}
-          <p>{current}</p>
+          <p>{current.value}</p>
         </DropdownButtonLeft>
         <DropdownIcon />
       </Button>

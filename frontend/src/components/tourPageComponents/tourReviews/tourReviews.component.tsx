@@ -22,8 +22,11 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   const handleOpenModal = (state: boolean): void => {
-    document.body.style.overflowY = state ? "hidden" : "scroll";
     setModalOpen(state);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   return (
@@ -39,15 +42,13 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
       <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
         See more reviews
       </Button>
-      {modalOpen && (
-        <Modal title={"Reviews"} handleOpen={handleOpenModal}>
-          <ReviewsModalText>
-            All reviews are from verified customers who have purchased a ticket
-            for this activity. Reviews can only be left once the activity is
-            completed.
-          </ReviewsModalText>
-        </Modal>
-      )}
+      <Modal title={"Reviews"} handleClose={handleCloseModal} open={modalOpen}>
+        <ReviewsModalText>
+          All reviews are from verified customers who have purchased a ticket
+          for this activity. Reviews can only be left once the activity is
+          completed.
+        </ReviewsModalText>
+      </Modal>
     </TourReviewsContainer>
   );
 };

@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const SummarySectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 3.2rem;
+  height: 100%;
 `;
 
 export const AboutTour = styled.p`

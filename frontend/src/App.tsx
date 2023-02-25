@@ -13,6 +13,7 @@ import UserReviews from "./routes/userReviews/userReviews.component";
 import UserBookingDetails from "./routes/userBookingDetails/userBookingDetails.component";
 import Signup from "./routes/signup/signup.component";
 import Login from "./routes/login/login.component";
+import AddTour from "./routes/addTour/addTour.component";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="wishlist" element={<UserWishList />} />
         <Route path="settings" element={<UserSettings />} />
         <Route path="reviews" element={<UserReviews />} />
+        <Route path="add-tour" element={<AddTour />} />
         <Route path="bookings/">
           <Route index element={<UserBookings />} />
           <Route path="details" element={<UserBookingDetails />} />

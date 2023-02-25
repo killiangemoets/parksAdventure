@@ -1,34 +1,19 @@
-import Map from "../../UIComponents/map/map.component";
-import Title, {
-  TITLE_TYPE_CLASSES,
-} from "../../UIComponents/title/title.component";
-import ItineraryPoint, {
-  ITINERARY_POINT_TYPE_CLASSES,
-} from "../itineraryPoint/itineraryPoint.component";
-import ItineraryLine from "../itineratyLine/itineraryLine.component";
+import ItineraryLine from "../../../tourPageComponents/itineratyLine/itineraryLine.component";
+import { ItineraryCaption } from "../../../tourPageComponents/tourItinerary/tourItinerary.component";
 import {
-  ItineraryCaptionContainer,
   ItineraryLeftContainer,
   ItineraryMapContainer,
   ItineraryRightContainer,
   TourItineraryContainer,
   TourItineraryContent,
   TourItineraryWrapper,
-} from "./tourItinerary.style";
+} from "../../../tourPageComponents/tourItinerary/tourItinerary.style";
+import Map from "../../../UIComponents/map/map.component";
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../../UIComponents/title/title.component";
 
-export const ItineraryCaption = () => {
-  return (
-    <ItineraryCaptionContainer>
-      <ItineraryPoint
-        type={ITINERARY_POINT_TYPE_CLASSES.startingPoint}
-        name="Meeting Point"
-      />
-      <ItineraryPoint name="Main Stops" />
-    </ItineraryCaptionContainer>
-  );
-};
-
-const TourItinerary = () => {
+const AddTourItinerary = () => {
   const points = [
     "Day 1: Louise Lake",
     "Day 2: The Wood Cabin",
@@ -43,7 +28,7 @@ const TourItinerary = () => {
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
         <TourItineraryContent>
           <ItineraryLeftContainer>
-            <ItineraryLine points={points} />
+            <ItineraryLine points={points} edit={true} />
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
@@ -57,4 +42,4 @@ const TourItinerary = () => {
   );
 };
 
-export default TourItinerary;
+export default AddTourItinerary;

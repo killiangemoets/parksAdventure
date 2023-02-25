@@ -10,7 +10,7 @@ import {
 } from "./tourGuide.style";
 
 export type TourGuideProps = {
-  pictureUrl: string;
+  pictureUrl?: string;
   position: string;
   name: string;
 };

@@ -41,6 +41,11 @@ const UserProfile = () => {
       link: "/profile/settings",
     },
     {
+      iconType: PROFILE_ICON_TYPE_CLASSES.addTour,
+      label: " add a tour",
+      link: "/profile/add-tour",
+    },
+    {
       iconType: PROFILE_ICON_TYPE_CLASSES.logout,
       label: " logout",
       link: "/profile/logout",

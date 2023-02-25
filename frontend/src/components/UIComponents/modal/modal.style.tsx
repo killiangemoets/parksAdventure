@@ -67,4 +67,9 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+
+  img {
+    max-height: 68vh;
+    max-width: 80vh;
+  }
 `;

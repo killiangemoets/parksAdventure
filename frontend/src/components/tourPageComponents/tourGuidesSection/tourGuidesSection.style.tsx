@@ -13,3 +13,7 @@ export const TourGuides = styled.div`
   justify-content: center;
   gap: 2rem;
 `;
+
+export const Tour = styled(TourGuidesSectionContainer)`
+  width: 100%;
+`;

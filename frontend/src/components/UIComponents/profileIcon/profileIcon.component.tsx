@@ -6,6 +6,7 @@ import {
   ReviewsIcon,
   WishListIcon,
   SettingsIcon,
+  PlusIcon,
 } from "./profileIcon.style";
 
 export enum PROFILE_ICON_TYPE_CLASSES {
@@ -15,6 +16,7 @@ export enum PROFILE_ICON_TYPE_CLASSES {
   wishList = "wishList",
   messages = "messages",
   logout = "logout",
+  addTour = "add tour",
 }
 
 const getIcon = (
@@ -27,6 +29,7 @@ const getIcon = (
     [PROFILE_ICON_TYPE_CLASSES.wishList]: WishListIcon,
     [PROFILE_ICON_TYPE_CLASSES.messages]: MessagesIcon,
     [PROFILE_ICON_TYPE_CLASSES.logout]: LogoutIcon,
+    [PROFILE_ICON_TYPE_CLASSES.addTour]: PlusIcon,
   }[iconType]);
 
 export type ProfileIconProps = {

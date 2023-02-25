@@ -1,8 +1,12 @@
 import { FC } from "react";
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../UIComponents/button/button.component";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../UIComponents/infoIcon/infoIcon.component";
 import {
+  CloseIcon,
   PointContainer,
   PointName,
   StartPointName,
@@ -16,11 +20,13 @@ export enum ITINERARY_POINT_TYPE_CLASSES {
 export type ItineraryPointProps = {
   type?: ITINERARY_POINT_TYPE_CLASSES;
   name: string;
+  edit?: boolean;
 };
 
 const ItineraryPoint: FC<ItineraryPointProps> = ({
   type = ITINERARY_POINT_TYPE_CLASSES.stopOverPoint,
   name,
+  edit = false,
 }) => {
   return (
     <PointContainer>
@@ -36,6 +42,12 @@ const ItineraryPoint: FC<ItineraryPointProps> = ({
       ) : (
         <PointName>{name}</PointName>
       )}
+      <Button
+        buttonType={BUTTON_TYPE_CLASSES.empty}
+        // onClick={() => handleClose()}
+      >
+        <CloseIcon />
+      </Button>
     </PointContainer>
   );
 };

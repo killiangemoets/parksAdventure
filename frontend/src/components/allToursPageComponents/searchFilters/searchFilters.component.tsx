@@ -2,7 +2,9 @@ import { useState } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
-import DropdownInput from "../../UIComponents/dropdownInput/dropdownInput.component";
+import DropdownInput, {
+  Info,
+} from "../../UIComponents/dropdownInput/dropdownInput.component";
 import FiltersPopup from "../filtersPopup/filtersPopup.component";
 
 import {
@@ -15,23 +17,26 @@ import {
 } from "./searchFilters.style";
 
 const SearchFilters = () => {
-  const sortPossibilites: string[] = [
-    "Popularity",
-    "Pricing",
-    "Rating",
-    "Last Minute",
+  const sortPossibilites: Info[] = [
+    { id: "popularity", value: "Popularity" },
+    { id: "pricing", value: "Pricing" },
+    { id: "rating", value: "Rating" },
+    { id: "last minute", value: "Last minute" },
   ];
 
-  const [currentSort, setCurrentSort] = useState<string>(sortPossibilites[0]);
+  const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
-  const handleDropDownSelect = (value: string): void => {
+  const handleDropDownSelect = (value: Info): void => {
     setCurrentSort(value);
   };
 
   const handleOpenFilters = (state: boolean): void => {
     document.body.style.overflowY = state ? "hidden" : "scroll";
     setFiltersOpen(state);
+  };
+  const handleCloseFilters = () => {
+    setFiltersOpen(false);
   };
 
   return (
@@ -72,7 +77,10 @@ const SearchFilters = () => {
           </DropdownInput>
         </Filters>
       </SearchFiltersWrapper>
-      {filtersOpen && <FiltersPopup handleOpenFilters={handleOpenFilters} />}
+      <FiltersPopup
+        handleCloseFilters={handleCloseFilters}
+        filtersOpen={filtersOpen}
+      />
     </SearchFiltersContainer>
   );
 };
