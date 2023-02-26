@@ -7,11 +7,11 @@ import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../../UIComponents/infoIcon/infoIcon.component";
 import { QuickFactInputContainer } from "./quickFactInput.style";
-import DropdownInput, {
-  DropdownInputProps,
-  Info,
-} from "../../../UIComponents/dropdownInput/dropdownInput.component";
+
 import { BUTTON_TYPE_CLASSES } from "../../../UIComponents/button/button.component";
+import Dropdown, {
+  DROPDOWN_TYPE_CLASSES,
+} from "../../../UIComponents/dropdown/dropdown.component";
 
 export type QuickFactProps = {
   iconType: INFO_ICON_TYPE_CLASSES;
@@ -19,7 +19,7 @@ export type QuickFactProps = {
   infoName: string;
   name: string;
   current: Info;
-  dropdownList: DropdownInputProps["list"];
+  dropdownList: Info[];
 };
 
 const QuickFactDropdown: FC<QuickFactProps> = ({
@@ -40,13 +40,12 @@ const QuickFactDropdown: FC<QuickFactProps> = ({
         <InfoIcon iconType={iconType} />
         <QuickFactName>{infoName}</QuickFactName>
       </QuickFactType>
-      <DropdownInput
-        list={dropdownList ? dropdownList : []}
+      <Dropdown
+        dropdownType={DROPDOWN_TYPE_CLASSES.input}
         current={current}
-        handler={(info) => {
-          onChange(info);
-        }}
-        buttonType={BUTTON_TYPE_CLASSES.light}
+        list={dropdownList ? dropdownList : []}
+        handleInput={onChange}
+        buttonType={BUTTON_TYPE_CLASSES.rectangular}
       />
     </QuickFactInputContainer>
   );

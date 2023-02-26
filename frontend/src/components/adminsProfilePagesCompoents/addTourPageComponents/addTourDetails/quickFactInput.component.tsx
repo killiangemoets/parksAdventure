@@ -14,6 +14,13 @@ export enum QUICK_FACT_INPUT_TYPE {
   text = "text",
 }
 
+export type QuickFactsCommonProps = {
+  iconType: INFO_ICON_TYPE_CLASSES;
+  infoName: string;
+  name: string;
+  value: string | number | undefined;
+};
+
 export type QuickFactProps = {
   iconType: INFO_ICON_TYPE_CLASSES;
   handleChange: (value: string | number | null, name: string) => void;

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Option } from "../../../UIComponents/dropdownInput/dropdown.style";
+import { Option } from "../../../UIComponents/dropdown/dropdownInput.style";
 
 export const QuickFactInputContainer = styled.div`
   display: flex;
@@ -12,31 +12,6 @@ export const QuickFactInputContainer = styled.div`
     height: 4.4rem;
     font-size: 1.4rem;
     font-weight: 400;
-  }
-
-  button {
-    min-width: 20rem;
-    width: 22rem;
-    height: 4rem;
-    padding: 0.4rem 1.8rem;
-
-    font-size: 1.4rem;
-    font-weight: 400;
-    text-transform: capitalize;
-    letter-spacing: 1px;
-
-    font-family: inherit;
-    color: inherit;
-    border: none;
-    background-color: #f9eedb;
-    border-radius: 4px;
-
-    border: 1px solid #cc704b;
-
-    &:hover {
-      border: 1px solid #cc704b;
-      background-color: #f9eedb;
-    }
   }
 
   .ant-input-number-group-wrapper,

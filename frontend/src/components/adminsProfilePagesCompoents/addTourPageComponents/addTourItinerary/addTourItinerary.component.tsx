@@ -12,6 +12,10 @@ import Map from "../../../UIComponents/map/map.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
+import {
+  AddTourItineraryContent,
+  AddTourItineraryWrapper,
+} from "./addTourItinerary.style";
 
 const AddTourItinerary = () => {
   const points = [
@@ -24,9 +28,9 @@ const AddTourItinerary = () => {
   ];
   return (
     <TourItineraryContainer>
-      <TourItineraryWrapper>
+      <AddTourItineraryWrapper>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
-        <TourItineraryContent>
+        <AddTourItineraryContent>
           <ItineraryLeftContainer>
             <ItineraryLine points={points} edit={true} />
           </ItineraryLeftContainer>
@@ -36,8 +40,8 @@ const AddTourItinerary = () => {
             </ItineraryMapContainer>
             <ItineraryCaption />
           </ItineraryRightContainer>
-        </TourItineraryContent>
-      </TourItineraryWrapper>
+        </AddTourItineraryContent>
+      </AddTourItineraryWrapper>
     </TourItineraryContainer>
   );
 };

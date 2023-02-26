@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { SectionTitle } from "../../UIComponents/title/title.style";
 
 export const TourItineraryContainer = styled.div`
   padding: 6.4rem;
@@ -9,16 +10,19 @@ export const TourItineraryContainer = styled.div`
 `;
 
 export const TourItineraryWrapper = styled.div`
-  /* width: 100%; */
   max-width: 100rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 6.4rem;
+
+  & ${SectionTitle} {
+    margin-left: -3.2rem;
+  }
 `;
 
 export const TourItineraryContent = styled.div`
-  margin-left: 6.4rem;
+  margin-left: 3.2rem;
   width: 100%;
   display: flex;
   /* align-items: center; */

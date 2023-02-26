@@ -17,9 +17,9 @@ import {
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
-import DropdownInput, {
-  Info,
-} from "../../../UIComponents/dropdownInput/dropdownInput.component";
+import Dropdown, {
+  DROPDOWN_TYPE_CLASSES,
+} from "../../../UIComponents/dropdown/dropdown.component";
 import { INFO_ICON_TYPE_CLASSES } from "../../../UIComponents/infoIcon/infoIcon.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -138,7 +138,8 @@ const AddTourDetails = () => {
                 </TourGuideSelected>
               ))}
             </TourGuides>
-            <DropdownInput
+            <Dropdown
+              dropdownType={DROPDOWN_TYPE_CLASSES.input}
               list={[
                 {
                   id: "1",
@@ -172,10 +173,11 @@ const AddTourDetails = () => {
                 },
               ]}
               current={{ id: "null", value: "" }}
-              handler={handleTourGuides}
+              handleInput={handleTourGuides}
+              keeOpenAfterSelection={true}
             >
               Select Tour Guides
-            </DropdownInput>
+            </Dropdown>
           </TourGuidesSelectSectionContainer>
         </TourInfosLeftWrapper>
       </TourInfosLeft>

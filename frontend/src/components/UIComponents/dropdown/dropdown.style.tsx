@@ -2,13 +2,12 @@ import styled from "styled-components";
 
 import { ReactComponent as DropdownSVG } from "../../../assets/chevron-down.svg";
 
-export const DropdownInputContainer = styled.div`
+export const DropdownContainer = styled.div`
   position: relative;
 
   button {
-    min-width: 22.6rem;
     justify-content: space-between;
-    gap: 0rem;
+    /* min-width: 22.6rem; */
   }
 `;
 
@@ -16,7 +15,7 @@ export const DropdownButtonLeft = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 1rem;
 `;
 
 export const DropdownIcon = styled(DropdownSVG)`

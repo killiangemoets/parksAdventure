@@ -3,9 +3,10 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
 import DateInput from "../../UIComponents/dateInput/dateInput.component";
-import DropdownCountsInput, {
-  CountInputState,
-} from "../../UIComponents/dropdownCountsInput/dropdownCountsInput.component";
+import { CountInputState } from "../../UIComponents/dropdown/dropdownCounts.component";
+import Dropdown, {
+  DROPDOWN_TYPE_CLASSES,
+} from "../../UIComponents/dropdown/dropdown.component";
 import {
   GroupIcon,
   TourBookingInputsContainer,
@@ -39,14 +40,17 @@ const TourBookingInputs = () => {
 
   return (
     <TourBookingInputsContainer>
-      <DropdownCountsInput
+      <Dropdown
+        dropdownType={DROPDOWN_TYPE_CLASSES.count}
         buttonType={BUTTON_TYPE_CLASSES.light}
         countInputsState={currentCountInputs}
-        handler={handleDropDownEdit}
-        label={label}
+        handleCount={handleDropDownEdit}
       >
-        <GroupIcon />
-      </DropdownCountsInput>
+        <>
+          <GroupIcon />
+          <p>{label}</p>
+        </>
+      </Dropdown>
       <DateInput />
       <Button style={{ width: "20rem" }}>Book Now</Button>
     </TourBookingInputsContainer>

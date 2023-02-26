@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const BaseButton = styled.button`
-  min-width: 16rem;
+  /* min-width: 16rem; */
   padding: 1.2rem 3.2rem;
 
   font-size: 1.8rem;
@@ -99,5 +99,26 @@ export const LightButton = styled(BaseButton)`
     background-color: #faf2e5;
     /* border: solid 2px #faf2e5; */
     border: 1px solid #aaa;
+  }
+`;
+
+export const RectangularButton = styled(BaseButton)`
+  width: 22rem;
+  height: 4rem;
+  padding: 0.4rem 1.8rem;
+
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-transform: capitalize;
+  letter-spacing: 1px;
+
+  color: #333;
+  background-color: #f9eedb;
+  border-radius: 4px;
+  border: 1px solid #cc704b;
+
+  &:hover {
+    border: 1px solid #cc704b;
+    background-color: #f9eedb;
   }
 `;

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import Button from "../../UIComponents/button/button.component";
 import CheckBoxes from "../../UIComponents/checkBoxes/checkBoxes.component";
 import Modal, { ModalProps } from "../../UIComponents/modal/modal.component";
@@ -11,17 +11,33 @@ import {
   FilterElement,
   Filters,
   FilterTitle,
-} from "./filtersPopup.style";
+} from "./filtersModalstyle";
 
-export type FiltersPopupProps = {
+export type FiltersModalProps = {
   handleCloseFilters: ModalProps["handleClose"];
   filtersOpen: ModalProps["open"];
 };
 
-const FiltersPopup: FC<FiltersPopupProps> = ({
+const FiltersModal: FC<FiltersModalProps> = ({
   handleCloseFilters,
   filtersOpen,
 }) => {
+  const categories: Info[] = [
+    { value: "Mountain", id: "mountain" },
+    { value: "Desert", id: "desert" },
+    { value: "Snow", id: "snow" },
+    { value: "Cities", id: "cities" },
+    { value: "Sea", id: "sea" },
+    { value: "Lakes", id: "lakes" },
+  ];
+
+  const [selectedCategories, setSelectedCategories] =
+    useState<Info[]>(categories);
+
+  const handleCategoriesChange = (selectedCategories: Info[]) => {
+    setSelectedCategories(selectedCategories);
+  };
+
   return (
     <Modal
       title={"Filters"}
@@ -57,7 +73,10 @@ const FiltersPopup: FC<FiltersPopupProps> = ({
           <FilterTitle>Category</FilterTitle>
           <FilterCheckBoxes>
             <CheckBoxes
-              options={["Mountain", "Desert", "Snow", "Cities", "Sea", "Lakes"]}
+              options={categories}
+              allowSelectAll={true}
+              selection={selectedCategories}
+              handler={handleCategoriesChange}
             />
           </FilterCheckBoxes>
         </FilterElement>
@@ -69,4 +88,4 @@ const FiltersPopup: FC<FiltersPopupProps> = ({
   );
 };
 
-export default FiltersPopup;
+export default FiltersModal;

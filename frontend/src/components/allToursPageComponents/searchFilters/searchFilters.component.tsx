@@ -2,10 +2,10 @@ import { useState } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
-import DropdownInput, {
-  Info,
-} from "../../UIComponents/dropdownInput/dropdownInput.component";
-import FiltersPopup from "../filtersPopup/filtersPopup.component";
+import Dropdown, {
+  DROPDOWN_TYPE_CLASSES,
+} from "../../UIComponents/dropdown/dropdown.component";
+import FiltersModal from "../filtersModal/filtersModal.component";
 
 import {
   Categories,
@@ -27,7 +27,7 @@ const SearchFilters = () => {
   const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
-  const handleDropDownSelect = (value: Info): void => {
+  const handleDropsown = (value: Info): void => {
     setCurrentSort(value);
   };
 
@@ -64,20 +64,17 @@ const SearchFilters = () => {
             <FilterIcon />
             Filters
           </Button>
-          {/* <Button>
-            <SortIcon />
-            Sort
-          </Button> */}
-          <DropdownInput
-            list={sortPossibilites}
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
             current={currentSort}
-            handler={handleDropDownSelect}
+            list={sortPossibilites}
+            handleInput={handleDropsown}
           >
             <SortIcon />
-          </DropdownInput>
+          </Dropdown>
         </Filters>
       </SearchFiltersWrapper>
-      <FiltersPopup
+      <FiltersModal
         handleCloseFilters={handleCloseFilters}
         filtersOpen={filtersOpen}
       />

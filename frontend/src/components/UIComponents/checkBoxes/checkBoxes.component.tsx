@@ -8,37 +8,43 @@ import {
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
 
-type CheckBoxesProps = {
-  options: string[];
-  defaultCheckedOptions?: string[];
+export type CheckBoxesProps = {
+  options: Info[];
+  allowSelectAll?: boolean;
+  selection: Info[];
+  handler: (infos: Info[]) => void;
 };
 
 const CheckBoxes: FC<CheckBoxesProps> = ({
   options,
-  defaultCheckedOptions = options,
+  allowSelectAll = false,
+  selection,
+  handler,
 }) => {
-  const [checkedList, setCheckedList] = useState<CheckboxValueType[]>(
-    defaultCheckedOptions
-  );
   const [indeterminate, setIndeterminate] = useState<boolean>(true);
   const [checkAll, setCheckAll] = useState<boolean>(false);
 
   const onChange = (list: CheckboxValueType[]) => {
-    setCheckedList(list);
     setIndeterminate(!!list.length && list.length < options.length);
     setCheckAll(list.length === options.length);
+
+    const newSelection = options.filter((option) => {
+      return list.find((listElement) => listElement === option.value);
+    });
+    handler(newSelection);
   };
 
   const onCheckAllChange = (e: CheckboxChangeEvent) => {
-    setCheckedList(e.target.checked ? options : []);
     setIndeterminate(false);
     setCheckAll(e.target.checked);
+    handler(e.target.checked ? options : []);
   };
 
   return (
     <CheckBoxesContainer>
       <ConfigProvider
         theme={{
+          hashed: false,
           components: {
             Checkbox: {
               colorPrimary: "#506044",
@@ -50,17 +56,21 @@ const CheckBoxes: FC<CheckBoxesProps> = ({
         }}
       >
         <CheckboxGroupElement
-          options={options}
-          value={checkedList}
+          options={options.map((option) => option.value?.toString() || "")}
+          value={selection.map(
+            (selection) => selection.value?.toString() || ""
+          )}
           onChange={onChange}
         />
-        <CheckBoxAll
-          indeterminate={indeterminate}
-          onChange={onCheckAllChange}
-          checked={checkAll}
-        >
-          Select all
-        </CheckBoxAll>
+        {allowSelectAll && (
+          <CheckBoxAll
+            indeterminate={indeterminate}
+            onChange={onCheckAllChange}
+            checked={checkAll}
+          >
+            Select all
+          </CheckBoxAll>
+        )}
       </ConfigProvider>
     </CheckBoxesContainer>
   );

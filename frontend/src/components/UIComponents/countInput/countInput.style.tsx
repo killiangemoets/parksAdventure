@@ -9,7 +9,7 @@ export const CountInputContainer = styled.div`
   gap: 1rem;
 
   button {
-    width: 2.4rem;
+    width: 2.4rem !important;
   }
 `;
 

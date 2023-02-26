@@ -9,6 +9,10 @@ export const TourBookingInputsContainer = styled.div`
 
   button {
     height: 5.2rem;
+    width: 26rem;
+    font-size: 1.6rem;
+    letter-spacing: 0px;
+    height: 5.2rem;
   }
 `;
 

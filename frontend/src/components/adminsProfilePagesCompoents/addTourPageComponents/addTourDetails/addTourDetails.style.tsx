@@ -3,7 +3,7 @@ import { TourGuidesSectionContainer } from "../../../tourPageComponents/tourGuid
 import {
   DropdownContainer,
   Option,
-} from "../../../UIComponents/dropdownInput/dropdown.style";
+} from "../../../UIComponents/dropdown/dropdownInput.style";
 import { ReactComponent as CloseSVG } from "../../../../assets/x-solid.svg";
 
 export const TourGuidesSelectSectionContainer = styled(

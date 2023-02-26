@@ -42,12 +42,14 @@ const ItineraryPoint: FC<ItineraryPointProps> = ({
       ) : (
         <PointName>{name}</PointName>
       )}
-      <Button
-        buttonType={BUTTON_TYPE_CLASSES.empty}
-        // onClick={() => handleClose()}
-      >
-        <CloseIcon />
-      </Button>
+      {edit && (
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.empty}
+          // onClick={() => handleClose()}
+        >
+          <CloseIcon />
+        </Button>
+      )}
     </PointContainer>
   );
 };

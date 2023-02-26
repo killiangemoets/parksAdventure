@@ -6,6 +6,7 @@ import {
   EmptyButton,
   GalleryButton,
   LightButton,
+  RectangularButton,
 } from "./button.style";
 
 export enum BUTTON_TYPE_CLASSES {
@@ -15,6 +16,7 @@ export enum BUTTON_TYPE_CLASSES {
   empty = "empty",
   gallery = "gallery",
   light = "light",
+  rectangular = "rectangular",
 }
 
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseButton =>
@@ -25,6 +27,7 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseButton =>
     [BUTTON_TYPE_CLASSES.empty]: EmptyButton,
     [BUTTON_TYPE_CLASSES.gallery]: GalleryButton,
     [BUTTON_TYPE_CLASSES.light]: LightButton,
+    [BUTTON_TYPE_CLASSES.rectangular]: RectangularButton,
   }[buttonType]);
 
 export type ButtonProps = {

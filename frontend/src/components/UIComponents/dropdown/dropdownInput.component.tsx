@@ -1,23 +1,25 @@
 // import { FC } from "react";
 import { FC } from "react";
-import { DropdownContainer, Option } from "./dropdown.style";
+import { DropdownContainer, Option } from "./dropdownInput.style";
 
-import { DropdownInputProps } from "./dropdownInput.component";
+export type DropdownProps = {
+  current: Info;
+  list: Info[];
+  handler: (info: Info) => void;
+  keeOpenAfterSelection?: boolean;
+};
 
-type DropdownProps = {
-  current: DropdownInputProps["current"];
-  list: DropdownInputProps["list"];
-  handler: DropdownInputProps["handler"];
+type DropdownPropsTotal = DropdownProps & {
   closeDropdown: () => void;
 };
 
-const Dropdown: FC<DropdownProps> = ({
+const DropdownInput: FC<DropdownPropsTotal> = ({
   current,
   list,
   closeDropdown,
   handler,
+  keeOpenAfterSelection = false,
 }) => {
-  console.log(current);
   return (
     <DropdownContainer>
       {list.map((info) => {
@@ -27,7 +29,8 @@ const Dropdown: FC<DropdownProps> = ({
             key={info.id}
             onClick={() => {
               handler(info);
-              closeDropdown();
+              console.log(keeOpenAfterSelection);
+              !keeOpenAfterSelection && closeDropdown();
             }}
           >
             <p>{info.value}</p>
@@ -38,4 +41,4 @@ const Dropdown: FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown;
+export default DropdownInput;
