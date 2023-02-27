@@ -24,14 +24,19 @@ const QuickFactsSection = () => {
           info={"Medium"}
         />
         <QuickFact
-          iconType={INFO_ICON_TYPE_CLASSES.group}
-          name={"Group Size"}
-          info={"25 people"}
-        />
-        <QuickFact
           iconType={INFO_ICON_TYPE_CLASSES.location}
           name={"Location"}
           info={"Banff, Canada"}
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.category}
+          name={"Categories"}
+          info={"Mountain, Snow"}
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.group}
+          name={"Group Size"}
+          info={"25 people"}
         />
       </QuickFacts>
     </QuickFactsSectionContainer>

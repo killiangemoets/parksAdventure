@@ -43,8 +43,8 @@ export const TourGuideSelected = styled.div`
 `;
 
 export const CloseIcon = styled(CloseSVG)`
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.4rem;
+  height: 1.4rem;
   cursor: pointer;
   .path {
     fill: #bbb;

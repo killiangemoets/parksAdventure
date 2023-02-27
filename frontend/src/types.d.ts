@@ -1,6 +1,6 @@
 type Info = {
   id: number | string;
-  value: string | React.ReactNode;
+  value: string | React.ReactNode | number;
 };
 
 type InfoString = {

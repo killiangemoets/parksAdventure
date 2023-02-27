@@ -21,6 +21,8 @@ export const ModalContainer = styled.div`
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  min-height: 20rem;
+  min-width: 20rem;
   /* gap: 4.8rem; */
 `;
 export const ModalTitleSection = styled.div`

@@ -1,7 +1,17 @@
 import styled from "styled-components";
 
 export const AddTourTitleContainer = styled.div`
-  padding: 6.4rem 6.4rem 0rem 6.4rem;
+  padding: 6.4rem 6.4rem 3.2rem 6.4rem;
+  /* padding: 6.4rem; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const AddTourTitleWrapper = styled.div`
+  width: 100%;
+  max-width: 125rem;
 `;
 
 export const TitleInput = styled.input`

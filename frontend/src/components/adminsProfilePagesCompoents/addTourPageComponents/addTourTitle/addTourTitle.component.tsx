@@ -1,9 +1,15 @@
-import { AddTourTitleContainer, TitleInput } from "./addTourTitle.style";
+import {
+  AddTourTitleContainer,
+  AddTourTitleWrapper,
+  TitleInput,
+} from "./addTourTitle.style";
 
 const AddTourTitle = () => {
   return (
     <AddTourTitleContainer>
-      <TitleInput placeholder="Add the tour title here" />
+      <AddTourTitleWrapper>
+        <TitleInput placeholder="Add the tour title here" />
+      </AddTourTitleWrapper>
     </AddTourTitleContainer>
   );
 };

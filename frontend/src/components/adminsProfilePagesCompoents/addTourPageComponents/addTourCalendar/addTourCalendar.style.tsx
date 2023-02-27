@@ -9,11 +9,9 @@ export const AddTourCalendarContainer = styled.div`
 `;
 
 export const AddTourCalendarWrapper = styled.div`
-  /* width: 100%; */
+  width: 100%;
   max-width: 100rem;
-  max-width: 110rem;
 
-  /* width: 100rem; */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,7 +24,7 @@ export const AddTourCalendarTitle = styled.div`
 `;
 
 export const AddTourCalendarContent = styled.div`
-  width: 80%;
+  width: 90%;
 
   display: flex;
   flex-direction: column;

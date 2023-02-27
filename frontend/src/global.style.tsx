@@ -10,11 +10,35 @@ body {
   -moz-osx-font-smoothing: grayscale;
   color: #333;
   font-weight: 300;
-  background-color: #fff;
-  background-color: #FEFCFA;
-  background-color: #faf2e5;
+  /* background-color: #fff; */
+  /* background-color: #FEFCFA; */
+  /* background-color: #faf2e5; */
   background-color: #fdfaf5;
   overflow-x: hidden;
+
+  .ant-picker-dropdown
+    .ant-picker-time-panel-column
+    > li.ant-picker-time-panel-cell-selected
+    .ant-picker-time-panel-cell-inner {
+    background: #ebc6b7;
+  }
+
+  .ant-btn-primary{
+    background-color: #cc704b;
+
+    &:hover{
+      background-color: #b86544 !important;
+    }
+  }
+
+  a{
+    color: #333;
+
+    &:hover{
+      color: #cc704b
+
+    }
+  }
 }
 
 code {

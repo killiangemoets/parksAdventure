@@ -13,15 +13,27 @@ export type ModalProps = {
   title: string;
   children: React.ReactNode;
   handleClose: () => void;
+  closeOnClickOnOverlay?: boolean;
   open: boolean;
 };
 
-const Modal: FC<ModalProps> = ({ title, children, handleClose, open }) => {
+const Modal: FC<ModalProps> = ({
+  title,
+  children,
+  handleClose,
+  open,
+  closeOnClickOnOverlay = true,
+}) => {
   const popupRef = useRef<HTMLDivElement | null>(null);
 
   const handleClickOnOverlay = (e: React.MouseEvent<HTMLDivElement>): void => {
-    if (popupRef.current && !popupRef.current.contains(e.target as Node))
+    if (
+      closeOnClickOnOverlay &&
+      popupRef.current &&
+      !popupRef.current.contains(e.target as Node)
+    ) {
       handleClose();
+    }
   };
 
   useEffect(() => {

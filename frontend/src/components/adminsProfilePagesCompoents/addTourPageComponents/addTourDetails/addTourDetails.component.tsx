@@ -1,9 +1,9 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import {
   QuickFacts,
   QuickFactsSectionContainer,
 } from "../../../tourPageComponents/quickFactsSection/quickFactsSection.style";
-
+import type { Dayjs } from "dayjs";
 import { SummarySectionContainer } from "../../../tourPageComponents/summarySection/summarySection.style";
 import TourGuide from "../../../tourPageComponents/tourGuide/tourGuide.component";
 
@@ -30,7 +30,6 @@ import {
   TourGuideSelected,
   TourGuidesSelectSectionContainer,
 } from "./addTourDetails.style";
-import QuickFactDropdown from "./quickFactDropdown.component";
 import QuickFactInput, {
   QUICK_FACT_INPUT_TYPE,
 } from "./quickFactInput.component";
@@ -38,8 +37,8 @@ import QuickFactInput, {
 type defaultQuickFactsFormFieldsProps = {
   duration: number | undefined;
   difficulty: Info;
-  groupSize: number | undefined;
   location: string | undefined;
+  categories: Info[];
 };
 
 const defaultQuickFactsFormFields: defaultQuickFactsFormFieldsProps = {
@@ -48,20 +47,50 @@ const defaultQuickFactsFormFields: defaultQuickFactsFormFieldsProps = {
     id: "null",
     value: "Select a difficulty",
   },
-  groupSize: undefined,
   location: "",
+  categories: [],
 };
 
+const categoriesList: Info[] = [
+  { value: "Mountain", id: "mountain" },
+  { value: "Desert", id: "desert" },
+  { value: "Snow", id: "snow" },
+  { value: "Cities", id: "cities" },
+  { value: "Sea", id: "sea" },
+  { value: "Lakes", id: "lakes" },
+];
+
+const difficultiesList: Info[] = [
+  { id: "family", value: "Family" },
+  { id: "medium", value: "Medium" },
+  { id: "difficult", value: "Difficult" },
+  { id: "expert", value: "Expert" },
+];
 const AddTourDetails = () => {
   const [formFields, setFormFields] =
     useState<defaultQuickFactsFormFieldsProps>(defaultQuickFactsFormFields);
-  const { duration, difficulty, groupSize, location } = formFields;
+  const { duration, difficulty, location, categories } = formFields;
   const [tourGuides, setTourGuides] = useState<Info[]>([]);
   const [summary, setSummary] = useState<string>("");
+  const [categoriesString, setCategoriesString] = useState<string>("");
 
-  const handleChange = (value: number | string | Info | null, name: string) => {
+  const handleChange = (
+    value: number | string | Info | Info[] | Dayjs | null,
+    name: string
+  ) => {
     setFormFields({ ...formFields, [name]: value });
   };
+
+  useEffect(() => {
+    let newCategoriesString = categories
+      .reduce((acc, curr) => acc + curr.value + ", ", "")
+      .slice(0, -2);
+
+    if (newCategoriesString.length > 18)
+      newCategoriesString = newCategoriesString.slice(0, 18) + "...";
+
+    setCategoriesString(newCategoriesString);
+  }, [categories]);
 
   const handleTourGuides = (newTourGuide: Info) => {
     setTourGuides([...tourGuides, newTourGuide]);
@@ -80,47 +109,62 @@ const AddTourDetails = () => {
             <Title titleType={TITLE_TYPE_CLASSES.section}>Quick Facts</Title>
             <QuickFacts>
               <QuickFactInput
+                type={QUICK_FACT_INPUT_TYPE.number}
                 iconType={INFO_ICON_TYPE_CLASSES.duration}
                 handleChange={handleChange}
                 infoName="Duration"
-                type={QUICK_FACT_INPUT_TYPE.number}
                 name="duration"
                 value={duration}
                 addonAfter="day(s)"
                 placeholder="Enter a value"
+                min={1}
               />
-              <QuickFactDropdown
+              <QuickFactInput
+                type={QUICK_FACT_INPUT_TYPE.dropdown}
                 iconType={INFO_ICON_TYPE_CLASSES.difficulty}
                 handleChange={handleChange}
                 infoName="Difficulty"
                 name="difficulty"
                 current={difficulty}
-                dropdownList={[
-                  { id: "family", value: "Family" },
-                  { id: "medium", value: "Medium" },
-                  { id: "difficult", value: "Difficult" },
-                  { id: "expert", value: "Expert" },
-                ]}
+                dropdownList={difficultiesList}
               />
               <QuickFactInput
-                iconType={INFO_ICON_TYPE_CLASSES.group}
-                handleChange={handleChange}
-                infoName="Group Size"
-                type={QUICK_FACT_INPUT_TYPE.number}
-                name="groupSize"
-                value={groupSize}
-                addonAfter="people"
-                placeholder="Enter a value"
-              />
-              <QuickFactInput
+                type={QUICK_FACT_INPUT_TYPE.text}
                 iconType={INFO_ICON_TYPE_CLASSES.location}
                 handleChange={handleChange}
                 infoName="Location"
-                type={QUICK_FACT_INPUT_TYPE.text}
                 name="location"
                 value={location}
                 placeholder="Add a tour location"
               />
+              <QuickFactInput
+                type={QUICK_FACT_INPUT_TYPE.dropdown}
+                dropdownType={DROPDOWN_TYPE_CLASSES.checkBoxes}
+                allowSelectAll={true}
+                iconType={INFO_ICON_TYPE_CLASSES.category}
+                handleChange={handleChange}
+                infoName="Categories"
+                name="categories"
+                selection={categories}
+                options={categoriesList}
+              >
+                {categories.length > 0 ? (
+                  <p>{categoriesString}</p>
+                ) : (
+                  <p>Select Categories</p>
+                )}
+              </QuickFactInput>
+              {/* <QuickFactInput
+                type={QUICK_FACT_INPUT_TYPE.number}
+                iconType={INFO_ICON_TYPE_CLASSES.group}
+                handleChange={handleChange}
+                infoName="Group Size"
+                name="groupSize"
+                value={groupSize}
+                addonAfter="people"
+                placeholder="Enter a value"
+                min={1}
+              /> */}
             </QuickFacts>
           </QuickFactsSectionContainer>
           <TourGuidesSelectSectionContainer>

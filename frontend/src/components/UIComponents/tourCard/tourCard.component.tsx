@@ -18,6 +18,8 @@ import {
   TourNextDate,
   TourPicture,
   TourPictureContainer,
+  TourTag,
+  TourTags,
   TourTitle,
   WishListIcon,
 } from "./tourCard.style";
@@ -43,9 +45,15 @@ const TourCard = () => {
       </TourTitle>
       <TourContent>
         <TourNextDate>Next start: March 23, 2023</TourNextDate>
-        <TourDescription>
+        {/* <TourDescription>
           Exploring the jaw-dropping US east coast by foot and by boat
-        </TourDescription>
+        </TourDescription> */}
+        {/* <TourDescription>Mountain, Snow</TourDescription> */}
+        <TourTags>
+          <TourTag>Mountain</TourTag>
+          <TourTag>Snow</TourTag>
+        </TourTags>
+
         <TourInfos>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
@@ -63,6 +71,10 @@ const TourCard = () => {
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.group} />
             <InfoText>15 people</InfoText>
           </Info>
+          {/* <Info>
+            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.category} />
+            <InfoText>Moutain, Snow</InfoText>
+          </Info> */}
         </TourInfos>
       </TourContent>
       <TourFooter>

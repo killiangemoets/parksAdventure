@@ -1,4 +1,4 @@
-import CalendarInput from "../../../UIComponents/calendarInput/calendarInput.component";
+import PricesCalendarInput from "../../../UIComponents/pricesCalendarInput/pricesCalendarInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
@@ -17,7 +17,7 @@ const AddTourCalendar = () => {
           <Title titleType={TITLE_TYPE_CLASSES.section}>Calendar</Title>
         </AddTourCalendarTitle>
         <AddTourCalendarContent>
-          <CalendarInput />
+          <PricesCalendarInput />
         </AddTourCalendarContent>
       </AddTourCalendarWrapper>
     </AddTourCalendarContainer>

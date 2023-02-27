@@ -134,6 +134,23 @@ export const TourDescription = styled.p`
   font-style: italic;
 `;
 
+export const TourTags = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+`;
+export const TourTag = styled.p`
+  background-color: #e0a993;
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  letter-spacing: 0.2px;
+  font-weight: 500;
+  padding: 0.2rem 0.8rem;
+  border-radius: 8px;
+  /* font-style: italic; */
+`;
+
 export const TourInfos = styled.div`
   margin-top: 1rem;
   display: grid;

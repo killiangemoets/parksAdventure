@@ -2,6 +2,7 @@ import { FC } from "react";
 import {
   BigGreenLocationIcon,
   BigOrangeLocationIcon,
+  CategoryIcon,
   DateIcon,
   DifficultyIcon,
   DurationIcon,
@@ -19,6 +20,7 @@ export enum INFO_ICON_TYPE_CLASSES {
   locationBigOrange = "locationBigOrange",
   date = "date",
   time = "time",
+  category = "category",
 }
 
 const getIcon = (
@@ -33,6 +35,7 @@ const getIcon = (
     [INFO_ICON_TYPE_CLASSES.locationBigOrange]: BigOrangeLocationIcon,
     [INFO_ICON_TYPE_CLASSES.date]: DateIcon,
     [INFO_ICON_TYPE_CLASSES.time]: TimeIcon,
+    [INFO_ICON_TYPE_CLASSES.category]: CategoryIcon,
   }[iconType]);
 
 export type InfoIconProps = {

@@ -6,6 +6,7 @@ import { ReactComponent as DifficultySVG } from "../../../assets/arrow-up-right-
 import { ReactComponent as GroupSVG } from "../../../assets/users-solid.svg";
 import { ReactComponent as CalendarSVG } from "../../../assets/calendar-regular.svg";
 import { ReactComponent as ClockSVG } from "../../../assets/clock-regular.svg";
+import { ReactComponent as TagSVG } from "../../../assets/tag.svg";
 
 export const LocationIcon = styled(PositionSVG)`
   width: 2rem;
@@ -70,5 +71,14 @@ export const TimeIcon = styled(ClockSVG)`
   height: 2rem;
   .path {
     fill: #cc704b;
+  }
+`;
+
+export const CategoryIcon = styled(TagSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
+    border: #cc704b;
   }
 `;

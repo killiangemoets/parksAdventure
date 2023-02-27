@@ -7,7 +7,6 @@ import { SectionTitle } from "../../../UIComponents/title/title.style";
 
 export const AddTourItineraryWrapper = styled(TourItineraryWrapper)`
   width: 100%;
-  max-width: 110rem;
 
   & ${SectionTitle} {
     margin-left: 0;

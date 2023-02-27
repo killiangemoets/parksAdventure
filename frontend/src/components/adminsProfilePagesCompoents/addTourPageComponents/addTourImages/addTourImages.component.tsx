@@ -3,8 +3,15 @@ import { PlusOutlined } from "@ant-design/icons";
 import { ConfigProvider, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
 import type { UploadFile } from "antd/es/upload/interface";
-import { AddTourImagesContainer } from "./addTourImages.style";
+import {
+  AddTourImagesContainer,
+  AddTourImagesTitle,
+  AddTourImagesWrapper,
+} from "./addTourImages.style";
 import Modal from "../../../UIComponents/modal/modal.component";
+import Title, {
+  TITLE_TYPE_CLASSES,
+} from "../../../UIComponents/title/title.component";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -56,30 +63,35 @@ const AddTourImages = () => {
 
   return (
     <AddTourImagesContainer>
-      <ConfigProvider
-        theme={{
-          hashed: false,
-        }}
-      >
-        <Upload
-          accept="image/*"
-          customRequest={uploadImage}
-          listType="picture-card"
-          defaultFileList={fileList}
-          onPreview={handlePreview}
-          multiple={true}
-          onChange={handleChange}
+      <AddTourImagesWrapper>
+        <AddTourImagesTitle>
+          <Title titleType={TITLE_TYPE_CLASSES.section}>Tour images</Title>
+        </AddTourImagesTitle>
+        <ConfigProvider
+          theme={{
+            hashed: false,
+          }}
         >
-          {fileList.length >= maxImages ? null : uploadButton}
-        </Upload>
-      </ConfigProvider>
-      <Modal
-        handleClose={handleCloseModal}
-        open={previewOpen}
-        title={"Tour image preview"}
-      >
-        <img alt="preview content" src={previewImage} />
-      </Modal>
+          <Upload
+            accept="image/*"
+            customRequest={uploadImage}
+            listType="picture-card"
+            defaultFileList={fileList}
+            onPreview={handlePreview}
+            multiple={true}
+            onChange={handleChange}
+          >
+            {fileList.length >= maxImages ? null : uploadButton}
+          </Upload>
+        </ConfigProvider>
+        <Modal
+          handleClose={handleCloseModal}
+          open={previewOpen}
+          title={"Tour image preview"}
+        >
+          <img alt="preview content" src={previewImage} />
+        </Modal>
+      </AddTourImagesWrapper>
     </AddTourImagesContainer>
   );
 };

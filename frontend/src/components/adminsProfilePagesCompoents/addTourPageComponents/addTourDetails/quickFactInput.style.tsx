@@ -15,7 +15,8 @@ export const QuickFactInputContainer = styled.div`
   }
 
   .ant-input-number-group-wrapper,
-  .ant-input {
+  .ant-input,
+  .ant-picker {
     min-width: 20rem;
     width: 22rem;
   }
@@ -30,7 +31,8 @@ export const QuickFactInputContainer = styled.div`
   }
 
   .ant-input-number,
-  .ant-input {
+  .ant-input,
+  .ant-picker {
     padding: 0.4rem 1.8rem;
     height: 4rem;
 
@@ -42,7 +44,8 @@ export const QuickFactInputContainer = styled.div`
   }
 
   .ant-input,
-  .ant-input-number input {
+  .ant-input-number input,
+  .ant-picker .ant-picker-input input {
     font-size: 1.4rem;
     font-weight: 400;
     letter-spacing: 1px;
