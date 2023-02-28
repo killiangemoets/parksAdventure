@@ -24,8 +24,9 @@ import {
 } from "@fullcalendar/core";
 import Modal from "../modal/modal.component";
 import QuickFactInput, {
+  handleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
-} from "../../adminsProfilePagesCompoents/addTourPageComponents/addTourDetails/quickFactInput.component";
+} from "../../adminsProfilePagesCompoents/addTourPageComponents/quickFactInput/quickFactInput.component";
 
 type ModalInfosProps = {
   adultPrice: number | undefined;
@@ -77,10 +78,7 @@ const PricesCalendarInput: FC = () => {
     setPriceModalOpen(false);
   };
 
-  const handleChange = (
-    value: number | string | Info | Info[] | Dayjs | null,
-    name: string
-  ) => {
+  const handleChange = (value: handleChangeValueType, name: string) => {
     setModalInfos({ ...modalInfos, [name]: value });
     console.log(modalInfos);
   };

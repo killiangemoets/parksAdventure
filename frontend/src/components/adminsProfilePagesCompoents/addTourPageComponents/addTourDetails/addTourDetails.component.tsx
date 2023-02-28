@@ -31,8 +31,9 @@ import {
   TourGuidesSelectSectionContainer,
 } from "./addTourDetails.style";
 import QuickFactInput, {
+  handleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
-} from "./quickFactInput.component";
+} from "../quickFactInput/quickFactInput.component";
 
 type defaultQuickFactsFormFieldsProps = {
   duration: number | undefined;
@@ -74,10 +75,7 @@ const AddTourDetails = () => {
   const [summary, setSummary] = useState<string>("");
   const [categoriesString, setCategoriesString] = useState<string>("");
 
-  const handleChange = (
-    value: number | string | Info | Info[] | Dayjs | null,
-    name: string
-  ) => {
+  const handleChange = (value: handleChangeValueType, name: string) => {
     setFormFields({ ...formFields, [name]: value });
   };
 

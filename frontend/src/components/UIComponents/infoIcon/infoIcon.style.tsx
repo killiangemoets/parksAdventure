@@ -7,6 +7,7 @@ import { ReactComponent as GroupSVG } from "../../../assets/users-solid.svg";
 import { ReactComponent as CalendarSVG } from "../../../assets/calendar-regular.svg";
 import { ReactComponent as ClockSVG } from "../../../assets/clock-regular.svg";
 import { ReactComponent as TagSVG } from "../../../assets/tag.svg";
+import { ReactComponent as ListSVG } from "../../../assets/list.svg";
 
 export const LocationIcon = styled(PositionSVG)`
   width: 2rem;
@@ -80,5 +81,13 @@ export const CategoryIcon = styled(TagSVG)`
   .path {
     fill: #cc704b;
     border: #cc704b;
+  }
+`;
+
+export const ListIcon = styled(ListSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
   }
 `;

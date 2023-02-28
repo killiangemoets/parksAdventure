@@ -7,6 +7,7 @@ import {
   DifficultyIcon,
   DurationIcon,
   GroupIcon,
+  ListIcon,
   LocationIcon,
   TimeIcon,
 } from "./infoIcon.style";
@@ -21,6 +22,7 @@ export enum INFO_ICON_TYPE_CLASSES {
   date = "date",
   time = "time",
   category = "category",
+  list = "list",
 }
 
 const getIcon = (
@@ -36,6 +38,7 @@ const getIcon = (
     [INFO_ICON_TYPE_CLASSES.date]: DateIcon,
     [INFO_ICON_TYPE_CLASSES.time]: TimeIcon,
     [INFO_ICON_TYPE_CLASSES.category]: CategoryIcon,
+    [INFO_ICON_TYPE_CLASSES.list]: ListIcon,
   }[iconType]);
 
 export type InfoIconProps = {

@@ -7,12 +7,13 @@ import type { Dayjs } from "dayjs";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../../UIComponents/infoIcon/infoIcon.component";
-import { QuickFactInputContainer } from "./quickFactInput.style";
+
 import { InputNumber, Input, ConfigProvider, TimePicker } from "antd";
 import Dropdown, {
   DROPDOWN_TYPE_CLASSES,
 } from "../../../UIComponents/dropdown/dropdown.component";
 import { BUTTON_TYPE_CLASSES } from "../../../UIComponents/button/button.component";
+import { QuickFactInputContainer } from "./quickFactInput.style";
 
 export enum QUICK_FACT_INPUT_TYPE {
   number = "number",
@@ -21,14 +22,19 @@ export enum QUICK_FACT_INPUT_TYPE {
   time = "time",
 }
 
+export type handleChangeValueType =
+  | Info[]
+  | Info
+  | string
+  | number
+  | Dayjs
+  | null;
+
 export type QuickFactsCommonProps = {
   iconType?: INFO_ICON_TYPE_CLASSES;
   infoName: string;
   name: string;
-  handleChange: (
-    value: Info[] | Info | string | number | Dayjs | null,
-    name: string
-  ) => void;
+  handleChange: (value: handleChangeValueType, name: string) => void;
 };
 
 export type QuickFactsConditionalProps =
