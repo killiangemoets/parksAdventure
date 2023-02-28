@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Switch } from "antd";
+import { ConfigProvider, Switch } from "antd";
 import { SwitchInputContainer, SwitchInputValue } from "./switchInput.style";
 
 export type SwitchInputProps = {
@@ -19,7 +19,13 @@ const SwitchInput: FC<SwitchInputProps> = ({ switchInfos, handleChange }) => {
       <SwitchInputValue selected={!selectedSecond}>
         {switchInfos[0].value}
       </SwitchInputValue>
-      <Switch checked={selectedSecond} onChange={onChange} />
+      <ConfigProvider
+        theme={{
+          hashed: false,
+        }}
+      >
+        <Switch checked={selectedSecond} onChange={onChange} />
+      </ConfigProvider>
       <SwitchInputValue selected={selectedSecond}>
         {switchInfos[1].value}
       </SwitchInputValue>

@@ -6,6 +6,15 @@ export const SwitchInputContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1.2rem;
+
+  .ant-switch,
+  .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
+    background-color: #ddd;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
 `;
 
 type SwitchInputValueProps = {

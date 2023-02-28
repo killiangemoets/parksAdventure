@@ -10,6 +10,8 @@ import gbLocale from "@fullcalendar/core/locales/en-gb";
 import {
   CalendarInputContainer,
   CalendarInputTopBarContainer,
+  DeleteButtonWrapper,
+  DeleteMessage,
   PriceModalButtons,
   ResetIcon,
 } from "./pricesCalendarInput.style";
@@ -27,6 +29,7 @@ import QuickFactInput, {
   handleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../../adminsProfilePagesCompoents/addTourPageComponents/quickFactInput/quickFactInput.component";
+import { bU } from "@fullcalendar/core/internal-common";
 
 type ModalInfosProps = {
   adultPrice: number | undefined;
@@ -52,6 +55,8 @@ const PricesCalendarInput: FC = () => {
   );
   const [selectedDates, setSelectedDates] = useState<Dayjs[]>([]);
   const [priceModalOpen, setPriceModalOpen] = useState<boolean>(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [showDeleteButton, setShowDeleteButton] = useState<boolean>(false);
   const [modalInfos, setModalInfos] =
     useState<ModalInfosProps>(defaultModalInfo);
   const [backgroundEventsSelectedDates, setBackgroundEventsSelectedDates] =
@@ -76,6 +81,10 @@ const PricesCalendarInput: FC = () => {
 
   const handleClosePriceModal = () => {
     setPriceModalOpen(false);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setDeleteModalOpen(false);
   };
 
   const handleChange = (value: handleChangeValueType, name: string) => {
@@ -121,6 +130,10 @@ const PricesCalendarInput: FC = () => {
     // TODO
   };
 
+  const handleDeleteConfirm = () => {
+    // TODO
+  };
+
   useEffect(() => {
     const events = selectedDates.map((date) => {
       return {
@@ -130,7 +143,16 @@ const PricesCalendarInput: FC = () => {
         color: "#e6b8a5",
       };
     });
+
+    const updateShowDeleteButton = events.find((selectEvent) =>
+      pricesEvents.find(
+        (priceEvent) =>
+          priceEvent.start && priceEvent.start === selectEvent.start
+      )
+    );
+
     setBackgroundEventsSelectedDates(events);
+    setShowDeleteButton(Boolean(updateShowDeleteButton));
   }, [selectedDates]);
 
   return (
@@ -142,6 +164,19 @@ const PricesCalendarInput: FC = () => {
         />
         {selectedDates.length > 0 && (
           <>
+            <DeleteButtonWrapper>
+              {showDeleteButton && (
+                <Button
+                  buttonType={BUTTON_TYPE_CLASSES.inverted}
+                  onClick={() => {
+                    setDeleteModalOpen(true);
+                  }}
+                >
+                  Delete selected info
+                </Button>
+              )}
+            </DeleteButtonWrapper>
+
             <Button
               onClick={() => {
                 setPriceModalOpen(true);
@@ -149,6 +184,7 @@ const PricesCalendarInput: FC = () => {
             >
               Edit selection
             </Button>
+
             <Button
               buttonType={BUTTON_TYPE_CLASSES.empty}
               onClick={resetSelectedDates}
@@ -229,6 +265,25 @@ const PricesCalendarInput: FC = () => {
             Cancel
           </Button>
           <Button onClick={handleModalConfirm}>Confirm</Button>
+        </PriceModalButtons>
+      </Modal>
+      <Modal
+        title={"Delete selection"}
+        handleClose={handleCloseDeleteModal}
+        open={deleteModalOpen}
+      >
+        <DeleteMessage>
+          Are you sure you want to delete the <br />
+          selected availabilities?
+        </DeleteMessage>
+        <PriceModalButtons>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            onClick={handleCloseDeleteModal}
+          >
+            No
+          </Button>
+          <Button onClick={handleDeleteConfirm}>Yes</Button>
         </PriceModalButtons>
       </Modal>
     </CalendarInputContainer>
