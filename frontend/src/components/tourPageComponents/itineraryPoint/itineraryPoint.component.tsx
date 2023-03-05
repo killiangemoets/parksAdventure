@@ -20,13 +20,13 @@ export enum ITINERARY_POINT_TYPE_CLASSES {
 export type ItineraryPointProps = {
   type?: ITINERARY_POINT_TYPE_CLASSES;
   name: string;
-  edit?: boolean;
+  handleDelete?: (name: string) => void;
 };
 
 const ItineraryPoint: FC<ItineraryPointProps> = ({
   type = ITINERARY_POINT_TYPE_CLASSES.stopOverPoint,
   name,
-  edit = false,
+  handleDelete,
 }) => {
   return (
     <PointContainer>
@@ -42,10 +42,10 @@ const ItineraryPoint: FC<ItineraryPointProps> = ({
       ) : (
         <PointName>{name}</PointName>
       )}
-      {edit && (
+      {handleDelete && (
         <Button
           buttonType={BUTTON_TYPE_CLASSES.empty}
-          // onClick={() => handleClose()}
+          onClick={() => handleDelete(name)}
         >
           <CloseIcon />
         </Button>

@@ -61,7 +61,7 @@ export const ToursMapButtonWrapper = styled.div`
   position: absolute;
   top: 3.2rem;
   left: 1rem;
-
+  z-index: 2;
   button {
     min-width: 0rem;
     padding: 0.6rem 1rem;

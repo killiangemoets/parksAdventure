@@ -11,6 +11,7 @@ export const TourItineraryContainer = styled.div`
 
 export const TourItineraryWrapper = styled.div`
   max-width: 100rem;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,8 +27,8 @@ export const TourItineraryContent = styled.div`
   width: 100%;
   display: flex;
   /* align-items: center; */
-  justify-content: center;
-  gap: 12rem;
+  justify-content: space-around;
+  /* gap: 12rem; */
 `;
 
 export const ItineraryLeftContainer = styled.div``;
@@ -39,8 +40,8 @@ export const ItineraryRightContainer = styled.div`
 `;
 
 export const ItineraryMapContainer = styled.div`
-  width: 50rem;
-  height: 40rem;
+  width: 64rem;
+  height: 48rem;
 `;
 
 export const ItineraryCaptionContainer = styled.div`

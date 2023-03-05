@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from "react";
 // import process from "process";
 
 import mapboxgl from "mapbox-gl";
-// eslint-disable-line import/no-webpack-loader-syntax
 import { MapContainer } from "./map.style";
 
 mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_TOKEN

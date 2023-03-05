@@ -60,6 +60,32 @@ export const BigOrangeLocationIcon = styled(PositionSVG)`
   }
 `;
 
+export const XLGreenLocationIcon = styled(PositionSVG)`
+  width: 3.6rem;
+  height: 3.6rem;
+
+  .path {
+    fill: #506044;
+  }
+`;
+export const XLOrangeLocationIcon = styled(PositionSVG)`
+  width: 3.6rem;
+  height: 3.6rem;
+
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const XLGreyLocationIcon = styled(PositionSVG)`
+  width: 3.6rem;
+  height: 3.6rem;
+
+  .path {
+    fill: #aaa;
+  }
+`;
+
 export const DateIcon = styled(CalendarSVG)`
   width: 2rem;
   height: 2rem;

@@ -9,13 +9,12 @@ module.exports = class Email {
     this.to = user.email;
     this.firstname = user.firstname;
     this.url = url;
-    this.from = `The Natour Agency <${process.env.EMAIL_FROM}>`;
+    this.from = `Parks Adventure Hiking Tours <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
     if (process.env.NODE_ENV === 'production') {
       // Sendgird
-
       return nodemailer.createTransport({
         service: 'SendGrid',
         auth: {
@@ -57,6 +56,7 @@ module.exports = class Email {
   }
 
   async sendEmailVerification() {
+    // TODO (send token like reset password)
     await this.send('welcome', 'Welcome to the Natours Family!');
   }
 
