@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as ResetSVG } from "../../../assets/rotate-left.svg";
-import { QuickFactName } from "../../tourPageComponents/quickFact/quickFact.style";
-import { BaseButton, InvertedButton } from "../button/button.style";
+import { ReactComponent as ResetSVG } from "../../../../assets/rotate-left.svg";
+import { QuickFactName } from "../../../tourPageComponents/quickFact/quickFact.style";
+import {
+  BaseButton,
+  InvertedButton,
+} from "../../../UIComponents/button/button.style";
 
 export const CalendarInputContainer = styled.div`
   .ant-picker-calendar.ant-picker-calendar-full

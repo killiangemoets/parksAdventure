@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { ConfigProvider, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
@@ -12,6 +12,7 @@ import Modal from "../../../UIComponents/modal/modal.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
+import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
 
 const getBase64 = (file: RcFile): Promise<string> =>
   new Promise((resolve, reject) => {
@@ -21,11 +22,15 @@ const getBase64 = (file: RcFile): Promise<string> =>
     reader.onerror = (error) => reject(error);
   });
 
-const AddTourImages = () => {
+export type AddTourImagesProps = {
+  images: UploadFile[];
+  handleChange: (images: UploadFile[], name: string) => void;
+};
+
+const AddTourImages: FC<AddTourImagesProps> = ({ images, handleChange }) => {
   const maxImages = 20;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
 
   const uploadImage = async (options: any) => {
     console.log(options);
@@ -42,12 +47,11 @@ const AddTourImages = () => {
     setPreviewOpen(true);
   };
 
-  const handleChange: UploadProps["onChange"] = ({ fileList: newFileList }) => {
-    while (newFileList.length > maxImages) {
-      console.log(newFileList);
-      newFileList.pop();
+  const onChange: UploadProps["onChange"] = ({ fileList: newImagesList }) => {
+    while (newImagesList.length > maxImages) {
+      newImagesList.pop();
     }
-    setFileList(newFileList);
+    handleChange(newImagesList, TOUR_DATA.images);
   };
 
   const handleCloseModal = () => {
@@ -76,12 +80,12 @@ const AddTourImages = () => {
             accept="image/*"
             customRequest={uploadImage}
             listType="picture-card"
-            defaultFileList={fileList}
+            defaultFileList={images}
             onPreview={handlePreview}
             multiple={true}
-            onChange={handleChange}
+            onChange={onChange}
           >
-            {fileList.length >= maxImages ? null : uploadButton}
+            {images.length >= maxImages ? null : uploadButton}
           </Upload>
         </ConfigProvider>
         <Modal

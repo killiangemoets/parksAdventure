@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { FC, useState } from "react";
+import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
 import ItineraryLine from "../../../tourPageComponents/itineratyLine/itineraryLine.component";
 import { ItineraryCaption } from "../../../tourPageComponents/tourItinerary/tourItinerary.component";
 import {
@@ -16,33 +17,22 @@ import {
 } from "./addTourItinerary.style";
 import AddTourItineraryMap from "./addTourItineraryMap.component";
 
-export type StopProps = {
-  latitude: number;
-  longitude: number;
-  text: string;
+export type AddTourItineraryProps = {
+  stops: Stop[];
+  handleChange: (stops: Stop[], name: string) => void;
 };
 
-const AddTourItinerary = () => {
-  const points = [
-    "Day 1: Louise Lake",
-    "Day 2: The Wood Cabin",
-    "Day 3: Sky Waterfall",
-    "Day 4: Castor Beach",
-    "Day 5: The Rock Viewpoint",
-    "Day 6: The Three Sisters",
-  ];
-
-  const [stops, setStops] = useState<StopProps[]>([]);
-
-  const addStop = (stop: StopProps) => {
-    console.log(stops);
-    setStops([...stops, stop]);
+const AddTourItinerary: FC<AddTourItineraryProps> = ({
+  stops,
+  handleChange,
+}) => {
+  const addStop = (stop: Stop) => {
+    handleChange([...stops, stop], TOUR_DATA.itinerary);
   };
 
   const deleteStop = (stopName: string) => {
-    console.log("delete", { stopName });
     const newStops = stops.filter((stop) => stop.text !== stopName);
-    setStops(newStops);
+    handleChange(newStops, TOUR_DATA.itinerary);
   };
 
   return (

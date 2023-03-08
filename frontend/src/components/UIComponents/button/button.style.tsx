@@ -122,3 +122,16 @@ export const RectangularButton = styled(BaseButton)`
     background-color: #f9eedb;
   }
 `;
+
+export const CancelButton = styled(BaseButton)`
+  border: solid 2px #cc704b;
+  background: none;
+  color: #cc704b;
+  transition: all 0.5s;
+
+  &:hover {
+    background: none;
+    border: solid 2px #b86544;
+    color: #b86544;
+  }
+`;

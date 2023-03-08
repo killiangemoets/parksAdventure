@@ -1,12 +1,11 @@
-import { useState } from "react";
-import { idText } from "typescript";
-import Button from "../../../UIComponents/button/button.component";
+import { FC } from "react";
+import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
 import { INFO_ICON_TYPE_CLASSES } from "../../../UIComponents/infoIcon/infoIcon.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
 import QuickFactInput, {
-  handleChangeValueType,
+  HandleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
 import {
@@ -18,14 +17,22 @@ import {
   AddTourPracticalInfosWrapper,
 } from "./addTourPracticalInfos.style";
 
-const AddTourPracticalInfos = () => {
-  const [address, setAddress] = useState<string>("");
-  const [additionalInfo, setAdditionalInfo] = useState<string[]>([]);
-  const handleChangeAddress = (value: handleChangeValueType) => {
-    setAddress(value as string);
+export type AddTourPracticalInfosProps = {
+  address: string | undefined;
+  additionalInfo: string[];
+  handleChange: (value: string | string[], name: string) => void;
+};
+
+const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
+  address,
+  additionalInfo,
+  handleChange,
+}) => {
+  const handleChangeAddress = (value: HandleChangeValueType) => {
+    handleChange(value as string, TOUR_DATA.address);
   };
   const handleChangeAdditionalInfo = (
-    value: handleChangeValueType,
+    value: HandleChangeValueType,
     name: string
   ) => {
     const infoNumber = +name.split("additionalInfo")[1] - 1;
@@ -35,7 +42,7 @@ const AddTourPracticalInfos = () => {
     newAdditionalInfoArray = newAdditionalInfoArray.filter(
       (info) => info.length > 0
     );
-    setAdditionalInfo(newAdditionalInfoArray);
+    handleChange(newAdditionalInfoArray, TOUR_DATA.additionalInfo);
   };
 
   return (

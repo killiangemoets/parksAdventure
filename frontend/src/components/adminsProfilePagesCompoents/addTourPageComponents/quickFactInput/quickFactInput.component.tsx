@@ -13,7 +13,11 @@ import Dropdown, {
   DROPDOWN_TYPE_CLASSES,
 } from "../../../UIComponents/dropdown/dropdown.component";
 import { BUTTON_TYPE_CLASSES } from "../../../UIComponents/button/button.component";
-import { QuickFactInputContainer } from "./quickFactInput.style";
+import {
+  QuickFactDescription,
+  QuickFactInfo,
+  QuickFactInputContainer,
+} from "./quickFactInput.style";
 
 export enum QUICK_FACT_INPUT_TYPE {
   number = "number",
@@ -22,7 +26,7 @@ export enum QUICK_FACT_INPUT_TYPE {
   time = "time",
 }
 
-export type handleChangeValueType =
+export type HandleChangeValueType =
   | Info[]
   | Info
   | string
@@ -33,8 +37,10 @@ export type handleChangeValueType =
 export type QuickFactsCommonProps = {
   iconType?: INFO_ICON_TYPE_CLASSES;
   infoName: string;
+  infoDescription?: string;
   name: string;
-  handleChange: (value: handleChangeValueType, name: string) => void;
+  error?: boolean;
+  handleChange: (value: HandleChangeValueType, name: string) => void;
 };
 
 export type QuickFactsConditionalProps =
@@ -126,7 +132,15 @@ export type QuickFactsConditionalProps =
 
 const QuickFactInput: FC<
   QuickFactsCommonProps & QuickFactsConditionalProps
-> = ({ type, iconType, infoName, name, ...otherProps }) => {
+> = ({
+  type,
+  iconType,
+  infoName,
+  infoDescription,
+  name,
+  error,
+  ...otherProps
+}) => {
   const {
     placeholder,
     addonAfter,
@@ -144,7 +158,7 @@ const QuickFactInput: FC<
     format = "HH:mm",
     minuteStep = 1,
   } = otherProps;
-  const onChange = (value: number | string | Info | Info[] | null) => {
+  const onChange = (value: HandleChangeValueType) => {
     handleChange(value, name);
   };
 
@@ -177,7 +191,9 @@ const QuickFactInput: FC<
           format={format}
           name={name}
           value={value as Dayjs}
-          onChange={handleChange}
+          onChange={(value) => {
+            onChange(value);
+          }}
         />
       ),
       [QUICK_FACT_INPUT_TYPE.dropdown]:
@@ -210,11 +226,16 @@ const QuickFactInput: FC<
   const QuickFactInputElement = getQuickFactInput(type);
 
   return (
-    <QuickFactInputContainer>
-      <QuickFactType>
-        {iconType && <InfoIcon iconType={iconType} />}
-        <QuickFactName>{infoName}</QuickFactName>
-      </QuickFactType>
+    <QuickFactInputContainer error={error}>
+      <QuickFactInfo>
+        <QuickFactType>
+          {iconType && <InfoIcon iconType={iconType} />}
+          <QuickFactName>{infoName}</QuickFactName>
+        </QuickFactType>
+        {infoDescription && (
+          <QuickFactDescription>{infoDescription}</QuickFactDescription>
+        )}
+      </QuickFactInfo>
       <ConfigProvider
         theme={{
           hashed: false,

@@ -16,7 +16,7 @@ export const InfoPopup = styled(Popup)`
 `;
 
 type InputItineraryProps = {
-  error: boolean;
+  error?: boolean;
 };
 
 export const PopupInputContainer = styled.div<InputItineraryProps>`

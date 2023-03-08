@@ -1,9 +1,8 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import {
   QuickFacts,
   QuickFactsSectionContainer,
 } from "../../../tourPageComponents/quickFactsSection/quickFactsSection.style";
-import type { Dayjs } from "dayjs";
 import { SummarySectionContainer } from "../../../tourPageComponents/summarySection/summarySection.style";
 import TourGuide from "../../../tourPageComponents/tourGuide/tourGuide.component";
 
@@ -31,26 +30,12 @@ import {
   TourGuidesSelectSectionContainer,
 } from "./addTourDetails.style";
 import QuickFactInput, {
-  handleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-
-type defaultQuickFactsFormFieldsProps = {
-  duration: number | undefined;
-  difficulty: Info;
-  location: string | undefined;
-  categories: Info[];
-};
-
-const defaultQuickFactsFormFields: defaultQuickFactsFormFieldsProps = {
-  duration: undefined,
-  difficulty: {
-    id: "null",
-    value: "Select a difficulty",
-  },
-  location: "",
-  categories: [],
-};
+import {
+  NewTourDataValueTypes,
+  TOUR_DATA,
+} from "../../../../routes/addTour/addTour.component";
 
 const categoriesList: Info[] = [
   { value: "Mountain", id: "mountain" },
@@ -67,17 +52,27 @@ const difficultiesList: Info[] = [
   { id: "difficult", value: "Difficult" },
   { id: "expert", value: "Expert" },
 ];
-const AddTourDetails = () => {
-  const [formFields, setFormFields] =
-    useState<defaultQuickFactsFormFieldsProps>(defaultQuickFactsFormFields);
-  const { duration, difficulty, location, categories } = formFields;
-  const [tourGuides, setTourGuides] = useState<Info[]>([]);
-  const [summary, setSummary] = useState<string>("");
-  const [categoriesString, setCategoriesString] = useState<string>("");
 
-  const handleChange = (value: handleChangeValueType, name: string) => {
-    setFormFields({ ...formFields, [name]: value });
-  };
+export type AddTourDetailsProps = {
+  duration: number | undefined;
+  difficulty: Info;
+  location: string | undefined;
+  categories: Info[];
+  summary: string | undefined;
+  tourGuides: Info[];
+  handleChange: (value: NewTourDataValueTypes, name: string) => void;
+};
+
+const AddTourDetails: FC<AddTourDetailsProps> = ({
+  duration,
+  difficulty,
+  location,
+  categories,
+  summary,
+  tourGuides,
+  handleChange,
+}) => {
+  const [categoriesString, setCategoriesString] = useState<string>("");
 
   useEffect(() => {
     let newCategoriesString = categories
@@ -91,12 +86,12 @@ const AddTourDetails = () => {
   }, [categories]);
 
   const handleTourGuides = (newTourGuide: Info) => {
-    setTourGuides([...tourGuides, newTourGuide]);
+    handleChange([...tourGuides, newTourGuide], TOUR_DATA.tourGuides);
   };
 
   const handleChangeSummary = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    const { value } = event.target;
-    setSummary(value);
+    const { value, name } = event.target;
+    handleChange(value, name);
   };
 
   return (
@@ -111,7 +106,7 @@ const AddTourDetails = () => {
                 iconType={INFO_ICON_TYPE_CLASSES.duration}
                 handleChange={handleChange}
                 infoName="Duration"
-                name="duration"
+                name={TOUR_DATA.duration}
                 value={duration}
                 addonAfter="day(s)"
                 placeholder="Enter a value"
@@ -122,7 +117,7 @@ const AddTourDetails = () => {
                 iconType={INFO_ICON_TYPE_CLASSES.difficulty}
                 handleChange={handleChange}
                 infoName="Difficulty"
-                name="difficulty"
+                name={TOUR_DATA.difficulty}
                 current={difficulty}
                 dropdownList={difficultiesList}
               />
@@ -131,7 +126,7 @@ const AddTourDetails = () => {
                 iconType={INFO_ICON_TYPE_CLASSES.location}
                 handleChange={handleChange}
                 infoName="Location"
-                name="location"
+                name={TOUR_DATA.location}
                 value={location}
                 placeholder="Add a tour location"
               />
@@ -142,7 +137,7 @@ const AddTourDetails = () => {
                 iconType={INFO_ICON_TYPE_CLASSES.category}
                 handleChange={handleChange}
                 infoName="Categories"
-                name="categories"
+                name={TOUR_DATA.categories}
                 selection={categories}
                 options={categoriesList}
               >
@@ -152,17 +147,6 @@ const AddTourDetails = () => {
                   <p>Select Categories</p>
                 )}
               </QuickFactInput>
-              {/* <QuickFactInput
-                type={QUICK_FACT_INPUT_TYPE.number}
-                iconType={INFO_ICON_TYPE_CLASSES.group}
-                handleChange={handleChange}
-                infoName="Group Size"
-                name="groupSize"
-                value={groupSize}
-                addonAfter="people"
-                placeholder="Enter a value"
-                min={1}
-              /> */}
             </QuickFacts>
           </QuickFactsSectionContainer>
           <TourGuidesSelectSectionContainer>
@@ -171,10 +155,7 @@ const AddTourDetails = () => {
               {tourGuides.map((tourGuides) => (
                 <TourGuideSelected>
                   {tourGuides.value}
-                  <Button
-                    buttonType={BUTTON_TYPE_CLASSES.empty}
-                    // onClick={() => handleClose()}
-                  >
+                  <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
                     <CloseIcon />
                   </Button>
                 </TourGuideSelected>
@@ -228,8 +209,9 @@ const AddTourDetails = () => {
           <Title titleType={TITLE_TYPE_CLASSES.section}>About the Tour</Title>
           <SummaryInput
             onChange={handleChangeSummary}
+            name="summary"
             value={summary}
-            placeholder={"Add a tour summary"}
+            placeholder="Add a tour summary"
           />
         </SummarySectionContainer>
       </TourInfosRight>

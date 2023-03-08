@@ -15,8 +15,10 @@ import {
   PriceModalButtons,
   ResetIcon,
 } from "./pricesCalendarInput.style";
-import SwitchInput from "../switchInput/switchInput.component";
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import SwitchInput from "../../../UIComponents/switchInput/switchInput.component";
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../../UIComponents/button/button.component";
 import "dayjs/locale/en-gb";
 
 import {
@@ -24,28 +26,47 @@ import {
   EventInput,
   LocaleSingularArg,
 } from "@fullcalendar/core";
-import Modal from "../modal/modal.component";
+import Modal from "../../../UIComponents/modal/modal.component";
 import QuickFactInput, {
-  handleChangeValueType,
+  HandleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
-} from "../../adminsProfilePagesCompoents/addTourPageComponents/quickFactInput/quickFactInput.component";
-import { bU } from "@fullcalendar/core/internal-common";
+} from "../quickFactInput/quickFactInput.component";
+import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
 
 type ModalInfosProps = {
-  adultPrice: number | undefined;
+  price: number | undefined;
   kidPrice: number | undefined;
   groupSize: number | undefined;
   startingTime: Dayjs | undefined;
 };
 
 const defaultModalInfo: ModalInfosProps = {
-  adultPrice: undefined,
+  price: undefined,
   kidPrice: undefined,
   groupSize: undefined,
   startingTime: undefined,
 };
 
-const PricesCalendarInput: FC = () => {
+type ErrorsProps = {
+  price: boolean;
+  groupSize: boolean;
+  startingTime: boolean;
+};
+const defaultErrorsState = {
+  price: false,
+  groupSize: false,
+  startingTime: false,
+};
+
+export type PricesCalendarInputProps = {
+  availabilities: Availability[];
+  handleChange: (availabilities: Availability[], name: string) => void;
+};
+
+const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
+  availabilities,
+  handleChange,
+}) => {
   const dateFormats: [Info, Info] = [
     { value: "US Format", id: "us" },
     { value: "EU Format", id: "en-gb" },
@@ -61,35 +82,61 @@ const PricesCalendarInput: FC = () => {
     useState<ModalInfosProps>(defaultModalInfo);
   const [backgroundEventsSelectedDates, setBackgroundEventsSelectedDates] =
     useState<EventInput[]>([]);
-  const [pricesEvents, setPricesEvents] = useState<EventInput[]>([
-    {
-      title: "Adults: $499.99",
-      start: "2023-03-12",
-      color: "#85907c",
-    },
-    {
-      title: "Adults: $499.99",
-      start: "2023-03-13",
-      color: "#85907c",
-    },
-    {
-      title: "Kids: $399.99",
-      start: "2023-03-13",
-      color: "#db9b81",
-    },
-  ]);
+  const [pricesEvents, setPricesEvents] = useState<EventInput[]>([]);
+  const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
+
+  useEffect(() => {
+    let newPricesEvents: EventInput[] = [];
+    availabilities.forEach((availability) => {
+      newPricesEvents.push({
+        title: `Adults: $${availability.price}`,
+        start: availability.date,
+        color: "#85907c",
+      });
+      if (availability.kidPrice) {
+        newPricesEvents.push({
+          title: `Kids: $${availability.kidPrice}`,
+          start: availability.date,
+          color: "#db9b81",
+        });
+      }
+    });
+    setPricesEvents(newPricesEvents);
+  }, [availabilities]);
+
+  useEffect(() => {
+    const events = selectedDates.map((date) => {
+      return {
+        start: date.format("YYYY-MM-DD"),
+        end: date.format("YYYY-MM-DD"),
+        display: "background",
+        color: "#e6b8a5",
+      };
+    });
+
+    const updateShowDeleteButton = events.find((selectEvent) =>
+      pricesEvents.find(
+        (priceEvent) =>
+          priceEvent.start && priceEvent.start === selectEvent.start
+      )
+    );
+
+    setBackgroundEventsSelectedDates(events);
+    setShowDeleteButton(Boolean(updateShowDeleteButton));
+  }, [pricesEvents, selectedDates]);
 
   const handleClosePriceModal = () => {
     setPriceModalOpen(false);
+    setErrors(defaultErrorsState);
   };
 
   const handleCloseDeleteModal = () => {
     setDeleteModalOpen(false);
   };
 
-  const handleChange = (value: handleChangeValueType, name: string) => {
+  const handleChangeInput = (value: HandleChangeValueType, name: string) => {
     setModalInfos({ ...modalInfos, [name]: value });
-    console.log(modalInfos);
+    if (name !== "kidPrice") setErrors({ ...errors, [name]: false });
   };
 
   const resetSelectedDates = () => {
@@ -127,33 +174,52 @@ const PricesCalendarInput: FC = () => {
   };
 
   const handleModalConfirm = () => {
-    // TODO
+    const newErrorsState = {
+      ...defaultErrorsState,
+    };
+    if (!modalInfos.price) newErrorsState.price = true;
+    if (!modalInfos.groupSize) newErrorsState.groupSize = true;
+    if (!modalInfos.startingTime) newErrorsState.startingTime = true;
+    setErrors(newErrorsState);
+
+    if (!modalInfos.price || !modalInfos.groupSize || !modalInfos.startingTime)
+      return;
+
+    const updatedAvailabilities: Availability[] = selectedDates.map(
+      (selectedDate) => {
+        return {
+          date: selectedDate.format("YYYY-MM-DD"),
+          price: modalInfos.price || 0,
+          kidPrice: modalInfos.kidPrice,
+          time: modalInfos.startingTime,
+          groupSize: modalInfos.groupSize || 0,
+        };
+      }
+    );
+    availabilities.forEach((availability) => {
+      if (!updatedAvailabilities.find((el) => el.date === availability.date))
+        updatedAvailabilities.push(availability);
+    });
+
+    handleChange(updatedAvailabilities, TOUR_DATA.availabilities);
+    setPriceModalOpen(false);
+    setModalInfos(defaultModalInfo);
+    setSelectedDates([]);
+    setErrors(defaultErrorsState);
   };
 
   const handleDeleteConfirm = () => {
-    // TODO
-  };
-
-  useEffect(() => {
-    const events = selectedDates.map((date) => {
-      return {
-        start: date.format("YYYY-MM-DD"),
-        end: date.format("YYYY-MM-DD"),
-        display: "background",
-        color: "#e6b8a5",
-      };
-    });
-
-    const updateShowDeleteButton = events.find((selectEvent) =>
-      pricesEvents.find(
-        (priceEvent) =>
-          priceEvent.start && priceEvent.start === selectEvent.start
-      )
+    const updatedAvailabilities = availabilities.filter(
+      (availability) =>
+        !selectedDates.find(
+          (selectedDate) =>
+            selectedDate.format("YYYY-MM-DD") === availability.date
+        )
     );
-
-    setBackgroundEventsSelectedDates(events);
-    setShowDeleteButton(Boolean(updateShowDeleteButton));
-  }, [selectedDates]);
+    handleChange(updatedAvailabilities, TOUR_DATA.availabilities);
+    setDeleteModalOpen(false);
+    setSelectedDates([]);
+  };
 
   return (
     <CalendarInputContainer>
@@ -219,18 +285,20 @@ const PricesCalendarInput: FC = () => {
       >
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}
-          handleChange={handleChange}
+          handleChange={handleChangeInput}
           infoName="Adult Price"
-          name="adultPrice"
-          value={modalInfos.adultPrice}
+          name="price"
+          value={modalInfos.price}
           addonAfter="$"
           placeholder="Enter a value"
           min={0}
+          error={errors.price}
         />
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}
-          handleChange={handleChange}
+          handleChange={handleChangeInput}
           infoName="Kid Price"
+          infoDescription="(optional)"
           name="kidPrice"
           value={modalInfos.kidPrice}
           addonAfter="$"
@@ -239,27 +307,29 @@ const PricesCalendarInput: FC = () => {
         />
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}
-          handleChange={handleChange}
+          handleChange={handleChangeInput}
           infoName="Group Size"
           name="groupSize"
           value={modalInfos.groupSize}
           addonAfter="people"
           placeholder="Enter a value"
           min={1}
+          error={errors.groupSize}
         />
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.time}
-          handleChange={handleChange}
+          handleChange={handleChangeInput}
           infoName="Starting Time"
           name="startingTime"
           value={modalInfos.startingTime}
           minuteStep={15}
           format={selectedDateFormat.id === "us" ? "HH:mm A" : "HH:mm"}
+          error={errors.startingTime}
         />
 
         <PriceModalButtons>
           <Button
-            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            buttonType={BUTTON_TYPE_CLASSES.cancel}
             onClick={handleClosePriceModal}
           >
             Cancel
@@ -278,7 +348,7 @@ const PricesCalendarInput: FC = () => {
         </DeleteMessage>
         <PriceModalButtons>
           <Button
-            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            buttonType={BUTTON_TYPE_CLASSES.cancel}
             onClick={handleCloseDeleteModal}
           >
             No

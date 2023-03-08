@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Option } from "../../../UIComponents/dropdown/dropdownInput.style";
 
-export const QuickFactInputContainer = styled.div`
+type QuickInputContainerProps = {
+  error?: boolean;
+};
+
+export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -28,6 +32,11 @@ export const QuickFactInputContainer = styled.div`
     box-shadow: none;
     transition: all 0.3s;
     border: 1px solid #cc704b;
+
+    ${({ error }) =>
+      error && {
+        border: "2px solid #ff0033",
+      }}
   }
 
   .ant-input-number,
@@ -41,6 +50,11 @@ export const QuickFactInputContainer = styled.div`
     border-radius: 4px;
     box-shadow: none;
     transition: all 0.3s;
+
+    ${({ error }) =>
+      error && {
+        border: "2px solid #ff0033",
+      }}
   }
 
   .ant-input,
@@ -71,4 +85,20 @@ export const QuickFactInputContainer = styled.div`
     padding: 0;
     background-color: #fdfaf5;
   }
+`;
+
+export const QuickFactDescription = styled.p`
+  width: 100%;
+  color: #aaa;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+`;
+
+export const QuickFactInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: center;
+  justify-content: center;
 `;

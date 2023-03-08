@@ -1,4 +1,4 @@
-import PricesCalendarInput from "../../../UIComponents/pricesCalendarInput/pricesCalendarInput.component";
+import PricesCalendarInput from "./pricesCalendarInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
@@ -8,8 +8,17 @@ import {
   AddTourCalendarTitle,
   AddTourCalendarWrapper,
 } from "./addTourCalendar.style";
+import { FC } from "react";
 
-const AddTourCalendar = () => {
+export type AddTourCalendarProps = {
+  availabilities: Availability[];
+  handleChange: (availabilities: Availability[], name: string) => void;
+};
+
+const AddTourCalendar: FC<AddTourCalendarProps> = ({
+  availabilities,
+  handleChange,
+}) => {
   return (
     <AddTourCalendarContainer>
       <AddTourCalendarWrapper>
@@ -17,7 +26,10 @@ const AddTourCalendar = () => {
           <Title titleType={TITLE_TYPE_CLASSES.section}>Calendar</Title>
         </AddTourCalendarTitle>
         <AddTourCalendarContent>
-          <PricesCalendarInput />
+          <PricesCalendarInput
+            availabilities={availabilities}
+            handleChange={handleChange}
+          />
         </AddTourCalendarContent>
       </AddTourCalendarWrapper>
     </AddTourCalendarContainer>

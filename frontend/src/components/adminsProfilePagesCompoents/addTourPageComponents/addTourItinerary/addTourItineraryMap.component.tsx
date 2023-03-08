@@ -27,7 +27,6 @@ import { ConfigProvider, Input } from "antd";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
-import { StopProps } from "./addTourItinerary.component";
 import axios from "axios";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
@@ -39,26 +38,31 @@ export type AddInfoPopupProps = {
   longitude: number;
 };
 
-const defaultNewStopState: StopProps = {
+const defaultNewStopState: Stop = {
   latitude: 0,
   longitude: 0,
   text: "",
 };
 
 export type AddTourItineraryMapProps = {
-  stops: StopProps[];
-  addStop: (stop: StopProps) => void;
+  stops: Stop[];
+  addStop: (stop: Stop) => void;
 };
 
 const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   stops,
   addStop,
 }) => {
+  const [viewState, setViewState] = useState({
+    longitude: -100,
+    latitude: 40,
+    zoom: 3.5,
+  });
   const [pins, setPins] = useState<JSX.Element[]>([]);
-  const [newStop, setNewStop] = useState<StopProps>(defaultNewStopState);
+  const [newStop, setNewStop] = useState<Stop>(defaultNewStopState);
   const [newPin, setNewPin] = useState<JSX.Element | null>(null);
 
-  const [popupInfo, setPopupInfo] = useState<StopProps | null>(null);
+  const [popupInfo, setPopupInfo] = useState<Stop | null>(null);
   const [showPopupAddInfo, setShowPopupAddInfo] = useState<boolean>(false);
   const [showErrorStopText, setShowErrorStopText] = useState<string>("");
   const [itinerary, setItinerary] = useState<[number, number][]>([]);
@@ -115,6 +119,8 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   const handleRenderNewStopInfo = (longitude: number, latitude: number) => {
     setShowErrorStopText("");
 
+    // setViewState({ ...viewState, longitude, latitude });
+
     const addNewPin = (
       <Marker longitude={longitude} latitude={latitude} anchor="bottom">
         <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.locationXLGrey} />
@@ -140,12 +146,12 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   };
 
   const handleAddStop = () => {
-    if (newStop.text.length === 0) {
+    if (newStop.text.trim().length === 0) {
       setShowErrorStopText("Please add a small description");
     } else if (stops.find((stop) => stop.text === newStop.text)) {
       setShowErrorStopText("The description should be unique");
     } else {
-      addStop(newStop);
+      addStop({ ...newStop, text: newStop.text.trim() });
       setNewStop(defaultNewStopState);
       setShowPopupAddInfo(false);
       setNewPin(null);
@@ -167,11 +173,14 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   return (
     <MapContainer>
       <Map
-        initialViewState={{
-          longitude: -18,
-          latitude: 35,
-          zoom: 1,
-        }}
+        // initialViewState={{
+        //   longitude: -18,
+        //   latitude: 35,
+        //   zoom: 1,
+        // }}
+        // ViewState={{ longitude: -18, latitude: 35, zoom: 1 }}
+        {...viewState}
+        onMove={(evt) => setViewState(evt.viewState)}
         dragRotate={false}
         mapStyle="mapbox://styles/killiangemoets/clcdpld4j009w14oxa2fmtnvx"
         mapboxAccessToken={MAPBOX_TOKEN}
@@ -264,7 +273,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
 
                 <PopupButton>
                   <Button
-                    buttonType={BUTTON_TYPE_CLASSES.inverted}
+                    buttonType={BUTTON_TYPE_CLASSES.cancel}
                     onClick={handleCloseAddPopup}
                   >
                     Cancel
