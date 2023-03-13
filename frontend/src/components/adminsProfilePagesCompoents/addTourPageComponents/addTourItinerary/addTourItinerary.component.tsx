@@ -1,5 +1,5 @@
-import { FC, useState } from "react";
-import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
+import { FC } from "react";
+import { Stop, TOUR_DATA } from "../../../../types/tour";
 import ItineraryLine from "../../../tourPageComponents/itineratyLine/itineraryLine.component";
 import { ItineraryCaption } from "../../../tourPageComponents/tourItinerary/tourItinerary.component";
 import {

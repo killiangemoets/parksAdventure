@@ -14,7 +14,11 @@ export const AddTourTitleWrapper = styled.div`
   max-width: 125rem;
 `;
 
-export const TitleInput = styled.input`
+type TitleInputProps = {
+  error?: boolean;
+};
+
+export const TitleInput = styled.input<TitleInputProps>`
   width: 100%;
   min-width: 52rem;
   padding: 1.25rem 1.75rem;
@@ -59,4 +63,9 @@ export const TitleInput = styled.input`
     outline: none;
     border: 1px solid #aaa;
   }
+
+  ${({ error }) =>
+    error && {
+      border: "2px solid #ff0033",
+    }}
 `;

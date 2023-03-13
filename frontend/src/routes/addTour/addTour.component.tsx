@@ -10,6 +10,7 @@ import {
   AddTourButtonsWrapper,
   AddTourContainer,
   CancelButton,
+  ErrorMessage,
   MainButton,
 } from "./addTour.style";
 import type { Dayjs } from "dayjs";
@@ -18,38 +19,9 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../components/UIComponents/button/button.component";
 import CheckBoxes from "../../components/UIComponents/checkBoxes/checkBoxes.component";
-
-export enum TOUR_DATA {
-  title = "title",
-  images = "images",
-  duration = "duration",
-  difficulty = "difficulty",
-  location = "location",
-  categories = "categories",
-  summary = "summary",
-  tourGuides = "tourGuides",
-  itinerary = "itinerary",
-  availabilities = "availabilities",
-  address = "address",
-  additionalInfo = "additionalInfo",
-  hidden = "hidden",
-}
-
-export type NewTourData = {
-  [TOUR_DATA.title]: string;
-  [TOUR_DATA.images]: UploadFile[];
-  [TOUR_DATA.duration]: number | undefined;
-  [TOUR_DATA.difficulty]: Info;
-  [TOUR_DATA.location]: string | undefined;
-  [TOUR_DATA.categories]: Info[];
-  [TOUR_DATA.summary]: string | undefined;
-  [TOUR_DATA.tourGuides]: Info[];
-  [TOUR_DATA.itinerary]: Stop[];
-  [TOUR_DATA.availabilities]: Availability[];
-  [TOUR_DATA.address]: string | undefined;
-  [TOUR_DATA.additionalInfo]: string[];
-  [TOUR_DATA.hidden]: boolean;
-};
+import { Availability, Stop, TourData, TOUR_DATA } from "../../types/tour";
+import { createTour } from "../../api/tour-requests";
+import Spinner from "../../components/UIComponents/spinner/spinner.component";
 
 export type NewTourDataValueTypes =
   | string
@@ -65,7 +37,7 @@ export type NewTourDataValueTypes =
   | boolean
   | Dayjs;
 
-const newTourDataDefaultState: NewTourData = {
+const newTourDataDefaultState: TourData = {
   title: "",
   images: [],
   duration: undefined,
@@ -84,11 +56,40 @@ const newTourDataDefaultState: NewTourData = {
   hidden: false,
 };
 
+type ErrorsProps = {
+  title: boolean;
+  images: boolean;
+  duration: boolean;
+  difficulty: boolean;
+  location: boolean;
+  categories: boolean;
+  summary: boolean;
+  tourGuides: boolean;
+  itinerary: boolean;
+  availabilities: boolean;
+  address: boolean;
+  generalMessage: string;
+};
+
+const defaultErrorsState: ErrorsProps = {
+  title: false,
+  images: false,
+  duration: false,
+  difficulty: false,
+  location: false,
+  categories: false,
+  summary: false,
+  tourGuides: false,
+  itinerary: false,
+  availabilities: false,
+  address: false,
+  generalMessage: "",
+};
+
 const AddTour = () => {
-  const [newTourData, setNewTourData] = useState<NewTourData>(
+  const [newTourData, setNewTourData] = useState<TourData>(
     newTourDataDefaultState
   );
-
   const {
     title,
     images,
@@ -104,14 +105,66 @@ const AddTour = () => {
     additionalInfo,
     hidden,
   } = newTourData;
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
 
   const handleChange = (value: NewTourDataValueTypes, name: string) => {
-    console.log({ name, value });
     setNewTourData({ ...newTourData, [name]: value });
   };
+
+  const handleCancel = () => {
+    setNewTourData(newTourDataDefaultState);
+    setErrors(defaultErrorsState);
+  };
+
+  const handleConfirm = async () => {
+    setLoading(true);
+
+    const newErrorsState = {
+      ...defaultErrorsState,
+    };
+
+    if (!title.length) newErrorsState.title = true;
+    if (images.length < 4) newErrorsState.images = true;
+    if (!duration) newErrorsState.duration = true;
+    if (difficulty.id === "null") newErrorsState.difficulty = true;
+    if (!location?.length) newErrorsState.location = true;
+    if (!categories.length) newErrorsState.categories = true;
+    if (!summary?.length) newErrorsState.summary = true;
+    if (!itinerary.length) newErrorsState.itinerary = true;
+    if (!availabilities.length) newErrorsState.availabilities = true;
+    if (!address?.length) newErrorsState.address = true;
+
+    if (
+      title.length &&
+      images.length >= 4 &&
+      duration &&
+      difficulty.id !== "null" &&
+      location?.length &&
+      categories.length &&
+      summary?.length &&
+      tourGuides.length &&
+      itinerary.length &&
+      availabilities.length &&
+      address?.length
+    ) {
+      const response = await createTour(newTourData);
+      console.log(response);
+    } else {
+      newErrorsState.generalMessage = "A field is missing";
+    }
+
+    setErrors(newErrorsState);
+    setLoading(false);
+  };
+
   return (
     <AddTourContainer>
-      <AddTourTitle title={title} handleChange={handleChange} />
+      <AddTourTitle
+        title={title}
+        handleChange={handleChange}
+        error={errors.title}
+      />
       <AddTourImages images={images} handleChange={handleChange} />
       <AddTourDetails
         duration={duration}
@@ -135,7 +188,12 @@ const AddTour = () => {
       <AddTourButtons>
         <AddTourButtonsWrapper>
           <CancelButton>
-            <Button buttonType={BUTTON_TYPE_CLASSES.cancel}>Cancel</Button>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.cancel}
+              onClick={handleCancel}
+            >
+              Cancel
+            </Button>
           </CancelButton>
           <MainButton>
             <CheckBoxes
@@ -159,7 +217,10 @@ const AddTour = () => {
                 handleChange(!hidden, TOUR_DATA.hidden);
               }}
             />
-            <Button>Add Tour</Button>
+            <Button onClick={handleConfirm}>
+              {loading ? <Spinner /> : "Add Tour"}
+            </Button>
+            <ErrorMessage>{errors.generalMessage}</ErrorMessage>
           </MainButton>
         </AddTourButtonsWrapper>
       </AddTourButtons>

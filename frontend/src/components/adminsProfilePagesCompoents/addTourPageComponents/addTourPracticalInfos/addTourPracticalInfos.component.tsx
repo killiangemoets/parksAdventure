@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
+import { TOUR_DATA } from "../../../../types/tour";
 import { INFO_ICON_TYPE_CLASSES } from "../../../UIComponents/infoIcon/infoIcon.component";
 import Title, {
   TITLE_TYPE_CLASSES,

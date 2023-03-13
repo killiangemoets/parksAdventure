@@ -25,19 +25,20 @@ export const AddTourButtonsWrapper = styled.div`
   align-items: center;
 
   & ${BaseButton} {
+    height: 5.2rem;
     font-size: 2rem;
     font-weight: 500;
   }
 `;
 
 export const CancelButton = styled.div`
-  height: 10rem;
+  height: 16rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
 `;
 
 export const MainButton = styled.div`
-  height: 10rem;
+  height: 16rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -70,9 +71,22 @@ export const MainButton = styled.div`
       width: 0.8rem;
       height: 1.4rem;
     }
+
+    .ant-checkbox-group {
+      height: 2.6rem;
+    }
   }
 
   & ${BaseButton} {
     width: 40rem;
   }
+`;
+
+export const ErrorMessage = styled.p`
+  height: 2.6rem;
+  padding-left: 0.8rem;
+  color: #ff0033;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
 `;

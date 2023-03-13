@@ -29,9 +29,24 @@ app.use(cors()); // To allow everyone
 // Access-Control-Allow-Origin *
 
 // If we want to give access to only one domain:
-// app.use(cors({
-//   origin: 'https://www.adventuresparks.com'
-// }));
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3001',
+//   })
+// );
+
+// const whitelist = ['http://localhost:3001'];
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (!origin || whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
 
 app.options('*', cors());
 
@@ -45,14 +60,16 @@ if (process.env.NODE_ENV == 'development') {
 
 // Limit requests from same API
 const limiter = rateLimit({
-  max: 100,
+  max: 1000,
   windowMs: 60 * 60 * 1000,
   message: 'Too many requests from this IP, please try again in an hour!',
 }); // allow 100 requests from the same IP in one hour
 app.use('/api', limiter);
 
 // Limit the amount of data that comes in the body
-app.use(express.json({ limit: '10kb' }));
+// app.use(express.json({ limit: '100kb' }));
+app.use(express.json({ limit: '25mb' }));
+// app.use(express.json());
 
 // Parse the data from cookies
 app.use(cookieParser());

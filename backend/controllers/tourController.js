@@ -4,6 +4,7 @@ const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
+const uploadToCloudinary = require('./../utils/uploadToCloudinary');
 
 // UPLOAD IMAGES
 const multerStorage = multer.memoryStorage();
@@ -53,6 +54,24 @@ exports.resizeTourImages = catchAsync(async (req, res, next) => {
   );
 
   next();
+});
+
+exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
+  // Prevent user to pass directly imageCover or images
+  req.body.imageCover = undefined;
+  req.body.images = undefined;
+
+  // Upload images to cloudinary
+  if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
+    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
+      req.body.imagesBase64,
+      `parkAdventures/tours`
+    );
+    req.body.imageCover = imgUrls[0];
+    req.body.images = imgUrls.slice(1);
+  }
+
+  return next();
 });
 
 exports.requiredFields = (req, res, next) => {

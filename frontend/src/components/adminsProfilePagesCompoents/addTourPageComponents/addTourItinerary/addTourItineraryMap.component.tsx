@@ -28,6 +28,8 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
 import axios from "axios";
+import { Stop } from "../../../../types/tour";
+import getDirection from "../../../../utils/map/getDirection";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
   ? process.env.REACT_APP_MAP_BOX_TOKEN
@@ -94,26 +96,29 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   }, [stops]);
 
   useEffect(() => {
-    const getDirections = async () => {
-      if (stops.length < 2) return setItinerary([]);
-      try {
-        let stopsToString = (
-          stops.reduce((acc, stop) => {
-            return acc + `${stop.longitude},${stop.latitude};`;
-          }, "") + `${stops[0].longitude},${stops[0].latitude};`
-        ).slice(0, -1);
+    // const getDirections = async () => {
+    //   if (stops.length < 2) return setItinerary([]);
+    //   try {
+    //     let stopsToString = (
+    //       stops.reduce((acc, stop) => {
+    //         return acc + `${stop.longitude},${stop.latitude};`;
+    //       }, "") + `${stops[0].longitude},${stops[0].latitude};`
+    //     ).slice(0, -1);
 
-        console.log({ stops, stopsToString });
-        const directions = await axios(
-          `https://api.mapbox.com/directions/v5/mapbox/walking/${stopsToString}?access_token=pk.eyJ1Ijoia2lsbGlhbmdlbW9ldHMiLCJhIjoiY2xjZHIzOTI4MDF6MTNybjBwNXRnZjM1YyJ9.6KlAze9wPLj3rmb2ykhgdQ&geometries=geojson`
-        );
-        setItinerary(directions.data.routes[0].geometry.coordinates);
-      } catch (error) {
-        setItinerary([]);
-        console.log(error);
-      }
+    //     const directions = await axios(
+    //       `https://api.mapbox.com/directions/v5/mapbox/walking/${stopsToString}?access_token=pk.eyJ1Ijoia2lsbGlhbmdlbW9ldHMiLCJhIjoiY2xjZHIzOTI4MDF6MTNybjBwNXRnZjM1YyJ9.6KlAze9wPLj3rmb2ykhgdQ&geometries=geojson`
+    //     );
+    //     setItinerary(directions.data.routes[0].geometry.coordinates);
+    //   } catch (error) {
+    //     setItinerary([]);
+    //     console.log(error);
+    //   }
+    // };
+    const updateItinerary = async () => {
+      const itinerary = await getDirection(stops);
+      setItinerary(itinerary);
     };
-    getDirections();
+    updateItinerary();
   }, [stops]);
 
   const handleRenderNewStopInfo = (longitude: number, latitude: number) => {

@@ -31,7 +31,7 @@ import QuickFactInput, {
   HandleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
+import { Availability, TOUR_DATA } from "../../../../types/tour";
 
 type ModalInfosProps = {
   price: number | undefined;
@@ -52,7 +52,7 @@ type ErrorsProps = {
   groupSize: boolean;
   startingTime: boolean;
 };
-const defaultErrorsState = {
+const defaultErrorsState: ErrorsProps = {
   price: false,
   groupSize: false,
   startingTime: false,
@@ -191,7 +191,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
           date: selectedDate.format("YYYY-MM-DD"),
           price: modalInfos.price || 0,
           kidPrice: modalInfos.kidPrice,
-          time: modalInfos.startingTime,
+          time: modalInfos.startingTime?.format("hh-mm") || "",
           groupSize: modalInfos.groupSize || 0,
         };
       }

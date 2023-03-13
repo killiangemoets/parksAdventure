@@ -15,38 +15,52 @@ const tourSchema = new mongoose.Schema(
     duration: {
       type: Number,
       required: [true, 'A tour must have a duration'],
-    },
-    summary: {
-      type: String,
-      trim: true,
-      required: [true, 'A tour must have a summary'],
-      maxlength: [100, 'A tour summary cannot have more than 100 characters'],
+      min: [1, 'The duration must be at least 1 day'],
     },
     description: {
       type: String,
       trim: true,
       required: [true, 'A tour must have a description'],
+      maxlength: [
+        700,
+        'A tour description cannot have more than 700 characters',
+      ],
+    },
+    location: {
+      type: String,
+      trim: true,
+      required: [true, 'A tour must have a location'],
+      maxlength: [40, 'A tour location cannot have more than 40 characters'],
     },
     imageCover: {
       type: String,
       required: [true, 'A tour must have an image cover'],
     },
-    images: [String],
-    maxGroupSize: {
-      type: Number,
-      required: [true, 'A tour must have a group size'],
+    images: {
+      type: [String],
+      validate: {
+        validator: function (val) {
+          return val.length >= 3;
+        },
+        message:
+          'A tour must have at least 3 pictures in addition to the cover picture',
+      },
     },
     difficulty: {
       type: String,
       required: [true, 'A tour must have a difficulty'],
       enum: {
-        values: ['family', 'medium', 'difficult', 'expert'],
-        message: 'Difficulty is either family, medium, difficult or expert',
+        values: ['family', 'medium', 'hard', 'expert'],
+        message: 'Difficulty is either family, medium, hard, or expert',
       },
     },
-    category: {
-      type: String,
-      required: [true, 'A tour must have a category'],
+    categories: {
+      type: [String],
+      required: [true, 'A tour must have at least one category'],
+      enum: {
+        values: ['mountain', 'desert', 'snow', 'cities', 'sea', 'lakes'],
+        message: 'Categories are mountain, desert, snow, cities, sea, or lakes',
+      },
     },
     ratingsAverage: {
       type: Number,
@@ -59,18 +73,14 @@ const tourSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    startLocation: {
-      type: {
-        type: String,
-        default: 'Point',
-        enum: ['Point'],
-      },
-      coordinates: {
-        type: [Number],
-        required: [40, 'A start location must have coordinates'],
-      },
-      address: String,
-      description: String,
+    meetingAddress: {
+      type: String,
+      required: [true, 'A tour must have a meeting address'],
+      trim: true,
+      maxlength: [
+        100,
+        'A meeting address cannot have more than 100 characters',
+      ],
     },
     locations: [
       {
@@ -80,29 +90,45 @@ const tourSchema = new mongoose.Schema(
           enum: ['Point'],
         },
         coordinates: [Number],
-        address: {
+        description: {
           type: String,
-          default: 'no specified',
+          required: [true, 'A location must have a descripion'],
+          trim: true,
+          maxlength: [
+            40,
+            'A location description cannot have more than 40 characters',
+          ],
         },
-        description: String,
-        day: Number,
       },
     ],
-    guides: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-      },
-    ],
+    guides: {
+      type: [
+        {
+          type: mongoose.Schema.ObjectId,
+          ref: 'User',
+        },
+      ],
+      required: [true, 'A tour must have at least one guide'],
+    },
     availabilities: [
       {
         date: {
           type: Date,
           required: [true, 'An availability must have a date'],
         },
+        time: {
+          type: String,
+          required: [true, 'An availability must have a time'],
+        },
         price: {
           type: Number,
           required: [true, 'An availability must have a price'],
+          validate: {
+            validator: function (val) {
+              return val > 0;
+            },
+            message: `Price ({VALUE}) must be hight than 0`,
+          },
         },
         kidPrice: {
           type: Number,
@@ -113,24 +139,38 @@ const tourSchema = new mongoose.Schema(
             message: `Kid price ({VALUE}) cannot be higher than the normal price`,
           },
         },
+        maxGroupSize: {
+          type: Number,
+          required: [true, 'A tour must have a group capacity'],
+          validate: {
+            validator: function (val) {
+              return val > 0;
+            },
+            message: `Group capacity ({VALUE}) must be hight than 0`,
+          },
+        },
         currentGroupSize: {
           type: Number,
           default: 0,
         },
       },
     ],
+    additionInfo: {
+      type: [String],
+      default: [],
+    },
     popularity: {
       type: Number,
       default: 0,
+    },
+    hiddenTour: {
+      type: Boolean,
+      default: false,
     },
     createdAt: {
       type: Date,
       default: Date.now(),
       select: false,
-    },
-    hiddenTour: {
-      type: Boolean,
-      default: false,
     },
   },
   {
@@ -153,13 +193,16 @@ tourSchema.virtual('reviews', {
 // PRE SAVE MIDDLEWARES //
 // Pre-save hook: runs before .save() and .create()
 tourSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+tourSchema.pre('save', function (next) {
   if (this.availabilities) {
     this.availabilities.forEach((availability) => {
       if (!availability.kidPrice) availability.kidPrice = availability.price;
     });
   }
-
-  this.slug = slugify(this.name, { lower: true });
   next();
 });
 

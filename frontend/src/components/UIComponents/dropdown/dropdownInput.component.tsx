@@ -29,7 +29,6 @@ const DropdownInput: FC<DropdownPropsTotal> = ({
             key={info.id}
             onClick={() => {
               handler(info);
-              console.log(keeOpenAfterSelection);
               !keeOpenAfterSelection && closeDropdown();
             }}
           >

@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from "react";
-import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
+import { TOUR_DATA } from "../../../../types/tour";
 import {
   AddTourTitleContainer,
   AddTourTitleWrapper,
@@ -9,11 +9,17 @@ import {
 export type AddTourTitleProps = {
   title: string;
   handleChange: (value: string, name: string) => void;
+  error: boolean;
 };
 
-const AddTourTitle: FC<AddTourTitleProps> = ({ title, handleChange }) => {
+const AddTourTitle: FC<AddTourTitleProps> = ({
+  title,
+  handleChange,
+  error = false,
+}) => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
+    if (value.length >= 40) return;
     handleChange(value, name);
   };
   return (
@@ -24,6 +30,7 @@ const AddTourTitle: FC<AddTourTitleProps> = ({ title, handleChange }) => {
           value={title}
           name={TOUR_DATA.title}
           onChange={onChange}
+          error={error}
         />
       </AddTourTitleWrapper>
     </AddTourTitleContainer>

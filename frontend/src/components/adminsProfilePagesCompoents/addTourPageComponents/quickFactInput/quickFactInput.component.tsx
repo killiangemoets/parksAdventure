@@ -60,6 +60,7 @@ export type QuickFactsConditionalProps =
       selection?: never;
       allowSelectAll?: never;
       children?: never;
+      maxLength?: number;
     }
   | {
       type: QUICK_FACT_INPUT_TYPE.number;
@@ -77,6 +78,7 @@ export type QuickFactsConditionalProps =
       selection?: never;
       allowSelectAll?: never;
       children?: never;
+      maxLength?: never;
     }
   | {
       type: QUICK_FACT_INPUT_TYPE.time;
@@ -94,6 +96,7 @@ export type QuickFactsConditionalProps =
       selection?: never;
       allowSelectAll?: never;
       children?: never;
+      maxLength?: never;
     }
   | {
       type: QUICK_FACT_INPUT_TYPE.dropdown;
@@ -111,6 +114,7 @@ export type QuickFactsConditionalProps =
       selection?: never;
       allowSelectAll?: never;
       children?: ReactNode;
+      maxLength?: never;
     }
   | {
       type: QUICK_FACT_INPUT_TYPE.dropdown;
@@ -128,6 +132,7 @@ export type QuickFactsConditionalProps =
       selection: Info[];
       allowSelectAll?: boolean;
       children?: ReactNode;
+      maxLength?: never;
     };
 
 const QuickFactInput: FC<
@@ -157,6 +162,7 @@ const QuickFactInput: FC<
     children,
     format = "HH:mm",
     minuteStep = 1,
+    maxLength = Infinity,
   } = otherProps;
   const onChange = (value: HandleChangeValueType) => {
     handleChange(value, name);
@@ -172,6 +178,7 @@ const QuickFactInput: FC<
             onChange(e.target.value);
           }}
           placeholder={placeholder}
+          maxLength={maxLength}
         />
       ),
       [QUICK_FACT_INPUT_TYPE.number]: (

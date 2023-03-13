@@ -32,10 +32,8 @@ import {
 import QuickFactInput, {
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-import {
-  NewTourDataValueTypes,
-  TOUR_DATA,
-} from "../../../../routes/addTour/addTour.component";
+import { NewTourDataValueTypes } from "../../../../routes/addTour/addTour.component";
+import { TOUR_DATA } from "../../../../types/tour";
 
 const categoriesList: Info[] = [
   { value: "Mountain", id: "mountain" },
@@ -91,6 +89,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
 
   const handleChangeSummary = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value, name } = event.target;
+    if (value.length >= 700) return;
     handleChange(value, name);
   };
 
@@ -129,6 +128,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 name={TOUR_DATA.location}
                 value={location}
                 placeholder="Add a tour location"
+                maxLength={40}
               />
               <QuickFactInput
                 type={QUICK_FACT_INPUT_TYPE.dropdown}

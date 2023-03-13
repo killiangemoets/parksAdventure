@@ -4,7 +4,7 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
-const cloudinary = require('./../utils/cloudinary');
+const cloudinary = require('../utils/uploadToCloudinary');
 
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
   if (req.body.imagePath) {

@@ -12,15 +12,8 @@ import Modal from "../../../UIComponents/modal/modal.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
-import { TOUR_DATA } from "../../../../routes/addTour/addTour.component";
-
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+import { TOUR_DATA } from "../../../../types/tour";
+import convertToBase64 from "../../../../utils/images-treatment/convert-base-64";
 
 export type AddTourImagesProps = {
   images: UploadFile[];
@@ -33,15 +26,15 @@ const AddTourImages: FC<AddTourImagesProps> = ({ images, handleChange }) => {
   const [previewImage, setPreviewImage] = useState("");
 
   const uploadImage = async (options: any) => {
-    console.log(options);
     const { onSuccess, onError, file, onProgress } = options;
     onSuccess("Ok");
   };
 
   const handlePreview = async (file: UploadFile) => {
     if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj as RcFile);
+      file.preview = await convertToBase64(file.originFileObj as RcFile);
     }
+    console.log(file.preview);
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
@@ -81,6 +74,7 @@ const AddTourImages: FC<AddTourImagesProps> = ({ images, handleChange }) => {
             customRequest={uploadImage}
             listType="picture-card"
             defaultFileList={images}
+            // fileList={images}
             onPreview={handlePreview}
             multiple={true}
             onChange={onChange}

@@ -9,6 +9,7 @@ import {
   AddTourCalendarWrapper,
 } from "./addTourCalendar.style";
 import { FC } from "react";
+import { Availability } from "../../../../types/tour";
 
 export type AddTourCalendarProps = {
   availabilities: Availability[];
