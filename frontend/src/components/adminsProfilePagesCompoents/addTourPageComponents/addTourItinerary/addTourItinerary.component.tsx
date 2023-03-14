@@ -14,17 +14,20 @@ import Title, {
 import {
   AddTourItineraryContent,
   AddTourItineraryWrapper,
+  ErrorMessage,
 } from "./addTourItinerary.style";
 import AddTourItineraryMap from "./addTourItineraryMap.component";
 
 export type AddTourItineraryProps = {
   stops: Stop[];
   handleChange: (stops: Stop[], name: string) => void;
+  error: boolean;
 };
 
 const AddTourItinerary: FC<AddTourItineraryProps> = ({
   stops,
   handleChange,
+  error,
 }) => {
   const addStop = (stop: Stop) => {
     handleChange([...stops, stop], TOUR_DATA.itinerary);
@@ -53,6 +56,9 @@ const AddTourItinerary: FC<AddTourItineraryProps> = ({
             <ItineraryCaption />
           </ItineraryRightContainer>
         </AddTourItineraryContent>
+        <ErrorMessage>
+          {error ? "Please add stops to the itinerary" : ""}
+        </ErrorMessage>
       </AddTourItineraryWrapper>
     </TourItineraryContainer>
   );

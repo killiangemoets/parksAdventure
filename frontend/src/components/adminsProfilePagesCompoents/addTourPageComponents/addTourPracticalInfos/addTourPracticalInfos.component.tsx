@@ -21,12 +21,14 @@ export type AddTourPracticalInfosProps = {
   address: string | undefined;
   additionalInfo: string[];
   handleChange: (value: string | string[], name: string) => void;
+  addressError: boolean;
 };
 
 const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
   address,
   additionalInfo,
   handleChange,
+  addressError,
 }) => {
   const handleChangeAddress = (value: HandleChangeValueType) => {
     handleChange(value as string, TOUR_DATA.address);
@@ -62,6 +64,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
             name="address"
             value={address}
             placeholder="Add an address"
+            error={addressError}
           />
           <AdditionalInfoInputs>
             <QuickFactInput
@@ -71,7 +74,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
               infoName="Additional Information"
               name={"additionalInfo1"}
               value={additionalInfo[0]}
-              placeholder="Add an information"
+              placeholder="Add information (optional)"
             />
             <AdditionalInfoExtraInputs>
               {additionalInfo.map((_, i) => {
@@ -83,7 +86,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
                     infoName=""
                     name={name}
                     value={additionalInfo[i + 1]}
-                    placeholder="Add an information"
+                    placeholder="Add an information (optional)"
                   />
                 );
               })}

@@ -58,7 +58,11 @@ export const CloseIcon = styled(CloseSVG)`
   }
 `;
 
-export const SummaryInput = styled.textarea`
+type SummaryInputProps = {
+  error?: boolean;
+};
+
+export const SummaryInput = styled.textarea<SummaryInputProps>`
   resize: none;
   width: 100%;
   height: 100%;
@@ -88,4 +92,17 @@ export const SummaryInput = styled.textarea`
   &:focus {
     outline: none;
   }
+
+  ${({ error }) =>
+    error && {
+      border: "2px solid #ff0033",
+    }}
+`;
+
+export const ErrorMessage = styled.p`
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 `;

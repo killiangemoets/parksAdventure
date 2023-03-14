@@ -7,6 +7,7 @@ import {
   AddTourImagesContainer,
   AddTourImagesTitle,
   AddTourImagesWrapper,
+  ErrorMessage,
 } from "./addTourImages.style";
 import Modal from "../../../UIComponents/modal/modal.component";
 import Title, {
@@ -18,9 +19,14 @@ import convertToBase64 from "../../../../utils/images-treatment/convert-base-64"
 export type AddTourImagesProps = {
   images: UploadFile[];
   handleChange: (images: UploadFile[], name: string) => void;
+  error: boolean;
 };
 
-const AddTourImages: FC<AddTourImagesProps> = ({ images, handleChange }) => {
+const AddTourImages: FC<AddTourImagesProps> = ({
+  images,
+  handleChange,
+  error,
+}) => {
   const maxImages = 20;
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -89,6 +95,9 @@ const AddTourImages: FC<AddTourImagesProps> = ({ images, handleChange }) => {
         >
           <img alt="preview content" src={previewImage} />
         </Modal>
+        <ErrorMessage>
+          {error ? "A tour must have at least 4 images" : ""}
+        </ErrorMessage>
       </AddTourImagesWrapper>
     </AddTourImagesContainer>
   );

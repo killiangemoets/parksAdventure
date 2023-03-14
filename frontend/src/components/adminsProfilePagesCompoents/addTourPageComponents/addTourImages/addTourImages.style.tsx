@@ -71,3 +71,13 @@ export const AddTourImagesWrapper = styled.div`
 `;
 
 export const AddTourImagesTitle = styled.div``;
+
+export const ErrorMessage = styled.p`
+  width: 100%;
+  text-align: center;
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+`;

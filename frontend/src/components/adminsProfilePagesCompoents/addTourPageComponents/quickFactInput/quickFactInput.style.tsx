@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { RectangularButton } from "../../../UIComponents/button/button.style";
 import { Option } from "../../../UIComponents/dropdown/dropdownInput.style";
 
 type QuickInputContainerProps = {
@@ -84,6 +85,13 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
   .ant-input-number-handler-wrap {
     padding: 0;
     background-color: #fdfaf5;
+  }
+
+  & ${RectangularButton} {
+    ${({ error }) =>
+      error && {
+        border: "2px solid #ff0033",
+      }}
   }
 `;
 

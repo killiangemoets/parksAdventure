@@ -25,6 +25,7 @@ import Title, {
 } from "../../../UIComponents/title/title.component";
 import {
   CloseIcon,
+  ErrorMessage,
   SummaryInput,
   TourGuideSelected,
   TourGuidesSelectSectionContainer,
@@ -59,6 +60,12 @@ export type AddTourDetailsProps = {
   summary: string | undefined;
   tourGuides: Info[];
   handleChange: (value: NewTourDataValueTypes, name: string) => void;
+  durationError: boolean;
+  difficultyError: boolean;
+  locationError: boolean;
+  categoriesError: boolean;
+  tourGuidesError: boolean;
+  summaryError: boolean;
 };
 
 const AddTourDetails: FC<AddTourDetailsProps> = ({
@@ -69,6 +76,12 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   summary,
   tourGuides,
   handleChange,
+  durationError,
+  difficultyError,
+  locationError,
+  categoriesError,
+  tourGuidesError,
+  summaryError,
 }) => {
   const [categoriesString, setCategoriesString] = useState<string>("");
 
@@ -110,6 +123,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 addonAfter="day(s)"
                 placeholder="Enter a value"
                 min={1}
+                error={durationError}
               />
               <QuickFactInput
                 type={QUICK_FACT_INPUT_TYPE.dropdown}
@@ -119,6 +133,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 name={TOUR_DATA.difficulty}
                 current={difficulty}
                 dropdownList={difficultiesList}
+                error={difficultyError}
               />
               <QuickFactInput
                 type={QUICK_FACT_INPUT_TYPE.text}
@@ -129,6 +144,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 value={location}
                 placeholder="Add a tour location"
                 maxLength={40}
+                error={locationError}
               />
               <QuickFactInput
                 type={QUICK_FACT_INPUT_TYPE.dropdown}
@@ -140,6 +156,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 name={TOUR_DATA.categories}
                 selection={categories}
                 options={categoriesList}
+                error={categoriesError}
               >
                 {categories.length > 0 ? (
                   <p>{categoriesString}</p>
@@ -201,6 +218,11 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             >
               Select Tour Guides
             </Dropdown>
+            <ErrorMessage>
+              {tourGuidesError
+                ? "A tour must have at least one LEAD guide"
+                : ""}
+            </ErrorMessage>
           </TourGuidesSelectSectionContainer>
         </TourInfosLeftWrapper>
       </TourInfosLeft>
@@ -212,6 +234,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             name="summary"
             value={summary}
             placeholder="Add a tour summary"
+            error={summaryError}
           />
         </SummarySectionContainer>
       </TourInfosRight>

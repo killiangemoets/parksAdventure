@@ -66,7 +66,7 @@ type ErrorsProps = {
   summary: boolean;
   tourGuides: boolean;
   itinerary: boolean;
-  availabilities: boolean;
+  // availabilities: boolean;
   address: boolean;
   generalMessage: string;
 };
@@ -81,7 +81,7 @@ const defaultErrorsState: ErrorsProps = {
   summary: false,
   tourGuides: false,
   itinerary: false,
-  availabilities: false,
+  // availabilities: false,
   address: false,
   generalMessage: "",
 };
@@ -131,8 +131,9 @@ const AddTour = () => {
     if (!location?.length) newErrorsState.location = true;
     if (!categories.length) newErrorsState.categories = true;
     if (!summary?.length) newErrorsState.summary = true;
+    if (!tourGuides?.length) newErrorsState.tourGuides = true;
     if (!itinerary.length) newErrorsState.itinerary = true;
-    if (!availabilities.length) newErrorsState.availabilities = true;
+    // if (!availabilities.length) newErrorsState.availabilities = true;
     if (!address?.length) newErrorsState.address = true;
 
     if (
@@ -145,13 +146,13 @@ const AddTour = () => {
       summary?.length &&
       tourGuides.length &&
       itinerary.length &&
-      availabilities.length &&
+      // availabilities.length &&
       address?.length
     ) {
       const response = await createTour(newTourData);
       console.log(response);
     } else {
-      newErrorsState.generalMessage = "A field is missing";
+      newErrorsState.generalMessage = "Information is missing";
     }
 
     setErrors(newErrorsState);
@@ -165,7 +166,11 @@ const AddTour = () => {
         handleChange={handleChange}
         error={errors.title}
       />
-      <AddTourImages images={images} handleChange={handleChange} />
+      <AddTourImages
+        images={images}
+        handleChange={handleChange}
+        error={errors.images}
+      />
       <AddTourDetails
         duration={duration}
         difficulty={difficulty}
@@ -174,8 +179,18 @@ const AddTour = () => {
         summary={summary}
         tourGuides={tourGuides}
         handleChange={handleChange}
+        durationError={errors.duration}
+        difficultyError={errors.difficulty}
+        locationError={errors.location}
+        categoriesError={errors.categories}
+        tourGuidesError={errors.tourGuides}
+        summaryError={errors.summary}
       />
-      <AddTourItinerary stops={itinerary} handleChange={handleChange} />
+      <AddTourItinerary
+        stops={itinerary}
+        handleChange={handleChange}
+        error={errors.itinerary}
+      />
       <AddTourCalendar
         availabilities={availabilities}
         handleChange={handleChange}
@@ -184,6 +199,7 @@ const AddTour = () => {
         address={address}
         additionalInfo={additionalInfo}
         handleChange={handleChange}
+        addressError={errors.address}
       />
       <AddTourButtons>
         <AddTourButtonsWrapper>
