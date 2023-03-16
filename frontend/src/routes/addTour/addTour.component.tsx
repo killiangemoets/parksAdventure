@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AddTourCalendar from "../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourCalendar/addTourCalendar.component";
 import AddTourDetails from "../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourDetails/addTourDetails.component";
 import AddTourImages from "../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourImages/addTourImages.component";
@@ -20,8 +20,9 @@ import Button, {
 } from "../../components/UIComponents/button/button.component";
 import CheckBoxes from "../../components/UIComponents/checkBoxes/checkBoxes.component";
 import { Availability, Stop, TourData, TOUR_DATA } from "../../types/tour";
-import { createTour } from "../../api/tour-requests";
+import { createTour, getTourGuides } from "../../api/tour-requests";
 import Spinner from "../../components/UIComponents/spinner/spinner.component";
+import { TUser } from "../../types/user";
 
 export type NewTourDataValueTypes =
   | string
@@ -107,6 +108,15 @@ const AddTour = () => {
   } = newTourData;
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
+  const [tourGuidesList, setTourGuidesList] = useState<TUser[]>([]);
+
+  useEffect(() => {
+    const loadTourGuides = async () => {
+      const response = await getTourGuides();
+      setTourGuidesList(response);
+    };
+    loadTourGuides();
+  }, []);
 
   const handleChange = (value: NewTourDataValueTypes, name: string) => {
     setNewTourData({ ...newTourData, [name]: value });
@@ -131,7 +141,15 @@ const AddTour = () => {
     if (!location?.length) newErrorsState.location = true;
     if (!categories.length) newErrorsState.categories = true;
     if (!summary?.length) newErrorsState.summary = true;
-    if (!tourGuides?.length) newErrorsState.tourGuides = true;
+    // if (!tourGuides?.length) newErrorsState.tourGuides = true;
+    if (
+      !tourGuidesList.find(
+        (guide) =>
+          guide.role === "lead-guide" &&
+          tourGuides.find((tourGuide) => tourGuide.id === guide._id)
+      )
+    )
+      newErrorsState.tourGuides = true;
     if (!itinerary.length) newErrorsState.itinerary = true;
     // if (!availabilities.length) newErrorsState.availabilities = true;
     if (!address?.length) newErrorsState.address = true;
@@ -151,10 +169,18 @@ const AddTour = () => {
     ) {
       const response = await createTour(newTourData);
       console.log(response);
+      if (response.status === 201) setNewTourData(newTourDataDefaultState);
+      else {
+        if (response.message.includes("E11000")) {
+          newErrorsState.generalMessage = "This tour title is already used";
+          newErrorsState.title = true;
+        } else {
+          newErrorsState.generalMessage = response.message;
+        }
+      }
     } else {
       newErrorsState.generalMessage = "Information is missing";
     }
-
     setErrors(newErrorsState);
     setLoading(false);
   };
@@ -178,6 +204,7 @@ const AddTour = () => {
         categories={categories}
         summary={summary}
         tourGuides={tourGuides}
+        tourGuidesList={tourGuidesList}
         handleChange={handleChange}
         durationError={errors.duration}
         difficultyError={errors.difficulty}

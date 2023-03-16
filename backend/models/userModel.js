@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  photo: { type: String, default: 'default.jpg' },
+  photo: String,
   phoneNumber: {
     type: String,
     validate: {
@@ -53,10 +53,22 @@ const userSchema = new mongoose.Schema({
       message: 'Passwords are not the same!',
     },
   },
-  passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
-  emailVerificationToken: String,
+  passwordChangedAt: {
+    type: Date,
+    select: false,
+  },
+  passwordResetToken: {
+    type: String,
+    select: false,
+  },
+  passwordResetExpires: {
+    type: Date,
+    select: false,
+  },
+  emailVerificationToken: {
+    type: String,
+    select: false,
+  },
   active: {
     type: Boolean,
     default: false,

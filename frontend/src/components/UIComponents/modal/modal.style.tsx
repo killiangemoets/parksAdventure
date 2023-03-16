@@ -39,7 +39,7 @@ export const ModalTitleSection = styled.div`
     right: 2rem;
   }
 `;
-export const ModalTitle = styled.div`
+export const ModalTitle = styled.h3`
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.6px;

@@ -94,6 +94,7 @@ app.use(
       'category',
       'ratingsAvarage',
       'ratingsQuantity',
+      'role',
     ], // we can specify a white list of properties for which we actually allow duplicates in the query string
   })
 );

@@ -30,7 +30,6 @@ export const TourGuidesSelectSectionContainer = styled(
     height: 4.8rem;
   }
 `;
-
 export const TourGuideSelected = styled.div`
   display: flex;
   align-items: center;

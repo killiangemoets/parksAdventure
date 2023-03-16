@@ -40,10 +40,10 @@ const tourSchema = new mongoose.Schema(
       type: [String],
       validate: {
         validator: function (val) {
-          return val.length >= 3;
+          return val.length >= 3 && val.length <= 19;
         },
         message:
-          'A tour must have at least 3 pictures in addition to the cover picture',
+          'A tour must have at least 3 pictures in addition to the cover picture and cannot have more than 20 pictures',
       },
     },
     difficulty: {

@@ -2,11 +2,10 @@ import axios from "axios";
 import { TourData } from "../types/tour";
 import type { RcFile } from "antd/es/upload";
 import convertToBase64 from "../utils/images-treatment/convert-base-64";
+import { TUser } from "../types/user";
 
 export const createTour = async (tourData: TourData) => {
   try {
-    console.log(tourData);
-
     const imagesBase64 = await Promise.all(
       tourData.images.map((img) => {
         if (!img.url && !img.preview) {
@@ -14,7 +13,6 @@ export const createTour = async (tourData: TourData) => {
         } else return img.url || img.preview;
       })
     );
-    console.log(imagesBase64);
 
     const tourBody = {
       name: tourData.title,
@@ -56,5 +54,20 @@ export const createTour = async (tourData: TourData) => {
       return err.response?.data;
     }
     return err;
+  }
+};
+
+export const getTourGuides = async (): Promise<TUser[]> => {
+  try {
+    const response = await axios.get(
+      `${process.env.REACT_APP_API_URL}/users?role=guide&role=lead-guide`
+    );
+
+    return response.data.data.data as TUser[];
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return [];
   }
 };

@@ -5,7 +5,6 @@ import {
 } from "../../../tourPageComponents/quickFactsSection/quickFactsSection.style";
 import { SummarySectionContainer } from "../../../tourPageComponents/summarySection/summarySection.style";
 import TourGuide from "../../../tourPageComponents/tourGuide/tourGuide.component";
-
 import { TourGuides } from "../../../tourPageComponents/tourGuidesSection/tourGuidesSection.style";
 import {
   TourInfosContainer,
@@ -35,6 +34,7 @@ import QuickFactInput, {
 } from "../quickFactInput/quickFactInput.component";
 import { NewTourDataValueTypes } from "../../../../routes/addTour/addTour.component";
 import { TOUR_DATA } from "../../../../types/tour";
+import { TUser } from "../../../../types/user";
 
 const categoriesList: Info[] = [
   { value: "Mountain", id: "mountain" },
@@ -59,6 +59,7 @@ export type AddTourDetailsProps = {
   categories: Info[];
   summary: string | undefined;
   tourGuides: Info[];
+  tourGuidesList: TUser[];
   handleChange: (value: NewTourDataValueTypes, name: string) => void;
   durationError: boolean;
   difficultyError: boolean;
@@ -75,6 +76,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   categories,
   summary,
   tourGuides,
+  tourGuidesList,
   handleChange,
   durationError,
   difficultyError,
@@ -104,6 +106,15 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
     const { value, name } = event.target;
     if (value.length >= 700) return;
     handleChange(value, name);
+  };
+
+  const removeTourGuide = (index: number) => {
+    const newTourGuides = [
+      ...tourGuides.slice(0, index),
+      ...tourGuides.slice(index + 1),
+    ];
+    console.log({ tourGuides, newTourGuides });
+    handleChange(newTourGuides, TOUR_DATA.tourGuides);
   };
 
   return (
@@ -169,10 +180,15 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
           <TourGuidesSelectSectionContainer>
             <Title titleType={TITLE_TYPE_CLASSES.section}>Tour Guides</Title>
             <TourGuides>
-              {tourGuides.map((tourGuides) => (
-                <TourGuideSelected>
-                  {tourGuides.value}
-                  <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
+              {tourGuides.map((tourGuide, i) => (
+                <TourGuideSelected key={i}>
+                  {tourGuide.value}
+                  <Button
+                    buttonType={BUTTON_TYPE_CLASSES.empty}
+                    onClick={() => {
+                      removeTourGuide(i);
+                    }}
+                  >
                     <CloseIcon />
                   </Button>
                 </TourGuideSelected>
@@ -180,38 +196,22 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             </TourGuides>
             <Dropdown
               dropdownType={DROPDOWN_TYPE_CLASSES.input}
-              list={[
-                {
-                  id: "1",
+              list={tourGuidesList.map((tourGuide) => {
+                return {
+                  id: tourGuide._id,
                   value: (
                     <TourGuide
-                      // pictureUrl="images/desert.jpg"
-                      position="Lead Guide"
-                      name="David Goggins"
+                      pictureUrl={
+                        tourGuide.photo || "../images/default_user.jpg"
+                      }
+                      position={
+                        tourGuide.role === "guide" ? "Guide" : "Lead Guide"
+                      }
+                      name={`${tourGuide.firstname} ${tourGuide.lastname}`}
                     />
                   ),
-                },
-                {
-                  id: "2",
-                  value: (
-                    <TourGuide
-                      // pictureUrl="images/desert.jpg"
-                      position="Tour Guide"
-                      name="Kate Morrison"
-                    />
-                  ),
-                },
-                {
-                  id: "3",
-                  value: (
-                    <TourGuide
-                      // pictureUrl={"images/user.jpg"}
-                      position="Tour Guide"
-                      name="Peter Parker"
-                    />
-                  ),
-                },
-              ]}
+                };
+              })}
               current={{ id: "null", value: "" }}
               handleInput={handleTourGuides}
               keeOpenAfterSelection={true}

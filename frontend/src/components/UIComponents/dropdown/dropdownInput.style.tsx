@@ -7,7 +7,7 @@ export const DropdownContainer = styled.div`
   background-color: #fdfaf5;
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
-  z-index: 999;
+  z-index: 3;
   padding: 0.6rem 0;
 `;
 
