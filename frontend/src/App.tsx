@@ -14,6 +14,8 @@ import UserBookingDetails from "./routes/userBookingDetails/userBookingDetails.c
 import Signup from "./routes/signup/signup.component";
 import Login from "./routes/login/login.component";
 import AddTour from "./routes/addTour/addTour.component";
+import EmailVerification from "./routes/emailVerification/emailVerification.component";
+import EmailConfirmation from "./routes/emailConfirmation/emailConfirmation.component";
 
 function App() {
   return (
@@ -23,6 +25,14 @@ function App() {
         <Route path="alltours" element={<AllTours />} />
         <Route path="tour" element={<Tour />} />
         <Route path="signup" element={<Signup />} />
+        <Route
+          path="signup/email-verification"
+          element={<EmailVerification />}
+        />
+        <Route
+          path="signup/email-confirmation/:token"
+          element={<EmailConfirmation />}
+        />
         <Route path="login" element={<Login />} />
       </Route>
       <Route path="profile/" element={<UserProfile />}>

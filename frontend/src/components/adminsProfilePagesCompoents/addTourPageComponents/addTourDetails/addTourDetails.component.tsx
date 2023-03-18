@@ -87,6 +87,8 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
 }) => {
   const [categoriesString, setCategoriesString] = useState<string>("");
 
+  console.log(tourGuidesList);
+
   useEffect(() => {
     let newCategoriesString = categories
       .reduce((acc, curr) => acc + curr.value + ", ", "")
@@ -198,7 +200,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
               dropdownType={DROPDOWN_TYPE_CLASSES.input}
               list={tourGuidesList.map((tourGuide) => {
                 return {
-                  id: tourGuide._id,
+                  id: tourGuide.id,
                   value: (
                     <TourGuide
                       pictureUrl={

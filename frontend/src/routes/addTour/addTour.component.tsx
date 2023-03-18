@@ -146,7 +146,7 @@ const AddTour = () => {
       !tourGuidesList.find(
         (guide) =>
           guide.role === "lead-guide" &&
-          tourGuides.find((tourGuide) => tourGuide.id === guide._id)
+          tourGuides.find((tourGuide) => tourGuide.id === guide.id)
       )
     )
       newErrorsState.tourGuides = true;
@@ -169,8 +169,9 @@ const AddTour = () => {
     ) {
       const response = await createTour(newTourData);
       console.log(response);
-      if (response.status === 201) setNewTourData(newTourDataDefaultState);
-      else {
+      if (response.status === 201) {
+        // setNewTourData(newTourDataDefaultState);
+      } else {
         if (response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";
           newErrorsState.title = true;

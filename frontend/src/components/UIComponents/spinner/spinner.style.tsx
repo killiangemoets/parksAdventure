@@ -28,3 +28,24 @@ export const WhiteSpinner = styled.div`
     }
   }
 `;
+
+export const LargeSpinner = styled.div`
+  display: inline-block;
+  width: 8rem;
+  height: 8rem;
+  border: 8px solid rgba(204, 112, 75, 0.6);
+  border-radius: 50%;
+  border-top-color: #cc704b;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  @keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  @-webkit-keyframes spin {
+    to {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+`;

@@ -1,11 +1,11 @@
-import SignupCard from "../../components/authenticationComponents/signupCard.component";
+import SignupForm from "../../components/authenticationComponents/signupForm.component";
 import { SignupContainer, SignupWrapper } from "./signup.style";
 
 export const Signup = () => {
   return (
     <SignupContainer>
       <SignupWrapper>
-        <SignupCard />
+        <SignupForm />
       </SignupWrapper>
     </SignupContainer>
   );

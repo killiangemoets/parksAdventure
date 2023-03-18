@@ -1,8 +1,9 @@
 import { FC } from "react";
-import { SpinnerOverlay, WhiteSpinner } from "./spinner.style";
+import { LargeSpinner, SpinnerOverlay, WhiteSpinner } from "./spinner.style";
 
 export enum SPINNER_TYPE_CLASSES {
   white = "white",
+  large = "large",
 }
 
 const getSpinner = (
@@ -10,6 +11,7 @@ const getSpinner = (
 ): typeof WhiteSpinner =>
   ({
     [SPINNER_TYPE_CLASSES.white]: WhiteSpinner,
+    [SPINNER_TYPE_CLASSES.large]: LargeSpinner,
   }[spinnerType]);
 
 export type SpinnerProps = {

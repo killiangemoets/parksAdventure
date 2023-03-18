@@ -3,6 +3,7 @@ import { TourData } from "../types/tour";
 import type { RcFile } from "antd/es/upload";
 import convertToBase64 from "../utils/images-treatment/convert-base-64";
 import { TUser } from "../types/user";
+import axiosInstance from "../utils/axios/axios-instance";
 
 export const createTour = async (tourData: TourData) => {
   try {
@@ -43,10 +44,7 @@ export const createTour = async (tourData: TourData) => {
       hiddenTour: tourData.hidden,
     };
 
-    const response = await axios.post(
-      `${process.env.REACT_APP_API_URL}/tours`,
-      tourBody
-    );
+    const response = await axiosInstance.post("/tours", tourBody);
 
     return response;
   } catch (err) {
@@ -59,11 +57,46 @@ export const createTour = async (tourData: TourData) => {
 
 export const getTourGuides = async (): Promise<TUser[]> => {
   try {
-    const response = await axios.get(
-      `${process.env.REACT_APP_API_URL}/users?role=guide&role=lead-guide`
+    const response = await axiosInstance.get(
+      "/users?role=guide&role=lead-guide&active=true"
     );
 
-    return response.data.data.data as TUser[];
+    const guides: TUser[] = response.data.data.data.map(
+      (guide: {
+        email: string;
+        firstname: string;
+        lastname: string;
+        photo: string;
+        phoneNumber: string;
+        birthDate: Date;
+        role: "guide" | "lead-guide";
+        _id: string;
+      }) => {
+        const {
+          email,
+          firstname,
+          lastname,
+          photo,
+          phoneNumber,
+          birthDate,
+          role,
+          _id: id,
+        } = guide;
+
+        return {
+          email,
+          firstname,
+          lastname,
+          photo,
+          phoneNumber,
+          birthDate,
+          role,
+          id,
+        };
+      }
+    );
+
+    return guides;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;

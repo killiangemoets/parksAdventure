@@ -14,6 +14,11 @@ const uploadImage = (image, folderPath = '') => {
     unique_filename: false,
     overwrite: true,
     folder: folderPath,
+    width: 1500,
+    heigth: 1500,
+    crop: 'scale',
+    format: 'webp',
+    quality: 90,
   };
   return new Promise((resolve, reject) => {
     cloudinary.uploader.upload(image, options, (error, result) => {

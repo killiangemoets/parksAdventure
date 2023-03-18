@@ -1,13 +1,13 @@
-import LoginCard from "../../components/authenticationComponents/loginCard.component";
-import { LoginCOntainer, LoginWrapper } from "./login.style";
+import LoginForm from "../../components/authenticationComponents/loginForm.component";
+import { LoginContainer, LoginWrapper } from "./login.style";
 
 export const Login = () => {
   return (
-    <LoginCOntainer>
+    <LoginContainer>
       <LoginWrapper>
-        <LoginCard />
+        <LoginForm />
       </LoginWrapper>
-    </LoginCOntainer>
+    </LoginContainer>
   );
 };
 

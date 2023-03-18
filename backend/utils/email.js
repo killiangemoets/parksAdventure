@@ -57,7 +57,10 @@ module.exports = class Email {
 
   async sendEmailVerification() {
     // TODO (send token like reset password)
-    await this.send('welcome', 'Welcome to the Natours Family!');
+    await this.send(
+      'verification',
+      'Welcome to the National Parks Hiking Tours Family!'
+    );
   }
 
   async sendWelcome() {

@@ -62,3 +62,12 @@ export const AuthenticationForm = styled.form`
     align-self: flex-end;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  text-align: center;
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+`;

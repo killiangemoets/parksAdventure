@@ -9,7 +9,7 @@ const TextInput: FC<TextInputProps> = ({ label, ...otherInputProps }) => {
   return (
     <TextInputContainer>
       <Label>{label}</Label>
-      <TextInputEl name={label} {...otherInputProps} />
+      <TextInputEl {...otherInputProps} />
     </TextInputContainer>
   );
 };

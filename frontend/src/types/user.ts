@@ -4,7 +4,20 @@ export type TUser = {
   lastname: string;
   photo?: string;
   phoneNumber?: string;
-  birthDate?: string;
+  birthDate?: Date;
   role: "user" | "guide" | "lead-guide" | "admin";
-  _id: string;
+  id: string;
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type SignUpData = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
 };

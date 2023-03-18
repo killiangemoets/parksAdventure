@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 // Implement CORS
-app.use(cors()); // To allow everyone
+// app.use(cors()); // To allow everyone
 // Access-Control-Allow-Origin *
 
 // If we want to give access to only one domain:
@@ -35,18 +35,18 @@ app.use(cors()); // To allow everyone
 //   })
 // );
 
-// const whitelist = ['http://localhost:3001'];
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (!origin || whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true,
-// };
-// app.use(cors(corsOptions));
+const whitelist = ['http://localhost:3001'];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 app.options('*', cors());
 
