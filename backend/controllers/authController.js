@@ -180,19 +180,20 @@ exports.logout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
-  let token;
-  if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
-  ) {
-    token = req.headers.authorization.split(' ')[1];
-  }
+  let token = req.cookies.jwt;
+  // if (
+  //   req.headers.authorization &&
+  //   req.headers.authorization.startsWith('Bearer')
+  // ) {
+  //   token = req.headers.authorization.split(' ')[1];
+  // }
 
-  if (!token) {
-    return next(
-      new AppError('You are not logged in! Please log in to get access')
-    );
-  }
+  if (req.cookies.jwt)
+    if (!token) {
+      return next(
+        new AppError('You are not logged in! Please log in to get access')
+      );
+    }
 
   // 2) Verification token
   const decoded = await util.promisify(jwt.verify)(
@@ -255,8 +256,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
   // 3) Send it to user's email
   try {
-    const forgotPasswordUrl = `${process.env.FORGOT_PASSWORD_URL}/${resetToken}`;
-    await new Email(user, forgotPasswordUrl).sendPasswordReset();
+    const resetPasswordUrl = `${process.env.RESET_PASSWORD_URL}/${resetToken}`;
+    await new Email(user, resetPasswordUrl).sendPasswordReset();
 
     res.status(200).json({
       status: 'success',
@@ -282,13 +283,14 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
     .createHash('sha256')
     .update(req.params.token)
     .digest('hex');
+
   const user = await User.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
     active: { $ne: false },
   });
 
-  // 2) If there is a user, and token has not expire, set the new password
+  // 2) If there is a user, and token has not expired, set the new password
   if (!user) return next(new AppError('Token is invalid or has expired', 400));
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;
@@ -323,4 +325,11 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // 4) Log user in, so send JWT
   createSendToken(user, 200, res);
+});
+
+exports.isLoggedIn = catchAsync(async (req, res, next) => {
+  res.status(200).json({
+    status: 'success',
+    user: req.user,
+  });
 });

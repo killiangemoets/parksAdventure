@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+import { ReactComponent as DropdownSVG } from "./../../assets/chevron-down.svg";
+
 export const NavBarContainer = styled.div`
   width: 100vw;
   height: 8rem;
@@ -20,6 +22,7 @@ export const NavBarLogoContainer = styled(Link)`
 `;
 
 export const LinksContainer = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -27,6 +30,9 @@ export const LinksContainer = styled.div`
 `;
 
 export const NavBarLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
   font-size: 1.6rem;
   text-transform: uppercase;
   color: #fbf3e5;
@@ -87,4 +93,10 @@ export const FooterLink = styled(Link)`
   &:hover {
     color: #666;
   }
+`;
+
+export const DropdownIcon = styled(DropdownSVG)`
+  margin-left: -0.4rem;
+  width: 2rem;
+  height: 2rem;
 `;

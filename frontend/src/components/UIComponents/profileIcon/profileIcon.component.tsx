@@ -7,6 +7,10 @@ import {
   WishListIcon,
   SettingsIcon,
   PlusIcon,
+  SettingsOrangeIcon,
+  BookingsOrangeIcon,
+  ReviewsOrangeIcon,
+  LogoutOrangeIcon,
 } from "./profileIcon.style";
 
 export enum PROFILE_ICON_TYPE_CLASSES {
@@ -17,6 +21,10 @@ export enum PROFILE_ICON_TYPE_CLASSES {
   messages = "messages",
   logout = "logout",
   addTour = "add tour",
+  settingsOrange = "settingsOrange",
+  bookingsOrange = "bookingsOrange",
+  reviewsOrange = "reviewsOrange",
+  logoutOrange = "logoutOrange",
 }
 
 const getIcon = (
@@ -30,6 +38,10 @@ const getIcon = (
     [PROFILE_ICON_TYPE_CLASSES.messages]: MessagesIcon,
     [PROFILE_ICON_TYPE_CLASSES.logout]: LogoutIcon,
     [PROFILE_ICON_TYPE_CLASSES.addTour]: PlusIcon,
+    [PROFILE_ICON_TYPE_CLASSES.settingsOrange]: SettingsOrangeIcon,
+    [PROFILE_ICON_TYPE_CLASSES.bookingsOrange]: BookingsOrangeIcon,
+    [PROFILE_ICON_TYPE_CLASSES.reviewsOrange]: ReviewsOrangeIcon,
+    [PROFILE_ICON_TYPE_CLASSES.logoutOrange]: LogoutOrangeIcon,
   }[iconType]);
 
 export type ProfileIconProps = {

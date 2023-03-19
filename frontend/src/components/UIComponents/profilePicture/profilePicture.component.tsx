@@ -6,6 +6,8 @@ import {
   SmallProfilePicture,
 } from "./profilePicture.style";
 
+import defaultUserImg from "../../../assets/default-user.jpg";
+
 export enum PROFILE_PICTURE_SIZE_CLASSES {
   small = "small",
   medium = "medium",
@@ -34,7 +36,7 @@ const ProfilePicture: FC<ProfilePictureProps> = ({
   const CustomProfilePicture = getProfilePicture(pictureSize);
   return (
     <CustomProfilePicture>
-      {pictureUrl && <img src={pictureUrl} alt="profile" />}
+      <img src={pictureUrl || defaultUserImg} alt="profile" />
     </CustomProfilePicture>
   );
 };

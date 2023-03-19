@@ -1,5 +1,3 @@
-import Button from "../../components/UIComponents/button/button.component";
-import Title from "../../components/UIComponents/title/title.component";
 import {
   EmailVerificationContainer,
   EmailVerificationErrorMessage,
@@ -8,7 +6,6 @@ import {
   EmailVerificationParagraph,
   EmailVerificationSection,
   EmailVerificationWrapper,
-  ResendCheckIcon,
 } from "./emailVerification.style";
 import roundLogo from "./../../assets/logo_hike_round.png";
 import { useSelector } from "react-redux";
@@ -16,9 +13,8 @@ import { selectEmail } from "../../store/user/user.selector";
 import NotFound from "../../components/notFound/notFound.component";
 import { resendEmail } from "../../api/authentication-requests";
 import { useState } from "react";
-import Spinner, {
-  SPINNER_TYPE_CLASSES,
-} from "../../components/UIComponents/spinner/spinner.component";
+import FormButton from "../../components/UIComponents/formButton/formButton.component";
+import Title from "../../components/UIComponents/title/title.component";
 
 const EmailVerification = () => {
   const email = useSelector(selectEmail);
@@ -71,19 +67,13 @@ const EmailVerification = () => {
             Still can't find the email?
           </EmailVerificationParagraph>
           <EmailVerificationSection>
-            <Button
-              onClick={() => {
-                handleResendEmail(email);
-              }}
+            <FormButton
+              loading={loading}
+              success={sent}
+              handleClick={() => handleResendEmail(email)}
             >
-              {loading ? (
-                <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
-              ) : sent ? (
-                <ResendCheckIcon />
-              ) : (
-                "Resend Email"
-              )}
-            </Button>
+              Resend Email
+            </FormButton>
             <EmailVerificationErrorMessage>
               {error}
             </EmailVerificationErrorMessage>

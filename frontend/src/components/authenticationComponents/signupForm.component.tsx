@@ -5,10 +5,7 @@ import { signUp } from "../../api/authentication-requests";
 import { AppDispatch } from "../../store/store";
 import { setEmail } from "../../store/user/user.action";
 import { SignUpData } from "../../types/user";
-import Button from "../UIComponents/button/button.component";
-import Spinner, {
-  SPINNER_TYPE_CLASSES,
-} from "../UIComponents/spinner/spinner.component";
+import FormButton from "../UIComponents/formButton/formButton.component";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -23,6 +20,7 @@ import {
 
 export const SignupForm = () => {
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState<SignUpData>({
     firstname: "",
     lastname: "",
@@ -32,8 +30,8 @@ export const SignupForm = () => {
   });
   const { firstname, lastname, email, password, passwordConfirm } = signUpData;
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -49,12 +47,20 @@ export const SignupForm = () => {
     setLoading(true);
     setErrorMessage("");
     const response = await signUp(signUpData);
-    console.log(response);
     setLoading(false);
+    console.log(response);
     if (response.status === "success") {
+      setSuccess(true);
       dispatch(setEmail(email));
-      return navigate("/signup/email-verification");
-    } else setErrorMessage(response.message);
+      setTimeout(function () {
+        setSuccess(false);
+        return navigate("/signup/email-verification");
+      }, 2000);
+    } else {
+      if (response.message.includes("Duplicate field value"))
+        setErrorMessage("This email address is already used");
+      else setErrorMessage("Something went wrong. Please try again!");
+    }
   };
 
   return (
@@ -111,13 +117,9 @@ export const SignupForm = () => {
             value={passwordConfirm}
             onChange={handleChange}
           />
-          <Button>
-            {loading ? (
-              <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
-            ) : (
-              "SIGN UP"
-            )}
-          </Button>
+          <FormButton loading={loading} success={success}>
+            SIGN UP
+          </FormButton>
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>

@@ -70,3 +70,37 @@ export const LogoutIcon = styled(LogoutSVG)`
     stroke: #fbf3e5;
   }
 `;
+
+export const SettingsOrangeIcon = styled(SettingsSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;
+
+export const BookingsOrangeIcon = styled(BookingsSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const ReviewsOrangeIcon = styled(ReviewsSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const LogoutOrangeIcon = styled(LogoutSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;

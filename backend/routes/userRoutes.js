@@ -11,11 +11,13 @@ router.get('/logout', authController.logout);
 router.patch('/email-verification/:token', authController.verifyEmail);
 router.post('/resend-email-verification', authController.resendEmail);
 
-router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
+router.post('/forgot-password', authController.forgotPassword);
+router.patch('/reset-password/:token', authController.resetPassword);
 
 // /!\ This will protect all the routes that come after this middleware, because middlewares run in sequence
-// router.use(authController.protect);
+router.use(authController.protect);
+
+router.get('/isloggedin', authController.isLoggedIn);
 
 router.patch('/updateMyPassword', authController.updatePassword);
 router.get('/me', userController.getMe, userController.getUser);

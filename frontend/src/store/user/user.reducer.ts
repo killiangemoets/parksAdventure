@@ -29,6 +29,17 @@ export const userReducer = (
         ...state,
         email: action.payload,
       };
+    case USER_ACTION_TYPES.REMOVE_USER:
+      return {
+        email: undefined,
+        firstname: undefined,
+        lastname: undefined,
+        photo: undefined,
+        phoneNumber: undefined,
+        birthDate: undefined,
+        role: undefined,
+        id: undefined,
+      };
     default:
       return state;
   }

@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { login } from "../../api/authentication-requests";
 import { useNavigate } from "react-router-dom";
-import Button from "../UIComponents/button/button.component";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -15,17 +14,16 @@ import {
   ErrorMessage,
 } from "./authentication.style";
 import { LoginData } from "../../types/user";
-import Spinner, {
-  SPINNER_TYPE_CLASSES,
-} from "../UIComponents/spinner/spinner.component";
 import { AppDispatch } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/user/user.action";
 import { selectEmail } from "../../store/user/user.selector";
+import FormButton from "../UIComponents/formButton/formButton.component";
 
 export const LoginForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const savedEmail = useSelector(selectEmail);
+  const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState<LoginData>({
     email: savedEmail || "",
@@ -33,8 +31,8 @@ export const LoginForm = () => {
   });
   const { email, password } = loginData;
   const [errorMessage, setErrorMessage] = useState<string>("");
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState<boolean>(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -49,6 +47,7 @@ export const LoginForm = () => {
     const response = await login(loginData);
     setLoading(false);
     if (response.status === "success") {
+      setSuccess(true);
       const {
         email,
         firstname,
@@ -71,7 +70,10 @@ export const LoginForm = () => {
           id,
         })
       );
-      return navigate("/");
+      setTimeout(function () {
+        setSuccess(false);
+        return navigate("/");
+      }, 2000);
     } else setErrorMessage(response.message);
   };
 
@@ -101,17 +103,15 @@ export const LoginForm = () => {
             name="password"
             type="password"
           />
-          <Button>
-            {loading ? (
-              <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
-            ) : (
-              "LOGIN"
-            )}
-          </Button>
+          <FormButton loading={loading} success={success}>
+            LOGIN
+          </FormButton>
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>
-      <AuthenticationLinkSmall to="/">Forgot password?</AuthenticationLinkSmall>
+      <AuthenticationLinkSmall to="/login/forgot-password">
+        Forgot password?
+      </AuthenticationLinkSmall>
       <AuthenticationLink to="/signup">
         Need to create an account?
       </AuthenticationLink>

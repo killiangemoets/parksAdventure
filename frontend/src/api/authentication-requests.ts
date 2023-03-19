@@ -54,3 +54,65 @@ export const resendEmail = async (email: string) => {
     return err;
   }
 };
+
+export const forgotPassword = async (email: string) => {
+  try {
+    const response = await axiosInstance.post("/users/forgot-password", {
+      email,
+    });
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const resetPassword = async (
+  token: string,
+  password: string,
+  passwordConfirm: string,
+  stayConnected: boolean
+) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/users/reset-password/${token}`,
+      {
+        password,
+        passwordConfirm,
+        stayConnected,
+      }
+    );
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const logout = async () => {
+  try {
+    const response = await axiosInstance.get("/users/logout");
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const response = await axiosInstance.get("/users/isloggedin");
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};

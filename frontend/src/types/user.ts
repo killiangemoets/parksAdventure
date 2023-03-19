@@ -21,3 +21,9 @@ export type SignUpData = {
   password: string;
   passwordConfirm: string;
 };
+
+export type PasswordsData = {
+  password: string;
+  passwordConfirm: string;
+  logout: boolean;
+};

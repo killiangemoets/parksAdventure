@@ -16,8 +16,50 @@ import Login from "./routes/login/login.component";
 import AddTour from "./routes/addTour/addTour.component";
 import EmailVerification from "./routes/emailVerification/emailVerification.component";
 import EmailConfirmation from "./routes/emailConfirmation/emailConfirmation.component";
+import ForgotPassword from "./routes/forgotPassword/forgotPassword.component";
+import ResetPassword from "./routes/resetPassword/resetPassword.component";
+import { useEffect } from "react";
+import { getUser } from "./api/authentication-requests";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "./store/store";
+import { removeUser, setUser } from "./store/user/user.action";
 
 function App() {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    const handleIsLoggedIn = async () => {
+      const response = await getUser();
+      console.log(response);
+      if (response.user) {
+        const {
+          email,
+          firstname,
+          lastname,
+          photo,
+          phoneNumber,
+          birthDate,
+          role,
+          _id: id,
+        } = response.user;
+        dispatch(
+          setUser({
+            email,
+            firstname,
+            lastname,
+            photo,
+            phoneNumber,
+            birthDate,
+            role,
+            id,
+          })
+        );
+      } else {
+        dispatch(removeUser());
+      }
+    };
+    handleIsLoggedIn();
+  }, []);
   return (
     <Routes>
       <Route path="/" element={<NavbarAndFooter />}>
@@ -34,6 +76,8 @@ function App() {
           element={<EmailConfirmation />}
         />
         <Route path="login" element={<Login />} />
+        <Route path="login/forgot-password" element={<ForgotPassword />} />
+        <Route path="login/reset-password/:token" element={<ResetPassword />} />
       </Route>
       <Route path="profile/" element={<UserProfile />}>
         <Route index element={<Navigate to="/profile/wishlist" />} />
