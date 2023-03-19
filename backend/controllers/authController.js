@@ -53,7 +53,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role, // TODO: remove it!!
-    emailVerificationToken,
+    emailVerificationTokens: [emailVerificationToken],
   });
 
   try {
@@ -65,7 +65,7 @@ exports.signup = catchAsync(async (req, res, next) => {
       message: 'Token sent to email!',
     });
   } catch (err) {
-    newUser.emailVerificationToken = undefined;
+    newUser.emailVerificationTokens = undefined;
     await newUser.save({ validateBeforeSave: false });
     return next(
       new AppError(
@@ -83,11 +83,13 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
+  console.log(hashedToken);
+
   const updatedUser = await User.findOneAndUpdate(
     {
-      emailVerificationToken: hashedToken,
+      emailVerificationTokens: { $in: [hashedToken] },
     },
-    { active: true, emailVerificationToken: undefined },
+    { active: true, emailVerificationTokens: undefined },
     {
       new: true,
       runValidators: true,
@@ -102,6 +104,49 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     message: 'The email address has been verified',
+  });
+});
+
+exports.resendEmail = catchAsync(async (req, res, next) => {
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+
+  // Encrypt the token using the sha256 algorithms
+  const emailVerificationToken = crypto
+    .createHash('sha256')
+    .update(verificationToken)
+    .digest('hex');
+
+  const user = await User.findOneAndUpdate(
+    {
+      email: req.body.email,
+    },
+    {
+      $inc: { emailVerificationTokenResend: 1 },
+      $push: { emailVerificationTokens: emailVerificationToken },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).select('+emailVerificationTokenResend +emailVerificationTokens');
+
+  console.log(user);
+
+  if (!user) return next(new AppError('No user found for this email', 400));
+  if (user.emailVerificationTokenResend >= 5)
+    return next(
+      new AppError(
+        'You have reached the limit of the number of emails you can send',
+        508
+      )
+    );
+
+  const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}`;
+  await new Email(user, emailVerificationUrl).sendEmailVerification();
+
+  res.status(200).json({
+    status: 'success',
+    message: 'A new verification email has been sent',
   });
 });
 

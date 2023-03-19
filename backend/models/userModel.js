@@ -65,8 +65,13 @@ const userSchema = new mongoose.Schema({
     type: Date,
     select: false,
   },
-  emailVerificationToken: {
-    type: String,
+  emailVerificationTokens: {
+    type: [String],
+    select: false,
+  },
+  emailVerificationTokenResend: {
+    type: Number,
+    default: 0,
     select: false,
   },
   active: {

@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { ReactComponent as CheckSVG } from "./../../assets/check-circle.svg";
 
 export const EmailVerificationContainer = styled.div`
   width: 100vw;
@@ -22,6 +23,12 @@ export const EmailVerificationWrapper = styled.div`
   gap: 4.2rem;
   align-items: center;
   justify-content: center;
+
+  button {
+    min-width: 19.4rem;
+    padding: 0rem 3.2rem;
+    height: 5rem;
+  }
 `;
 
 export const EmailVerificationLogo = styled.div`
@@ -44,6 +51,21 @@ export const EmailVerificationParagraph = styled.p`
   }
 `;
 
+export const EmailVerificationSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const EmailVerificationErrorMessage = styled.p`
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+`;
+
 export const EmailVerificationLink = styled(Link)`
   color: #cc704b;
   text-decoration: underline;
@@ -51,5 +73,14 @@ export const EmailVerificationLink = styled(Link)`
   transition: all 0.3s;
   &:hover {
     color: #b86544;
+  }
+`;
+
+export const ResendCheckIcon = styled(CheckSVG)`
+  width: 3.2rem;
+  height: 3.2rem;
+
+  .path {
+    stroke: #fff;
   }
 `;

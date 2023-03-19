@@ -15,16 +15,20 @@ import {
   ErrorMessage,
 } from "./authentication.style";
 import { LoginData } from "../../types/user";
-import Spinner from "../UIComponents/spinner/spinner.component";
+import Spinner, {
+  SPINNER_TYPE_CLASSES,
+} from "../UIComponents/spinner/spinner.component";
 import { AppDispatch } from "../../store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../store/user/user.action";
+import { selectEmail } from "../../store/user/user.selector";
 
 export const LoginForm = () => {
   const dispatch: AppDispatch = useDispatch();
+  const savedEmail = useSelector(selectEmail);
 
   const [loginData, setLoginData] = useState<LoginData>({
-    email: "",
+    email: savedEmail || "",
     password: "",
   });
   const { email, password } = loginData;
@@ -97,7 +101,13 @@ export const LoginForm = () => {
             name="password"
             type="password"
           />
-          <Button>{loading ? <Spinner /> : "LOGIN"}</Button>
+          <Button>
+            {loading ? (
+              <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
+            ) : (
+              "LOGIN"
+            )}
+          </Button>
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>

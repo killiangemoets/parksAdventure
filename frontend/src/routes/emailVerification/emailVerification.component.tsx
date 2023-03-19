@@ -2,19 +2,52 @@ import Button from "../../components/UIComponents/button/button.component";
 import Title from "../../components/UIComponents/title/title.component";
 import {
   EmailVerificationContainer,
+  EmailVerificationErrorMessage,
   EmailVerificationLink,
   EmailVerificationLogo,
   EmailVerificationParagraph,
+  EmailVerificationSection,
   EmailVerificationWrapper,
+  ResendCheckIcon,
 } from "./emailVerification.style";
 import roundLogo from "./../../assets/logo_hike_round.png";
 import { useSelector } from "react-redux";
 import { selectEmail } from "../../store/user/user.selector";
+import NotFound from "../../components/notFound/notFound.component";
+import { resendEmail } from "../../api/authentication-requests";
+import { useState } from "react";
+import Spinner, {
+  SPINNER_TYPE_CLASSES,
+} from "../../components/UIComponents/spinner/spinner.component";
 
 const EmailVerification = () => {
   const email = useSelector(selectEmail);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sent, setSent] = useState<boolean>(false);
+  const [error, setError] = useState<string>("");
+
+  const handleResendEmail = async (email: string) => {
+    setLoading(true);
+    const response = await resendEmail(email);
+    console.log(response);
+    setLoading(false);
+    if (response.status === "success") {
+      setSent(true);
+      setTimeout(function () {
+        setSent(false);
+      }, 3000);
+      setError("");
+    } else {
+      if (
+        response.message ===
+        "You have reached the limit of the number of emails you can send"
+      )
+        setError(response.message);
+      else setError("An error has occured. Please try again.");
+    }
+  };
   if (!email) {
-    return <EmailVerificationContainer>ERROR 404</EmailVerificationContainer>;
+    return <NotFound title="There is no email to verify" />;
   } else {
     return (
       <EmailVerificationContainer>
@@ -37,10 +70,30 @@ const EmailVerification = () => {
           <EmailVerificationParagraph>
             Still can't find the email?
           </EmailVerificationParagraph>
-          <Button>Resend Email</Button>
+          <EmailVerificationSection>
+            <Button
+              onClick={() => {
+                handleResendEmail(email);
+              }}
+            >
+              {loading ? (
+                <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
+              ) : sent ? (
+                <ResendCheckIcon />
+              ) : (
+                "Resend Email"
+              )}
+            </Button>
+            <EmailVerificationErrorMessage>
+              {error}
+            </EmailVerificationErrorMessage>
+          </EmailVerificationSection>
+
           <EmailVerificationParagraph>
             Need help?{" "}
-            <EmailVerificationLink to={"/"}>Contact Us</EmailVerificationLink>
+            <EmailVerificationLink to={"/contact"}>
+              Contact Us
+            </EmailVerificationLink>
           </EmailVerificationParagraph>
         </EmailVerificationWrapper>
       </EmailVerificationContainer>

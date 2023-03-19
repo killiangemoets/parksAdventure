@@ -6,7 +6,9 @@ import { AppDispatch } from "../../store/store";
 import { setEmail } from "../../store/user/user.action";
 import { SignUpData } from "../../types/user";
 import Button from "../UIComponents/button/button.component";
-import Spinner from "../UIComponents/spinner/spinner.component";
+import Spinner, {
+  SPINNER_TYPE_CLASSES,
+} from "../UIComponents/spinner/spinner.component";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -41,6 +43,9 @@ export const SignupForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (password !== passwordConfirm) {
+      return setErrorMessage("Passwords are not the same");
+    }
     setLoading(true);
     setErrorMessage("");
     const response = await signUp(signUpData);
@@ -106,7 +111,13 @@ export const SignupForm = () => {
             value={passwordConfirm}
             onChange={handleChange}
           />
-          <Button>{loading ? <Spinner /> : "SIGN UP"}</Button>
+          <Button>
+            {loading ? (
+              <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
+            ) : (
+              "SIGN UP"
+            )}
+          </Button>
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>
