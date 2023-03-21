@@ -3,10 +3,16 @@ import { ConfigProvider, Slider } from "antd";
 import { SliderStepsContainer } from "./sliderSteps.style";
 
 export type SliderStepsProps = {
-  steps: string[] | number[];
+  steps: TInfo<string>[];
+  currentValues: TInfo<string>[];
+  handler: (values: TInfo<string>[]) => void;
 };
 
-const SliderSteps: FC<SliderStepsProps> = ({ steps }) => {
+const SliderSteps: FC<SliderStepsProps> = ({
+  steps,
+  handler,
+  currentValues,
+}) => {
   const [inputValues, setInputValues] = useState<[number, number]>([0, 100]);
 
   const [marks, setMarks] = useState({});
@@ -33,13 +39,13 @@ const SliderSteps: FC<SliderStepsProps> = ({ steps }) => {
             ref={(el) => (marksRef.current[i] = el)}
             data-step-value={stepValue}
           >
-            {step}
+            {step.value}
           </span>
         ),
       };
     });
     setMarks({ ...createMarks });
-  }, []);
+  }, [steps]);
 
   useEffect(() => {
     marksRef.current.forEach((markEl) => {
@@ -57,8 +63,29 @@ const SliderSteps: FC<SliderStepsProps> = ({ steps }) => {
     });
   }, [inputValues]);
 
+  useEffect(() => {
+    const min = steps.findIndex((step) => step.id === currentValues[0].id);
+    const max = steps.findIndex(
+      (step) => step.id === currentValues[currentValues.length - 1].id
+    );
+
+    const stepMin = (100 / (steps.length - 1)) * min;
+    const stepMax = (100 / (steps.length - 1)) * max;
+
+    setInputValues([stepMin, stepMax]);
+  }, [currentValues]);
+
   const onChange = (values: [number, number]) => {
     setInputValues(values);
+    let newValues = [];
+    for (
+      let i = Math.trunc(values[0] / (100 / (steps.length - 1)));
+      i <= Math.trunc(values[1] / (100 / (steps.length - 1)));
+      i++
+    ) {
+      newValues.push(steps[i]);
+    }
+    handler(newValues);
   };
 
   return (

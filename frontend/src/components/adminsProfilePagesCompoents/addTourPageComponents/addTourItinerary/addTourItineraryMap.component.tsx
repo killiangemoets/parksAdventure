@@ -28,7 +28,7 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
 import axios from "axios";
-import { Stop } from "../../../../types/tour";
+import { TCreateStop } from "../../../../types/tour";
 import getDirection from "../../../../utils/map/getDirection";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
@@ -40,15 +40,15 @@ export type AddInfoPopupProps = {
   longitude: number;
 };
 
-const defaultNewStopState: Stop = {
+const defaultNewStopState: TCreateStop = {
   latitude: 0,
   longitude: 0,
   text: "",
 };
 
 export type AddTourItineraryMapProps = {
-  stops: Stop[];
-  addStop: (stop: Stop) => void;
+  stops: TCreateStop[];
+  addStop: (stop: TCreateStop) => void;
 };
 
 const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
@@ -61,10 +61,10 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
     zoom: 3.5,
   });
   const [pins, setPins] = useState<JSX.Element[]>([]);
-  const [newStop, setNewStop] = useState<Stop>(defaultNewStopState);
+  const [newStop, setNewStop] = useState<TCreateStop>(defaultNewStopState);
   const [newPin, setNewPin] = useState<JSX.Element | null>(null);
 
-  const [popupInfo, setPopupInfo] = useState<Stop | null>(null);
+  const [popupInfo, setPopupInfo] = useState<TCreateStop | null>(null);
   const [showPopupAddInfo, setShowPopupAddInfo] = useState<boolean>(false);
   const [showErrorStopText, setShowErrorStopText] = useState<string>("");
   const [itinerary, setItinerary] = useState<[number, number][]>([]);

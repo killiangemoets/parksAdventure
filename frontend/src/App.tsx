@@ -30,7 +30,6 @@ function App() {
   useEffect(() => {
     const handleIsLoggedIn = async () => {
       const response = await getUser();
-      console.log(response);
       if (response.user) {
         const {
           email,
@@ -60,6 +59,7 @@ function App() {
     };
     handleIsLoggedIn();
   }, []);
+
   return (
     <Routes>
       <Route path="/" element={<NavbarAndFooter />}>

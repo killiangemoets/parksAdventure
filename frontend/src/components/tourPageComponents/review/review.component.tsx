@@ -43,7 +43,7 @@ const Review: FC<ReviewProps> = ({ hideEditButtons = true }) => {
         <ReviewDate>November 14, 2022</ReviewDate>
       </ReviewInfos>
       <ReviewContent>
-        <StarsRating hiddenValue={true} />
+        <StarsRating hiddenValue={true} rating={4.2} numRatings={6} />
         <ReviewText>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab
           harum labore culpa porro minus sunt at id voluptate perspiciatis, quo

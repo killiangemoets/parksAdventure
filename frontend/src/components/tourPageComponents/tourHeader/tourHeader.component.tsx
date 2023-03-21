@@ -29,6 +29,8 @@ const TourHeader: FC<TourHeaderProps> = ({
           <StarsRating
             linkOnReviews={true}
             handleLinkTo={handleScrollToReviews}
+            rating={4.2}
+            numRatings={6}
           />
         </TourHeaderLeft>
         <TourHeaderRight>

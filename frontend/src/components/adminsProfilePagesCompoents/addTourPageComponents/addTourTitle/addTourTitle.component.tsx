@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from "react";
-import { TOUR_DATA } from "../../../../types/tour";
+import { CREATE_TOUR_DATA } from "../../../../types/tour";
 import {
   AddTourTitleContainer,
   AddTourTitleWrapper,
@@ -28,7 +28,7 @@ const AddTourTitle: FC<AddTourTitleProps> = ({
         <TitleInput
           placeholder="Add the tour title here"
           value={title}
-          name={TOUR_DATA.title}
+          name={CREATE_TOUR_DATA.name}
           onChange={onChange}
           error={error}
         />

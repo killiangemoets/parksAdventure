@@ -16,9 +16,9 @@ const TourRecommandations = () => {
           You might also like...
         </Title>
         <RecommandationCards>
+          {/* <TourCard />
           <TourCard />
-          <TourCard />
-          <TourCard />
+          <TourCard /> */}
         </RecommandationCards>
       </TourRecommandationsWrapper>
     </TourRecommandationsContainer>

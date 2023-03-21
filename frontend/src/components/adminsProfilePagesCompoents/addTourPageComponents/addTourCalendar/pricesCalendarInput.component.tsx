@@ -1,12 +1,10 @@
 import { FC, useEffect, useState } from "react";
-
 import FullCalendar from "@fullcalendar/react"; // must go before plugins
 import dayGridPlugin from "@fullcalendar/daygrid"; // a plugin!
 import interactionPlugin from "@fullcalendar/interaction";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import gbLocale from "@fullcalendar/core/locales/en-gb";
-
 import {
   CalendarInputContainer,
   CalendarInputTopBarContainer,
@@ -31,7 +29,7 @@ import QuickFactInput, {
   HandleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-import { Availability, TOUR_DATA } from "../../../../types/tour";
+import { TCreateAvailability, CREATE_TOUR_DATA } from "../../../../types/tour";
 
 type ModalInfosProps = {
   price: number | undefined;
@@ -59,8 +57,8 @@ const defaultErrorsState: ErrorsProps = {
 };
 
 export type PricesCalendarInputProps = {
-  availabilities: Availability[];
-  handleChange: (availabilities: Availability[], name: string) => void;
+  availabilities: TCreateAvailability[];
+  handleChange: (availabilities: TCreateAvailability[], name: string) => void;
 };
 
 const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
@@ -185,7 +183,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
     if (!modalInfos.price || !modalInfos.groupSize || !modalInfos.startingTime)
       return;
 
-    const updatedAvailabilities: Availability[] = selectedDates.map(
+    const updatedAvailabilities: TCreateAvailability[] = selectedDates.map(
       (selectedDate) => {
         return {
           date: selectedDate.format("YYYY-MM-DD"),
@@ -201,7 +199,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         updatedAvailabilities.push(availability);
     });
 
-    handleChange(updatedAvailabilities, TOUR_DATA.availabilities);
+    handleChange(updatedAvailabilities, CREATE_TOUR_DATA.availabilities);
     setPriceModalOpen(false);
     setModalInfos(defaultModalInfo);
     setSelectedDates([]);
@@ -216,7 +214,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
             selectedDate.format("YYYY-MM-DD") === availability.date
         )
     );
-    handleChange(updatedAvailabilities, TOUR_DATA.availabilities);
+    handleChange(updatedAvailabilities, CREATE_TOUR_DATA.availabilities);
     setDeleteModalOpen(false);
     setSelectedDates([]);
   };

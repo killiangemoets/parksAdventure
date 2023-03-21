@@ -83,8 +83,6 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
-  console.log(hashedToken);
-
   const updatedUser = await User.findOneAndUpdate(
     {
       emailVerificationTokens: { $in: [hashedToken] },
@@ -129,8 +127,6 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
       runValidators: true,
     }
   ).select('+emailVerificationTokenResend +emailVerificationTokens');
-
-  console.log(user);
 
   if (!user) return next(new AppError('No user found for this email', 400));
   if (user.emailVerificationTokenResend >= 5)
@@ -309,8 +305,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
     _id: req.user.id,
     active: { $ne: false },
   }).select('+password');
-
-  console.log(req.body.passwordCurrent, user);
 
   // 2) Check if POSTED current password is correct
   if (!(await user.correctPassword(req.body.passwordCurrent, user.password)))

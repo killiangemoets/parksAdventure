@@ -10,13 +10,18 @@ export const UserWishList = () => {
     <UserWishListContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>My Wishlist</Title>
       <WishListCards>
+        {/* <TourCard />
         <TourCard />
         <TourCard />
         <TourCard />
-        <TourCard />
-        <TourCard />
+        <TourCard /> */}
       </WishListCards>
-      <Pagination />
+      <Pagination
+        current={1}
+        total={32}
+        defaultPageSize={16}
+        handleChange={(value) => {}}
+      />
     </UserWishListContainer>
   );
 };

@@ -9,8 +9,6 @@ import Title, {
 } from "../../components/UIComponents/title/title.component";
 import ReservationInfoSection from "../../components/userProfilePagesComponents/reservationInfoSection/reservationInfoSection.component";
 import {
-  StarsRatingContainer,
-  StarsRatingWrapper,
   TitleContainer,
   TitleWrapper,
   UserBookingDetailsContainer,
@@ -22,7 +20,7 @@ const UserBookingDetails = () => {
       <TitleContainer>
         <TitleWrapper>
           <Title titleType={TITLE_TYPE_CLASSES.main}>The Forest Hiker</Title>
-          <StarsRating linkOnReviews={true} />
+          <StarsRating linkOnReviews={true} rating={3.9} numRatings={12} />
         </TitleWrapper>
       </TitleContainer>
       {/* <StarsRatingContainer>

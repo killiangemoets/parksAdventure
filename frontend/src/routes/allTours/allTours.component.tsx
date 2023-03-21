@@ -7,16 +7,35 @@ import {
   AllToursResults,
   AllToursResultsLeft,
 } from "./allTours.style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLayoutEffect } from "react";
 import { useRef } from "react";
 import Pagination from "../../components/UIComponents/pagination/pagination.component";
+import { AppDispatch } from "../../store/store";
+import { useDispatch } from "react-redux";
+import { fetchToursAsync } from "../../store/tours/tours.action";
+import { useSearchParams } from "react-router-dom";
+// import {
+//   categoriesList,
+//   difficultiesList,
+//   TCategory,
+//   TDifficulty,
+// } from "../../types/tour";
+// import isValidDate from "../../utils/formatting/validDate";
 
 const AllTours = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchToursAsync());
+  }, [searchParams]);
+
   const tourCardsResultRef = useRef<HTMLDivElement | null>(null);
   const [fix, setFix] = useState<boolean>(false);
   const [reduceHeight, setReduceHeight] = useState<boolean>(false);
   const [mapOpen, setMapOpen] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const checkScroll = (): void => {
     if (!tourCardsResultRef.current) return;
@@ -71,7 +90,14 @@ const AllTours = () => {
           // className="tour-cards"
         >
           <ToursCards mapOpen={mapOpen} />
-          <Pagination />
+          <Pagination
+            current={currentPage}
+            total={100}
+            defaultPageSize={16}
+            handleChange={(value) => {
+              setCurrentPage(value);
+            }}
+          />
         </AllToursResultsLeft>
         <ToursMap
           fix={fix}

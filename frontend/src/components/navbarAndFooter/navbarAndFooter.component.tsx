@@ -28,9 +28,9 @@ export const Navigation = () => {
   const [showProfileDropdown, setShowProfileDropdown] =
     useState<boolean>(false);
 
-  useEffect(() => {
-    console.log({ user });
-  }, [user]);
+  // useEffect(() => {
+  //   console.log({ user });
+  // }, [user]);
 
   return (
     <NavBarContainer

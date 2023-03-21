@@ -50,8 +50,8 @@ const tourSchema = new mongoose.Schema(
       type: String,
       required: [true, 'A tour must have a difficulty'],
       enum: {
-        values: ['family', 'medium', 'hard', 'expert'],
-        message: 'Difficulty is either family, medium, hard, or expert',
+        values: ['family', 'medium', 'difficult', 'expert'],
+        message: 'Difficulty is either family, medium, difficult, or expert',
       },
     },
     categories: {
@@ -82,6 +82,24 @@ const tourSchema = new mongoose.Schema(
         'A meeting address cannot have more than 100 characters',
       ],
     },
+    startLocation: {
+      type: {
+        type: String,
+        default: 'Point',
+        enum: ['Point'],
+      },
+      coordinates: [Number],
+      description: {
+        type: String,
+        required: [true, 'A location must have a descripion'],
+        trim: true,
+        maxlength: [
+          40,
+          'A location description cannot have more than 40 characters',
+        ],
+      },
+    },
+
     locations: [
       {
         type: {
@@ -155,11 +173,11 @@ const tourSchema = new mongoose.Schema(
         },
       },
     ],
-    additionInfo: {
+    additionalInfo: {
       type: [String],
       default: [],
     },
-    popularity: {
+    popularityIndex: {
       type: Number,
       default: 0,
     },
@@ -179,7 +197,7 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-tourSchema.index({ popularity: -1, ratingsAverage: -1 });
+tourSchema.index({ popularityIndex: -1, ratingsAverage: -1 });
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
@@ -213,7 +231,7 @@ tourSchema.pre(/^find/, function (next) {
   next();
 });
 
-tourSchema.pre(/^find/, function (next) {
+tourSchema.pre(/^findOne/, function (next) {
   this.populate({
     path: 'guides',
     select: '-__v -passwordChangedAt',

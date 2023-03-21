@@ -1,17 +1,38 @@
 import styled from "styled-components";
 
 import { ReactComponent as GlassSVG } from "../../../assets/glass.svg";
+import { ReactComponent as DeleteSVG } from "../../../assets/x-solid.svg";
 
 export const SearchInputContainer = styled.div`
   position: relative;
 `;
 
-export const Glass = styled(GlassSVG)`
+export const SearchInputDeleteButton = styled.div`
   position: absolute;
   top: 30%;
   left: 3.5%;
+`;
+
+export const SearchInputForm = styled.form``;
+
+export const Glass = styled(GlassSVG)`
   width: 2rem;
   height: 2rem;
+  cursor: pointer;
+
+  .path {
+    fill: #aaa;
+  }
+`;
+
+export const Delete = styled(DeleteSVG)`
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+
+  .path {
+    fill: #cc704b;
+  }
 `;
 
 export const Input = styled.input`

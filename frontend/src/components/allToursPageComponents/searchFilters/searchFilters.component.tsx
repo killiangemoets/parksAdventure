@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -17,17 +18,19 @@ import {
 } from "./searchFilters.style";
 
 const SearchFilters = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const sortPossibilites: Info[] = [
     { id: "popularity", value: "Popularity" },
     { id: "pricing", value: "Pricing" },
     { id: "rating", value: "Rating" },
-    { id: "last minute", value: "Last minute" },
+    { id: "lastminute", value: "Last minute" },
   ];
 
   const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
   const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
-  const handleDropsown = (value: Info): void => {
+  const handleDropdown = (value: Info): void => {
     setCurrentSort(value);
   };
 
@@ -39,25 +42,42 @@ const SearchFilters = () => {
     setFiltersOpen(false);
   };
 
+  useEffect(() => {
+    if (currentSort.id !== "popularity")
+      searchParams.set("sort", currentSort.id.toString());
+    else searchParams.delete("sort");
+    setSearchParams(searchParams);
+  }, [currentSort, searchParams]);
+
   return (
     <SearchFiltersContainer>
       <SearchFiltersWrapper>
         <Categories>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-            Family Tours
-          </Button>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-            Advanced Tours
-          </Button>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-            Mountain Tours
-          </Button>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-            Desert Tours
-          </Button>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-            10Days+ Tours
-          </Button>
+          <Link to="/alltours?difficulty=family">
+            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+              Family Tours
+            </Button>
+          </Link>
+          <Link to="/alltours?difficulty=expert">
+            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+              Advanced Tours
+            </Button>
+          </Link>
+          <Link to="/alltours?category=mountain">
+            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+              Mountain Tours
+            </Button>
+          </Link>
+          <Link to="/alltours?category=desert">
+            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+              Desert Tours
+            </Button>
+          </Link>
+          <Link to="/alltours?duration[gte]=10">
+            <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+              10Days+ Tours
+            </Button>
+          </Link>
         </Categories>
         <Filters>
           <Button onClick={() => handleOpenFilters(true)}>
@@ -68,7 +88,7 @@ const SearchFilters = () => {
             dropdownType={DROPDOWN_TYPE_CLASSES.input}
             current={currentSort}
             list={sortPossibilites}
-            handleInput={handleDropsown}
+            handleInput={handleDropdown}
           >
             <SortIcon />
           </Dropdown>

@@ -3,13 +3,9 @@ import { FC } from "react";
 import {
   NumRatings,
   RatingData,
-  StarIcon,
-  StarsContainer,
   StarsRatingContainer,
   RatingValue,
   LinkNumRatings,
-  HalfStarIcon,
-  EmptyStarIcon,
 } from "./starsRating.style";
 
 export type StarsRatingProps = {
@@ -17,6 +13,8 @@ export type StarsRatingProps = {
   linkOnReviews?: boolean;
   handleLinkTo?: () => void;
   readonly?: boolean;
+  rating: number;
+  numRatings: number;
 };
 
 const StarsRating: FC<StarsRatingProps> = ({
@@ -24,17 +22,11 @@ const StarsRating: FC<StarsRatingProps> = ({
   linkOnReviews = false,
   handleLinkTo = () => {},
   readonly = true,
+  rating,
+  numRatings,
 }) => {
   return (
     <StarsRatingContainer>
-      {/* <StarsContainer>
-        <StarIcon />
-        <StarIcon />
-        <StarIcon />
-        <HalfStarIcon />
-        <EmptyStarIcon />
-      </StarsContainer> */}
-      {/* <Rate character={<StarIcon />} allowHalf disabled defaultValue={3.8} /> */}
       <ConfigProvider
         theme={{
           components: {
@@ -44,16 +36,18 @@ const StarsRating: FC<StarsRatingProps> = ({
           },
         }}
       >
-        <Rate allowHalf disabled={readonly} defaultValue={3.8} />
+        <Rate allowHalf disabled={readonly} defaultValue={rating} />
       </ConfigProvider>
 
       {!hiddenValue && (
         <RatingData>
-          <RatingValue>4.8</RatingValue>
+          <RatingValue>{rating}</RatingValue>
           {!linkOnReviews ? (
-            <NumRatings>(6)</NumRatings>
+            <NumRatings>({numRatings})</NumRatings>
           ) : (
-            <LinkNumRatings onClick={handleLinkTo}>(6 reviews)</LinkNumRatings>
+            <LinkNumRatings onClick={handleLinkTo}>
+              ({numRatings} reviews)
+            </LinkNumRatings>
           )}
         </RatingData>
       )}

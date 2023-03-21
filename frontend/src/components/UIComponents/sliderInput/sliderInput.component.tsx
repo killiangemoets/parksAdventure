@@ -1,23 +1,24 @@
 import { InputNumbers, SliderInputContainer } from "./sliderInput.style";
 import { ConfigProvider, InputNumber, Slider } from "antd";
-import { FC, useState } from "react";
+import { FC } from "react";
 
 export type SliderInputProps = {
   min: number;
   max: number;
+  currentValues: [number, number];
+  handler: (values: [number, number]) => void;
 };
 
-const SliderInput: FC<SliderInputProps> = ({ min, max }) => {
-  const [inputValues, setInputValues] = useState<[number, number]>([min, max]);
-
+const SliderInput: FC<SliderInputProps> = ({
+  min,
+  max,
+  currentValues,
+  handler,
+}) => {
   const onChange = (values: [number, number]) => {
     console.log("onChange: ", values);
     if (values[1] < values[0]) return;
-    setInputValues(values);
-  };
-
-  const onAfterChange = (values: [number, number]) => {
-    console.log("onAfterChange: ", values);
+    handler(values);
   };
 
   return (
@@ -45,31 +46,28 @@ const SliderInput: FC<SliderInputProps> = ({ min, max }) => {
           step={1}
           min={min}
           max={max}
-          // defaultValue={[min, max]}
-          // tooltip={{ open: true }}
           onChange={onChange}
-          // onAfterChange={onAfterChange}
-          value={inputValues}
+          value={currentValues}
         />
         <InputNumbers>
           <InputNumber
             min={min}
             max={max}
             style={{ margin: "0 16px" }}
-            value={inputValues[0]}
+            value={currentValues[0]}
             onChange={(newValue) => {
               if (!newValue) return;
-              onChange([newValue, inputValues[1]]);
+              onChange([newValue, currentValues[1]]);
             }}
           />
           <InputNumber
             min={min}
             max={max}
             style={{ margin: "0 16px" }}
-            value={inputValues[1]}
+            value={currentValues[1]}
             onChange={(newValue) => {
               if (!newValue) return;
-              onChange([inputValues[0], newValue]);
+              onChange([currentValues[0], newValue]);
             }}
           />
         </InputNumbers>

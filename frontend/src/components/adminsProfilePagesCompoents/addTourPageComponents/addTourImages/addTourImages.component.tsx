@@ -13,7 +13,7 @@ import Modal from "../../../UIComponents/modal/modal.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
-import { TOUR_DATA } from "../../../../types/tour";
+import { CREATE_TOUR_DATA } from "../../../../types/tour";
 import convertToBase64 from "../../../../utils/images-treatment/convert-base-64";
 
 export type AddTourImagesProps = {
@@ -50,7 +50,7 @@ const AddTourImages: FC<AddTourImagesProps> = ({
     while (newImagesList.length > maxImages) {
       newImagesList.pop();
     }
-    handleChange(newImagesList, TOUR_DATA.images);
+    handleChange(newImagesList, CREATE_TOUR_DATA.images);
   };
 
   const handleCloseModal = () => {

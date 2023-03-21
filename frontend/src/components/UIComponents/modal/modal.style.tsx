@@ -58,7 +58,6 @@ export const CloseIcon = styled(CloseSVG)`
 
   &:hover {
     .path {
-      fill: #333;
       fill: #cc704b;
     }
   }

@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 import type { PaginationProps } from "antd";
 import { PaginationContainer, PaginationElement } from "./pagination.style";
 
-const Pagination = () => {
-  const [current, setCurrent] = useState<number>(8);
-
-  const onChange: PaginationProps["onChange"] = (page) => {
-    console.log(page);
-    setCurrent(page);
-  };
-
+type PaginationElProps = {
+  current: number;
+  total: number;
+  defaultPageSize: number;
+  handleChange: (value: number) => void;
+};
+const Pagination: FC<PaginationElProps> = ({
+  current,
+  total,
+  handleChange,
+  defaultPageSize,
+}) => {
   return (
     <PaginationContainer>
       <PaginationElement
         current={current}
-        onChange={onChange}
-        total={600}
-        defaultPageSize={16}
+        onChange={(page) => {
+          handleChange(page);
+        }}
+        total={total}
+        defaultPageSize={defaultPageSize}
         defaultCurrent={1}
         showSizeChanger={false}
       />

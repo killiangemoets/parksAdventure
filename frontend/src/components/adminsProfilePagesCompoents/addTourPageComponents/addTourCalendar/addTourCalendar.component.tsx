@@ -9,11 +9,11 @@ import {
   AddTourCalendarWrapper,
 } from "./addTourCalendar.style";
 import { FC } from "react";
-import { Availability } from "../../../../types/tour";
+import { TCreateAvailability } from "../../../../types/tour";
 
 export type AddTourCalendarProps = {
-  availabilities: Availability[];
-  handleChange: (availabilities: Availability[], name: string) => void;
+  availabilities: TCreateAvailability[];
+  handleChange: (availabilities: TCreateAvailability[], name: string) => void;
 };
 
 const AddTourCalendar: FC<AddTourCalendarProps> = ({

@@ -1,11 +1,28 @@
 import axios from "axios";
-import { TourData } from "../types/tour";
+import { CreateTourData, TourData } from "../types/tour";
 import type { RcFile } from "antd/es/upload";
 import convertToBase64 from "../utils/images-treatment/convert-base-64";
 import { TUser } from "../types/user";
 import axiosInstance from "../utils/axios/axios-instance";
 
-export const createTour = async (tourData: TourData) => {
+export const getTours = async (): Promise<TourData[]> => {
+  try {
+    const requestStringFromUrl = window.location.href.split("?")[1];
+    const requestString = requestStringFromUrl
+      ? `?${requestStringFromUrl}`
+      : "";
+    const response = await axiosInstance.get(`/tours${requestString}`);
+    console.log(response.data.data.data);
+    return response.data.data.data as TourData[];
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return [];
+  }
+};
+
+export const createTour = async (tourData: CreateTourData) => {
   try {
     const imagesBase64 = await Promise.all(
       tourData.images.map((img) => {
@@ -16,7 +33,7 @@ export const createTour = async (tourData: TourData) => {
     );
 
     const tourBody = {
-      name: tourData.title,
+      name: tourData.name,
       duration: tourData.duration,
       description: tourData.summary,
       location: tourData.location,
@@ -24,12 +41,20 @@ export const createTour = async (tourData: TourData) => {
       difficulty: tourData.difficulty.id,
       categories: tourData.categories.map((category) => category.id),
       meetingAddress: tourData.address,
-      locations: tourData.itinerary.map((stop) => {
+      locations: tourData.locations.slice(1).map((stop) => {
         return {
           coordinates: [stop.longitude, stop.latitude],
           description: stop.text,
         };
       }),
+      startLocation: {
+        coordinates: [
+          tourData.locations[0].longitude,
+          tourData.locations[0].latitude,
+        ],
+        description: tourData.locations[0].text,
+      },
+
       guides: tourData.tourGuides.map((tourGuide) => tourGuide.id),
       availabilities: tourData.availabilities.map((availability) => {
         return {
@@ -46,7 +71,7 @@ export const createTour = async (tourData: TourData) => {
 
     const response = await axiosInstance.post("/tours", tourBody);
 
-    return response;
+    return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;

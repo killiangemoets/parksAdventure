@@ -33,24 +33,12 @@ import QuickFactInput, {
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
 import { NewTourDataValueTypes } from "../../../../routes/addTour/addTour.component";
-import { TOUR_DATA } from "../../../../types/tour";
+import {
+  categoriesInfoList,
+  CREATE_TOUR_DATA,
+  difficultiesInfoList,
+} from "../../../../types/tour";
 import { TUser } from "../../../../types/user";
-
-const categoriesList: Info[] = [
-  { value: "Mountain", id: "mountain" },
-  { value: "Desert", id: "desert" },
-  { value: "Snow", id: "snow" },
-  { value: "Cities", id: "cities" },
-  { value: "Sea", id: "sea" },
-  { value: "Lakes", id: "lakes" },
-];
-
-const difficultiesList: Info[] = [
-  { id: "family", value: "Family" },
-  { id: "medium", value: "Medium" },
-  { id: "difficult", value: "Difficult" },
-  { id: "expert", value: "Expert" },
-];
 
 export type AddTourDetailsProps = {
   duration: number | undefined;
@@ -87,8 +75,6 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
 }) => {
   const [categoriesString, setCategoriesString] = useState<string>("");
 
-  console.log(tourGuidesList);
-
   useEffect(() => {
     let newCategoriesString = categories
       .reduce((acc, curr) => acc + curr.value + ", ", "")
@@ -101,7 +87,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   }, [categories]);
 
   const handleTourGuides = (newTourGuide: Info) => {
-    handleChange([...tourGuides, newTourGuide], TOUR_DATA.tourGuides);
+    handleChange([...tourGuides, newTourGuide], CREATE_TOUR_DATA.tourGuides);
   };
 
   const handleChangeSummary = (event: ChangeEvent<HTMLTextAreaElement>) => {
@@ -116,7 +102,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
       ...tourGuides.slice(index + 1),
     ];
     console.log({ tourGuides, newTourGuides });
-    handleChange(newTourGuides, TOUR_DATA.tourGuides);
+    handleChange(newTourGuides, CREATE_TOUR_DATA.tourGuides);
   };
 
   return (
@@ -131,7 +117,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 iconType={INFO_ICON_TYPE_CLASSES.duration}
                 handleChange={handleChange}
                 infoName="Duration"
-                name={TOUR_DATA.duration}
+                name={CREATE_TOUR_DATA.duration}
                 value={duration}
                 addonAfter="day(s)"
                 placeholder="Enter a value"
@@ -143,9 +129,9 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 iconType={INFO_ICON_TYPE_CLASSES.difficulty}
                 handleChange={handleChange}
                 infoName="Difficulty"
-                name={TOUR_DATA.difficulty}
+                name={CREATE_TOUR_DATA.difficulty}
                 current={difficulty}
-                dropdownList={difficultiesList}
+                dropdownList={difficultiesInfoList}
                 error={difficultyError}
               />
               <QuickFactInput
@@ -153,7 +139,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 iconType={INFO_ICON_TYPE_CLASSES.location}
                 handleChange={handleChange}
                 infoName="Location"
-                name={TOUR_DATA.location}
+                name={CREATE_TOUR_DATA.location}
                 value={location}
                 placeholder="Add a tour location"
                 maxLength={40}
@@ -166,9 +152,9 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 iconType={INFO_ICON_TYPE_CLASSES.category}
                 handleChange={handleChange}
                 infoName="Categories"
-                name={TOUR_DATA.categories}
+                name={CREATE_TOUR_DATA.categories}
                 selection={categories}
-                options={categoriesList}
+                options={categoriesInfoList}
                 error={categoriesError}
               >
                 {categories.length > 0 ? (

@@ -2,8 +2,6 @@ import styled from "styled-components";
 
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
 
-import TourBackground from "../../../assets/tour-bg.jpg";
-
 export const TourPictureContainer = styled.div`
   width: 100%;
   -webkit-clip-path: polygon(0 0, 100% 0%, 100% 86%, 0% 98%);
@@ -13,10 +11,15 @@ export const TourPictureContainer = styled.div`
   border-top-right-radius: 12px;
   overflow: hidden;
 `;
-export const TourPicture = styled.div`
+
+type TourPictureProps = {
+  imageUrl: string;
+};
+
+export const TourPicture = styled.div<TourPictureProps>`
   width: 100%;
   height: 100%;
-  background: url(${TourBackground}) no-repeat left center;
+  background: ${({ imageUrl }) => `url(${imageUrl})`} no-repeat left center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -127,12 +130,6 @@ export const TourNextDate = styled.p`
   color: #303a29;
   color: #cc704b;
 `;
-export const TourDescription = styled.p`
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-  letter-spacing: 0.2px;
-  font-style: italic;
-`;
 
 export const TourTags = styled.div`
   display: flex;
@@ -162,7 +159,7 @@ export const TourInfos = styled.div`
 
 export const Info = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   /* justify-content: center; */
   gap: 1.2rem;
 `;

@@ -1,7 +1,9 @@
 import axios from "axios";
-import { Stop } from "../../types/tour";
+import { TCreateStop } from "../../types/tour";
 
-const getDirection = async (stops: Stop[]): Promise<[number, number][]> => {
+const getDirection = async (
+  stops: TCreateStop[]
+): Promise<[number, number][]> => {
   if (stops.length < 2) return [];
 
   try {

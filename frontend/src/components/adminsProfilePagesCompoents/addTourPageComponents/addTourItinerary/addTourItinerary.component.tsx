@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Stop, TOUR_DATA } from "../../../../types/tour";
+import { TCreateStop, CREATE_TOUR_DATA } from "../../../../types/tour";
 import ItineraryLine from "../../../tourPageComponents/itineratyLine/itineraryLine.component";
 import { ItineraryCaption } from "../../../tourPageComponents/tourItinerary/tourItinerary.component";
 import {
@@ -19,8 +19,8 @@ import {
 import AddTourItineraryMap from "./addTourItineraryMap.component";
 
 export type AddTourItineraryProps = {
-  stops: Stop[];
-  handleChange: (stops: Stop[], name: string) => void;
+  stops: TCreateStop[];
+  handleChange: (stops: TCreateStop[], name: string) => void;
   error: boolean;
 };
 
@@ -29,13 +29,13 @@ const AddTourItinerary: FC<AddTourItineraryProps> = ({
   handleChange,
   error,
 }) => {
-  const addStop = (stop: Stop) => {
-    handleChange([...stops, stop], TOUR_DATA.itinerary);
+  const addStop = (stop: TCreateStop) => {
+    handleChange([...stops, stop], CREATE_TOUR_DATA.locations);
   };
 
   const deleteStop = (stopName: string) => {
     const newStops = stops.filter((stop) => stop.text !== stopName);
-    handleChange(newStops, TOUR_DATA.itinerary);
+    handleChange(newStops, CREATE_TOUR_DATA.locations);
   };
 
   return (

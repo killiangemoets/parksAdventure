@@ -2,14 +2,14 @@ import { UserDipatchTypes } from "./user.action";
 import { USER_ACTION_TYPES } from "./user.type";
 
 export type UserState = {
-  email?: string;
-  firstname?: string;
-  lastname?: string;
-  photo?: string;
-  phoneNumber?: string;
-  birthDate?: Date;
-  role?: "user" | "guide" | "lead-guide" | "admin";
-  id?: string;
+  readonly email?: string;
+  readonly firstname?: string;
+  readonly lastname?: string;
+  readonly photo?: string;
+  readonly phoneNumber?: string;
+  readonly birthDate?: Date;
+  readonly role?: "user" | "guide" | "lead-guide" | "admin";
+  readonly id?: string;
 };
 
 export const USER_INITIAL_STATE: UserState = {};

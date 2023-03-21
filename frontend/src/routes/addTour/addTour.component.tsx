@@ -19,7 +19,12 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../components/UIComponents/button/button.component";
 import CheckBoxes from "../../components/UIComponents/checkBoxes/checkBoxes.component";
-import { Availability, Stop, TourData, TOUR_DATA } from "../../types/tour";
+import {
+  TCreateAvailability,
+  TCreateStop,
+  CreateTourData,
+  CREATE_TOUR_DATA,
+} from "../../types/tour";
 import { createTour, getTourGuides } from "../../api/tour-requests";
 import Spinner from "../../components/UIComponents/spinner/spinner.component";
 import { TUser } from "../../types/user";
@@ -30,16 +35,16 @@ export type NewTourDataValueTypes =
   | number
   | Info
   | Info[]
-  | Stop[]
-  | Availability[]
+  | TCreateStop[]
+  | TCreateAvailability[]
   | UploadFile[]
   | undefined
   | null
   | boolean
   | Dayjs;
 
-const newTourDataDefaultState: TourData = {
-  title: "",
+const newTourDataDefaultState: CreateTourData = {
+  name: "",
   images: [],
   duration: undefined,
   difficulty: {
@@ -50,7 +55,7 @@ const newTourDataDefaultState: TourData = {
   categories: [],
   summary: "",
   tourGuides: [],
-  itinerary: [],
+  locations: [],
   availabilities: [],
   address: "",
   additionalInfo: [],
@@ -58,7 +63,7 @@ const newTourDataDefaultState: TourData = {
 };
 
 type ErrorsProps = {
-  title: boolean;
+  name: boolean;
   images: boolean;
   duration: boolean;
   difficulty: boolean;
@@ -66,14 +71,14 @@ type ErrorsProps = {
   categories: boolean;
   summary: boolean;
   tourGuides: boolean;
-  itinerary: boolean;
+  locations: boolean;
   // availabilities: boolean;
   address: boolean;
   generalMessage: string;
 };
 
 const defaultErrorsState: ErrorsProps = {
-  title: false,
+  name: false,
   images: false,
   duration: false,
   difficulty: false,
@@ -81,18 +86,18 @@ const defaultErrorsState: ErrorsProps = {
   categories: false,
   summary: false,
   tourGuides: false,
-  itinerary: false,
+  locations: false,
   // availabilities: false,
   address: false,
   generalMessage: "",
 };
 
 const AddTour = () => {
-  const [newTourData, setNewTourData] = useState<TourData>(
+  const [newTourData, setNewTourData] = useState<CreateTourData>(
     newTourDataDefaultState
   );
   const {
-    title,
+    name,
     images,
     duration,
     difficulty,
@@ -100,7 +105,7 @@ const AddTour = () => {
     categories,
     summary,
     tourGuides,
-    itinerary,
+    locations,
     availabilities,
     address,
     additionalInfo,
@@ -134,7 +139,7 @@ const AddTour = () => {
       ...defaultErrorsState,
     };
 
-    if (!title.length) newErrorsState.title = true;
+    if (!name.length) newErrorsState.name = true;
     if (images.length < 4) newErrorsState.images = true;
     if (!duration) newErrorsState.duration = true;
     if (difficulty.id === "null") newErrorsState.difficulty = true;
@@ -150,12 +155,12 @@ const AddTour = () => {
       )
     )
       newErrorsState.tourGuides = true;
-    if (!itinerary.length) newErrorsState.itinerary = true;
+    if (!locations.length) newErrorsState.locations = true;
     // if (!availabilities.length) newErrorsState.availabilities = true;
     if (!address?.length) newErrorsState.address = true;
 
     if (
-      title.length &&
+      name.length &&
       images.length >= 4 &&
       duration &&
       difficulty.id !== "null" &&
@@ -163,18 +168,18 @@ const AddTour = () => {
       categories.length &&
       summary?.length &&
       tourGuides.length &&
-      itinerary.length &&
+      locations.length &&
       // availabilities.length &&
       address?.length
     ) {
       const response = await createTour(newTourData);
       console.log(response);
-      if (response.status === 201) {
+      if (response.status === "success") {
         // setNewTourData(newTourDataDefaultState);
       } else {
         if (response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";
-          newErrorsState.title = true;
+          newErrorsState.name = true;
         } else {
           newErrorsState.generalMessage = response.message;
         }
@@ -189,9 +194,9 @@ const AddTour = () => {
   return (
     <AddTourContainer>
       <AddTourTitle
-        title={title}
+        title={name}
         handleChange={handleChange}
-        error={errors.title}
+        error={errors.name}
       />
       <AddTourImages
         images={images}
@@ -215,9 +220,9 @@ const AddTour = () => {
         summaryError={errors.summary}
       />
       <AddTourItinerary
-        stops={itinerary}
+        stops={locations}
         handleChange={handleChange}
-        error={errors.itinerary}
+        error={errors.locations}
       />
       <AddTourCalendar
         availabilities={availabilities}
@@ -258,7 +263,7 @@ const AddTour = () => {
                     ]
               }
               handler={() => {
-                handleChange(!hidden, TOUR_DATA.hidden);
+                handleChange(!hidden, CREATE_TOUR_DATA.hidden);
               }}
             />
             <Button onClick={handleConfirm}>

@@ -76,7 +76,7 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
 
 exports.requiredFields = (req, res, next) => {
   req.query.fields =
-    'name,slug,duration,summary,imageCover,maxGroupSize,difficulty,ratingsAverage,ratingsQuantity,startLocation,availabilities,popularity';
+    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,availabilities,popularityIndex';
   next();
 };
 

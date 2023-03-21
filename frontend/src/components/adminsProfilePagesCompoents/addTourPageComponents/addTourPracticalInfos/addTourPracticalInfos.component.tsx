@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { TOUR_DATA } from "../../../../types/tour";
+import { CREATE_TOUR_DATA } from "../../../../types/tour";
 import { INFO_ICON_TYPE_CLASSES } from "../../../UIComponents/infoIcon/infoIcon.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -31,7 +31,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
   addressError,
 }) => {
   const handleChangeAddress = (value: HandleChangeValueType) => {
-    handleChange(value as string, TOUR_DATA.address);
+    handleChange(value as string, CREATE_TOUR_DATA.address);
   };
   const handleChangeAdditionalInfo = (
     value: HandleChangeValueType,
@@ -44,7 +44,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
     newAdditionalInfoArray = newAdditionalInfoArray.filter(
       (info) => info.length > 0
     );
-    handleChange(newAdditionalInfoArray, TOUR_DATA.additionalInfo);
+    handleChange(newAdditionalInfoArray, CREATE_TOUR_DATA.additionalInfo);
   };
 
   return (

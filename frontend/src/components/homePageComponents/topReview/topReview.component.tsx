@@ -18,7 +18,7 @@ const TopReview: FC<TopReviewProps> = ({ review }) => {
   return (
     <TopReviewContainer>
       <ReviewTitle>{review.title}</ReviewTitle>
-      <StarsRating hiddenValue={true} />
+      <StarsRating hiddenValue={true} rating={4.5} numRatings={6} />
       <ReviewDescription>{review.description}</ReviewDescription>
       <ReviewUser>
         <ProfilePicture pictureUrl={review.profilePicture} />

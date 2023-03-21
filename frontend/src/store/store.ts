@@ -10,14 +10,13 @@ export type RootState = ReturnType<typeof rootReducer>;
 
 const persistConfig: PersistConfig<RootState> = {
   key: "root",
-  storage: sessionStorage, // to store it in Local Storage
-  whitelist: ["user"], // to only store the inpuValues
+  storage: sessionStorage, // to store it in session Storage
+  whitelist: ["user"], // to only store the user slice
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = createStore(persistedReducer, applyMiddleware(thunk));
-// export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 export const persistor = persistStore(store);
 

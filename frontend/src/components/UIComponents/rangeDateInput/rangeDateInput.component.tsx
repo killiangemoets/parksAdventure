@@ -1,10 +1,9 @@
-import React from "react";
 import type { RangePickerProps } from "antd/es/date-picker";
 import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { RangeDatePickerElement } from "./rangeDateInput.style";
 import { ConfigProvider } from "antd";
-import { inherits } from "util";
+import { FC, useRef } from "react";
 
 dayjs.extend(customParseFormat);
 
@@ -22,31 +21,55 @@ const rangePresets: {
   { label: "Next Month", value: [dayjs().add(30, "d"), dayjs().add(60, "d")] },
 ];
 
-const RangeDateInput = () => (
-  <ConfigProvider
-    theme={{
-      hashed: false,
-      components: {
-        DatePicker: {
-          colorPrimary: "#cc704b",
-          fontSize: 16,
-          // lineHeight: 1.375,
-          colorText: "#333",
-          colorTextPlaceholder: "#aaa",
-          borderRadiusSM: 999,
-          colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-          colorBgElevated: "#fdfaf5",
+type RangeDateInputProps = {
+  currentValues: [Dayjs, Dayjs] | null;
+  handleChange: (values: any) => void;
+};
+
+const RangeDateInput: FC<RangeDateInputProps> = ({
+  currentValues,
+  handleChange,
+}) => {
+  const input = useRef(null);
+  const dateInputs = document.querySelectorAll(".ant-picker-input input");
+
+  const onChange = (values: any) => {
+    dateInputs.forEach((dateInput) => {
+      (dateInput as HTMLElement).blur();
+    });
+    handleChange(values);
+  };
+
+  return (
+    <ConfigProvider
+      theme={{
+        hashed: false,
+        components: {
+          DatePicker: {
+            colorPrimary: "#cc704b",
+            fontSize: 16,
+            colorText: "#333",
+            colorTextPlaceholder: "#aaa",
+            borderRadiusSM: 999,
+            colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
+            colorBgElevated: "#fdfaf5",
+          },
         },
-      },
-    }}
-  >
-    <RangeDatePickerElement
-      presets={rangePresets}
-      disabledDate={disabledDate}
-      format="DD/MM/YYYY"
-      className="range-date-picker"
-    />
-  </ConfigProvider>
-);
+      }}
+    >
+      <RangeDatePickerElement
+        ref={input}
+        presets={rangePresets}
+        disabledDate={disabledDate}
+        value={currentValues}
+        onChange={(values) => {
+          onChange(values);
+        }}
+        format="DD/MM/YYYY"
+        className="range-date-picker"
+      />
+    </ConfigProvider>
+  );
+};
 
 export default RangeDateInput;

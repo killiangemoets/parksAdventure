@@ -53,20 +53,3 @@ export const TitleWrapper = styled.div`
   width: 100%;
   max-width: 130rem;
 `;
-
-export const StarsRatingContainer = styled.div`
-  /* padding: 0 6.4rem; */
-  /* margin-bottom: -4rem; */
-  padding: 3.2rem 6.4rem 2rem 6.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const StarsRatingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  max-width: 130rem;
-`;

@@ -90,8 +90,9 @@ const FirstSection = () => {
         Unique Hiking Tours
       </Title>
       <FirstSectionContentWrapper>
-        {elements.map((el) => (
+        {elements.map((el, i) => (
           <FlipCard
+            key={i}
             title={el.title}
             imageUrl={el.imageUrl}
             text={el.text}
