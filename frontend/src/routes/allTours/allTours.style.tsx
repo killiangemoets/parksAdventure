@@ -26,7 +26,7 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
   align-items: center;
   justify-content: center;
   width: calc(100vw - 8rem);
-  margin-left: -8rem;
+  /* margin-left: -8rem; */
   transition: all 0.6s;
 
   ${({ mapOpen }) =>
@@ -34,4 +34,17 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
     css`
       margin-left: -40%;
     `}
+`;
+
+export const AllToursResultsCards = styled.div`
+  /* display: flex; */
+  /* min-height: calc(100vh - 8rem); */
+`;
+
+export const NoResultsMessage = styled.p`
+  align-self: center;
+  font-weight: 600;
+  margin-right: 2.25rem;
+  font-size: 2rem;
+  letter-spacing: 1px;
 `;

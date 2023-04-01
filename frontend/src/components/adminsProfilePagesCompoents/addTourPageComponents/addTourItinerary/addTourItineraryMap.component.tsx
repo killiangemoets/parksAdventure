@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
   ErrorMessage,
@@ -27,7 +26,6 @@ import { ConfigProvider, Input } from "antd";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
-import axios from "axios";
 import { TCreateStop } from "../../../../types/tour";
 import getDirection from "../../../../utils/map/getDirection";
 

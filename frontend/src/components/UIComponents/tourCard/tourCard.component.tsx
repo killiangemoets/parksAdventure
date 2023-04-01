@@ -1,8 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useNavigate } from "react-router-dom";
+import useInfoFromAvailabilities from "../../../hooks/infoFromAvailabilities";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import { TourData } from "../../../types/tour";
-import niceDate from "../../../utils/formatting/niceDate";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
@@ -33,6 +33,7 @@ const TourCard: FC<TourCardProps> = ({ tour }) => {
 
   const {
     name,
+    slug,
     categories,
     difficulty,
     duration,
@@ -43,34 +44,11 @@ const TourCard: FC<TourCardProps> = ({ tour }) => {
     ratingsQuantity,
   } = tour;
 
-  const [nextStart, setNextStart] = useState<string | null>(null);
-  const [maxGroupSize, setMaxGroupSize] = useState<string>("");
-  const [minPrice, setMinPrice] = useState<string>("");
-
-  useEffect(() => {
-    if (availabilities && availabilities.length > 0) {
-      let newStart: Date | null = null;
-      let newMaxGroupSize = availabilities[0].maxGroupSize || 0;
-      let newMinPrice = availabilities[0].price;
-
-      availabilities.forEach((availability) => {
-        if (new Date(availability.date) > new Date(Date.now())) {
-          if (!newStart) newStart = availability.date;
-          else if (availability.date < newStart) newStart = availability.date;
-        }
-        if (availability.maxGroupSize < newMaxGroupSize)
-          newMaxGroupSize = availability.maxGroupSize;
-        if (availability.price < newMinPrice) newMinPrice = availability.price;
-      });
-
-      newStart && setNextStart(niceDate(newStart));
-      setMaxGroupSize(newMaxGroupSize.toString());
-      setMinPrice(newMinPrice.toString());
-    }
-  }, []);
+  const { nextStart, maxGroupSize, minGroupSize, minPrice } =
+    useInfoFromAvailabilities({ availabilities });
 
   const handleClickTour = () => {
-    navigate("/tour");
+    navigate(`/tour/${slug}`);
   };
   if (!nextStart) {
     return <></>;
@@ -119,7 +97,12 @@ const TourCard: FC<TourCardProps> = ({ tour }) => {
             </Info>
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.group} />
-              <InfoText>{maxGroupSize} people</InfoText>
+              <InfoText>
+                {maxGroupSize === minGroupSize
+                  ? maxGroupSize
+                  : `${minGroupSize}-${maxGroupSize}`}{" "}
+                people
+              </InfoText>
             </Info>
           </TourInfos>
         </TourContent>

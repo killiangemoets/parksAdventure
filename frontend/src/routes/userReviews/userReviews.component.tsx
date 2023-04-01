@@ -12,9 +12,9 @@ const UserReviews = () => {
     <UserReviewsContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>My Reviews</Title>
       <Reviews>
-        <Review hideEditButtons={false} />
-        <Review hideEditButtons={false} />
-        <Review hideEditButtons={false} />
+        {/* <Review hideEditButtons={false} /> */}
+        {/* <Review hideEditButtons={false} /> */}
+        {/* <Review hideEditButtons={false} /> */}
       </Reviews>
       <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
         See more reviews

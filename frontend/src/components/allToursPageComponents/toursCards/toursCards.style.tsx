@@ -12,7 +12,8 @@ type ToursCardWrapperProps = {
 };
 export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  /* grid-template-columns: auto auto auto auto; */
+  grid-template-columns: repeat(4, 1fr);
   align-items: center;
   justify-content: space-between;
   /* justify-content: center; */

@@ -16,7 +16,6 @@ const SliderInput: FC<SliderInputProps> = ({
   handler,
 }) => {
   const onChange = (values: [number, number]) => {
-    console.log("onChange: ", values);
     if (values[1] < values[0]) return;
     handler(values);
   };

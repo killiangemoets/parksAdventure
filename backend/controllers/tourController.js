@@ -88,7 +88,39 @@ exports.aliasTopRecommandations = (req, res, next) => {
 
 exports.getAllTours = factory.getAll(Tour);
 
-exports.getTour = factory.getOne(Tour, [{ path: 'reviews' }]);
+exports.getTour = factory.getOne(Tour, [
+  {
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'firstname lastname photo',
+    },
+  },
+]);
+
+exports.getTourBySlug = catchAsync(async (req, res, next) => {
+  let query = Tour.findOne({ slug: req.params.slug });
+  query = query.populate({
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'firstname lastname photo',
+    },
+  });
+
+  const doc = await query;
+
+  if (!doc) {
+    return next(new AppError('No document found with that slug', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: doc,
+    },
+  });
+});
 
 exports.createTour = factory.createOne(Tour);
 

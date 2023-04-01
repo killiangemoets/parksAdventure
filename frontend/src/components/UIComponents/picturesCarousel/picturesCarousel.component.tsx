@@ -25,9 +25,13 @@ import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 export type PicturesCarouselProps = {
   handleOpen: (state: boolean) => void;
+  images: string[];
 };
 
-const PicturesCarousel: FC<PicturesCarouselProps> = ({ handleOpen }) => {
+const PicturesCarousel: FC<PicturesCarouselProps> = ({
+  handleOpen,
+  images,
+}) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
 
@@ -53,30 +57,13 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({ handleOpen }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper2"
         >
-          <SwiperSlide>
-            <img src={pic1} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic2} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic3} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic4} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic1} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic2} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic3} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic4} alt={"tour view"} />
-          </SwiperSlide>
+          {images.map((image, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <img src={image} alt={"tour view"} />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
         <Swiper
           onSwiper={setThumbsSwiper}
@@ -88,30 +75,13 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({ handleOpen }) => {
           modules={[FreeMode, Navigation, Thumbs]}
           className="mySwiper"
         >
-          <SwiperSlide>
-            <img src={pic1} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic2} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic3} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic4} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic1} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic2} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic3} alt={"tour view"} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={pic4} alt={"tour view"} />
-          </SwiperSlide>
+          {images.map((image, i) => {
+            return (
+              <SwiperSlide key={i}>
+                <img src={image} alt={"tour view"} />
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </PicturesCarouselContainer>
       <CloseButton>

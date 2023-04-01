@@ -39,6 +39,7 @@ router
     tourController.deleteTour
   );
 
+router.route('/slug/:slug').get(tourController.getTourBySlug);
 /*
 // MIGHT BE USEFUL FOR ADMIN
 router.route('/tour-stats').get(tourController.getTourStats);

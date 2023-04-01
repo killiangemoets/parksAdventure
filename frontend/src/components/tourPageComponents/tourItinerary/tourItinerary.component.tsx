@@ -1,4 +1,11 @@
-import Map from "../../UIComponents/map/map.component";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import {
+  selectTour,
+  selectTourIsLoading,
+} from "../../../store/tour/tour.selector";
+import { TStop } from "../../../types/tour";
+import CustomMap from "../../UIComponents/customMap/customMap.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
@@ -29,29 +36,44 @@ export const ItineraryCaption = () => {
 };
 
 const TourItinerary = () => {
-  const points = [
-    "Day 1: Louise Lake",
-    "Day 2: The Wood Cabin",
-    "Day 3: Sky Waterfall",
-    "Day 4: Castor Beach",
-    "Day 5: The Rock Viewpoint",
-    "Day 6: The Three Sisters",
-  ];
+  const tour = useSelector(selectTour);
+  const isLoading = useSelector(selectTourIsLoading);
+  const [points, setPoints] = useState<string[]>([]);
+  const [stops, setStops] = useState<TStop[]>([]);
+  useEffect(() => {
+    let newPoints = [];
+    let newStops = [];
+    if (tour?.startLocation) {
+      newPoints.push(tour.startLocation.description);
+      newStops.push(tour.startLocation);
+    }
+    if (tour?.locations) {
+      tour.locations.forEach((location) => {
+        newPoints.push(location.description);
+      });
+      newStops.push(...tour.locations);
+    }
+    setPoints(newPoints);
+    setStops(newStops);
+  }, [tour]);
+
   return (
     <TourItineraryContainer>
       <TourItineraryWrapper>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
-        <TourItineraryContent>
-          <ItineraryLeftContainer>
-            <ItineraryLine points={points} />
-          </ItineraryLeftContainer>
-          <ItineraryRightContainer>
-            <ItineraryMapContainer>
-              <Map />
-            </ItineraryMapContainer>
-            <ItineraryCaption />
-          </ItineraryRightContainer>
-        </TourItineraryContent>
+        {!isLoading && (
+          <TourItineraryContent>
+            <ItineraryLeftContainer>
+              <ItineraryLine points={points} />
+            </ItineraryLeftContainer>
+            <ItineraryRightContainer>
+              <ItineraryMapContainer>
+                <CustomMap stops={stops} />
+              </ItineraryMapContainer>
+              <ItineraryCaption />
+            </ItineraryRightContainer>
+          </TourItineraryContent>
+        )}
       </TourItineraryWrapper>
     </TourItineraryContainer>
   );

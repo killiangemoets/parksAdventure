@@ -8,11 +8,11 @@ export type FetchToursStart = Action<TOURS_ACTION_TYPES.FETCH_TOURS_START>;
 
 export type FetchToursSuccess = ActionWithPayload<
   TOURS_ACTION_TYPES.FETCH_TOURS_SUCCESS,
-  TourData[]
+  { tours: TourData[]; total: number }
 >;
 export type FetchToursFailed = ActionWithPayload<
   TOURS_ACTION_TYPES.FETCH_TOURS_FAILED,
-  Error
+  string
 >;
 export type ToursDipatchTypes =
   | FetchToursStart
@@ -23,25 +23,29 @@ const fetchToursStart = (): FetchToursStart => {
   return { type: TOURS_ACTION_TYPES.FETCH_TOURS_START };
 };
 
-const fetchToursSuccess = (toursArray: TourData[]): FetchToursSuccess => {
+const fetchToursSuccess = (
+  tours: TourData[],
+  total: number
+): FetchToursSuccess => {
   return {
     type: TOURS_ACTION_TYPES.FETCH_TOURS_SUCCESS,
-    payload: toursArray,
+    payload: { tours, total },
   };
 };
 
-const fetchToursFailed = (error: Error): FetchToursFailed => {
+const fetchToursFailed = (error: string): FetchToursFailed => {
   return { type: TOURS_ACTION_TYPES.FETCH_TOURS_FAILED, payload: error };
 };
 
 // THUNK ACTION:
 export const fetchToursAsync =
-  () => async (dispatch: Dispatch<ToursDipatchTypes>) => {
+  (requestString: string = "") =>
+  async (dispatch: Dispatch<ToursDipatchTypes>) => {
     dispatch(fetchToursStart());
-    try {
-      const ToursArray = await getTours();
-      dispatch(fetchToursSuccess(ToursArray));
-    } catch (error) {
-      dispatch(fetchToursFailed(error as Error));
-    }
+    const response = await getTours(requestString);
+    console.log(response);
+
+    if (response.status === "success")
+      dispatch(fetchToursSuccess(response.data.data, response.totalResults));
+    else dispatch(fetchToursFailed(response.message));
   };

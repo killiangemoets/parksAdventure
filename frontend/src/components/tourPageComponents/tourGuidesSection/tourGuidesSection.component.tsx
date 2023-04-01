@@ -1,3 +1,8 @@
+import { useSelector } from "react-redux";
+import {
+  selectTour,
+  selectTourIsLoading,
+} from "../../../store/tour/tour.selector";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
@@ -8,26 +13,25 @@ import {
 } from "./tourGuidesSection.style";
 
 const TourGuidesSection = () => {
+  const tour = useSelector(selectTour);
+  const isLoading = useSelector(selectTourIsLoading);
   return (
     <TourGuidesSectionContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>Your Tour Guides</Title>
-      <TourGuides>
-        <TourGuide
-          pictureUrl="images/desert.jpg"
-          position="Lead Guide"
-          name="David Goggins"
-        />
-        <TourGuide
-          pictureUrl="images/desert.jpg"
-          position="Tour Guide"
-          name="Kate Morrison"
-        />
-        <TourGuide
-          pictureUrl="images/user.jpg"
-          position="Tour Guide"
-          name="Peter Parker"
-        />
-      </TourGuides>
+      {!isLoading && (
+        <>
+          <TourGuides>
+            {tour?.guides &&
+              tour?.guides.map((guide) => (
+                <TourGuide
+                  pictureUrl={guide.photo}
+                  position={guide.role}
+                  name={`${guide.firstname} ${guide.lastname}`}
+                />
+              ))}
+          </TourGuides>
+        </>
+      )}
     </TourGuidesSectionContainer>
   );
 };

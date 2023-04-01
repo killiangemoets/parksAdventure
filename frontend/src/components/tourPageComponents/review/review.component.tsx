@@ -18,8 +18,14 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
 import { FC } from "react";
+import niceDate from "../../../utils/formatting/niceDate";
 
-const Reviewer = () => {
+type ReviewerProps = {
+  userImg?: string;
+  userName: string;
+};
+
+const Reviewer: FC<ReviewerProps> = ({ userImg, userName }) => {
   return (
     <ReviewerContainer>
       <ProfilePicture
@@ -33,26 +39,30 @@ const Reviewer = () => {
 
 type ReviewProps = {
   hideEditButtons?: boolean;
+  date: Date;
+  review: string;
+  rating: number;
+  userImg?: string;
+  userName: string;
 };
 
-const Review: FC<ReviewProps> = ({ hideEditButtons = true }) => {
+const Review: FC<ReviewProps> = ({
+  hideEditButtons = true,
+  date,
+  review,
+  rating,
+  userImg,
+  userName,
+}) => {
   return (
     <ReviewContainer>
       <ReviewInfos>
-        <Reviewer />
-        <ReviewDate>November 14, 2022</ReviewDate>
+        <Reviewer userImg={userImg} userName={userName} />
+        <ReviewDate>{niceDate(date)}</ReviewDate>
       </ReviewInfos>
       <ReviewContent>
-        <StarsRating hiddenValue={true} rating={4.2} numRatings={6} />
-        <ReviewText>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis ab
-          harum labore culpa porro minus sunt at id voluptate perspiciatis, quo
-          optio non esse a fugiat quae, aut commodi quisquam. Lorem ipsum dolor
-          sit, amet consectetur adipisicing elit. Aliquid veritatis pariatur
-          rerum debitis laboriosam, voluptatem velit dolore dolorem veniam,
-          magni architecto quos unde ea totam incidunt placeat expedita eius
-          libero! :)
-        </ReviewText>
+        <StarsRating hiddenValue={true} rating={rating} />
+        <ReviewText>{review}</ReviewText>
       </ReviewContent>
       {!hideEditButtons && (
         <EditButtons>

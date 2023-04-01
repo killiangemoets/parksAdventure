@@ -14,7 +14,7 @@ export type StarsRatingProps = {
   handleLinkTo?: () => void;
   readonly?: boolean;
   rating: number;
-  numRatings: number;
+  numRatings?: number;
 };
 
 const StarsRating: FC<StarsRatingProps> = ({
@@ -42,13 +42,14 @@ const StarsRating: FC<StarsRatingProps> = ({
       {!hiddenValue && (
         <RatingData>
           <RatingValue>{rating}</RatingValue>
-          {!linkOnReviews ? (
-            <NumRatings>({numRatings})</NumRatings>
-          ) : (
-            <LinkNumRatings onClick={handleLinkTo}>
-              ({numRatings} reviews)
-            </LinkNumRatings>
-          )}
+          {typeof numRatings !== "undefined" &&
+            (!linkOnReviews ? (
+              <NumRatings>({numRatings})</NumRatings>
+            ) : (
+              <LinkNumRatings onClick={handleLinkTo}>
+                ({numRatings} reviews)
+              </LinkNumRatings>
+            ))}
         </RatingData>
       )}
     </StarsRatingContainer>

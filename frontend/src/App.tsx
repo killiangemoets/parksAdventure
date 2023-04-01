@@ -65,7 +65,7 @@ function App() {
       <Route path="/" element={<NavbarAndFooter />}>
         <Route index element={<Home />} />
         <Route path="alltours" element={<AllTours />} />
-        <Route path="tour" element={<Tour />} />
+        <Route path="tour/:slug" element={<Tour />} />
         <Route path="signup" element={<Signup />} />
         <Route
           path="signup/email-verification"

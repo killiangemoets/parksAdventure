@@ -1,6 +1,9 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { selectTours } from "../../../store/tours/tours.selector";
+import {
+  selectTours,
+  selectToursError,
+} from "../../../store/tours/tours.selector";
 import TourCard from "../../UIComponents/tourCard/tourCard.component";
 import { ToursCardsContainer, ToursCardsWrapper } from "./toursCards.style";
 
@@ -10,6 +13,11 @@ export type ToursCardsProps = {
 
 const ToursCards: FC<ToursCardsProps> = ({ mapOpen }) => {
   const tours = useSelector(selectTours);
+  const error = useSelector(selectToursError);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
 
   return (
     <ToursCardsContainer>

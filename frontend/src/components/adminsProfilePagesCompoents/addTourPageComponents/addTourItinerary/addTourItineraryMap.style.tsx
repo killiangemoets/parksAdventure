@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Popup } from "react-map-gl";
 import { BaseButton } from "../../../UIComponents/button/button.style";
-import { Input } from "antd";
 
 export const MapContainer = styled.div`
   width: 100%;

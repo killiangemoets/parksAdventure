@@ -16,8 +16,10 @@ export type TCreateAvailability = {
 };
 
 export type TStop = {
-  coordinats: [number, number];
-  text: string;
+  coordinates: [number, number];
+  description: string;
+  type: "Point";
+  _id: string;
 };
 
 export type TAvailability = {
@@ -89,6 +91,15 @@ export type TDifficultyOption =
       value: "Select a difficulty";
     };
 
+export type TReview = {
+  createdAt: Date;
+  id: string;
+  rating: number;
+  review: string;
+  tour: string;
+  user: { firstname: string; lastname: string; photo?: string; _id: string };
+};
+
 export enum CREATE_TOUR_DATA {
   name = "name",
   images = "images",
@@ -140,6 +151,7 @@ export enum TOUR_DATA {
   availabilities = "availabilities",
   additionalInfo = "additionalInfo",
   popularityIndex = "popularityIndex",
+  reviews = "reviews",
   id = "_id",
 }
 
@@ -162,6 +174,7 @@ export type TourData = {
   [TOUR_DATA.availabilities]: TAvailability[];
   [TOUR_DATA.additionalInfo]?: string[];
   [TOUR_DATA.popularityIndex]: number;
+  [TOUR_DATA.reviews]: TReview[];
   [TOUR_DATA.id]: string;
 };
 
@@ -180,7 +193,7 @@ type TFiltersMinMax = {
 };
 
 export const filtersMinMax: TFiltersMinMax = {
-  price: [0, 200],
+  price: [0, 500],
   duration: [0, 20],
   groupSize: [0, 100],
 };

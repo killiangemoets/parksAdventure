@@ -39,11 +39,13 @@ const AllToursHeader = () => {
   const handleSearch = () => {
     if (search.length) searchParams.set("search", search.toLowerCase());
     else searchParams.delete("search");
+    searchParams.delete("page");
     setSearchParams(searchParams);
   };
   const handleDeleteSearch = () => {
     setSearch("");
     searchParams.delete("search");
+    searchParams.delete("page");
     setSearchParams(searchParams);
   };
 
@@ -52,9 +54,11 @@ const AllToursHeader = () => {
     if (newDates) {
       searchParams.set("date[gte]", newDates[0].format("YYYY-MM-DD"));
       searchParams.set("date[lte]", newDates[1].format("YYYY-MM-DD"));
+      searchParams.delete("page");
     } else {
       searchParams.delete("date[gte]");
       searchParams.delete("date[lte]");
+      searchParams.delete("page");
     }
     setSearchParams(searchParams);
   };

@@ -76,18 +76,49 @@ exports.getAll = (Model) =>
     let filter = {};
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
-    const features = new APIFeatures(Model.find(filter), req.query, next)
+    let features = new APIFeatures(Model.find(filter), req.query, next)
+      .filter()
+      .sort()
+      .limitFields();
+
+    const featuresWithPagination = new APIFeatures(
+      Model.find(filter),
+      req.query,
+      next
+    )
       .filter()
       .sort()
       .limitFields()
       .paginate();
 
-    const doc = await features.query;
+    const count = await features.query.countDocuments();
+    const doc = await featuresWithPagination.query;
 
-    // SEND RESPONSE
+    // const doc = await Model.aggregate([
+    //   {
+    //     $facet: {
+    //       totalData: [
+    //         {
+    //           $match: {
+    //             availabilities: {
+    //               $elemMatch: {
+    //                 price: { gte: new Date(Date.now()).toISOString() },
+    //               },
+    //             },
+    //           },
+    //         },
+    //         { $skip: +(req.query.limit * (req.query.page - 1)) },
+    //         { $limit: +req.query.limit },
+    //       ],
+    //       totalCount: [{ $count: 'count' }],
+    //     },
+    //   },
+    // ]);
+
     res.status(200).json({
       status: 'success',
       results: doc.length,
+      totalResults: count,
       data: {
         data: doc,
       },

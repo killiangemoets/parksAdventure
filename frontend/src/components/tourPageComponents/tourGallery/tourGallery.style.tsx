@@ -20,6 +20,7 @@ export const TourGalleryGrid = styled.div`
 export const TourMainImage = styled.div`
   grid-column: 1/5;
   grid-row: 1/3;
+  background-color: #aaa;
   img {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
@@ -30,6 +31,7 @@ export const TourMainImage = styled.div`
 `;
 export const TourSecondImage = styled.div`
   grid-column: 5/7;
+  background-color: #aaa;
   img {
     border-top-right-radius: 8px;
     width: 100%;
@@ -38,6 +40,7 @@ export const TourSecondImage = styled.div`
   }
 `;
 export const TourThirdImage = styled.div`
+  background-color: #aaa;
   img {
     width: 100%;
     height: 100%;
@@ -45,6 +48,7 @@ export const TourThirdImage = styled.div`
   }
 `;
 export const TourFourthImage = styled.div`
+  background-color: #aaa;
   img {
     border-bottom-right-radius: 8px;
     width: 100%;

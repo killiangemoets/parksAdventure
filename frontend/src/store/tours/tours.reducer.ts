@@ -4,12 +4,14 @@ import { TOURS_ACTION_TYPES } from "./tours.type";
 
 export type ToursState = {
   readonly tours: TourData[];
+  readonly total: number;
   readonly isLoading: boolean;
-  readonly error: Error | null;
+  readonly error: string | null;
 };
 
 export const TOUR_INITIAL_STATE: ToursState = {
   tours: [],
+  total: 0,
   isLoading: false,
   error: null, // Since we do asynchronous fetching
 };
@@ -24,7 +26,7 @@ export const toursReducer = (
     case TOURS_ACTION_TYPES.FETCH_TOURS_SUCCESS:
       return {
         ...state,
-        tours: action.payload,
+        ...action.payload,
         isLoading: false,
       };
     case TOURS_ACTION_TYPES.FETCH_TOURS_FAILED:

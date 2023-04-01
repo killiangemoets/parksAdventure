@@ -5,20 +5,39 @@ import convertToBase64 from "../utils/images-treatment/convert-base-64";
 import { TUser } from "../types/user";
 import axiosInstance from "../utils/axios/axios-instance";
 
-export const getTours = async (): Promise<TourData[]> => {
+// type GetToursResult =
+//   | {
+//       status: "success";
+//       data: TourData[];
+//     }
+//   | { status: "fail" | "error"; message: string };
+
+export const getTours = async (requestString: string = "") => {
   try {
-    const requestStringFromUrl = window.location.href.split("?")[1];
-    const requestString = requestStringFromUrl
-      ? `?${requestStringFromUrl}`
-      : "";
+    // requestString = requestString ? `&${requestString}` : "";
+    // const response = await axiosInstance.get(
+    // `/tours?onlyAvailables=true${requestString}`
+    // );
+    // requestString = requestString ? `&${requestString}` : "";
     const response = await axiosInstance.get(`/tours${requestString}`);
-    console.log(response.data.data.data);
-    return response.data.data.data as TourData[];
+    return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;
     }
-    return [];
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};
+
+export const getTour = async (slug: string) => {
+  try {
+    const response = await axiosInstance.get(`/tours/slug/${slug}`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
   }
 };
 

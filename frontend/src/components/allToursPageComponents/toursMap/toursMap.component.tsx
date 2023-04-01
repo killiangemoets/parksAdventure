@@ -2,7 +2,7 @@ import { FC } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
-import Map from "../../UIComponents/map/map.component";
+import CustomMap from "../../UIComponents/customMap/customMap.component";
 import {
   HideMapNote,
   LeftArrowIcon,
@@ -44,7 +44,7 @@ const ToursMap: FC<ToursMapProps> = ({
             {mapOpen ? <RightArrowIcon /> : <LeftArrowIcon />}
           </Button>
         </ToursMapButtonWrapper>
-        <Map />
+        <CustomMap />
         {/* <HideMapNote /> */}
       </ToursMapWrapper>
     </ToursMapContainer>

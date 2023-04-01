@@ -21,9 +21,9 @@ const SearchFilters = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortPossibilites: Info[] = [
-    { id: "popularity", value: "Popularity" },
+    { id: "-popularityIndex", value: "Popularity" },
     { id: "pricing", value: "Pricing" },
-    { id: "rating", value: "Rating" },
+    { id: "-ratingsAverage", value: "Rating" },
     { id: "lastminute", value: "Last minute" },
   ];
 
@@ -32,6 +32,10 @@ const SearchFilters = () => {
 
   const handleDropdown = (value: Info): void => {
     setCurrentSort(value);
+    if (value.id !== "-popularityIndex")
+      searchParams.set("sort", value.id.toString());
+    else searchParams.delete("sort");
+    setSearchParams(searchParams);
   };
 
   const handleOpenFilters = (state: boolean): void => {
@@ -43,11 +47,16 @@ const SearchFilters = () => {
   };
 
   useEffect(() => {
-    if (currentSort.id !== "popularity")
-      searchParams.set("sort", currentSort.id.toString());
-    else searchParams.delete("sort");
-    setSearchParams(searchParams);
-  }, [currentSort, searchParams]);
+    const sortParam = searchParams.get("sort");
+    const sortPossibility = sortPossibilites.find(
+      (sortPossibility) => sortPossibility.id === sortParam
+    );
+    if (sortPossibility) setCurrentSort(sortPossibility);
+    else {
+      searchParams.delete("sort");
+      setSearchParams(searchParams);
+    }
+  }, [searchParams]);
 
   return (
     <SearchFiltersContainer>

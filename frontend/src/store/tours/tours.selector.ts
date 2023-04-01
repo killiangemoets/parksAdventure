@@ -16,6 +16,11 @@ export const selectTours = createSelector(
   (toursSlice) => toursSlice.tours
 );
 
+export const selectToursTotal = createSelector(
+  [selectToursReducer],
+  (toursSlice) => toursSlice.total
+);
+
 export const selectToursError = createSelector(
   [selectToursReducer],
   (toursSlice) => toursSlice.error

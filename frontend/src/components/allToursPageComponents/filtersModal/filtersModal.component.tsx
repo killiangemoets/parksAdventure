@@ -86,9 +86,9 @@ const FiltersModal: FC<FiltersModalProps> = ({
 
     const difficultyParams = searchParams.getAll("difficulty");
     let difficulty: TInfo<string>[] = [];
-    difficultyParams.forEach((difficultiesParam) => {
+    difficultyParams.forEach((difficultyParam) => {
       const difficultyFound = difficultiesInfoList.find(
-        (difficulty) => difficulty.id === difficultiesParam
+        (difficulty) => difficulty.id === difficultyParam
       );
       if (difficultyFound) difficulty.push(difficultyFound);
     });
@@ -138,6 +138,7 @@ const FiltersModal: FC<FiltersModalProps> = ({
       searchParams.set("groupSize[lte]", filters.groupSize[1].toString());
     else searchParams.delete("groupSize[lte]");
 
+    searchParams.delete("page");
     setSearchParams(searchParams);
     handleCloseFilters();
   };

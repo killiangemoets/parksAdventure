@@ -99,7 +99,6 @@ const tourSchema = new mongoose.Schema(
         ],
       },
     },
-
     locations: [
       {
         type: {
@@ -198,6 +197,13 @@ const tourSchema = new mongoose.Schema(
 );
 
 tourSchema.index({ popularityIndex: -1, ratingsAverage: -1 });
+tourSchema.index({
+  name: 'text',
+  description: 'text',
+  location: 'text',
+  difficulty: 'text',
+  categories: 'text',
+});
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
@@ -239,14 +245,13 @@ tourSchema.pre(/^findOne/, function (next) {
   next();
 });
 
-/*
 // AGGREGATION MIDDLEWARES //
 // We also want to exclude the secret tour of all our agregations
 tourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  this.pipeline().unshift({ $match: { hiddenTour: { $ne: true } } });
+  // this.match({ secretTour: { $ne: true } });
   next();
 });
-*/
 
 const Tour = mongoose.model('Tour', tourSchema);
 

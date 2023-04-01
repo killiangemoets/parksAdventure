@@ -6,11 +6,27 @@ import TourReviews from "../../components/tourPageComponents/tourReviews/tourRev
 import TourRecommandations from "../../components/tourPageComponents/tourRecommandations/tourRecommandations.component";
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
 import { TourContainer } from "./tour.style";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store/store";
+import { fetchTourAsync } from "../../store/tour/tour.action";
+import { useParams } from "react-router-dom";
 
 const Tour = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { slug } = useParams<
+    keyof TourSlugRouteParams
+  >() as TourSlugRouteParams;
+
+  type TourSlugRouteParams = {
+    slug: string;
+  };
   const bookingRef = useRef<HTMLDivElement | null>(null);
   const reviewsRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    dispatch(fetchTourAsync(slug));
+  }, []);
 
   const handleScrollToBooking = () => {
     window.scrollTo({
