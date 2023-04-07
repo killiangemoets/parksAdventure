@@ -30,9 +30,9 @@ const Reviewer: FC<ReviewerProps> = ({ userImg, userName }) => {
     <ReviewerContainer>
       <ProfilePicture
         pictureSize={PROFILE_PICTURE_SIZE_CLASSES.small}
-        pictureUrl={UserImg}
+        pictureUrl={userImg}
       />
-      <ReviewerName>Jack Harlow</ReviewerName>
+      <ReviewerName>{userName}</ReviewerName>
     </ReviewerContainer>
   );
 };

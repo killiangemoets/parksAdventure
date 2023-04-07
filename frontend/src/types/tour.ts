@@ -152,6 +152,7 @@ export enum TOUR_DATA {
   additionalInfo = "additionalInfo",
   popularityIndex = "popularityIndex",
   reviews = "reviews",
+  recommandations = "recommandations",
   id = "_id",
 }
 
@@ -176,6 +177,7 @@ export type TourData = {
   [TOUR_DATA.popularityIndex]: number;
   [TOUR_DATA.reviews]: TReview[];
   [TOUR_DATA.id]: string;
+  [TOUR_DATA.recommandations]?: TourData[];
 };
 
 export type FiltersData = {

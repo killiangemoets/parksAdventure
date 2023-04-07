@@ -24,50 +24,52 @@ const QuickFactsSection = () => {
   return (
     <QuickFactsSectionContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>Quick Facts</Title>
-      {!isLoading && (
-        <>
-          <QuickFacts>
-            <QuickFact
-              iconType={INFO_ICON_TYPE_CLASSES.duration}
-              name={"Duration"}
-              info={
-                tour?.duration && tour?.duration > 1
-                  ? `${tour.duration} days`
-                  : `${tour?.duration} day`
-              }
-            />
-            <QuickFact
-              iconType={INFO_ICON_TYPE_CLASSES.difficulty}
-              name={"Difficulty"}
-              info={
-                tour?.difficulty
-                  ? tour.difficulty[0].toUpperCase() +
-                    tour.difficulty.slice(1).toLowerCase()
-                  : ""
-              }
-            />
-            <QuickFact
-              iconType={INFO_ICON_TYPE_CLASSES.location}
-              name={"Location"}
-              info={tour?.location || ""}
-            />
-            <QuickFact
-              iconType={INFO_ICON_TYPE_CLASSES.category}
-              name={"Categories"}
-              info={tour?.categories ? tour.categories.join(", ") : ""}
-            />
-            <QuickFact
-              iconType={INFO_ICON_TYPE_CLASSES.group}
-              name={"Group Size"}
-              info={
-                maxGroupSize === minGroupSize
-                  ? `${maxGroupSize} people`
-                  : `${minGroupSize}-${maxGroupSize} people`
-              }
-            />
-          </QuickFacts>
-        </>
-      )}
+      <QuickFacts>
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.duration}
+          name={"Duration"}
+          info={
+            !isLoading
+              ? tour?.duration && tour?.duration > 1
+                ? `${tour.duration} days`
+                : `${tour?.duration} day`
+              : ""
+          }
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.difficulty}
+          name={"Difficulty"}
+          info={
+            !isLoading && tour?.difficulty
+              ? tour.difficulty[0].toUpperCase() +
+                tour.difficulty.slice(1).toLowerCase()
+              : ""
+          }
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.location}
+          name={"Location"}
+          info={tour?.location || ""}
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.category}
+          name={"Categories"}
+          info={
+            !isLoading && tour?.categories ? tour.categories.join(", ") : ""
+          }
+        />
+        <QuickFact
+          iconType={INFO_ICON_TYPE_CLASSES.group}
+          name={"Group Size"}
+          info={
+            !isLoading
+              ? maxGroupSize === minGroupSize
+                ? `${maxGroupSize} people`
+                : `${minGroupSize}-${maxGroupSize} people`
+              : ""
+          }
+        />
+      </QuickFacts>
     </QuickFactsSectionContainer>
   );
 };

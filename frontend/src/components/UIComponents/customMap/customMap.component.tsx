@@ -18,9 +18,17 @@ const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
 
 type MapProps = {
   stops?: TStop[];
+  geolocationControl?: boolean;
+  fullscreenControl?: boolean;
+  navigationControl?: boolean;
 };
 
-const CustomMap: FC<MapProps> = ({ stops }) => {
+const CustomMap: FC<MapProps> = ({
+  stops,
+  geolocationControl = false,
+  fullscreenControl = false,
+  navigationControl = false,
+}) => {
   const [viewState, setViewState] = useState({
     longitude: stops && stops.length > 0 ? stops[0].coordinates[0] : -100,
     latitude: stops && stops.length > 0 ? stops[0].coordinates[1] : 40,
@@ -72,9 +80,9 @@ const CustomMap: FC<MapProps> = ({ stops }) => {
       mapStyle="mapbox://styles/killiangemoets/clcdpld4j009w14oxa2fmtnvx"
       mapboxAccessToken={MAPBOX_TOKEN}
     >
-      <GeolocateControl position="top-left" />
-      <FullscreenControl position="top-left" />
-      <NavigationControl position="top-left" />
+      {geolocationControl && <GeolocateControl position="top-left" />}
+      {fullscreenControl && <FullscreenControl position="top-left" />}
+      {navigationControl && <NavigationControl position="top-left" />}
       {pins}
       {popupInfo && (
         <InfoPopup

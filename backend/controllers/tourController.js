@@ -99,8 +99,7 @@ exports.getTour = factory.getOne(Tour, [
 ]);
 
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
-  let query = Tour.findOne({ slug: req.params.slug });
-  query = query.populate({
+  const tour = await Tour.findOne({ slug: req.params.slug }).populate({
     path: 'reviews',
     populate: {
       path: 'user',
@@ -108,16 +107,22 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     },
   });
 
-  const doc = await query;
-
-  if (!doc) {
-    return next(new AppError('No document found with that slug', 404));
+  if (!tour) {
+    return next(new AppError('No tour found with that slug', 404));
   }
+
+  const recommandations = await Tour.find({
+    _id: { $ne: tour._id },
+    // categories: tour.categories[0],
+  })
+    .sort('-popularityIndex -ratingsAvarage')
+    .limit(3);
 
   res.status(200).json({
     status: 'success',
     data: {
-      data: doc,
+      tour,
+      recommandations,
     },
   });
 });

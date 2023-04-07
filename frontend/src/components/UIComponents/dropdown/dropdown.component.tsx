@@ -12,6 +12,7 @@ import {
 export type DropdownCommonProps = {
   children?: ReactNode;
   buttonType?: BUTTON_TYPE_CLASSES;
+  error?: boolean;
 };
 
 export enum DROPDOWN_TYPE_CLASSES {
@@ -64,6 +65,7 @@ export type DropdownConditionalProps =
 const Dropdown: FC<DropdownCommonProps & DropdownConditionalProps> = ({
   children,
   buttonType,
+  error,
   dropdownType,
   ...otherProps
 }) => {
@@ -135,6 +137,7 @@ const Dropdown: FC<DropdownCommonProps & DropdownConditionalProps> = ({
         onClick={() => {
           setOpenDropdown(!openDropdown);
         }}
+        style={{ border: error ? "2px solid #ff0033" : "" }}
       >
         <DropdownButtonLeft>
           {children}

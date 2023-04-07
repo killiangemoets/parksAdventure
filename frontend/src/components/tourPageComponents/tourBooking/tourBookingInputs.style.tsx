@@ -23,3 +23,27 @@ export const GroupIcon = styled(GroupSVG)`
     fill: #aaa;
   }
 `;
+
+export const SelectDateFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const SelectDateFooterText = styled.p`
+  position: relative;
+  text-align: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  &::before {
+    position: absolute;
+    top: 46%;
+    left: -10%;
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: #b83b3b;
+    display: inline-block;
+  }
+`;

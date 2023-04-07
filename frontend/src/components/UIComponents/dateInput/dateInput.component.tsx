@@ -1,16 +1,43 @@
-import React from "react";
-import dayjs, { type Dayjs } from "dayjs";
-import type { DatePickerProps } from "antd";
+import React, { FC, ReactNode } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { DatePickerProps } from "antd";
 import { ConfigProvider } from "antd";
-import { DatePickerElement } from "./dateInput.style";
+import { DateInputValue, DatePickerElement } from "./dateInput.style";
 
-const DateInput = () => {
+type DateInputProps = {
+  currentValue: Date | null;
+  handleChange: (value: Date | null) => void;
+  enabledDates?: Date[];
+  highlightDates?: Date[];
+  footer?: string | ReactNode;
+  error?: boolean;
+};
+
+const DateInput: FC<DateInputProps> = ({
+  currentValue,
+  handleChange,
+  enabledDates,
+  highlightDates,
+  footer,
+  error,
+}) => {
+  const dateInput = document.querySelector(".ant-picker-input input");
+
   const onChange: DatePickerProps["onChange"] = (date, dateString) => {
-    console.log(date, dateString);
+    handleChange(date && date?.toDate());
+    (dateInput as HTMLElement).blur();
   };
 
   const disabledDate = (current: Dayjs) => {
-    return current && current <= dayjs().add(-1, "d");
+    return (
+      !Boolean(
+        enabledDates?.find(
+          (enableDate) =>
+            current.isSame(dayjs(enableDate), "day") &&
+            new Date(enableDate) > new Date(Date.now())
+        )
+      ) || current <= dayjs().add(-1, "d")
+    );
   };
 
   return (
@@ -33,9 +60,31 @@ const DateInput = () => {
       }}
     >
       <DatePickerElement
+        style={{ border: error ? "2px solid #ff0033" : "" }}
         onChange={onChange}
         disabledDate={disabledDate}
+        value={currentValue && dayjs(currentValue)}
         format="DD/MM/YYYY"
+        dateRender={(current) => {
+          let highlight = false;
+          if (
+            highlightDates?.find(
+              (highlightDate) =>
+                current.isSame(dayjs(highlightDate), "day") &&
+                new Date(highlightDate) > new Date(Date.now())
+            )
+          )
+            highlight = true;
+          return (
+            <DateInputValue
+              className="ant-picker-cell-inner"
+              highlight={highlight}
+            >
+              {current.date()}
+            </DateInputValue>
+          );
+        }}
+        renderExtraFooter={() => footer}
       />
     </ConfigProvider>
   );

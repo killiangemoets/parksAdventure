@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+import { selectRecommandations } from "../../../store/tour/tour.selector";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
@@ -9,6 +11,8 @@ import {
 } from "./tourRecommandations.style";
 
 const TourRecommandations = () => {
+  const recommandations = useSelector(selectRecommandations);
+
   return (
     <TourRecommandationsContainer>
       <TourRecommandationsWrapper>
@@ -16,9 +20,10 @@ const TourRecommandations = () => {
           You might also like...
         </Title>
         <RecommandationCards>
-          {/* <TourCard />
-          <TourCard />
-          <TourCard /> */}
+          {recommandations &&
+            recommandations.map((tour) => (
+              <TourCard key={tour._id} tour={tour} />
+            ))}
         </RecommandationCards>
       </TourRecommandationsWrapper>
     </TourRecommandationsContainer>

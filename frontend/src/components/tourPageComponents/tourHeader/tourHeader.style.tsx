@@ -47,6 +47,7 @@ export const TourHeaderWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   max-width: 130rem;
+  min-height: 9rem;
 `;
 
 export const TourHeaderLeft = styled.div`

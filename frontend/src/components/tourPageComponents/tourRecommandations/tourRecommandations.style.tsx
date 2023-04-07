@@ -16,6 +16,7 @@ export const TourRecommandationsWrapper = styled.div`
 `;
 
 export const RecommandationCards = styled.div`
+  min-height: 50.8rem;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -55,3 +55,11 @@ export const ReviewsModalText = styled.div`
   /* font-weight: 400; */
   /* letter-spacing: 0.4px; */
 `;
+
+export const NoReviewsMessage = styled.p`
+  align-self: center;
+  font-weight: 400;
+  margin-right: 2.25rem;
+  font-size: 1.4rem;
+  letter-spacing: 1.2px;
+`;

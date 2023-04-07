@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
 
 export const DatePickerElement = styled(DatePicker)`
@@ -50,5 +50,36 @@ export const DatePickerElement = styled(DatePicker)`
 
   .ant-picker-suffix {
     margin-right: 1rem !important;
+  }
+
+  .ant-picker-dropdown .ant-picker-today-btn {
+    display: none !important;
+  }
+`;
+
+const highlightStyle = css`
+  position: absolute;
+  bottom: 20%;
+  right: 4%;
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #b83b3b;
+  display: inline-block;
+`;
+
+type DateInputValueProps = {
+  highlight?: boolean;
+};
+export const DateInputValue = styled.div<DateInputValueProps>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &::after {
+    ${({ highlight }) => highlight && highlightStyle}
   }
 `;

@@ -19,6 +19,7 @@ import {
   ReviewsModalText,
   ReviewsWrapper,
   TourReviewsContainer,
+  NoReviewsMessage,
 } from "./tourReviews.style";
 
 export type TourReviewsProps = {
@@ -45,25 +46,40 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
     setModalOpen(false);
   };
 
+  const handleRenderReviews = () => {
+    if (!tour) return;
+    const newReviews = tour.reviews.slice(reviews.length, reviews.length + 3);
+    setReviews([...reviews, ...newReviews]);
+  };
+
   return (
     <TourReviewsContainer ref={forwardRef}>
       <Title titleType={TITLE_TYPE_CLASSES.section}>
         Customer Reviews <Info onClick={() => handleOpenModal(true)} />
       </Title>
       <ReviewsWrapper>
-        {reviews.map((review, i) => (
-          <Review
-            key={i}
-            date={review.createdAt}
-            userImg={review.user.photo}
-            userName={`${review.user.firstname} ${review.user.lastname}`}
-            review={review.review}
-            rating={review.rating}
-          />
-        ))}
+        {reviews.length ? (
+          reviews.map((review, i) => (
+            <Review
+              key={i}
+              date={review.createdAt}
+              userImg={review.user.photo}
+              userName={`${review.user.firstname} ${review.user.lastname}`}
+              review={review.review}
+              rating={review.rating}
+            />
+          ))
+        ) : (
+          <NoReviewsMessage>No reviews yet</NoReviewsMessage>
+        )}
       </ReviewsWrapper>
       {tour?.reviews && tour.reviews.length > reviews.length && (
-        <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.inverted}
+          onClick={() => {
+            handleRenderReviews();
+          }}
+        >
           See more reviews
         </Button>
       )}

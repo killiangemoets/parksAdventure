@@ -9,3 +9,29 @@ const niceDate = (dateToFormat: string | Date) => {
 };
 
 export default niceDate;
+
+export const niceMonth = (date: string | Date) => {
+  const monthsList = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  return monthsList[new Date(date).getMonth()];
+};
+
+export const niceFullDate = (dateToFormat: string | Date) => {
+  const date = new Date(dateToFormat);
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  return `${niceMonth(dateToFormat)} ${day}, ${year}`;
+};

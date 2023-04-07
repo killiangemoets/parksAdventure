@@ -49,6 +49,7 @@ const TourCard: FC<TourCardProps> = ({ tour }) => {
 
   const handleClickTour = () => {
     navigate(`/tour/${slug}`);
+    // window.open(`${window.location.origin}/tour/${slug}`, "_blank");
   };
   if (!nextStart) {
     return <></>;

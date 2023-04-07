@@ -2,10 +2,12 @@ import { FC } from "react";
 import {
   BigGreenLocationIcon,
   BigOrangeLocationIcon,
+  BulletIcon,
   CategoryIcon,
   DateIcon,
   DifficultyIcon,
   DurationIcon,
+  EmptyIcon,
   GroupIcon,
   ListIcon,
   LocationIcon,
@@ -29,6 +31,8 @@ export enum INFO_ICON_TYPE_CLASSES {
   time = "time",
   category = "category",
   list = "list",
+  bullet = "bullet",
+  empty = "empty",
 }
 
 const getIcon = (
@@ -48,6 +52,8 @@ const getIcon = (
     [INFO_ICON_TYPE_CLASSES.time]: TimeIcon,
     [INFO_ICON_TYPE_CLASSES.category]: CategoryIcon,
     [INFO_ICON_TYPE_CLASSES.list]: ListIcon,
+    [INFO_ICON_TYPE_CLASSES.bullet]: BulletIcon,
+    [INFO_ICON_TYPE_CLASSES.empty]: EmptyIcon,
   }[iconType]);
 
 export type InfoIconProps = {

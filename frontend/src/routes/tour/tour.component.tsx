@@ -7,10 +7,16 @@ import TourRecommandations from "../../components/tourPageComponents/tourRecomma
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
 import { TourContainer } from "./tour.style";
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { fetchTourAsync } from "../../store/tour/tour.action";
 import { useParams } from "react-router-dom";
+import { selectTourError } from "../../store/tour/tour.selector";
+import NotFound from "../../components/notFound/notFound.component";
+
+type TourSlugRouteParams = {
+  slug: string;
+};
 
 const Tour = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -18,15 +24,18 @@ const Tour = () => {
     keyof TourSlugRouteParams
   >() as TourSlugRouteParams;
 
-  type TourSlugRouteParams = {
-    slug: string;
-  };
   const bookingRef = useRef<HTMLDivElement | null>(null);
   const reviewsRef = useRef<HTMLDivElement | null>(null);
+  const error = useSelector(selectTourError);
+
+  useEffect(() => {
+    if (error) {
+    }
+  }, [error]);
 
   useEffect(() => {
     dispatch(fetchTourAsync(slug));
-  }, []);
+  }, [slug]);
 
   const handleScrollToBooking = () => {
     window.scrollTo({
@@ -41,20 +50,24 @@ const Tour = () => {
     });
   };
 
-  return (
-    <TourContainer>
-      <TourHeader
-        handleScrollToBooking={handleScrollToBooking}
-        handleScrollToReviews={handleScrollToReviews}
-      />
-      <TourGallery />
-      <TourInfos />
-      <TourItinerary />
-      <TourBooking forwardRef={bookingRef} />
-      <TourReviews forwardRef={reviewsRef} />
-      <TourRecommandations />
-    </TourContainer>
-  );
+  if (error) {
+    return <NotFound title="No tour found wih this name" />;
+  } else {
+    return (
+      <TourContainer>
+        <TourHeader
+          handleScrollToBooking={handleScrollToBooking}
+          handleScrollToReviews={handleScrollToReviews}
+        />
+        <TourGallery />
+        <TourInfos />
+        <TourItinerary />
+        <TourBooking forwardRef={bookingRef} />
+        <TourReviews forwardRef={reviewsRef} />
+        <TourRecommandations />
+      </TourContainer>
+    );
+  }
 };
 
 export default Tour;

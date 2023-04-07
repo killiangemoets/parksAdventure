@@ -8,8 +8,18 @@ export const TourBookingContainer = styled.div`
   justify-content: center;
 `;
 
+export const TourBookingWrapper = styled.div`
+  width: 100rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const TourBookingBox = styled.div`
   position: relative;
+  width: 100%;
   padding: 3.2rem 2.4rem 3.2rem 20.4rem;
   border-radius: 12px;
   background: -webkit-gradient(

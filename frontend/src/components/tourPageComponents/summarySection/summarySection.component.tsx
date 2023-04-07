@@ -13,14 +13,10 @@ const SummarySection = () => {
   const isLoading = useSelector(selectTourIsLoading);
   return (
     <SummarySectionContainer>
-      {!isLoading && (
-        <>
-          <Title titleType={TITLE_TYPE_CLASSES.section}>
-            {`About the ${tour?.name}`}
-          </Title>
-          <AboutTour>{tour?.description}</AboutTour>
-        </>
-      )}
+      <Title titleType={TITLE_TYPE_CLASSES.section}>
+        {!isLoading ? `About the ${tour?.name}` : "About ..."}
+      </Title>
+      <AboutTour>{!isLoading && tour?.description}</AboutTour>
     </SummarySectionContainer>
   );
 };

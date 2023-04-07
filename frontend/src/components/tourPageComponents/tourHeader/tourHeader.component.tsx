@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useInfoFromAvailabilities from "../../../hooks/infoFromAvailabilities";
 import {
@@ -35,25 +35,27 @@ const TourHeader: FC<TourHeaderProps> = ({
 
   return (
     <TourHeaderContainer>
-      {!isLoading && (
-        <TourHeaderWrapper>
-          <TourHeaderLeft>
-            <Title titleType={TITLE_TYPE_CLASSES.main}>{tour?.name}</Title>
+      <TourHeaderWrapper>
+        <TourHeaderLeft>
+          <Title titleType={TITLE_TYPE_CLASSES.main}>
+            {!isLoading && tour?.name}
+          </Title>
+          {!isLoading && (
             <StarsRating
               linkOnReviews={true}
               handleLinkTo={handleScrollToReviews}
               rating={tour?.ratingsAverage || 0}
               numRatings={tour?.ratingsQuantity || 0}
             />
-          </TourHeaderLeft>
-          <TourHeaderRight>
-            <Button onClick={handleScrollToBooking}>Book Now</Button>
-            <Price>
-              <span>{`From $${minPrice}`}</span> per person
-            </Price>
-          </TourHeaderRight>
-        </TourHeaderWrapper>
-      )}
+          )}
+        </TourHeaderLeft>
+        <TourHeaderRight>
+          <Button onClick={handleScrollToBooking}>Book Now</Button>
+          <Price>
+            <span>{`From $${minPrice || 0}`}</span> per person
+          </Price>
+        </TourHeaderRight>
+      </TourHeaderWrapper>
     </TourHeaderContainer>
   );
 };

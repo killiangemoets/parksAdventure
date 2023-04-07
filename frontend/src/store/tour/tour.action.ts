@@ -41,6 +41,11 @@ export const fetchTourAsync =
     const response = await getTour(slug);
     console.log(response);
     if (response.status === "success")
-      dispatch(fetchTourSuccess(response.data.data));
+      dispatch(
+        fetchTourSuccess({
+          ...response.data.tour,
+          recommandations: response.data.recommandations,
+        })
+      );
     else dispatch(fetchTourFailed(response.message));
   };

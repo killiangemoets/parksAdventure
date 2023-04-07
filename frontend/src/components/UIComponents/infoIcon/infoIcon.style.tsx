@@ -8,6 +8,7 @@ import { ReactComponent as CalendarSVG } from "../../../assets/calendar-regular.
 import { ReactComponent as ClockSVG } from "../../../assets/clock-regular.svg";
 import { ReactComponent as TagSVG } from "../../../assets/tag.svg";
 import { ReactComponent as ListSVG } from "../../../assets/list.svg";
+import { ReactComponent as RightChevronSVG } from "../../../assets/chevron-right-solid.svg";
 
 export const LocationIcon = styled(PositionSVG)`
   width: 2rem;
@@ -115,5 +116,21 @@ export const ListIcon = styled(ListSVG)`
   height: 2rem;
   .path {
     fill: #cc704b;
+  }
+`;
+
+export const BulletIcon = styled(RightChevronSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: #cc704b;
+  }
+`;
+
+export const EmptyIcon = styled(RightChevronSVG)`
+  width: 2rem;
+  height: 2rem;
+  .path {
+    fill: rgba(0, 0, 0, 0);
   }
 `;

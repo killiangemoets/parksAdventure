@@ -30,7 +30,6 @@ const RangeDateInput: FC<RangeDateInputProps> = ({
   currentValues,
   handleChange,
 }) => {
-  const input = useRef(null);
   const dateInputs = document.querySelectorAll(".ant-picker-input input");
 
   const onChange = (values: any) => {
@@ -58,7 +57,6 @@ const RangeDateInput: FC<RangeDateInputProps> = ({
       }}
     >
       <RangeDatePickerElement
-        ref={input}
         presets={rangePresets}
         disabledDate={disabledDate}
         value={currentValues}

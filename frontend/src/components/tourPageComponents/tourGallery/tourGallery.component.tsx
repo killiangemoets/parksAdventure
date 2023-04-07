@@ -45,50 +45,46 @@ const TourGallery = () => {
 
   return (
     <>
-      {!isLoading && (
-        <>
-          <TourGalleryContainer>
-            <TourGalleryGrid>
-              <TourMainImage>
-                {tour?.imageCover && (
-                  <img src={tour?.imageCover} alt="Tour 1" />
-                )}
-              </TourMainImage>
-              <TourSecondImage>
-                {tour?.images && tour?.images[0] && (
-                  <img src={tour.images[0]} alt="Tour 2" />
-                )}
-              </TourSecondImage>
-              <TourThirdImage>
-                {tour?.images && tour?.images[1] && (
-                  <img src={tour.images[1]} alt="Tour 3" />
-                )}
-              </TourThirdImage>
-              <TourFourthImage>
-                {tour?.images && tour?.images[2] && (
-                  <img src={tour.images[2]} alt="Tour 4" />
-                )}
-              </TourFourthImage>
-              <TourGalleryButtons>
-                <Button
-                  buttonType={BUTTON_TYPE_CLASSES.gallery}
-                  onClick={() => handleOpenCarousel(true)}
-                >
-                  View all {carouselImages.length} images
-                </Button>
-                <Button buttonType={BUTTON_TYPE_CLASSES.gallery}>
-                  Add to wishlist <HeartIcon />
-                </Button>
-              </TourGalleryButtons>
-            </TourGalleryGrid>
-          </TourGalleryContainer>
-          {picturesCarouselOpen && (
-            <PicturesCarousel
-              handleOpen={handleOpenCarousel}
-              images={carouselImages}
-            />
-          )}
-        </>
+      <TourGalleryContainer>
+        <TourGalleryGrid>
+          <TourMainImage>
+            {!isLoading && tour?.imageCover && (
+              <img src={tour?.imageCover} alt="Tour 1" />
+            )}
+          </TourMainImage>
+          <TourSecondImage>
+            {!isLoading && tour?.images && tour?.images[0] && (
+              <img src={tour.images[0]} alt="Tour 2" />
+            )}
+          </TourSecondImage>
+          <TourThirdImage>
+            {!isLoading && tour?.images && tour?.images[1] && (
+              <img src={tour.images[1]} alt="Tour 3" />
+            )}
+          </TourThirdImage>
+          <TourFourthImage>
+            {!isLoading && tour?.images && tour?.images[2] && (
+              <img src={tour.images[2]} alt="Tour 4" />
+            )}
+          </TourFourthImage>
+          <TourGalleryButtons>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.gallery}
+              onClick={() => handleOpenCarousel(true)}
+            >
+              View all {carouselImages.length} images
+            </Button>
+            <Button buttonType={BUTTON_TYPE_CLASSES.gallery}>
+              Add to wishlist <HeartIcon />
+            </Button>
+          </TourGalleryButtons>
+        </TourGalleryGrid>
+      </TourGalleryContainer>
+      {picturesCarouselOpen && (
+        <PicturesCarousel
+          handleOpen={handleOpenCarousel}
+          images={carouselImages}
+        />
       )}
     </>
   );
