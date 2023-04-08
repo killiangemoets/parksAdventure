@@ -5,19 +5,18 @@ export const ToursCardsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.6s;
 `;
 
 type ToursCardWrapperProps = {
   mapOpen: boolean;
 };
+
 export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
   display: grid;
-  /* grid-template-columns: auto auto auto auto; */
   grid-template-columns: repeat(4, 1fr);
   align-items: center;
   justify-content: space-between;
-  /* justify-content: center; */
-  /* column-gap: 4.8rem; */
   row-gap: 4.8rem;
   transition: all 0.6s;
 
@@ -27,8 +26,7 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
   ${({ mapOpen }) =>
     mapOpen &&
     css`
-      grid-template-columns: auto auto auto;
-      justify-content: center;
-      column-gap: 2.8rem;
+      grid-template-columns: repeat(3, 1fr);
+      max-width: 104rem;
     `}
 `;

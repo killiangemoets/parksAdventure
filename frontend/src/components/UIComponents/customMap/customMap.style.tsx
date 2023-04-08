@@ -11,4 +11,9 @@ export const InfoPopup = styled(Popup)`
   width: auto;
   height: auto;
   max-width: none !important;
+
+  .mapboxgl-popup-content {
+    padding: 0 !important;
+    border-radius: 12px !important;
+  }
 `;

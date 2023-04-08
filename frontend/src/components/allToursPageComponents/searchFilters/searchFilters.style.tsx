@@ -5,10 +5,12 @@ import { ReactComponent as SortSVG } from "../../../assets/sort-solid.svg";
 
 export const SearchFiltersContainer = styled.div`
   width: 100%;
-  padding: 6.4rem;
+  height: 12rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid #cc704b;
+  background-color: #fdfaf5;
 `;
 
 export const SearchFiltersWrapper = styled.div`

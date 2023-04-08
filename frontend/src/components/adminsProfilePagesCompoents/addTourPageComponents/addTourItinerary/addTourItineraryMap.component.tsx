@@ -94,24 +94,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   }, [stops]);
 
   useEffect(() => {
-    // const getDirections = async () => {
-    //   if (stops.length < 2) return setItinerary([]);
-    //   try {
-    //     let stopsToString = (
-    //       stops.reduce((acc, stop) => {
-    //         return acc + `${stop.longitude},${stop.latitude};`;
-    //       }, "") + `${stops[0].longitude},${stops[0].latitude};`
-    //     ).slice(0, -1);
-
-    //     const directions = await axios(
-    //       `https://api.mapbox.com/directions/v5/mapbox/walking/${stopsToString}?access_token=pk.eyJ1Ijoia2lsbGlhbmdlbW9ldHMiLCJhIjoiY2xjZHIzOTI4MDF6MTNybjBwNXRnZjM1YyJ9.6KlAze9wPLj3rmb2ykhgdQ&geometries=geojson`
-    //     );
-    //     setItinerary(directions.data.routes[0].geometry.coordinates);
-    //   } catch (error) {
-    //     setItinerary([]);
-    //     console.log(error);
-    //   }
-    // };
     const updateItinerary = async () => {
       const itinerary = await getDirection(stops);
       setItinerary(itinerary);
@@ -121,8 +103,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
 
   const handleRenderNewStopInfo = (longitude: number, latitude: number) => {
     setShowErrorStopText("");
-
-    // setViewState({ ...viewState, longitude, latitude });
 
     const addNewPin = (
       <Marker longitude={longitude} latitude={latitude} anchor="bottom">
@@ -161,27 +141,9 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
     }
   };
 
-  // const dataOne = {
-  //   type: "Feature",
-  //   properties: {},
-  //   geometry: {
-  //     type: "LineString",
-  // coordinates: [
-  //   [-122.41510269913951, 37.77909036739809],
-  //   [39.5423, -77.0564],
-  // ],
-  //   },
-  // };
-
   return (
     <MapContainer>
       <Map
-        // initialViewState={{
-        //   longitude: -18,
-        //   latitude: 35,
-        //   zoom: 1,
-        // }}
-        // ViewState={{ longitude: -18, latitude: 35, zoom: 1 }}
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
         dragRotate={false}

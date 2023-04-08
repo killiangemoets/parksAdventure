@@ -5,15 +5,20 @@ export const AllToursContainer = styled.div`
   position: relative;
 `;
 
+export const AllTourFixElements = styled.div`
+  width: 100%;
+  z-index: 2;
+`;
+
 export const AllToursResults = styled.div`
   position: relative;
-  padding-top: 3.2rem;
 
   display: flex;
   align-items: flex-start;
   justify-content: center;
 
   margin-bottom: 6.4rem;
+  min-height: calc(100vh - 8rem - 14.6rem);
 `;
 
 type AllToursResultsLeftProps = {
@@ -21,12 +26,8 @@ type AllToursResultsLeftProps = {
 };
 
 export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  padding-top: 6.4rem;
   width: calc(100vw - 8rem);
-  /* margin-left: -8rem; */
   transition: all 0.6s;
 
   ${({ mapOpen }) =>
@@ -36,12 +37,12 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
     `}
 `;
 
-export const AllToursResultsCards = styled.div`
-  /* display: flex; */
-  /* min-height: calc(100vh - 8rem); */
-`;
+export const AllToursResultsCards = styled.div``;
 
 export const NoResultsMessage = styled.p`
+  width: 100%;
+  padding-top: 6.4rem;
+  text-align: center;
   align-self: center;
   font-weight: 600;
   margin-right: 2.25rem;

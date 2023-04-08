@@ -52,3 +52,7 @@ export const ItineraryCaptionContainer = styled.div`
   background-color: #fdfaf5;
   padding: 2rem 0.4rem;
 `;
+
+export const StopDescription = styled.div`
+  padding: 1rem 1.2rem;
+`;

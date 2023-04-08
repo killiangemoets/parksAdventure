@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import RangeDateInput from "../../UIComponents/rangeDateInput/rangeDateInput.component";
 import SearchInput from "../../UIComponents/searchInput/searchInput.component";
@@ -15,7 +15,11 @@ import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isValidDate from "../../../utils/formatting/validDate";
 
-const AllToursHeader = () => {
+export type AllTourHeaderProps = {
+  forwardRef?: React.MutableRefObject<HTMLDivElement | null>;
+};
+
+const AllToursHeader: FC<AllTourHeaderProps> = ({ forwardRef }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<string>("");
   const [dates, setDates] = useState<[Dayjs, Dayjs] | null>(null);
@@ -64,7 +68,7 @@ const AllToursHeader = () => {
   };
 
   return (
-    <AllToursHeaderContainer>
+    <AllToursHeaderContainer ref={forwardRef} className="header">
       <AllToursHeaderWrapper>
         <AllToursHeaderContent>
           <AllToursHeaderInputs>

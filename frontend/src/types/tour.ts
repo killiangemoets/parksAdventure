@@ -1,4 +1,5 @@
 import { UploadFile } from "antd";
+import { TCoordinates } from "./map";
 import { TUser } from "./user";
 
 export type TCreateStop = {
@@ -16,7 +17,7 @@ export type TCreateAvailability = {
 };
 
 export type TStop = {
-  coordinates: [number, number];
+  coordinates: TCoordinates;
   description: string;
   type: "Point";
   _id: string;

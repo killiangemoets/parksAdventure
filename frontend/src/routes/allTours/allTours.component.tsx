@@ -3,6 +3,7 @@ import SearchFilters from "../../components/allToursPageComponents/searchFilters
 import ToursCards from "../../components/allToursPageComponents/toursCards/toursCards.component";
 import ToursMap from "../../components/allToursPageComponents/toursMap/toursMap.component";
 import {
+  AllTourFixElements,
   AllToursContainer,
   AllToursResults,
   AllToursResultsCards,
@@ -25,13 +26,6 @@ import {
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";
-// import {
-//   categoriesList,
-//   difficultiesList,
-//   TCategory,
-//   TDifficulty,
-// } from "../../types/tour";
-// import isValidDate from "../../utils/formatting/validDate";
 
 const AllTours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,9 +34,8 @@ const AllTours = () => {
   const isLoading = useSelector(selectToursIsLoading);
   const tours = useSelector(selectTours);
 
-  const tourCardsResultRef = useRef<HTMLDivElement | null>(null);
-  const [fix, setFix] = useState<boolean>(false);
-  const [reduceHeight, setReduceHeight] = useState<boolean>(false);
+  const filtersRef = useRef<HTMLDivElement | null>(null);
+  const allToursRef = useRef<HTMLDivElement | null>(null);
   const [mapOpen, setMapOpen] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
@@ -53,6 +46,7 @@ const AllTours = () => {
   }, [searchParams]);
 
   useEffect(() => {
+    if (window.scrollY > 400) window.scrollTo(0, 400);
     const requestStringFromUrl = window.location.href.split("?")[1];
     console.log(requestStringFromUrl);
     const requestString =
@@ -72,58 +66,43 @@ const AllTours = () => {
     setNumberOfPages(newNumberOfPages);
   }, [totalResults]);
 
-  const checkScroll = (): void => {
-    if (!tourCardsResultRef.current) return;
-
-    const tourCardsTop = tourCardsResultRef.current.getBoundingClientRect().top;
-    const tourCardsBottom =
-      tourCardsResultRef.current.getBoundingClientRect().bottom;
-
-    // const tourCards = document.querySelector(".tour-cards");
-    // const searchMap = document.querySelector(".search-map");
-    // console.log({ tourCards, searchMap });
-    // if (!tourCards || !searchMap) return;
-    // const tourCardsTop = tourCards.getBoundingClientRect().top;
-    // const tourCardsBottom = tourCards.getBoundingClientRect().bottom;
-
-    if (tourCardsTop <= 80) {
-      setFix(true);
-      // searchMap.classList.add("fix");
-    } else {
-      setFix(false);
-      // searchMap.classList.remove("fix");
-    }
-    if (tourCardsBottom < window.innerHeight) {
-      setReduceHeight(true);
-      setFix(false);
-      // searchMap.classList.add("move-bottom");
-      // searchMap.classList.remove("fix");
-    } else {
-      setReduceHeight(false);
-      // searchMap.classList.remove("move-bottom");
-    }
-  };
-
-  useLayoutEffect(() => {
-    checkScroll();
-    window.addEventListener("scroll", checkScroll);
-    return window.addEventListener("scroll", checkScroll);
-  }, []);
-
   const handleOpenMap = (): void => {
     setMapOpen(!mapOpen);
   };
 
+  useLayoutEffect(() => {
+    if (!filtersRef.current) return;
+
+    const filtersRefAnimate = filtersRef.current.getBoundingClientRect().top;
+    console.log(filtersRefAnimate);
+    const onScroll = () => {
+      if (!filtersRef.current || !allToursRef.current) return;
+      console.log({ filtersRefAnimate, windowScrollY: window.scrollY });
+      if (480 < window.scrollY + 80) {
+        console.log("ok");
+        filtersRef.current.style.position = "fixed";
+        filtersRef.current.style.top = "8rem";
+        filtersRef.current.style.left = "0";
+        allToursRef.current.style.marginTop = "12rem";
+      } else {
+        filtersRef.current.style.position = "relative";
+        filtersRef.current.style.top = "0";
+        allToursRef.current.style.marginTop = "0";
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <AllToursContainer>
       <AllToursHeader />
-      <SearchFilters />
-      <AllToursResults>
-        <AllToursResultsLeft
-          mapOpen={mapOpen}
-          ref={tourCardsResultRef}
-          // className="tour-cards"
-        >
+      <AllTourFixElements ref={filtersRef}>
+        <SearchFilters />
+        <ToursMap handleOpenMap={handleOpenMap} mapOpen={mapOpen} />
+      </AllTourFixElements>
+      <AllToursResults ref={allToursRef}>
+        <AllToursResultsLeft mapOpen={mapOpen}>
           <AllToursResultsCards>
             {isLoading ? (
               <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
@@ -149,12 +128,6 @@ const AllTours = () => {
             ""
           )}
         </AllToursResultsLeft>
-        <ToursMap
-          fix={fix}
-          reduceHeight={reduceHeight}
-          handleOpenMap={handleOpenMap}
-          mapOpen={mapOpen}
-        />
       </AllToursResults>
     </AllToursContainer>
   );

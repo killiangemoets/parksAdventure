@@ -18,6 +18,7 @@ import {
   ItineraryLeftContainer,
   ItineraryMapContainer,
   ItineraryRightContainer,
+  StopDescription,
   TourItineraryContainer,
   TourItineraryContent,
   TourItineraryWrapper,
@@ -67,12 +68,21 @@ const TourItinerary = () => {
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
-              <CustomMap
-                stops={stops}
-                geolocationControl={true}
-                fullscreenControl={true}
-                navigationControl={true}
-              />
+              {stops.length > 0 && (
+                <CustomMap
+                  locations={stops.map((stop) => {
+                    return {
+                      coordinates: stop.coordinates,
+                      popupContent: (
+                        <StopDescription>{stop.description}</StopDescription>
+                      ),
+                    };
+                  })}
+                  geolocationControl={true}
+                  fullscreenControl={true}
+                  navigationControl={true}
+                />
+              )}
             </ItineraryMapContainer>
             <ItineraryCaption />
           </ItineraryRightContainer>

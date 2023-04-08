@@ -1,5 +1,4 @@
-import { FC, useState } from "react";
-import type { PaginationProps } from "antd";
+import { FC } from "react";
 import { PaginationContainer, PaginationElement } from "./pagination.style";
 
 type PaginationElProps = {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import Button, {
   BUTTON_TYPE_CLASSES,
@@ -17,7 +17,7 @@ import {
   SortIcon,
 } from "./searchFilters.style";
 
-const SearchFilters = () => {
+const SearchFilters: FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const sortPossibilites: Info[] = [
@@ -69,7 +69,7 @@ const SearchFilters = () => {
           </Link>
           <Link to="/alltours?difficulty=expert">
             <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>
-              Advanced Tours
+              Expert Tours
             </Button>
           </Link>
           <Link to="/alltours?category=mountain">

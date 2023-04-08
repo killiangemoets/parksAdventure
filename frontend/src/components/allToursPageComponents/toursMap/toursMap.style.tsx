@@ -13,26 +13,19 @@ const reduceHeigthStyle = css`
 `;
 
 type ToursMapContainerProps = {
-  fix: boolean;
-  reduceHeight: boolean;
   mapOpen: boolean;
 };
 
 export const ToursMapContainer = styled.div<ToursMapContainerProps>`
   position: absolute;
-  /* top: 0; */
-  /* bottom: 0%; */
+
   right: 0%;
-  /* transform: translateX(0%); */
-  /* width: 40%; */
+
   width: 40%;
   transition: transform 0.6s;
 
   height: calc(100vh - 8rem);
   z-index: 2;
-
-  ${({ fix }) => fix && fixedStyle}
-  ${({ reduceHeight }) => reduceHeight && reduceHeigthStyle}
 
   ${({ mapOpen }) =>
     !mapOpen &&
@@ -44,17 +37,6 @@ export const ToursMapContainer = styled.div<ToursMapContainerProps>`
 export const ToursMapWrapper = styled.div`
   position: relative;
   height: 100%;
-  /* padding-bottom: 3rem; */
-`;
-
-export const HideMapNote = styled.div`
-  position: absolute;
-  bottom: 0%;
-  left: 0%;
-  width: 30rem;
-  background-color: #fdfaf5;
-  height: 2.8rem;
-  z-index: 999;
 `;
 
 export const ToursMapButtonWrapper = styled.div`

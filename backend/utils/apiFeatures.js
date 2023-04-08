@@ -25,7 +25,7 @@ class APIFeatures {
       if (!boxStartLat || !boxStartLgn || !boxEndLat || !boxEndLng) {
         this.next(
           new AppError(
-            'Please provide latitude and longitude in format <boxStartLat>,<boxStartLng>to<boxEndLat>,<boxEndLng>',
+            'Please provide latitude and longitude in format <boxSouthWestLat>,<boxSouthWestLng>to<boxNorthEastLat>,<boxNorthEastLng>',
             400
           )
         );
@@ -47,9 +47,7 @@ class APIFeatures {
       const categoriesQuery = Array.isArray(queryObj.category)
         ? [...queryObj.category]
         : [queryObj.category];
-      console.log('categoriesQuery', categoriesQuery);
       queryObj.categories = { $in: categoriesQuery };
-      // queryObj.categories = { $in: [queryObj.category] };
       delete queryObj.category;
     }
 

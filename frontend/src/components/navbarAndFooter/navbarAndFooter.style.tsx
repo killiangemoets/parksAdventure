@@ -59,11 +59,14 @@ export const SignUpLink = styled(NavBarLink)`
 
 export const FooterContainer = styled.div`
   /* width: 100%; */
+  position: relative;
   height: 8rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 4rem;
+  z-index: 999;
+  background-color: #fdfaf5;
 `;
 
 export const FooterLogo = styled.div`
