@@ -3,7 +3,9 @@ import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { selectTours } from "../../../store/tours/tours.selector";
-import { TCoordinatesBox, TLocation } from "../../../types/map";
+import { TCoordinatesBox, TLocation, TViewState } from "../../../types/map";
+import compareObjects from "../../../utils/comparison/compareObjects";
+import { StopDescription } from "../../tourPageComponents/tourItinerary/tourItinerary.style";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -22,20 +24,30 @@ import {
 export type ToursMapProps = {
   handleOpenMap: () => void;
   mapOpen: boolean;
+  highlightMarker: string | undefined;
 };
 
-const ToursMap: FC<ToursMapProps> = ({ handleOpenMap, mapOpen }) => {
+const ToursMap: FC<ToursMapProps> = ({
+  handleOpenMap,
+  mapOpen,
+  highlightMarker,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const tours = useSelector(selectTours);
   const [markers, setMarkers] = useState<TLocation[]>([]);
   const [timeout, setTimout] = useState<number | undefined>(undefined);
+  const [initialViewState, setViewState] = useState<TViewState>({
+    longitude: 0,
+    latitude: 0,
+    zoom: 0,
+  });
 
   useEffect(() => {
-    if (mapOpen) {
-      searchParams.set("box", "90,180to-90,-180");
-    } else {
+    if (!mapOpen) {
       searchParams.delete("box");
+      searchParams.delete("viewstate");
     }
+    searchParams.delete("page");
     setSearchParams(searchParams);
   }, [mapOpen]);
 
@@ -44,25 +56,46 @@ const ToursMap: FC<ToursMapProps> = ({ handleOpenMap, mapOpen }) => {
     const newMarkers = tours.map((tour) => {
       return {
         coordinates: tour.startLocation.coordinates,
+        highlight: highlightMarker === tour._id,
         popupContent: <TourPopup tour={tour} />,
       };
     });
     setMarkers(newMarkers);
-  }, [tours, mapOpen]);
+  }, [tours, mapOpen, highlightMarker]);
+
+  useEffect(() => {
+    const initialViewStateArr = searchParams.get("viewstate")?.split(",");
+    if (!initialViewStateArr) return;
+    const newInitialViewState: TViewState = {
+      latitude: +initialViewStateArr[0],
+      longitude: +initialViewStateArr[1],
+      zoom: +initialViewStateArr[2].replace("zoom", ""),
+    };
+    console.log({ newInitialViewState });
+    if (!compareObjects(newInitialViewState, initialViewState))
+      setViewState(newInitialViewState);
+  }, [searchParams]);
 
   const handleClickMap = () => {
     handleOpenMap();
   };
 
-  const handleCoordinatesBox = (coordinatesBox: TCoordinatesBox) => {
+  const handleCoordinatesBox = (
+    coordinatesBox: TCoordinatesBox,
+    viewState: TViewState
+  ) => {
     if (!mapOpen) return;
-    console.log(timeout);
     timeout && window.clearTimeout(timeout);
     const newTimeout = window.setTimeout(() => {
       searchParams.set(
         "box",
         `${coordinatesBox.southwest[0]},${coordinatesBox.southwest[1]}to${coordinatesBox.northeast[0]},${coordinatesBox.northeast[1]}`
       );
+      searchParams.set(
+        "viewstate",
+        `${viewState.latitude},${viewState.longitude},${viewState.zoom}zoom`
+      );
+      searchParams.delete("page");
       setSearchParams(searchParams);
     }, 2000);
 
@@ -85,6 +118,7 @@ const ToursMap: FC<ToursMapProps> = ({ handleOpenMap, mapOpen }) => {
           handleCoordinatesBox={handleCoordinatesBox}
           type={MAP_TYPE_CLASSES.searchTours}
           mapOpen={mapOpen}
+          initialViewState={initialViewState}
         />
       </ToursMapWrapper>
     </ToursMapContainer>

@@ -29,12 +29,17 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
   padding-top: 6.4rem;
   width: calc(100vw - 8rem);
   transition: all 0.6s;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: space-between;
+  min-height: calc(100vh - 8rem - 14.6rem);
 
   ${({ mapOpen }) =>
     mapOpen &&
     css`
       margin-left: -40%;
-    `}
+    `};
 `;
 
 export const AllToursResultsCards = styled.div``;

@@ -19,7 +19,9 @@ export const getTours = async (requestString: string = "") => {
     // `/tours?onlyAvailables=true${requestString}`
     // );
     // requestString = requestString ? `&${requestString}` : "";
-    const response = await axiosInstance.get(`/tours${requestString}`);
+    const response = await axiosInstance.get(
+      `/tours/all/aggregation${requestString}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

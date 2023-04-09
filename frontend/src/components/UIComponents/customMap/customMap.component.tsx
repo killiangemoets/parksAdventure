@@ -7,7 +7,7 @@ import Map, {
   GeolocateControl,
   ViewStateChangeEvent,
 } from "react-map-gl";
-import { TCoordinatesBox, TLocation } from "../../../types/map";
+import { TCoordinatesBox, TLocation, TViewState } from "../../../types/map";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../infoIcon/infoIcon.component";
@@ -27,24 +27,23 @@ type MapCommonProps = {
   geolocationControl?: boolean;
   fullscreenControl?: boolean;
   navigationControl?: boolean;
-  handleCoordinatesBox?: (value: TCoordinatesBox) => void;
+  handleCoordinatesBox?: (
+    CoordinatesBox: TCoordinatesBox,
+    viewState: TViewState
+  ) => void;
 };
 
 type MapConditionalProps =
   | {
       type?: MAP_TYPE_CLASSES.searchTours;
       mapOpen: boolean;
+      initialViewState?: TViewState;
     }
   | {
       type?: MAP_TYPE_CLASSES.tourItinerary;
       mapOpen?: never;
+      initialViewState?: never;
     };
-
-type ViewStateProps = {
-  longitude: number;
-  latitude: number;
-  zoom: number;
-};
 
 const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
   locations,
@@ -54,14 +53,17 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
   handleCoordinatesBox,
   type = MAP_TYPE_CLASSES.tourItinerary,
   mapOpen,
+  initialViewState,
 }) => {
-  const [viewState, setViewState] = useState<ViewStateProps>({
-    longitude:
-      locations && locations.length > 0 ? locations[0].coordinates[0] : 9.8,
-    latitude:
-      locations && locations.length > 0 ? locations[0].coordinates[1] : 5.6,
-    zoom: 0,
-  });
+  const [viewState, setViewState] = useState<TViewState>(
+    initialViewState || {
+      longitude:
+        locations && locations.length > 0 ? locations[0].coordinates[0] : -100,
+      latitude:
+        locations && locations.length > 0 ? locations[0].coordinates[1] : 40,
+      zoom: 0,
+    }
+  );
   const [pins, setPins] = useState<JSX.Element[]>([]);
   const [popupInfo, setPopupInfo] = useState<TLocation | null>(null);
 
@@ -83,7 +85,8 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
       >
         <InfoIcon
           iconType={
-            type === MAP_TYPE_CLASSES.tourItinerary && index === 0
+            (type === MAP_TYPE_CLASSES.tourItinerary && index === 0) ||
+            stop.highlight
               ? INFO_ICON_TYPE_CLASSES.locationXLGreen
               : INFO_ICON_TYPE_CLASSES.locationXLOrange
           }
@@ -94,7 +97,8 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
   }, [locations]);
 
   useEffect(() => {
-    if (type === MAP_TYPE_CLASSES.tourItinerary)
+    if (type === MAP_TYPE_CLASSES.tourItinerary) {
+      console.log("SET VIEW STATE", locations);
       setViewState({
         longitude:
           locations && locations.length > 0
@@ -104,19 +108,28 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
           locations && locations.length > 0 ? locations[0].coordinates[1] : 40,
         zoom: 5,
       });
+    }
   }, [locations]);
+
+  useEffect(() => {
+    if (!initialViewState) return;
+    console.log("NEW VIEW STATE", initialViewState);
+    setViewState(initialViewState);
+  }, [initialViewState]);
 
   const handleOnMove = (evt: ViewStateChangeEvent) => {
     if (handleCoordinatesBox) {
       const mapBounds = evt.target.getBounds();
       const northeast = mapBounds.getNorthEast();
       const southwest = mapBounds.getSouthWest();
-      console.log(evt, mapBounds);
 
-      handleCoordinatesBox({
-        southwest: [southwest.lat, southwest.lng],
-        northeast: [northeast.lat, northeast.lng],
-      });
+      handleCoordinatesBox(
+        {
+          southwest: [southwest.lat, southwest.lng],
+          northeast: [northeast.lat, northeast.lng],
+        },
+        evt.viewState
+      );
     }
   };
 
@@ -135,6 +148,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
       onMove={(evt) => {
         setViewState(evt.viewState);
       }}
+      onLoad={(evt) => {}}
       onMoveEnd={handleOnMove}
       dragRotate={false}
       mapStyle="mapbox://styles/killiangemoets/clcdpld4j009w14oxa2fmtnvx"

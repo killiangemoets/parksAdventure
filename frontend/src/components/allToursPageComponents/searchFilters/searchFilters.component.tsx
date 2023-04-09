@@ -22,9 +22,9 @@ const SearchFilters: FC = () => {
 
   const sortPossibilites: Info[] = [
     { id: "-popularityIndex", value: "Popularity" },
-    { id: "pricing", value: "Pricing" },
+    { id: "lowerPrice", value: "Pricing" },
     { id: "-ratingsAverage", value: "Rating" },
-    { id: "lastminute", value: "Last minute" },
+    { id: "firstAvailability", value: "Last minute" },
   ];
 
   const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
@@ -35,6 +35,7 @@ const SearchFilters: FC = () => {
     if (value.id !== "-popularityIndex")
       searchParams.set("sort", value.id.toString());
     else searchParams.delete("sort");
+    searchParams.delete("page");
     setSearchParams(searchParams);
   };
 

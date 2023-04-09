@@ -9,9 +9,10 @@ import { ToursCardsContainer, ToursCardsWrapper } from "./toursCards.style";
 
 export type ToursCardsProps = {
   mapOpen: boolean;
+  handleOverTourCard: (id: string | undefined) => void;
 };
 
-const ToursCards: FC<ToursCardsProps> = ({ mapOpen }) => {
+const ToursCards: FC<ToursCardsProps> = ({ mapOpen, handleOverTourCard }) => {
   const tours = useSelector(selectTours);
   const error = useSelector(selectToursError);
 
@@ -22,7 +23,14 @@ const ToursCards: FC<ToursCardsProps> = ({ mapOpen }) => {
   return (
     <ToursCardsContainer>
       <ToursCardsWrapper mapOpen={mapOpen}>
-        {tours && tours.map((tour) => <TourCard key={tour._id} tour={tour} />)}
+        {tours &&
+          tours.map((tour) => (
+            <TourCard
+              key={tour._id}
+              tour={tour}
+              handleOver={handleOverTourCard}
+            />
+          ))}
       </ToursCardsWrapper>
     </ToursCardsContainer>
   );

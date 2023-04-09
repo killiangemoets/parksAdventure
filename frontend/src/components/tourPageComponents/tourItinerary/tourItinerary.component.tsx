@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import {
   selectTour,
+  selectTourIsLoading,
   // selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
 import { TStop } from "../../../types/tour";
@@ -38,7 +39,7 @@ export const ItineraryCaption = () => {
 
 const TourItinerary = () => {
   const tour = useSelector(selectTour);
-  // const isLoading = useSelector(selectTourIsLoading);
+  const isLoading = useSelector(selectTourIsLoading);
   const [points, setPoints] = useState<string[]>([]);
   const [stops, setStops] = useState<TStop[]>([]);
   useEffect(() => {
@@ -68,21 +69,21 @@ const TourItinerary = () => {
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
-              {stops.length > 0 && (
-                <CustomMap
-                  locations={stops.map((stop) => {
-                    return {
-                      coordinates: stop.coordinates,
-                      popupContent: (
-                        <StopDescription>{stop.description}</StopDescription>
-                      ),
-                    };
-                  })}
-                  geolocationControl={true}
-                  fullscreenControl={true}
-                  navigationControl={true}
-                />
-              )}
+              {/* {!isLoading && stops.length > 0 && ( */}
+              <CustomMap
+                locations={stops.map((stop) => {
+                  return {
+                    coordinates: stop.coordinates,
+                    popupContent: (
+                      <StopDescription>{stop.description}</StopDescription>
+                    ),
+                  };
+                })}
+                geolocationControl={true}
+                fullscreenControl={true}
+                navigationControl={true}
+              />
+              {/* )} */}
             </ItineraryMapContainer>
             <ItineraryCaption />
           </ItineraryRightContainer>

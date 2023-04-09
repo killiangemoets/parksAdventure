@@ -87,33 +87,13 @@ exports.getAll = (Model) =>
       next
     )
       .filter()
+      .search()
       .sort()
       .limitFields()
       .paginate();
 
     const count = await features.query.countDocuments();
     const doc = await featuresWithPagination.query;
-
-    // const doc = await Model.aggregate([
-    //   {
-    //     $facet: {
-    //       totalData: [
-    //         {
-    //           $match: {
-    //             availabilities: {
-    //               $elemMatch: {
-    //                 price: { gte: new Date(Date.now()).toISOString() },
-    //               },
-    //             },
-    //           },
-    //         },
-    //         { $skip: +(req.query.limit * (req.query.page - 1)) },
-    //         { $limit: +req.query.limit },
-    //       ],
-    //       totalCount: [{ $count: 'count' }],
-    //     },
-    //   },
-    // ]);
 
     res.status(200).json({
       status: 'success',

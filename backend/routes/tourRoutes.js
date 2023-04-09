@@ -40,6 +40,12 @@ router
   );
 
 router.route('/slug/:slug').get(tourController.getTourBySlug);
+router
+  .route('/all/aggregation')
+  .get(
+    tourController.aggreagationRequiredFields,
+    tourController.getToursByAggregation
+  );
 /*
 // MIGHT BE USEFUL FOR ADMIN
 router.route('/tour-stats').get(tourController.getTourStats);

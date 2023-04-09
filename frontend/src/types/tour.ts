@@ -154,6 +154,10 @@ export enum TOUR_DATA {
   popularityIndex = "popularityIndex",
   reviews = "reviews",
   recommandations = "recommandations",
+  lowerPrice = "lowerPrice",
+  firstAvailability = "firstAvailability",
+  minGroupSizeCapacity = "minGroupSizeCapacity",
+  maxGroupSizeCapacity = "maxGroupSizeCapacity",
   id = "_id",
 }
 
@@ -179,6 +183,10 @@ export type TourData = {
   [TOUR_DATA.reviews]: TReview[];
   [TOUR_DATA.id]: string;
   [TOUR_DATA.recommandations]?: TourData[];
+  [TOUR_DATA.lowerPrice]: number;
+  [TOUR_DATA.firstAvailability]: Date;
+  [TOUR_DATA.minGroupSizeCapacity]: number;
+  [TOUR_DATA.maxGroupSizeCapacity]: number;
 };
 
 export type FiltersData = {

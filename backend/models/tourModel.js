@@ -207,6 +207,32 @@ tourSchema.index({
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
+tourSchema.virtual('currentAvailabilities').get(function () {
+  return this.availabilities
+    ? this.availabilities.filter(
+        (availability) => new Date(availability.date) >= new Date(Date.now())
+      )
+    : [];
+});
+tourSchema.virtual('firstAvailability').get(function () {
+  return this.currentAvailabilities.sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  )[0]?.date;
+});
+tourSchema.virtual('lowerPrice').get(function () {
+  return this.currentAvailabilities.sort((a, b) => a.price - b.price)[0]?.price;
+});
+tourSchema.virtual('minGroupSizeCapacity').get(function () {
+  return this.currentAvailabilities.sort(
+    (a, b) => a.maxGroupSize - b.maxGroupSize
+  )[0]?.maxGroupSize;
+});
+tourSchema.virtual('maxGroupSizeCapacity').get(function () {
+  return this.currentAvailabilities.sort(
+    (a, b) => b.maxGroupSize - a.maxGroupSize
+  )[0]?.maxGroupSize;
+});
+
 // Add the tour reviews to the query
 tourSchema.virtual('reviews', {
   ref: 'Review',
@@ -245,13 +271,14 @@ tourSchema.pre(/^findOne/, function (next) {
   next();
 });
 
+// REMOVED BECAUSE NOT OK: $text needs to be in top of pipeline !!
 // AGGREGATION MIDDLEWARES //
 // We also want to exclude the secret tour of all our agregations
-tourSchema.pre('aggregate', function (next) {
-  this.pipeline().unshift({ $match: { hiddenTour: { $ne: true } } });
-  // this.match({ secretTour: { $ne: true } });
-  next();
-});
+// tourSchema.pre('aggregate', function (next) {
+// this.pipeline().unshift({ $match: { hiddenTour: { $ne: true } } });
+// this.match({ secretTour: { $ne: true } });
+// next();
+// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

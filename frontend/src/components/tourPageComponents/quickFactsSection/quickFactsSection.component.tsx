@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import useInfoFromAvailabilities from "../../../hooks/infoFromAvailabilities";
 import {
   selectTour,
   selectTourIsLoading,
@@ -17,9 +16,6 @@ import {
 const QuickFactsSection = () => {
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
-  const { minGroupSize, maxGroupSize } = useInfoFromAvailabilities({
-    availabilities: tour?.availabilities || [],
-  });
 
   return (
     <QuickFactsSectionContainer>
@@ -63,9 +59,9 @@ const QuickFactsSection = () => {
           name={"Group Size"}
           info={
             !isLoading
-              ? maxGroupSize === minGroupSize
-                ? `${maxGroupSize} people`
-                : `${minGroupSize}-${maxGroupSize} people`
+              ? tour?.maxGroupSizeCapacity === tour?.minGroupSizeCapacity
+                ? `${tour?.maxGroupSizeCapacity} people`
+                : `${tour?.minGroupSizeCapacity}-${tour?.maxGroupSizeCapacity} people`
               : ""
           }
         />

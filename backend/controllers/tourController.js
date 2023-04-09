@@ -5,6 +5,8 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 const uploadToCloudinary = require('./../utils/uploadToCloudinary');
+const TourAPIFeatures = require('../utils/tourApiFeatures');
+const APIFeaturesCopy = require('../utils/apiFeatureCopy');
 
 // UPLOAD IMAGES
 const multerStorage = multer.memoryStorage();
@@ -80,6 +82,12 @@ exports.requiredFields = (req, res, next) => {
   next();
 };
 
+exports.aggreagationRequiredFields = (req, res, next) => {
+  req.query.fields =
+    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,popularityIndex,availabilities,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity';
+  next();
+};
+
 exports.aliasTopRecommandations = (req, res, next) => {
   req.query.limit = '5';
   req.query.sort = '-popularity,-ratingsAvarage';
@@ -87,6 +95,34 @@ exports.aliasTopRecommandations = (req, res, next) => {
 };
 
 exports.getAllTours = factory.getAll(Tour);
+
+exports.getToursByAggregation = catchAsync(async (req, res, next) => {
+  const featuresWithPagination = new TourAPIFeatures(Tour, req.query, next)
+    .filter()
+    .search()
+    .sort()
+    .limitFields()
+    .paginate()
+    .createAggregation();
+  const doc = await featuresWithPagination.aggregation;
+  // const featuresWithPagination = new APIFeaturesCopy(Tour, req.query, next)
+  //   .filter()
+  //   .sort()
+  //   .limitFields()
+  //   .paginate();
+  // const doc = await featuresWithPagination.query;
+
+  res.status(200).json({
+    status: 'success',
+    results: doc.length,
+    totalResults: doc[0].totalCount[0]?.total || 0,
+    // totalResults: 8,
+    data: {
+      data: doc[0].data,
+      // data: doc,
+    },
+  });
+});
 
 exports.getTour = factory.getOne(Tour, [
   {

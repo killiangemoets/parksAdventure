@@ -36,9 +36,14 @@ const AllTours = () => {
 
   const filtersRef = useRef<HTMLDivElement | null>(null);
   const allToursRef = useRef<HTMLDivElement | null>(null);
-  const [mapOpen, setMapOpen] = useState<boolean>(false);
+  const [mapOpen, setMapOpen] = useState<boolean>(
+    Boolean(searchParams.get("box"))
+  );
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
+  const [highlightMarker, setHighlightMarker] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const pageParam = searchParams.get("page");
@@ -48,11 +53,13 @@ const AllTours = () => {
   useEffect(() => {
     if (window.scrollY > 400) window.scrollTo(0, 400);
     const requestStringFromUrl = window.location.href.split("?")[1];
-    console.log(requestStringFromUrl);
+    console.log({ requestStringFromUrl });
+    const updatedRequestStringFromUrl =
+      requestStringFromUrl &&
+      requestStringFromUrl.replace(/(&viewstate|viewstate).*zoom/, "");
     const requestString =
       `?onlyAvailables=true&limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
-      (requestStringFromUrl ? `&${requestStringFromUrl}` : "");
-    console.log({ requestString });
+      (updatedRequestStringFromUrl ? `&${updatedRequestStringFromUrl}` : "");
     dispatch(fetchToursAsync(requestString));
   }, [searchParams]);
 
@@ -70,16 +77,16 @@ const AllTours = () => {
     setMapOpen(!mapOpen);
   };
 
+  const handleOverTourCard = (id: string | undefined) => {
+    setHighlightMarker(id);
+  };
+
   useLayoutEffect(() => {
     if (!filtersRef.current) return;
 
-    const filtersRefAnimate = filtersRef.current.getBoundingClientRect().top;
-    console.log(filtersRefAnimate);
     const onScroll = () => {
       if (!filtersRef.current || !allToursRef.current) return;
-      console.log({ filtersRefAnimate, windowScrollY: window.scrollY });
       if (480 < window.scrollY + 80) {
-        console.log("ok");
         filtersRef.current.style.position = "fixed";
         filtersRef.current.style.top = "8rem";
         filtersRef.current.style.left = "0";
@@ -99,7 +106,11 @@ const AllTours = () => {
       <AllToursHeader />
       <AllTourFixElements ref={filtersRef}>
         <SearchFilters />
-        <ToursMap handleOpenMap={handleOpenMap} mapOpen={mapOpen} />
+        <ToursMap
+          handleOpenMap={handleOpenMap}
+          mapOpen={mapOpen}
+          highlightMarker={highlightMarker}
+        />
       </AllTourFixElements>
       <AllToursResults ref={allToursRef}>
         <AllToursResultsLeft mapOpen={mapOpen}>
@@ -109,7 +120,10 @@ const AllTours = () => {
             ) : !tours.length ? (
               <NoResultsMessage>No Results</NoResultsMessage>
             ) : (
-              <ToursCards mapOpen={mapOpen} />
+              <ToursCards
+                mapOpen={mapOpen}
+                handleOverTourCard={handleOverTourCard}
+              />
             )}
           </AllToursResultsCards>
           {tours.length ? (
@@ -118,7 +132,6 @@ const AllTours = () => {
               total={numberOfPages}
               defaultPageSize={1}
               handleChange={(value) => {
-                console.log("changePage", value);
                 if (value > 1) searchParams.set("page", value.toString());
                 else searchParams.delete("page");
                 setSearchParams(searchParams);

@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import useInfoFromAvailabilities from "../../../hooks/infoFromAvailabilities";
 import {
   selectTour,
   selectTourIsLoading,
@@ -29,9 +28,6 @@ const TourHeader: FC<TourHeaderProps> = ({
 }) => {
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
-  const { minPrice } = useInfoFromAvailabilities({
-    availabilities: tour?.availabilities || [],
-  });
 
   return (
     <TourHeaderContainer>
@@ -52,7 +48,7 @@ const TourHeader: FC<TourHeaderProps> = ({
         <TourHeaderRight>
           <Button onClick={handleScrollToBooking}>Book Now</Button>
           <Price>
-            <span>{`From $${minPrice || 0}`}</span> per person
+            <span>{`From $${tour?.lowerPrice || 0}`}</span> per person
           </Price>
         </TourHeaderRight>
       </TourHeaderWrapper>
