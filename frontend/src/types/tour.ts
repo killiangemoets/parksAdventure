@@ -26,7 +26,7 @@ export type TStop = {
 export type TAvailability = {
   date: Date;
   price: number;
-  kidPrice: number | undefined;
+  kidPrice?: number;
   time: string;
   maxGroupSize: number;
   currentGroupSize: number;
@@ -150,10 +150,11 @@ export enum TOUR_DATA {
   locations = "locations",
   guides = "guides",
   availabilities = "availabilities",
+  currentAvailabilities = "currentAvailabilities",
   additionalInfo = "additionalInfo",
   popularityIndex = "popularityIndex",
   reviews = "reviews",
-  recommandations = "recommandations",
+  recommendations = "recommendations",
   lowerPrice = "lowerPrice",
   firstAvailability = "firstAvailability",
   minGroupSizeCapacity = "minGroupSizeCapacity",
@@ -178,11 +179,12 @@ export type TourData = {
   [TOUR_DATA.locations]?: TStop[];
   [TOUR_DATA.guides]?: TUser[];
   [TOUR_DATA.availabilities]: TAvailability[];
+  [TOUR_DATA.currentAvailabilities]: TAvailability[];
   [TOUR_DATA.additionalInfo]?: string[];
   [TOUR_DATA.popularityIndex]: number;
   [TOUR_DATA.reviews]: TReview[];
   [TOUR_DATA.id]: string;
-  [TOUR_DATA.recommandations]?: TourData[];
+  [TOUR_DATA.recommendations]?: TourData[];
   [TOUR_DATA.lowerPrice]: number;
   [TOUR_DATA.firstAvailability]: Date;
   [TOUR_DATA.minGroupSizeCapacity]: number;

@@ -11,7 +11,7 @@ export const DropdownCountsContainer = styled.ul`
   /* background-color: #faf2e5; */
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
-  z-index: 999;
+  z-index: 4;
 
   padding: 2rem 3.2rem;
   display: flex;

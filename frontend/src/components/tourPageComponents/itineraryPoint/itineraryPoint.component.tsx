@@ -6,7 +6,6 @@ import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../UIComponents/infoIcon/infoIcon.component";
 import {
-  CloseIcon,
   PointContainer,
   PointName,
   StartPointName,
@@ -47,7 +46,7 @@ const ItineraryPoint: FC<ItineraryPointProps> = ({
           buttonType={BUTTON_TYPE_CLASSES.empty}
           onClick={() => handleDelete(name)}
         >
-          <CloseIcon />
+          <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
         </Button>
       )}
     </PointContainer>

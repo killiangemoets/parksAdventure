@@ -1,11 +1,18 @@
 import { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addItem } from "../../../store/cart/cart.action";
+import { AppDispatch } from "../../../store/store";
 import {
   selectTour,
   selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
+import { TItem, TItemWithTourInfo } from "../../../types/booking";
 import { TAvailability } from "../../../types/tour";
-import { niceFullDate, niceMonth } from "../../../utils/formatting/niceDate";
+import calculateTotalPrice from "../../../utils/dataManipulation/calculateTotalPrice";
+import {
+  niceDatesRange,
+  niceMonth,
+} from "../../../utils/formatting/formatDates";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -33,7 +40,7 @@ import {
 } from "./tourBookingDetails.style";
 
 type TourBookingDetailsProps = {
-  availability?: TAvailability;
+  availability: TAvailability;
   group: CountInputState[];
 };
 
@@ -41,10 +48,10 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
   availability,
   group,
 }) => {
+  const dispatch: AppDispatch = useDispatch();
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
   const [endDate, setEndDate] = useState<Date>(new Date(Date.now()));
-  console.log({ availability, group });
 
   useEffect(() => {
     if (tour && availability) {
@@ -55,6 +62,20 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
       setEndDate(newEndDate);
     }
   }, [tour, availability]);
+
+  const handleAddToCart = () => {
+    if (!tour) return;
+    const newItem: TItem = {
+      tourId: tour._id,
+      startingDate: availability.date,
+      kidPrice: availability.kidPrice,
+      price: availability.price,
+      adults: group[0].value,
+      children: group[1].value,
+    };
+    console.log({ newItem });
+    dispatch(addItem(newItem));
+  };
 
   return (
     <TourBookingDetailsContainer>
@@ -92,8 +113,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />
               <InfoContent>
-                From {niceFullDate(availability.date)} to{" "}
-                {niceFullDate(endDate)}
+                {niceDatesRange(availability.date, endDate)}
               </InfoContent>
             </Info>
             <InfoPrices>
@@ -114,7 +134,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
                         : INFO_ICON_TYPE_CLASSES.group
                     }
                   />
-                  <InfoPriceName>Kid</InfoPriceName>
+                  <InfoPriceName>Child</InfoPriceName>
                   <InfoPriceContent>{`${group[1].value} x $${availability.kidPrice}`}</InfoPriceContent>
                   <InfoPrice>
                     $
@@ -130,14 +150,23 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
               <TotalPriceTitle>Total Price</TotalPriceTitle>
               <TotalPrice>
                 $
-                {group[0].value * availability.price +
-                  group[1].value *
-                    (availability.kidPrice || availability.price)}
+                {calculateTotalPrice(
+                  group[0].value,
+                  group[1].value,
+                  availability.price,
+                  availability.kidPrice
+                )}
               </TotalPrice>
             </TourBookingTotal>
             <TourBookingButtons>
               <Button buttonType={BUTTON_TYPE_CLASSES.cancel}>Book now</Button>
-              <Button>Add to cart</Button>
+              <Button
+                onClick={() => {
+                  handleAddToCart();
+                }}
+              >
+                Add to cart
+              </Button>
             </TourBookingButtons>
           </TourBookingFooter>
         </>

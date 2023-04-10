@@ -1,7 +1,7 @@
 import TourGallery from "../../components/tourPageComponents/tourGallery/tourGallery.component";
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
 import TourItinerary from "../../components/tourPageComponents/tourItinerary/tourItinerary.component";
-import TourRecommandations from "../../components/tourPageComponents/tourRecommandations/tourRecommandations.component";
+import TourRecommendations from "../../components/UIComponents/tourRecommendations/tourRecommendations.component";
 import TourReviews from "../../components/tourPageComponents/tourReviews/tourReviews.component";
 import StarsRating from "../../components/UIComponents/starsRating/starsRating.component";
 import Title, {
@@ -31,7 +31,7 @@ const UserBookingDetails = () => {
       <TourInfos />
       <TourItinerary />
       <TourReviews />
-      <TourRecommandations />
+      <TourRecommendations tours={[]} />
     </UserBookingDetailsContainer>
   );
 };

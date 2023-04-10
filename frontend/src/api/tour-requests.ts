@@ -150,3 +150,15 @@ export const getTourGuides = async (): Promise<TUser[]> => {
     return [];
   }
 };
+
+export const getTopTourRecommendations = async () => {
+  try {
+    const response = await axiosInstance.get(`/tours/top-recommendations`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};

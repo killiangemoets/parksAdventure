@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { verifyEmail } from "../../api/authentication-requests";
-import NotFound from "../../components/notFound/notFound.component";
+import NotFound from "../../components/notFoundComponent/notFound.component";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";

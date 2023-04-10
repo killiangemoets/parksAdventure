@@ -13,7 +13,7 @@ import Modal from "../../UIComponents/modal/modal.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
-import Review from "../review/review.component";
+import Review from "../../UIComponents/review/review.component";
 import {
   Info,
   ReviewsModalText,

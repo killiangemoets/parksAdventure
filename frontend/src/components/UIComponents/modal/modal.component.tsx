@@ -1,7 +1,9 @@
 import { FC, useEffect, useRef } from "react";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
+import InfoIcon, {
+  INFO_ICON_TYPE_CLASSES,
+} from "../infoIcon/infoIcon.component";
 import {
-  CloseIcon,
   ModalContainer,
   ModalContent,
   ModalTitle,
@@ -52,7 +54,7 @@ const Modal: FC<ModalProps> = ({
             buttonType={BUTTON_TYPE_CLASSES.empty}
             onClick={() => handleClose()}
           >
-            <CloseIcon />
+            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
           </Button>
         </ModalTitleSection>
         <ModalContent>{children}</ModalContent>

@@ -93,7 +93,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       });
       if (availability.kidPrice) {
         newPricesEvents.push({
-          title: `Kids: $${availability.kidPrice}`,
+          title: `Children: $${availability.kidPrice}`,
           start: availability.date,
           color: "#db9b81",
         });
@@ -295,7 +295,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}
           handleChange={handleChangeInput}
-          infoName="Kid Price"
+          infoName="Child Price"
           infoDescription="(optional)"
           name="kidPrice"
           value={modalInfos.kidPrice}

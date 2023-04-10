@@ -16,14 +16,19 @@ export const selectTour = createSelector(
   (tourSlice) => tourSlice.tour
 );
 
-export const selectRecommandations = createSelector(
+export const selectRecommendations = createSelector(
   [selectTourReducer],
-  (tourSlice) => tourSlice.tour?.recommandations
+  (tourSlice) => tourSlice.tour?.recommendations
 );
 
 export const selectTourAvailabilities = createSelector(
   [selectTourReducer],
   (tourSlice) => tourSlice.tour?.availabilities
+);
+
+export const selectTourCurrentAvailabilities = createSelector(
+  [selectTourReducer],
+  (tourSlice) => tourSlice.tour?.currentAvailabilities
 );
 
 export const selectTourError = createSelector(

@@ -13,9 +13,13 @@ import {
   SelectDateFooterText,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
-import { selectTourAvailabilities } from "../../../store/tour/tour.selector";
+import {
+  selectTourAvailabilities,
+  // selectTourCurrentAvailabilities,
+} from "../../../store/tour/tour.selector";
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
+import compareDates from "../../../utils/comparison/compareDates";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;
@@ -32,6 +36,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   handleChangeGroup,
   handleSeeDetails,
 }) => {
+  // const availabilities = useSelector(selectTourCurrentAvailabilities);
   const availabilities = useSelector(selectTourAvailabilities);
   const [availableDates, setAvailableDates] = useState<Date[]>([]);
   const [highlightDates, setHighlightsDates] = useState<Date[]>([]);
@@ -43,7 +48,10 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   const handleDropDownEdit = (newState: CountInputState[]): void => {
     groupError && setGroupError(false);
     handleChangeGroup(newState);
-    const newLabel = newState.reduce((acc, cur) => {
+  };
+
+  useEffect(() => {
+    const newLabel = currentGroup.reduce((acc, cur) => {
       if (cur.value > 0 && !acc.length)
         return acc + `${cur.title} x ${cur.value}`;
       else if (cur.value > 0) return acc + `, ${cur.title} x ${cur.value}`;
@@ -56,18 +64,13 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         <p>Add people</p>
       )
     );
-  };
+  }, [currentGroup]);
 
   const handleChangeDate = (date: Date | null) => {
     dateError && setDateError(false);
     if (availabilities && date) {
-      const newAvailability = availabilities.find(
-        (availability) =>
-          new Date(availability.date).getDate() === new Date(date).getDate() &&
-          new Date(availability.date).getMonth() ===
-            new Date(date).getMonth() &&
-          new Date(availability.date).getFullYear() ===
-            new Date(date).getFullYear()
+      const newAvailability = availabilities.find((availability) =>
+        compareDates(availability.date, date)
       );
       handleChangeAvailability(newAvailability);
     }
@@ -102,6 +105,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         availability.price < minPrice &&
         new Date(availability.date) > new Date(Date.now())
       ) {
+        // if (availability.price < minPrice) {
         highlightDates = [availability.date];
         minPrice = availability.price;
       } else if (availability.price === minPrice) {

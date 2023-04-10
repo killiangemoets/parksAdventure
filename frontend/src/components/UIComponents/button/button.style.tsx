@@ -48,7 +48,6 @@ export const InputButton = styled(BaseButton)`
 `;
 
 export const EmptyButton = styled.button`
-  min-width: 0rem;
   width: auto;
   height: auto;
   padding: 0;

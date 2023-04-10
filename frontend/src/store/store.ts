@@ -11,7 +11,7 @@ export type RootState = ReturnType<typeof rootReducer>;
 const persistConfig: PersistConfig<RootState> = {
   key: "root",
   storage: sessionStorage, // to store it in session Storage
-  whitelist: ["user"], // to only store the user slice
+  whitelist: ["user", "cart"], // to only store the user slice
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

@@ -3,7 +3,7 @@ import TourGallery from "../../components/tourPageComponents/tourGallery/tourGal
 import TourHeader from "../../components/tourPageComponents/tourHeader/tourHeader.component";
 import TourItinerary from "../../components/tourPageComponents/tourItinerary/tourItinerary.component";
 import TourReviews from "../../components/tourPageComponents/tourReviews/tourReviews.component";
-import TourRecommandations from "../../components/tourPageComponents/tourRecommandations/tourRecommandations.component";
+import TourRecommendations from "../../components/UIComponents/tourRecommendations/tourRecommendations.component";
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
 import { TourContainer } from "./tour.style";
 import { useEffect, useRef } from "react";
@@ -11,8 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/store";
 import { fetchTourAsync } from "../../store/tour/tour.action";
 import { useParams } from "react-router-dom";
-import { selectTourError } from "../../store/tour/tour.selector";
-import NotFound from "../../components/notFound/notFound.component";
+import {
+  selectRecommendations,
+  selectTourError,
+} from "../../store/tour/tour.selector";
+import NotFound from "../../components/notFoundComponent/notFound.component";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -27,6 +30,7 @@ const Tour = () => {
   const bookingRef = useRef<HTMLDivElement | null>(null);
   const reviewsRef = useRef<HTMLDivElement | null>(null);
   const error = useSelector(selectTourError);
+  const recommendations = useSelector(selectRecommendations);
 
   useEffect(() => {
     if (error) {
@@ -64,7 +68,7 @@ const Tour = () => {
         <TourItinerary />
         <TourBooking forwardRef={bookingRef} />
         <TourReviews forwardRef={reviewsRef} />
-        <TourRecommandations />
+        <TourRecommendations tours={recommendations || []} />
       </TourContainer>
     );
   }

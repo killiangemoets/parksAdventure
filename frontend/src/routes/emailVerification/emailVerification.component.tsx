@@ -10,7 +10,7 @@ import {
 import roundLogo from "./../../assets/logo_hike_round.png";
 import { useSelector } from "react-redux";
 import { selectEmail } from "../../store/user/user.selector";
-import NotFound from "../../components/notFound/notFound.component";
+import NotFound from "../../components/notFoundComponent/notFound.component";
 import { resendEmail } from "../../api/authentication-requests";
 import { useState } from "react";
 import FormButton from "../../components/UIComponents/formButton/formButton.component";

@@ -1,4 +1,4 @@
-import Review from "../../components/tourPageComponents/review/review.component";
+import Review from "../../components/UIComponents/review/review.component";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../components/UIComponents/button/button.component";

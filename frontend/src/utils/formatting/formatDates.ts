@@ -35,3 +35,7 @@ export const niceFullDate = (dateToFormat: string | Date) => {
 
   return `${niceMonth(dateToFormat)} ${day}, ${year}`;
 };
+
+export const niceDatesRange = (startingDate: Date, endDate: Date) => {
+  return `From ${niceFullDate(startingDate)} to ${niceFullDate(endDate)}`;
+};

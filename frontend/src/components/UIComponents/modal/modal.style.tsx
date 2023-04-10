@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { ReactComponent as CloseSVG } from "../../../assets/x-solid.svg";
 
 export const Overlay = styled.div`
   position: fixed;
@@ -46,21 +45,6 @@ export const ModalTitle = styled.h3`
   /* letter-spacing: 1px; */
   color: #cc704b;
   /* text-transform: uppercase; */
-`;
-export const CloseIcon = styled(CloseSVG)`
-  width: 1.8rem;
-  height: 1.8rem;
-  cursor: pointer;
-  .path {
-    fill: #aaa;
-    transition: all 0.3s;
-  }
-
-  &:hover {
-    .path {
-      fill: #cc704b;
-    }
-  }
 `;
 
 export const ModalContent = styled.div`

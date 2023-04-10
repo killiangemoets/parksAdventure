@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { TAvailability } from "../types/tour";
-import niceDate from "../utils/formatting/niceDate";
+import niceDate from "../utils/formatting/formatDates";
 
 type InfosFromAvailabilities = {
   nextStart: string | null;

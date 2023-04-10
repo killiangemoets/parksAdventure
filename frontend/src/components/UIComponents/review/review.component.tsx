@@ -1,7 +1,7 @@
-import StarsRating from "../../UIComponents/starsRating/starsRating.component";
+import StarsRating from "../starsRating/starsRating.component";
 import ProfilePicture, {
   PROFILE_PICTURE_SIZE_CLASSES,
-} from "../../UIComponents/profilePicture/profilePicture.component";
+} from "../profilePicture/profilePicture.component";
 import {
   EditButtons,
   ReviewContainer,
@@ -13,12 +13,9 @@ import {
   ReviewText,
 } from "./review.style";
 
-import UserImg from "../../../assets/user.jpg";
-import Button, {
-  BUTTON_TYPE_CLASSES,
-} from "../../UIComponents/button/button.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { FC } from "react";
-import niceDate from "../../../utils/formatting/niceDate";
+import niceDate from "../../../utils/formatting/formatDates";
 
 type ReviewerProps = {
   userImg?: string;

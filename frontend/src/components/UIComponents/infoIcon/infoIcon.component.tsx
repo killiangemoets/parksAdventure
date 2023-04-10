@@ -4,6 +4,7 @@ import {
   BigOrangeLocationIcon,
   BulletIcon,
   CategoryIcon,
+  CloseIcon,
   DateIcon,
   DifficultyIcon,
   DurationIcon,
@@ -33,6 +34,7 @@ export enum INFO_ICON_TYPE_CLASSES {
   list = "list",
   bullet = "bullet",
   empty = "empty",
+  close = "close",
 }
 
 const getIcon = (
@@ -54,6 +56,7 @@ const getIcon = (
     [INFO_ICON_TYPE_CLASSES.list]: ListIcon,
     [INFO_ICON_TYPE_CLASSES.bullet]: BulletIcon,
     [INFO_ICON_TYPE_CLASSES.empty]: EmptyIcon,
+    [INFO_ICON_TYPE_CLASSES.close]: CloseIcon,
   }[iconType]);
 
 export type InfoIconProps = {

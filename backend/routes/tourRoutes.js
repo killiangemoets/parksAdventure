@@ -6,16 +6,32 @@ const reviewRouter = require('./reviewRoutes');
 const router = express.Router();
 
 router
-  .route('/top-recommandations')
+  .route('/top-recommendations')
   .get(
-    tourController.requiredFields,
-    tourController.aliasTopRecommandations,
-    tourController.getAllTours
+    tourController.aggreagationRequiredFields,
+    tourController.aliasTopRecommendations,
+    tourController.getToursByAggregation
+  );
+
+router
+  .route('/all/aggregation')
+  .get(
+    tourController.aggreagationRequiredFields,
+    tourController.getToursByAggregation
+  );
+
+router
+  .route('/cart-items')
+  .get(
+    tourController.tourItemsRequiredFields,
+    tourController.aliasRecommendations,
+    tourController.getToursByAggregation
   );
 
 router
   .route('/')
-  .get(tourController.requiredFields, tourController.getAllTours)
+  // .get(tourController.requiredFields, tourController.getAllTours)
+  .get(tourController.getAllTours)
   .post(
     // authController.protect,
     // authController.restrictTo('admin', 'lead-guide'),
@@ -23,6 +39,7 @@ router
     tourController.createTour
   );
 
+router.route('/slug/:slug').get(tourController.getTourBySlug);
 router
   .route('/:id')
   .get(tourController.getTour)
@@ -39,13 +56,6 @@ router
     tourController.deleteTour
   );
 
-router.route('/slug/:slug').get(tourController.getTourBySlug);
-router
-  .route('/all/aggregation')
-  .get(
-    tourController.aggreagationRequiredFields,
-    tourController.getToursByAggregation
-  );
 /*
 // MIGHT BE USEFUL FOR ADMIN
 router.route('/tour-stats').get(tourController.getTourStats);

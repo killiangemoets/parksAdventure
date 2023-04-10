@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import { TourData } from "../../../types/tour";
-import niceDate from "../../../utils/formatting/niceDate";
+import niceDate from "../../../utils/formatting/formatDates";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,

@@ -30,6 +30,7 @@ import TourBookingDetails from "./tourBookingDetails.component";
 import { CountInputState } from "../../UIComponents/dropdown/dropdownCounts.component";
 import { TAvailability } from "../../../types/tour";
 import { useParams } from "react-router-dom";
+import Alert from "../../UIComponents/alert/alert.component";
 
 export type TourBookingProps = {
   forwardRef?: React.MutableRefObject<HTMLDivElement | null>;
@@ -41,7 +42,7 @@ type TourSlugRouteParams = {
 
 const defaultCountInputs = [
   { id: "adult", title: "Adult", subtitle: "(16+ years)", value: 0 },
-  { id: "kid", title: "Kid", subtitle: "(4-15 years)", value: 0 },
+  { id: "child", title: "Child", subtitle: "(4-15 years)", value: 0 },
 ];
 
 const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
@@ -54,8 +55,12 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
     TAvailability | undefined
   >(undefined);
   const [showDetails, setShowDetails] = useState<boolean>(false);
-  const [currentCountInputs, setcurrentCountInputs] =
+  const [currentCountInputs, setCurrentCountInputs] =
     useState<CountInputState[]>(defaultCountInputs);
+
+  const [alertMessage, setAlertMessage] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     if (
@@ -69,8 +74,54 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
 
   useEffect(() => {
     setSelectedAvailability(undefined);
-    setcurrentCountInputs(defaultCountInputs);
+    setCurrentCountInputs(defaultCountInputs);
   }, [slug]);
+
+  const handleChangeGroup = (group: CountInputState[]) => {
+    console.log("handleChangeGroup", group);
+    if (
+      (selectedAvailability &&
+        group[0].value + group[1].value >
+          selectedAvailability.maxGroupSize -
+            selectedAvailability.currentGroupSize) ||
+      (tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity)
+    ) {
+      setAlertMessage(
+        tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity
+          ? `The maximum group size for this tour is ${tour?.maxGroupSizeCapacity} people`
+          : `There is only ${
+              (selectedAvailability?.maxGroupSize || 0) -
+              (selectedAvailability?.currentGroupSize || 0)
+            } spots left for this date`
+      );
+      setTimeout(function () {
+        setAlertMessage(undefined);
+      }, 4000);
+    } else {
+      setCurrentCountInputs(group);
+    }
+  };
+  const handleChangeAvailability = (
+    availability: TAvailability | undefined
+  ) => {
+    console.log("handleChangeAvailability", availability);
+    if (
+      availability &&
+      currentCountInputs[0].value + currentCountInputs[1].value >
+        availability.maxGroupSize - availability.currentGroupSize
+    ) {
+      setAlertMessage(
+        `There is only ${
+          availability.maxGroupSize - availability.currentGroupSize
+        } spots left for this date`
+      );
+      setTimeout(function () {
+        setAlertMessage(undefined);
+      }, 4000);
+      setCurrentCountInputs(defaultCountInputs);
+    }
+    setSelectedAvailability(availability);
+  };
 
   return (
     <TourBookingContainer ref={forwardRef}>
@@ -91,12 +142,8 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
             <TourBookingInputs
               currentAvailability={selectedAvailability}
               currentGroup={currentCountInputs}
-              handleChangeAvailability={(availability) => {
-                setSelectedAvailability(availability);
-              }}
-              handleChangeGroup={(group) => {
-                setcurrentCountInputs(group);
-              }}
+              handleChangeAvailability={handleChangeAvailability}
+              handleChangeGroup={handleChangeGroup}
               handleSeeDetails={() => {
                 setShowDetails(true);
               }}
@@ -131,13 +178,14 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
             </TourBookingPictures>
           </TourBookingBox>
         )}
-        {showDetails && (
+        {showDetails && selectedAvailability && (
           <TourBookingDetails
             availability={selectedAvailability}
             group={currentCountInputs}
           />
         )}
       </TourBookingWrapper>
+      {alertMessage && <Alert>{alertMessage}</Alert>}
     </TourBookingContainer>
   );
 };

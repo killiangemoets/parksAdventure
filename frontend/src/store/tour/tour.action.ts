@@ -44,7 +44,7 @@ export const fetchTourAsync =
       dispatch(
         fetchTourSuccess({
           ...response.data.tour,
-          recommandations: response.data.recommandations,
+          recommendations: response.data.recommendations,
         })
       );
     else dispatch(fetchTourFailed(response.message));

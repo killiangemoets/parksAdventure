@@ -1,4 +1,5 @@
 const AppError = require('./appError');
+const ObjectId = require('mongodb').ObjectID;
 
 class TourAPIFeatures {
   constructor(model, queryString, next) {
@@ -55,6 +56,20 @@ class TourAPIFeatures {
         ? [...queryObj.difficulty]
         : [queryObj.difficulty];
       queryObj.difficulty = { $in: difficultyQuery };
+    }
+
+    if (queryObj.id) {
+      const isArray = Array.isArray(queryObj.id);
+      let idQuery = [];
+      if (isArray) {
+        queryObj.id.forEach((id) => {
+          idQuery.push(ObjectId(id));
+        });
+      } else {
+        idQuery = [ObjectId(queryObj.id)];
+      }
+      queryObj._id = { $in: idQuery };
+      delete queryObj.id;
     }
 
     if (
@@ -195,12 +210,10 @@ class TourAPIFeatures {
   }
 
   paginate() {
-    if (this.queryString.limit) {
-      const page = +this.queryString.page || 1;
-      const limit = +this.queryString.limit;
-      const skip = limit * (page - 1);
-      this.aggregatePagination = { skip, limit };
-    }
+    const page = +this.queryString.page || 1;
+    const limit = +this.queryString.limit || 100;
+    const skip = limit * (page - 1);
+    this.aggregatePagination = { skip, limit };
 
     return this;
   }

@@ -9,6 +9,7 @@ import { ReactComponent as ClockSVG } from "../../../assets/clock-regular.svg";
 import { ReactComponent as TagSVG } from "../../../assets/tag.svg";
 import { ReactComponent as ListSVG } from "../../../assets/list.svg";
 import { ReactComponent as RightChevronSVG } from "../../../assets/chevron-right-solid.svg";
+import { ReactComponent as CloseSVG } from "../../../assets/x-solid.svg";
 
 export const LocationIcon = styled(PositionSVG)`
   width: 2rem;
@@ -132,5 +133,21 @@ export const EmptyIcon = styled(RightChevronSVG)`
   height: 2rem;
   .path {
     fill: rgba(0, 0, 0, 0);
+  }
+`;
+
+export const CloseIcon = styled(CloseSVG)`
+  width: 1.4rem;
+  height: 1.4rem;
+  cursor: pointer;
+  .path {
+    fill: #aaa;
+    transition: all 0.3s;
+  }
+
+  &:hover {
+    .path {
+      fill: #cc704b;
+    }
   }
 `;

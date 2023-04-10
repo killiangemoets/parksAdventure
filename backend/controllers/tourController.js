@@ -76,21 +76,32 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   return next();
 });
 
-exports.requiredFields = (req, res, next) => {
-  req.query.fields =
-    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,availabilities,popularityIndex';
-  next();
-};
+// exports.requiredFields = (req, res, next) => {
+//   req.query.fields =
+//     'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,availabilities,popularityIndex';
+//   next();
+// };
 
 exports.aggreagationRequiredFields = (req, res, next) => {
   req.query.fields =
-    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,popularityIndex,availabilities,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity';
+    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity';
   next();
 };
 
-exports.aliasTopRecommandations = (req, res, next) => {
-  req.query.limit = '5';
+exports.tourItemsRequiredFields = (req, res, next) => {
+  req.query.fields =
+    'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities';
+  next();
+};
+
+exports.aliasTopRecommendations = (req, res, next) => {
+  req.query.limit = '3';
   req.query.sort = '-popularity,-ratingsAvarage';
+  next();
+};
+
+exports.aliasRecommendations = (req, res, next) => {
+  req.recommendations = 'true';
   next();
 };
 
@@ -105,6 +116,8 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     .paginate()
     .createAggregation();
   const doc = await featuresWithPagination.aggregation;
+
+  // if(req.recommendations === )
   // const featuresWithPagination = new APIFeaturesCopy(Tour, req.query, next)
   //   .filter()
   //   .sort()
@@ -112,11 +125,29 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
   //   .paginate();
   // const doc = await featuresWithPagination.query;
 
+  let recommendations = undefined;
+  if (req.recommendations === 'true') {
+    let queryObj = {};
+    if (req.query.id) {
+      queryObj = {
+        _id: {
+          $nin: Array.isArray(req.query.id)
+            ? [...req.query.id]
+            : [req.query.id],
+        },
+      };
+    }
+    recommendations = await Tour.find(queryObj)
+      .sort('-popularityIndex -ratingsAvarage')
+      .limit(3);
+  }
+
   res.status(200).json({
     status: 'success',
-    results: doc.length,
+    results: doc[0].data.length,
     totalResults: doc[0].totalCount[0]?.total || 0,
     // totalResults: 8,
+    recommendations,
     data: {
       data: doc[0].data,
       // data: doc,
@@ -147,7 +178,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     return next(new AppError('No tour found with that slug', 404));
   }
 
-  const recommandations = await Tour.find({
+  const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     // categories: tour.categories[0],
   })
@@ -158,7 +189,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       tour,
-      recommandations,
+      recommendations,
     },
   });
 });

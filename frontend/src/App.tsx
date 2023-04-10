@@ -1,7 +1,7 @@
 // import "./App.css";
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import NavbarAndFooter from "./components/navbarAndFooter/navbarAndFooter.component";
+import NavbarAndFooter from "./components/navbarAndFooterComponents/navbarAndFooter.component";
 import AllTours from "./routes/allTours/allTours.component";
 import Home from "./routes/home/home.component";
 import Tour from "./routes/tour/tour.component";
@@ -23,6 +23,7 @@ import { getUser } from "./api/authentication-requests";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "./store/store";
 import { removeUser, setUser } from "./store/user/user.action";
+import Cart from "./routes/cart/cart.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -78,6 +79,7 @@ function App() {
         <Route path="login" element={<Login />} />
         <Route path="login/forgot-password" element={<ForgotPassword />} />
         <Route path="login/reset-password/:token" element={<ResetPassword />} />
+        <Route path="cart" element={<Cart />} />
       </Route>
       <Route path="profile/" element={<UserProfile />}>
         <Route index element={<Navigate to="/profile/wishlist" />} />

@@ -87,6 +87,7 @@ app.use(xss());
 app.use(
   hpp({
     whitelist: [
+      'id',
       'price',
       'duration',
       'maxGroupSize',
