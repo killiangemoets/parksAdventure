@@ -12,9 +12,7 @@ import Spinner, {
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../components/UIComponents/title/title.component";
-import { clearCart, removeItem } from "../../store/cart/cart.action";
 import { selectCartItems } from "../../store/cart/cart.selector";
-import { AppDispatch } from "../../store/store";
 import { TItemWithTourInfo, TSoldOutItem } from "../../types/booking";
 import { calculateBasketPrice } from "../../utils/dataManipulation/calculateTotalPrice";
 import {
@@ -26,15 +24,18 @@ import {
   CartSpinner,
   CartWrapper,
   ItemsList,
+  RightColumn,
+  SoldOutItems,
 } from "./cart.style";
 import { TourData } from "../../types/tour";
 import { getTopTourRecommendations } from "../../api/tour-requests";
 import { TTourItem } from "../../types/booking";
 import compareDates from "../../utils/comparison/compareDates";
+import { AppDispatch } from "../../store/store";
+import { setOrder } from "../../store/cart/cart.action";
 
 const Cart = () => {
   const dispatch: AppDispatch = useDispatch();
-
   const items = useSelector(selectCartItems);
   const [itemsWithTourInfo, setItemsWithTourInfo] = useState<
     TItemWithTourInfo[]
@@ -50,6 +51,7 @@ const Cart = () => {
     const handleGetTourItems = async () => {
       setIsLoading(true);
       const tourIds = items.map((item) => item.tourId);
+      // if(tourIds){
       const response = await getTourItems(tourIds);
       if (response.status === "success") {
         const toursList: TTourItem[] = response.data.data;
@@ -64,33 +66,36 @@ const Cart = () => {
               return compareDates(availability.date, item.startingDate);
             }
           );
-          console.log({ tour, item, selectedAvailability });
+
+          // a tour can be soldout in 3 different cases:
+          // - the availibility has been removed (by admin or guide)
+          // - the group is full
+          // - the date has passed
           if (
             !selectedAvailability ||
             item.adults + item.children >
               selectedAvailability?.maxGroupSize -
-                selectedAvailability?.currentGroupSize
+                selectedAvailability?.currentGroupSize ||
+            new Date(selectedAvailability.date) < new Date(Date.now())
           ) {
-            dispatch(removeItem(item.tourId, item.startingDate));
             newSoldOutItems.push({
               ...item,
-              availableGroupCapacity: selectedAvailability
-                ? selectedAvailability?.maxGroupSize -
-                  selectedAvailability?.currentGroupSize
-                : 0,
+              tour,
             });
           } else {
             newItemsWithTourInfo.push({
               ...item,
               tour,
+              kidPrice: selectedAvailability.kidPrice,
+              price: selectedAvailability.price,
             });
           }
         });
 
-        console.log({ newItemsWithTourInfo, newSoldOutItems });
         setItemsWithTourInfo(newItemsWithTourInfo);
         setSoldoutItems(newSoldOutItems);
         setRecommendations(response.recommendations);
+        dispatch(setOrder(newItemsWithTourInfo));
       } else {
         setErrorMessage("An error occured. Please try again!");
       }
@@ -106,30 +111,22 @@ const Cart = () => {
       setIsLoading(false);
     };
 
-    if (items.length > itemsWithTourInfo.length) {
-      console.log("handleGetTourItems");
-      handleGetTourItems();
-    }
     if (!recommendations.length && !items.length) {
-      console.log("handleGetTopRecommendations");
       handleGetTopRecommendations();
     }
-    if (items.length === 0) setErrorMessage("Your cart is empty");
+    if (items.length) {
+      handleGetTourItems();
+    }
+    if (!items.length) {
+      setItemsWithTourInfo([]);
+      setSoldoutItems([]);
+      dispatch(setOrder([]));
+    }
   }, [items]);
 
-  const handleDeleteItem = (tourId: string, startingDate: Date) => {
-    const newItemsWithTourInfo = itemsWithTourInfo.filter(
-      (item) =>
-        !(
-          item.tour._id === tourId &&
-          compareDates(item.startingDate, startingDate)
-        )
-    );
-
-    console.log(newItemsWithTourInfo);
-    setItemsWithTourInfo(newItemsWithTourInfo);
-    dispatch(removeItem(tourId, startingDate));
-  };
+  useEffect(() => {
+    if (items.length === 0) setErrorMessage("Your cart is empty");
+  }, [items]);
 
   return (
     <CartContainer>
@@ -149,30 +146,50 @@ const Cart = () => {
               <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
             </CartSpinner>
           ) : (
-            itemsWithTourInfo.length > 0 && (
-              <>
-                <ItemsList>
-                  {itemsWithTourInfo.map((item, i) => (
-                    <CartItem
-                      key={i}
-                      startingDate={item.startingDate}
-                      kidPrice={item.kidPrice}
-                      price={item.price}
-                      adults={item.adults}
-                      children={item.children}
-                      tour={item.tour}
-                      handleDelete={handleDeleteItem}
-                    />
-                  ))}
-                </ItemsList>
+            <RightColumn>
+              {/* {itemsWithTourInfo.length > 0 && ( */}
+              <ItemsList>
+                {itemsWithTourInfo.map((item, i) => (
+                  <CartItem
+                    key={i}
+                    startingDate={item.startingDate}
+                    kidPrice={item.kidPrice}
+                    price={item.price}
+                    adults={item.adults}
+                    children={item.children}
+                    tour={item.tour}
+                  />
+                ))}
+              </ItemsList>
+              {/* )} */}
+              {soldoutItems.length > 0 && (
+                <SoldOutItems>
+                  <Title titleType={TITLE_TYPE_CLASSES.section}>
+                    These selections are no longer available
+                  </Title>
+                  <ItemsList>
+                    {soldoutItems.map((item, i) => (
+                      <CartItem
+                        key={i}
+                        soldout={true}
+                        startingDate={item.startingDate}
+                        adults={item.adults}
+                        children={item.children}
+                        tour={item.tour}
+                      />
+                    ))}
+                  </ItemsList>
+                </SoldOutItems>
+              )}
+              {itemsWithTourInfo.length > 0 && (
                 <CartCheckout>
                   <CheckoutCard
                     numberOfItems={itemsWithTourInfo.length}
                     totalPrice={calculateBasketPrice(itemsWithTourInfo)}
                   />
                 </CartCheckout>
-              </>
-            )
+              )}
+            </RightColumn>
           )}
         </CartBody>
         {recommendations.length && (

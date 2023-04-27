@@ -59,8 +59,20 @@ export const DatePickerElement = styled(DatePicker)`
 
 const highlightStyle = css`
   position: absolute;
-  bottom: 20%;
-  right: 4%;
+  bottom: 16%;
+  right: 0%;
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: #20640c;
+  display: inline-block;
+`;
+
+const highlightStyle2 = css`
+  position: absolute;
+  top: 16%;
+  right: 0%;
   content: "";
   width: 0.4rem;
   height: 0.4rem;
@@ -71,6 +83,7 @@ const highlightStyle = css`
 
 type DateInputValueProps = {
   highlight?: boolean;
+  highlight2?: boolean;
 };
 export const DateInputValue = styled.div<DateInputValueProps>`
   display: flex;
@@ -81,5 +94,9 @@ export const DateInputValue = styled.div<DateInputValueProps>`
 
   &::after {
     ${({ highlight }) => highlight && highlightStyle}
+  }
+
+  &::before {
+    ${({ highlight2 }) => highlight2 && highlightStyle2}
   }
 `;

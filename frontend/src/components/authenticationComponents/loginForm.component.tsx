@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { login } from "../../api/authentication-requests";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate, useSearchParams } from "react-router-dom";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -21,6 +21,7 @@ import { selectEmail } from "../../store/user/user.selector";
 import FormButton from "../UIComponents/formButton/formButton.component";
 
 export const LoginForm = () => {
+  const [searchParams] = useSearchParams();
   const dispatch: AppDispatch = useDispatch();
   const savedEmail = useSelector(selectEmail);
   const navigate = useNavigate();
@@ -33,6 +34,13 @@ export const LoginForm = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [uri, setUri] = useState<string | null>(null);
+
+  useEffect(() => {
+    const newUri = searchParams.get("uri");
+    console.log({ newUri });
+    setUri(newUri ? newUri.replaceAll("%26", "&") : null);
+  }, [searchParams]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -72,7 +80,7 @@ export const LoginForm = () => {
       );
       setTimeout(function () {
         setSuccess(false);
-        return navigate("/");
+        return navigate(uri || "/");
       }, 2000);
     } else setErrorMessage(response.message);
   };
@@ -112,8 +120,8 @@ export const LoginForm = () => {
       <AuthenticationLinkSmall to="/login/forgot-password">
         Forgot password?
       </AuthenticationLinkSmall>
-      <AuthenticationLink to="/signup">
-        Need to create an account?
+      <AuthenticationLink to={uri ? `/signup?uri=${uri}` : "/signup"}>
+        Don't have an account yet?
       </AuthenticationLink>
     </AuthenticationContainer>
   );

@@ -10,7 +10,7 @@ import {
   AuthenticationContainer,
   AuthenticationForm,
   ErrorMessage,
-  ForgotPassowrdButtonContainer,
+  ForgotPasswordButtonContainer,
   Messages,
   SuccessMessage,
 } from "./authentication.style";
@@ -73,11 +73,11 @@ const ForgotPasswordForm = () => {
             onChange={handleChange}
             required
           />
-          <ForgotPassowrdButtonContainer>
+          <ForgotPasswordButtonContainer>
             <FormButton loading={loading} success={success}>
               Get new password
             </FormButton>
-          </ForgotPassowrdButtonContainer>
+          </ForgotPasswordButtonContainer>
         </AuthenticationForm>
         <Messages>
           <ErrorMessage>{errorMessage}</ErrorMessage>

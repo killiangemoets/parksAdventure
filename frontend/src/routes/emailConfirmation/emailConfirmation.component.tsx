@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { verifyEmail } from "../../api/authentication-requests";
 import NotFound from "../../components/notFoundComponent/notFound.component";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";
 import Title from "../../components/UIComponents/title/title.component";
+import { AppDispatch } from "../../store/store";
+import { removeUser, setUser } from "../../store/user/user.action";
 import {
   EmailVerificationContainer,
   EmailVerificationLink,
@@ -25,6 +28,8 @@ type EmailConfirmationRouteParams = {
 };
 
 const EmailConfirmation = () => {
+  const [searchParams] = useSearchParams();
+  const dispatch: AppDispatch = useDispatch();
   const { token } = useParams<
     keyof EmailConfirmationRouteParams
   >() as EmailConfirmationRouteParams;
@@ -36,13 +41,43 @@ const EmailConfirmation = () => {
     const handleVerifyEmail = async (token: string) => {
       console.log({ token });
       const response = await verifyEmail(token);
-      console.log(response);
       if (response.status === "success") {
-        setTimeout(function () {
-          return navigate("/login");
-        }, 2000);
+        if (response.data.user) {
+          const {
+            email,
+            firstname,
+            lastname,
+            photo,
+            phoneNumber,
+            birthDate,
+            role,
+            _id: id,
+          } = response.data.user;
+          dispatch(
+            setUser({
+              email,
+              firstname,
+              lastname,
+              photo,
+              phoneNumber,
+              birthDate,
+              role,
+              id,
+            })
+          );
+          setTimeout(function () {
+            const uri = window.location.href.split("uri=").slice(-1)[0];
+            console.log({ uri });
+            return navigate(uri || "/");
+          }, 2000);
+        } else {
+          setTimeout(function () {
+            return navigate("/login");
+          }, 2000);
+        }
       } else {
         setError(true);
+        dispatch(removeUser());
       }
       setLoading(false);
     };

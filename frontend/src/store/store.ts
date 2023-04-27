@@ -4,13 +4,15 @@ import { persistStore, persistReducer, PersistConfig } from "redux-persist";
 import thunk from "redux-thunk";
 import { Dispatch } from "react";
 import { rootReducer } from "./root-reducer";
-import sessionStorage from "redux-persist/es/storage/session";
+import storage from "redux-persist/lib/storage";
+// import sessionStorage from "redux-persist/es/storage/session";
 
 export type RootState = ReturnType<typeof rootReducer>;
 
 const persistConfig: PersistConfig<RootState> = {
   key: "root",
-  storage: sessionStorage, // to store it in session Storage
+  storage,
+  // storage: sessionStorage, // to store it in session Storage
   whitelist: ["user", "cart"], // to only store the user slice
 };
 

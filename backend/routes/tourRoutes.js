@@ -33,8 +33,8 @@ router
   // .get(tourController.requiredFields, tourController.getAllTours)
   .get(tourController.getAllTours)
   .post(
-    // authController.protect,
-    // authController.restrictTo('admin', 'lead-guide'),
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide'),
     tourController.uploadImagesToCloudinary,
     tourController.createTour
   );

@@ -14,9 +14,15 @@ export const login = async (loginData: LoginData) => {
   }
 };
 
-export const signUp = async (signUpData: SignUpData) => {
+export const signUp = async (
+  signUpData: SignUpData,
+  redirectUri: string | undefined
+) => {
   try {
-    const response = await axiosInstance.post("/users/signup", signUpData);
+    const response = await axiosInstance.post("/users/signup", {
+      ...signUpData,
+      redirectUri,
+    });
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

@@ -10,3 +10,8 @@ export const selectCartItems = createSelector(
   [selectCartReducer],
   (cartSlice) => cartSlice.items
 );
+
+export const selectOrder = createSelector(
+  [selectCartReducer],
+  (cartSlice) => cartSlice.order
+);

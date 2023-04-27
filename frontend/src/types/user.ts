@@ -27,3 +27,10 @@ export type PasswordsData = {
   passwordConfirm: string;
   logout: boolean;
 };
+
+export type CheckoutUserData = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  phoneNumber: string;
+};

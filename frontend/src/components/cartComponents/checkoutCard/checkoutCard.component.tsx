@@ -1,4 +1,7 @@
 import { FC } from "react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { selectUserId } from "../../../store/user/user.selector";
 import Button from "../../UIComponents/button/button.component";
 import {
   CheckoutCardBody,
@@ -15,6 +18,14 @@ type CheckoutCardProps = {
 };
 
 const CheckoutCard: FC<CheckoutCardProps> = ({ numberOfItems, totalPrice }) => {
+  const navigate = useNavigate();
+  const userId = useSelector(selectUserId);
+
+  const handleCheckout = () => {
+    if (userId) return navigate("/checkout/step2");
+    navigate("/login?uri=/checkout/step2");
+  };
+
   return (
     <CheckoutCardContainer>
       <CheckoutCardBody>
@@ -30,7 +41,13 @@ const CheckoutCard: FC<CheckoutCardProps> = ({ numberOfItems, totalPrice }) => {
           <CheckoutCardText>All taxes and fees included</CheckoutCardText>
         </CheckoutCardInfo>
       </CheckoutCardBody>
-      <Button>Checkout</Button>
+      <Button
+        onClick={() => {
+          handleCheckout();
+        }}
+      >
+        Checkout
+      </Button>
     </CheckoutCardContainer>
   );
 };

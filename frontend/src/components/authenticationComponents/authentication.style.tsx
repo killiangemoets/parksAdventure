@@ -13,8 +13,8 @@ export const AuthenticationContainer = styled.div`
 
 export const AuthenticationLink = styled(Link)`
   cursor: pointer;
-  font-weight: 500;
-  font-size: 1.8rem;
+  font-weight: 600;
+  font-size: 2.4rem;
   letter-spacing: 1px;
   color: #cc704b;
   border-bottom: solid 1px #cc704b;
@@ -28,7 +28,7 @@ export const AuthenticationLink = styled(Link)`
 
 export const AuthenticationLinkSmall = styled(AuthenticationLink)`
   font-weight: 500;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   letter-spacing: 1px;
   border-bottom: none;
   border-bottom: solid 1px rgba(204, 112, 75, 0);
@@ -89,7 +89,7 @@ export const SuccessMessage = styled.p`
   letter-spacing: 0.4px;
 `;
 
-export const ForgotPassowrdButtonContainer = styled.div`
+export const ForgotPasswordButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;

@@ -101,7 +101,7 @@ export const createTour = async (tourData: CreateTourData) => {
   }
 };
 
-export const getTourGuides = async (): Promise<TUser[]> => {
+export const getTourGuides = async () => {
   try {
     const response = await axiosInstance.get(
       "/users?role=guide&role=lead-guide&active=true"
@@ -142,7 +142,7 @@ export const getTourGuides = async (): Promise<TUser[]> => {
       }
     );
 
-    return guides;
+    return { status: "success", data: guides };
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;

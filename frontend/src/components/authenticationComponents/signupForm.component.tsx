@@ -1,6 +1,6 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { signUp } from "../../api/authentication-requests";
 import { AppDispatch } from "../../store/store";
 import { setEmail } from "../../store/user/user.action";
@@ -19,6 +19,7 @@ import {
 } from "./authentication.style";
 
 export const SignupForm = () => {
+  const [searchParams] = useSearchParams();
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState<SignUpData>({
@@ -32,6 +33,12 @@ export const SignupForm = () => {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
+  const [uri, setUri] = useState<string | null>(null);
+
+  useEffect(() => {
+    const newUri = searchParams.get("uri");
+    setUri(newUri);
+  }, [searchParams]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
@@ -46,7 +53,7 @@ export const SignupForm = () => {
     }
     setLoading(true);
     setErrorMessage("");
-    const response = await signUp(signUpData);
+    const response = await signUp(signUpData, uri || undefined);
     setLoading(false);
     console.log(response);
     if (response.status === "success") {
@@ -123,7 +130,7 @@ export const SignupForm = () => {
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>
-      <AuthenticationLink to="/login">
+      <AuthenticationLink to={uri ? `/login?uri=${uri}` : "/login"}>
         Already have an account?
       </AuthenticationLink>
     </AuthenticationContainer>

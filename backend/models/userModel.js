@@ -69,6 +69,10 @@ const userSchema = new mongoose.Schema({
     type: [String],
     select: false,
   },
+  emailVerificationSessionToken: {
+    type: String,
+    // select: false,
+  },
   emailVerificationTokenResend: {
     type: Number,
     default: 0,

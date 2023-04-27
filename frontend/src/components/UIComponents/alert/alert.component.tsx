@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { AlertContainer, AlertMessage } from "./alert.style";
+import { AlertContainer, AlertMessage, AlertWrapper } from "./alert.style";
 
 type AlertProps = {
   children: string | ReactNode;
@@ -8,7 +8,9 @@ type AlertProps = {
 const Alert: FC<AlertProps> = ({ children }) => {
   return (
     <AlertContainer>
-      <AlertMessage>{children}</AlertMessage>
+      <AlertWrapper>
+        <AlertMessage>{children}</AlertMessage>
+      </AlertWrapper>
     </AlertContainer>
   );
 };

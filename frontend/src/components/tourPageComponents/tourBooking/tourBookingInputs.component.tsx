@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -11,6 +11,7 @@ import {
   GroupIcon,
   SelectDateFooter,
   SelectDateFooterText,
+  SelectDateFooterText2,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
 import {
@@ -20,6 +21,8 @@ import {
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
+import useDatesFromAvailabilities from "../../../hooks/datesFromAvailabilities";
+import useLabelFromGroupInfo from "../../../hooks/labelFromGroupInfo";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;
@@ -38,33 +41,18 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
 }) => {
   // const availabilities = useSelector(selectTourCurrentAvailabilities);
   const availabilities = useSelector(selectTourAvailabilities);
-  const [availableDates, setAvailableDates] = useState<Date[]>([]);
-  const [highlightDates, setHighlightsDates] = useState<Date[]>([]);
 
-  const [label, setLabel] = useState<React.ReactNode>(<p>Add People</p>);
   const [groupError, setGroupError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);
+
+  const { availableDates, cheapestDates, lastSpotsDates } =
+    useDatesFromAvailabilities({ availabilities });
+  const { label } = useLabelFromGroupInfo({ group: currentGroup });
 
   const handleDropDownEdit = (newState: CountInputState[]): void => {
     groupError && setGroupError(false);
     handleChangeGroup(newState);
   };
-
-  useEffect(() => {
-    const newLabel = currentGroup.reduce((acc, cur) => {
-      if (cur.value > 0 && !acc.length)
-        return acc + `${cur.title} x ${cur.value}`;
-      else if (cur.value > 0) return acc + `, ${cur.title} x ${cur.value}`;
-      else return acc;
-    }, "");
-    setLabel(
-      newLabel.length ? (
-        <p style={{ color: "#333" }}>{newLabel}</p>
-      ) : (
-        <p>Add people</p>
-      )
-    );
-  }, [currentGroup]);
 
   const handleChangeDate = (date: Date | null) => {
     dateError && setDateError(false);
@@ -73,13 +61,12 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         compareDates(availability.date, date)
       );
       handleChangeAvailability(newAvailability);
-    }
-    if (!date) {
+    } else {
       handleChangeAvailability(undefined);
     }
   };
 
-  const handleClick = () => {
+  const handleClickOnSeeDetails = () => {
     if (
       (currentGroup[0].value > 0 || currentGroup[1].value > 0) &&
       currentAvailability
@@ -91,31 +78,6 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
 
     if (!currentAvailability) setDateError(true);
   };
-
-  useEffect(() => {
-    if (!availabilities) return;
-    let newAvailableDates: Date[] = [];
-    let highlightDates: Date[] = [];
-    let minPrice = Infinity;
-    availabilities.forEach((availability) => {
-      if (new Date(availability.date) > new Date(Date.now())) {
-        newAvailableDates.push(availability.date);
-      }
-      if (
-        availability.price < minPrice &&
-        new Date(availability.date) > new Date(Date.now())
-      ) {
-        // if (availability.price < minPrice) {
-        highlightDates = [availability.date];
-        minPrice = availability.price;
-      } else if (availability.price === minPrice) {
-        highlightDates.push(availability.date);
-      }
-    });
-
-    setAvailableDates(newAvailableDates);
-    setHighlightsDates(highlightDates);
-  }, [availabilities]);
 
   return (
     <TourBookingInputsContainer>
@@ -132,20 +94,22 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         </>
       </Dropdown>
       <DateInput
-        currentValue={currentAvailability ? currentAvailability?.date : null}
+        currentValue={currentAvailability?.date || null}
         handleChange={(value) => {
           handleChangeDate(value);
         }}
         enabledDates={availableDates}
-        highlightDates={highlightDates}
+        highlightDates={cheapestDates}
+        highlightDates2={lastSpotsDates}
         footer={
           <SelectDateFooter>
             <SelectDateFooterText>Cheapest date(s)</SelectDateFooterText>
+            <SelectDateFooterText2>5 or less spots left</SelectDateFooterText2>
           </SelectDateFooter>
         }
         error={dateError}
       />
-      <Button style={{ width: "20rem" }} onClick={handleClick}>
+      <Button style={{ width: "20rem" }} onClick={handleClickOnSeeDetails}>
         See Details
       </Button>
     </TourBookingInputsContainer>

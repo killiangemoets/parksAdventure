@@ -37,6 +37,26 @@ export const NavBarLink = styled(Link)`
   text-transform: uppercase;
   color: #fbf3e5;
   transition: all 0.3s;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+
+  &:hover {
+    color: #cc704b;
+  }
+`;
+
+export const NavBarButton = styled.button`
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 1.6rem;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  color: #fbf3e5;
+  transition: all 0.3s;
+  font-weight: 400;
+  letter-spacing: 0.2px;
 
   &:hover {
     color: #cc704b;
@@ -45,6 +65,20 @@ export const NavBarLink = styled(Link)`
 
 export const SignUpLink = styled(NavBarLink)`
   padding: 1.2rem 2.8rem;
+  border: solid 1px #faf2e5;
+  border-radius: 10rem;
+
+  &:hover {
+    background-color: #cc704b;
+    border: solid 1px #cc704b;
+    color: #fbf3e5;
+
+    text-shadow: none;
+  }
+`;
+
+export const SignUpButton = styled(NavBarButton)`
+  padding: 1.4rem 2.8rem;
   border: solid 1px #faf2e5;
   border-radius: 10rem;
 

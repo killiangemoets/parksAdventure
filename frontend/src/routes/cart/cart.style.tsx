@@ -25,8 +25,21 @@ export const CartBody = styled.div`
   min-height: 24rem;
 `;
 
+export const RightColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+`;
+
 export const ItemsList = styled.div`
   width: 100%;
+  max-width: calc(100% - 46rem);
+`;
+
+export const SoldOutItems = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const CartCheckout = styled.div`

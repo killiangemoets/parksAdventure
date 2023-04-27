@@ -31,6 +31,8 @@ import { CountInputState } from "../../UIComponents/dropdown/dropdownCounts.comp
 import { TAvailability } from "../../../types/tour";
 import { useParams } from "react-router-dom";
 import Alert from "../../UIComponents/alert/alert.component";
+import { selectCartItems } from "../../../store/cart/cart.selector";
+import compareDates from "../../../utils/comparison/compareDates";
 
 export type TourBookingProps = {
   forwardRef?: React.MutableRefObject<HTMLDivElement | null>;
@@ -40,7 +42,7 @@ type TourSlugRouteParams = {
   slug: string;
 };
 
-const defaultCountInputs = [
+export const defaultCountInputs = [
   { id: "adult", title: "Adult", subtitle: "(16+ years)", value: 0 },
   { id: "child", title: "Child", subtitle: "(4-15 years)", value: 0 },
 ];
@@ -51,6 +53,8 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
   >() as TourSlugRouteParams;
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
+  const cartItems = useSelector(selectCartItems);
+
   const [selectedAvailability, setSelectedAvailability] = useState<
     TAvailability | undefined
   >(undefined);
@@ -79,20 +83,32 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
 
   const handleChangeGroup = (group: CountInputState[]) => {
     console.log("handleChangeGroup", group);
+
+    const currentCartItem = selectedAvailability
+      ? cartItems.find((item) =>
+          compareDates(item.startingDate, selectedAvailability?.date)
+        )
+      : undefined;
+
+    const spotsLeft = selectedAvailability
+      ? selectedAvailability.maxGroupSize -
+        selectedAvailability.currentGroupSize -
+        (currentCartItem
+          ? currentCartItem.adults + currentCartItem.children
+          : 0)
+      : 0;
+
     if (
-      (selectedAvailability &&
-        group[0].value + group[1].value >
-          selectedAvailability.maxGroupSize -
-            selectedAvailability.currentGroupSize) ||
+      (selectedAvailability && group[0].value + group[1].value > spotsLeft) ||
       (tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity)
     ) {
+      const spotsString = spotsLeft > 1 ? "spots" : "spot";
       setAlertMessage(
         tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity
           ? `The maximum group size for this tour is ${tour?.maxGroupSizeCapacity} people`
-          : `There is only ${
-              (selectedAvailability?.maxGroupSize || 0) -
-              (selectedAvailability?.currentGroupSize || 0)
-            } spots left for this date`
+          : spotsLeft
+          ? `There is only ${spotsLeft} ${spotsString} left for this date`
+          : "There is no spot left for this date"
       );
       setTimeout(function () {
         setAlertMessage(undefined);
@@ -104,16 +120,30 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
   const handleChangeAvailability = (
     availability: TAvailability | undefined
   ) => {
-    console.log("handleChangeAvailability", availability);
+    const currentCartItem = availability
+      ? cartItems.find((item) =>
+          compareDates(item.startingDate, availability?.date)
+        )
+      : undefined;
+
+    const spotsLeft = availability
+      ? availability.maxGroupSize -
+        availability.currentGroupSize -
+        (currentCartItem
+          ? currentCartItem.adults + currentCartItem.children
+          : 0)
+      : 0;
+
+    console.log("handleChangeAvailability", availability, cartItems, spotsLeft);
     if (
       availability &&
-      currentCountInputs[0].value + currentCountInputs[1].value >
-        availability.maxGroupSize - availability.currentGroupSize
+      currentCountInputs[0].value + currentCountInputs[1].value > spotsLeft
     ) {
+      const spotsString = spotsLeft > 1 ? "spots" : "spot";
       setAlertMessage(
-        `There is only ${
-          availability.maxGroupSize - availability.currentGroupSize
-        } spots left for this date`
+        spotsLeft
+          ? `There is only ${spotsLeft} ${spotsString} left for this date`
+          : `There is no spot left for this date`
       );
       setTimeout(function () {
         setAlertMessage(undefined);

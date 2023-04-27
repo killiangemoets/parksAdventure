@@ -3,7 +3,15 @@ import styled from "styled-components";
 export const AlertContainer = styled.div`
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 999 !important;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const AlertWrapper = styled.div`
   padding: 2rem 6.4rem;
   min-width: 40rem;
   background-color: #cc704b;

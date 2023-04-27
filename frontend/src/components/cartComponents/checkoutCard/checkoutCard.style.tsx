@@ -6,7 +6,7 @@ export const CheckoutCardContainer = styled.div`
   border-radius: 12px;
   border: solid 1px #aaa;
   padding: 2rem 0;
-  width: 36rem;
+  width: 40rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@ export const CheckoutCardBody = styled.div`
   gap: 4.8rem;
 `;
 export const CheckoutCardTitle = styled.h5`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.2px;
@@ -29,13 +29,13 @@ export const CheckoutCardInfo = styled.div`
   align-items: flex-end;
 `;
 export const CheckoutCardTotal = styled.p`
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 1px;
 `;
 export const CheckoutCardText = styled.p`
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.4px;
   color: #888;

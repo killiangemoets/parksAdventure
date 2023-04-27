@@ -87,13 +87,14 @@ exports.getAll = (Model) =>
       next
     )
       .filter()
-      .search()
       .sort()
       .limitFields()
       .paginate();
 
     const count = await features.query.countDocuments();
     const doc = await featuresWithPagination.query;
+
+    console.log({ doc });
 
     res.status(200).json({
       status: 'success',

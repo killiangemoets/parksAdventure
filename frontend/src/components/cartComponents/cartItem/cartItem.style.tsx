@@ -5,7 +5,7 @@ export const CartItemContainer = styled.div`
   gap: 2rem;
   padding: 3.2rem 0;
   border-bottom: 1px solid #aaa;
-  max-width: calc(100% - 44rem);
+  width: 100%;
 `;
 
 export const CartItemPicture = styled.div`
@@ -78,4 +78,32 @@ export const CartItemPrice = styled.p`
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.6px;
+`;
+
+export const Rebook = styled.div`
+  font-weight: 700;
+  font-size: 1.6rem;
+`;
+
+export const CartItemInputs = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 2rem;
+
+  button {
+    margin: 0;
+    height: 5.2rem;
+    width: 26rem;
+    font-size: 1.6rem;
+    letter-spacing: 0px;
+  }
+`;
+
+export const CartItemEditButton = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3.2rem;
 `;

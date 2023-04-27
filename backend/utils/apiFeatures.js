@@ -15,6 +15,11 @@ class APIFeatures {
       delete queryObj[el];
     });
 
+    if (queryObj.search) {
+      queryObj['$text'] = { $search: queryObj.search };
+      delete queryObj.search;
+    }
+
     // Adding the $ sign where needed (cause we don't want to pass it in the url)
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);

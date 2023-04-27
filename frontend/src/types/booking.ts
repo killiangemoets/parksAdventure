@@ -7,6 +7,7 @@ export type TTourItem = {
   [TOUR_DATA.name]: string;
   [TOUR_DATA.ratingsAverage]: number;
   [TOUR_DATA.ratingsQuantity]: number;
+  [TOUR_DATA.maxGroupSizeCapacity]: number;
   [TOUR_DATA.slug]: string;
   [TOUR_DATA.id]: string;
 };
@@ -14,8 +15,8 @@ export type TTourItem = {
 export type TItem = {
   tourId: string;
   startingDate: Date;
-  kidPrice?: number;
-  price: number;
+  // kidPrice?: number;
+  // price: number;
   adults: number;
   children: number;
 };
@@ -30,5 +31,20 @@ export type TItemWithTourInfo = {
 };
 
 export type TSoldOutItem = TItem & {
-  availableGroupCapacity: number;
+  tour: TTourItem;
+  // availableGroupCapacity: number;
 };
+
+export type TUpdateItem = {
+  startingDate?: Date;
+  adults?: number;
+  children?: number;
+};
+
+export type TCheckoutState = "done" | "in progress" | "to do";
+
+export enum CHECKOUT_STATES {
+  done = "done",
+  in_progress = "in progress",
+  to_do = "to do",
+}

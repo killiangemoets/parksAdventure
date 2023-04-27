@@ -90,7 +90,7 @@ exports.aggreagationRequiredFields = (req, res, next) => {
 
 exports.tourItemsRequiredFields = (req, res, next) => {
   req.query.fields =
-    'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities';
+    'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities,maxGroupSizeCapacity';
   next();
 };
 

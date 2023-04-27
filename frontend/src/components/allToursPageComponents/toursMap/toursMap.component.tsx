@@ -1,11 +1,9 @@
-import { time } from "console";
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import { selectTours } from "../../../store/tours/tours.selector";
 import { TCoordinatesBox, TLocation, TViewState } from "../../../types/map";
 import compareObjects from "../../../utils/comparison/compareObjects";
-import { StopDescription } from "../../tourPageComponents/tourItinerary/tourItinerary.style";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -36,7 +34,7 @@ const ToursMap: FC<ToursMapProps> = ({
   const tours = useSelector(selectTours);
   const [markers, setMarkers] = useState<TLocation[]>([]);
   const [timeout, setTimout] = useState<number | undefined>(undefined);
-  const [initialViewState, setViewState] = useState<TViewState>({
+  const [initialViewState, setinitialViewState] = useState<TViewState>({
     longitude: 0,
     latitude: 0,
     zoom: 0,
@@ -65,7 +63,14 @@ const ToursMap: FC<ToursMapProps> = ({
 
   useEffect(() => {
     const initialViewStateArr = searchParams.get("viewstate")?.split(",");
-    if (!initialViewStateArr) return;
+    if (!initialViewStateArr) {
+      setinitialViewState({
+        longitude: 0,
+        latitude: 0,
+        zoom: 0,
+      });
+      return;
+    }
     const newInitialViewState: TViewState = {
       latitude: +initialViewStateArr[0],
       longitude: +initialViewStateArr[1],
@@ -73,7 +78,7 @@ const ToursMap: FC<ToursMapProps> = ({
     };
     console.log({ newInitialViewState });
     if (!compareObjects(newInitialViewState, initialViewState))
-      setViewState(newInitialViewState);
+      setinitialViewState(newInitialViewState);
   }, [searchParams]);
 
   const handleClickMap = () => {

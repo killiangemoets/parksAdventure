@@ -37,8 +37,31 @@ const createSendToken = (user, statusCode, res) => {
   });
 };
 
+const createSessionToken = (sessionToken, statusCode, res) => {
+  const signedToken = signToken(sessionToken);
+
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.SESSION_COOKIE_EXPIRES_IN * 60 * 1000
+    ), // the browser will delete the cookie after it has expired
+    httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+
+  res.cookie('tmp', signedToken, cookieOptions);
+
+  res.status(statusCode).json({
+    status: 'success',
+    // message: 'Token sent to email!',
+    data: {
+      sessionToken,
+    },
+  });
+};
+
 exports.signup = catchAsync(async (req, res, next) => {
   const verificationToken = crypto.randomBytes(32).toString('hex');
+  const emailVerificationSessionToken = crypto.randomBytes(32).toString('hex');
 
   // Encrypt the token using the sha256 algorithms
   const emailVerificationToken = crypto
@@ -54,16 +77,17 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     role: req.body.role, // TODO: remove it!!
     emailVerificationTokens: [emailVerificationToken],
+    emailVerificationSessionToken,
   });
 
   try {
-    const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}`;
+    const redirectUri = req.body.redirectUri;
+    console.log({ redirectUri });
+    const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
+    const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
     await new Email(newUser, emailVerificationUrl).sendEmailVerification();
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Token sent to email!',
-    });
+    createSessionToken(emailVerificationSessionToken, 200, res);
   } catch (err) {
     newUser.emailVerificationTokens = undefined;
     await newUser.save({ validateBeforeSave: false });
@@ -83,26 +107,52 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
-  const updatedUser = await User.findOneAndUpdate(
-    {
-      emailVerificationTokens: { $in: [hashedToken] },
-    },
-    { active: true, emailVerificationTokens: undefined },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const sessionToken = req.cookies.tmp;
+  const decoded = sessionToken
+    ? await util.promisify(jwt.verify)(sessionToken, process.env.JWT_SECRET)
+    : { id: undefined };
+
+  res.cookie('tmp', 'null', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
+  // const updatedUser = await User.findOneAndUpdate(
+  //   {
+  //     emailVerificationTokens: { $in: [hashedToken] },
+  //   },
+  //   { active: true, emailVerificationTokens: undefined },
+  //   {
+  //     new: true,
+  //     runValidators: true,
+  //   }
+  // );
+
+  const user = await User.findOne({
+    emailVerificationTokens: { $in: [hashedToken] },
+  });
 
   // 2) If there is no updated user return error
-  if (!updatedUser)
+  if (!user)
     return next(new AppError('Token is invalid or has already been used', 400));
 
+  const emailVerificationSessionToken = user.emailVerificationSessionToken;
+  user.active = true;
+  user.emailVerificationTokens = undefined;
+  user.emailVerificationSessionToken = undefined;
+  await user.save({ validateBeforeSave: false });
+
   // 3) Send response
-  res.status(200).json({
-    status: 'success',
-    message: 'The email address has been verified',
-  });
+  if (emailVerificationSessionToken === decoded.id) {
+    createSendToken(user, 200, res);
+  } else {
+    res.status(200).json({
+      status: 'success',
+      data: {
+        user: undefined,
+      },
+    });
+  }
 });
 
 exports.resendEmail = catchAsync(async (req, res, next) => {

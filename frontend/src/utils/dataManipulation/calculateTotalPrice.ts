@@ -11,7 +11,7 @@ const calculateTotalPrice = (
 
 export default calculateTotalPrice;
 
-export const calculateBasketPrice = (items: (TItem | TItemWithTourInfo)[]) => {
+export const calculateBasketPrice = (items: TItemWithTourInfo[]) => {
   return items.reduce((sum, item) => {
     return (
       sum +

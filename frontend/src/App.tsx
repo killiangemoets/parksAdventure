@@ -20,10 +20,14 @@ import ForgotPassword from "./routes/forgotPassword/forgotPassword.component";
 import ResetPassword from "./routes/resetPassword/resetPassword.component";
 import { useEffect } from "react";
 import { getUser } from "./api/authentication-requests";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "./store/store";
+
 import { removeUser, setUser } from "./store/user/user.action";
 import Cart from "./routes/cart/cart.component";
+import CheckoutLine from "./components/checkoutPagesComponents/checkoutLine/checkoutLine.component";
+import OverviewStep from "./components/checkoutPagesComponents/overviewStep/overviewStep.component";
+import { AppDispatch } from "./store/store";
+import { useDispatch } from "react-redux";
+import ConfirmationStep from "./components/checkoutPagesComponents/confirmationStep/confirmationStep.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -42,6 +46,7 @@ function App() {
           role,
           _id: id,
         } = response.user;
+
         dispatch(
           setUser({
             email,
@@ -58,7 +63,9 @@ function App() {
         dispatch(removeUser());
       }
     };
-    handleIsLoggedIn();
+
+    if (!window.location.href.includes("/signup/email-confirmation/"))
+      handleIsLoggedIn();
   }, []);
 
   return (
@@ -80,6 +87,12 @@ function App() {
         <Route path="login/forgot-password" element={<ForgotPassword />} />
         <Route path="login/reset-password/:token" element={<ResetPassword />} />
         <Route path="cart" element={<Cart />} />
+        <Route path="checkout/" element={<CheckoutLine step={2} />}>
+          <Route path="step2" element={<OverviewStep />} />
+        </Route>
+        <Route path="checkout/" element={<CheckoutLine step={4} />}>
+          <Route path="step4" element={<ConfirmationStep />} />
+        </Route>
       </Route>
       <Route path="profile/" element={<UserProfile />}>
         <Route index element={<Navigate to="/profile/wishlist" />} />

@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { addItem } from "../../../store/cart/cart.action";
 import { AppDispatch } from "../../../store/store";
 import {
   selectTour,
   selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
-import { TItem, TItemWithTourInfo } from "../../../types/booking";
+import { TItem } from "../../../types/booking";
 import { TAvailability } from "../../../types/tour";
 import calculateTotalPrice from "../../../utils/dataManipulation/calculateTotalPrice";
 import {
@@ -17,6 +18,7 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
 import { CountInputState } from "../../UIComponents/dropdown/dropdownCounts.component";
+import FormButton from "../../UIComponents/formButton/formButton.component";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../UIComponents/infoIcon/infoIcon.component";
@@ -52,6 +54,8 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
   const [endDate, setEndDate] = useState<Date>(new Date(Date.now()));
+  const [success, setSuccess] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (tour && availability) {
@@ -65,16 +69,19 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
 
   const handleAddToCart = () => {
     if (!tour) return;
+    setSuccess(true);
     const newItem: TItem = {
       tourId: tour._id,
       startingDate: availability.date,
-      kidPrice: availability.kidPrice,
-      price: availability.price,
       adults: group[0].value,
       children: group[1].value,
     };
     console.log({ newItem });
     dispatch(addItem(newItem));
+    setTimeout(function () {
+      setSuccess(false);
+      return navigate("/cart");
+    }, 2000);
   };
 
   return (
@@ -160,13 +167,15 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
             </TourBookingTotal>
             <TourBookingButtons>
               <Button buttonType={BUTTON_TYPE_CLASSES.cancel}>Book now</Button>
-              <Button
-                onClick={() => {
+              <FormButton
+                loading={false}
+                success={success}
+                handleClick={() => {
                   handleAddToCart();
                 }}
               >
                 Add to cart
-              </Button>
+              </FormButton>
             </TourBookingButtons>
           </TourBookingFooter>
         </>

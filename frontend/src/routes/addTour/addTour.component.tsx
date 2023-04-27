@@ -118,7 +118,9 @@ const AddTour = () => {
   useEffect(() => {
     const loadTourGuides = async () => {
       const response = await getTourGuides();
-      setTourGuidesList(response);
+      if (response.status === "success") {
+        setTourGuidesList(response.data);
+      }
     };
     loadTourGuides();
   }, []);
@@ -175,7 +177,7 @@ const AddTour = () => {
       const response = await createTour(newTourData);
       console.log(response);
       if (response.status === "success") {
-        // setNewTourData(newTourDataDefaultState);
+        setNewTourData(newTourDataDefaultState);
       } else {
         if (response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";

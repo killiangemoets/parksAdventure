@@ -74,6 +74,21 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   summaryError,
 }) => {
   const [categoriesString, setCategoriesString] = useState<string>("");
+  const [unselectedTourGuides, setUnselectedTourGuides] =
+    useState<TUser[]>(tourGuidesList);
+
+  console.log({ tourGuides, tourGuidesList });
+
+  useEffect(() => {
+    const newUnselectedTourGuides = tourGuidesList.filter(
+      (guide) =>
+        !tourGuides.find(
+          (selectedTourGuide) => selectedTourGuide.id === guide.id
+        )
+    );
+    console.log({ newUnselectedTourGuides });
+    setUnselectedTourGuides(newUnselectedTourGuides);
+  }, [tourGuides]);
 
   useEffect(() => {
     let newCategoriesString = categories
@@ -184,14 +199,12 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             </TourGuides>
             <Dropdown
               dropdownType={DROPDOWN_TYPE_CLASSES.input}
-              list={tourGuidesList.map((tourGuide) => {
+              list={unselectedTourGuides.map((tourGuide) => {
                 return {
                   id: tourGuide.id,
                   value: (
                     <TourGuide
-                      pictureUrl={
-                        tourGuide.photo || "../images/default_user.jpg"
-                      }
+                      pictureUrl={tourGuide.photo}
                       position={
                         tourGuide.role === "guide" ? "Guide" : "Lead Guide"
                       }

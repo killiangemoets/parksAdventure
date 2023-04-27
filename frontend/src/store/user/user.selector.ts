@@ -10,3 +10,8 @@ export const selectEmail = createSelector(
   [selectUserReducer],
   (userSlice) => userSlice.email
 );
+
+export const selectUserId = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.id
+);
