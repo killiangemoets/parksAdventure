@@ -1,8 +1,9 @@
+import { stat } from "fs";
 import { UserDipatchTypes } from "./user.action";
 import { USER_ACTION_TYPES } from "./user.type";
 
 export type UserState = {
-  readonly email?: string;
+  readonly email?: string ;
   readonly firstname?: string;
   readonly lastname?: string;
   readonly photo?: string;
@@ -40,6 +41,8 @@ export const userReducer = (
         role: undefined,
         id: undefined,
       };
+    case USER_ACTION_TYPES.UPDATE_USER:
+      return {...state, ...action.payload}
     default:
       return state;
   }

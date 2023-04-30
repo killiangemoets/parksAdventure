@@ -101,7 +101,17 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.verifyEmail = catchAsync(async (req, res, next) => {
-  // 1) Get user based on the token
+
+  // 1) Verify that token is present
+  if(!req.params.token)
+  return next(
+    new AppError(
+      'token is missing',
+      500
+    )
+  );
+
+  // 2) Get user based on the token
   const hashedToken = crypto
     .createHash('sha256')
     .update(req.params.token)
@@ -132,7 +142,7 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     emailVerificationTokens: { $in: [hashedToken] },
   });
 
-  // 2) If there is no updated user return error
+  // 3) If there is no updated user return error
   if (!user)
     return next(new AppError('Token is invalid or has already been used', 400));
 
@@ -142,7 +152,7 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
   user.emailVerificationSessionToken = undefined;
   await user.save({ validateBeforeSave: false });
 
-  // 3) Send response
+  // 4) Send response
   if (emailVerificationSessionToken === decoded.id) {
     createSendToken(user, 200, res);
   } else {
@@ -234,7 +244,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   //   token = req.headers.authorization.split(' ')[1];
   // }
 
-  if (req.cookies.jwt)
+  // if (req.cookies.jwt)
     if (!token) {
       return next(
         new AppError('You are not logged in! Please log in to get access')

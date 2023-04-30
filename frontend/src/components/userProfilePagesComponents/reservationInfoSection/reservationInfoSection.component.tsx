@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import InfoIcon, {
   INFO_ICON_TYPE_CLASSES,
 } from "../../UIComponents/infoIcon/infoIcon.component";
@@ -14,8 +15,32 @@ import {
   ReservationInfoTitle,
   ReservationInfoSectionWrapper,
 } from "./reservationInfoSection.style";
+import { selectBookingDetails, selectTourAvailabilities, selectTourIsLoading, selectTourMeetingAddress } from "../../../store/tour/tour.selector";
+import { useEffect, useState } from "react";
+import { niceDatesRange, niceMonth, niceTime } from "../../../utils/formatting/formatDates";
+import compareDates from "../../../utils/comparison/compareDates";
+import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
 
 const ReservationInfoSection = () => {
+  const bookingDetails = useSelector(selectBookingDetails);
+  const availabilities = useSelector(selectTourAvailabilities);
+  const address = useSelector(selectTourMeetingAddress);
+  const isLoading = useSelector(selectTourIsLoading);
+  const [endDate, setEndDate] = useState<Date| undefined>(undefined);
+  const [time, setTime] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if(!bookingDetails) return;
+    let newEndDate = new Date(bookingDetails.date);
+    newEndDate.setDate(new Date(bookingDetails.date).getDate() + bookingDetails.tour.duration);
+    setEndDate(newEndDate)
+  }, [bookingDetails]);
+
+  useEffect(() => {
+    if(!bookingDetails || !availabilities) return;
+    const selectedAvailability = availabilities.find(availability => compareDates(availability.date, bookingDetails.date));
+    if(selectedAvailability) setTime(selectedAvailability.time);
+  }, [bookingDetails, availabilities]);
   return (
     <ReservationInfoSectionContainer>
       <ReservationInfoSectionWrapper>
@@ -27,20 +52,22 @@ const ReservationInfoSection = () => {
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />
             <InfoTitle>Date</InfoTitle>
-            <InfoContent>From June 30, 2022 to July 4, 2022</InfoContent>
+            <InfoContent>{!isLoading && endDate && bookingDetails ? niceDatesRange(bookingDetails.date, endDate) : ""}</InfoContent>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.time} />
             <InfoTitle>Starting Time</InfoTitle>
             <InfoContent>
-              June 30 at <span>9.00 am</span>
+              {!isLoading && bookingDetails && `${niceMonth(bookingDetails.date)} ${new Date(
+                  bookingDetails.date
+                ).getDate()} at `} <span>{time && niceTime(time)}</span>
             </InfoContent>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
             <InfoTitle>Address</InfoTitle>
             <InfoLink to="https://www.google.com">
-              Wallstreet 24, 13650 FL, United States
+              {!isLoading && address}
             </InfoLink>
           </Info>
         </InfoContainer>
@@ -48,23 +75,23 @@ const ReservationInfoSection = () => {
           <Title titleType={TITLE_TYPE_CLASSES.section}>Your Reservation</Title>
           <Info>
             <ReservationInfoTitle>Reservation Reference</ReservationInfoTitle>
-            <InfoContent>GYG32NV8RZG7</InfoContent>
+            <InfoContent>{bookingDetails?.orderNumber}</InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>PIN</ReservationInfoTitle>
-            <InfoContent>ykEYmg+&</InfoContent>
+            <InfoContent>{bookingDetails?.pin}</InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>Hiker</ReservationInfoTitle>
-            <InfoContent>Lucas Scott</InfoContent>
+            <InfoContent>{!isLoading && `${bookingDetails?.user.firstname} ${bookingDetails?.user.lastname}`}</InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>Number of hikers</ReservationInfoTitle>
-            <InfoContent>4 Adults and 2 Children (-12 years)</InfoContent>
+            <InfoContent>{!isLoading && niceGroupDetailsString(bookingDetails?.adults  || 0, bookingDetails?.kids  || 0)}</InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>Price</ReservationInfoTitle>
-            <InfoContent>489.90€</InfoContent>
+            <InfoContent>{!isLoading && `$${bookingDetails?.price}`}</InfoContent>
           </Info>
         </InfoContainer>
       </ReservationInfoSectionWrapper>

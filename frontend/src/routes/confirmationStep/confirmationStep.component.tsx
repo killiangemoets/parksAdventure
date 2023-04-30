@@ -1,5 +1,6 @@
-import Button from "../../UIComponents/button/button.component";
-import Title from "../../UIComponents/title/title.component";
+import { useSelector } from "react-redux";
+import Button from "../../components/UIComponents/button/button.component";
+import Title from "../../components/UIComponents/title/title.component";
 import {
   ConfirmationStepContactLink,
   ConfirmationStepContainer,
@@ -7,21 +8,25 @@ import {
   ConfirmationStepTextContent,
   ConfirmationStepTextElement,
 } from "./confirmationStep.style";
+import { selectUserReducer } from "../../store/user/user.selector";
+import { useNavigate } from "react-router-dom";
 
 const ConfirmationStep = () => {
+  const user = useSelector(selectUserReducer);
+  const navigate = useNavigate()
   return (
     <ConfirmationStepContainer>
-      <Title>Thank your for order Lucas!</Title>
+      <Title>{`Thank your for order ${user.firstname}!`}</Title>
       <ConfirmationStepTextContent>
         <ConfirmationStepTextElement>
           An order confirmation email has been sent to{" "}
-          <span>lucas.scott@gmail.com</span>.
+          <span>{user.email}</span>.
         </ConfirmationStepTextElement>
         <ConfirmationStepTextElement>
           We are looking forward to meeting you on the hike.
         </ConfirmationStepTextElement>
       </ConfirmationStepTextContent>
-      <Button>View Order Confirmation</Button>
+      <Button onClick={() => {navigate("/profile/bookings")}}>View Booking Confirmation</Button>
       <ConfirmationStepHelpSection>
         Need help?{" "}
         <ConfirmationStepContactLink to={"/contact"}>

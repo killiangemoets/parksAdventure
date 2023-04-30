@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { login } from "../../api/authentication-requests";
-import { redirect, useNavigate, useSearchParams } from "react-router-dom";
+import {  useNavigate, useSearchParams } from "react-router-dom";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,

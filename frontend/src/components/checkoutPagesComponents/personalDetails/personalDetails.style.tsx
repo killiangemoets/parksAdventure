@@ -26,3 +26,10 @@ export const ContactInfo = styled.p`
   font-size: 1.6rem;
   letter-spacing: 1px;
 `;
+
+export const ModalFooterNote = styled.p`
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.4rem;
+  letter-spacing: 0.2px;
+`;

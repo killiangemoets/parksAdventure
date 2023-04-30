@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Outlet } from "react-router-dom";
+import { FC, useEffect } from "react";
+import { Outlet, useNavigate } from "react-router-dom";
 import { CHECKOUT_STATES, TCheckoutState } from "../../../types/booking";
 import {
   CheckoutContent,
@@ -11,6 +11,8 @@ import {
   CheckoutStepNumber,
   CheckoutStepTitle,
 } from "./checkoutLine.style";
+import { useSelector } from "react-redux";
+import { selectUserId } from "../../../store/user/user.selector";
 
 type CheckoutStepProps = {
   number: number;
@@ -38,6 +40,14 @@ type CheckoutLineProps = {
 };
 
 const CheckoutLine: FC<CheckoutLineProps> = ({ step = 1 }) => {
+  const navigate = useNavigate();
+  const userId = useSelector(selectUserId);
+
+  useEffect(() => {
+    if (!userId) navigate("/login?uri=/checkout/step2");
+  }, [userId])
+
+  
   return (
     <CheckoutLineContainer>
       <CheckoutLineElement>
@@ -83,7 +93,7 @@ const CheckoutLine: FC<CheckoutLineProps> = ({ step = 1 }) => {
           state={
             step > 4
               ? CHECKOUT_STATES.done
-              : step < 3
+              : step < 4
               ? CHECKOUT_STATES.to_do
               : CHECKOUT_STATES.in_progress
           }

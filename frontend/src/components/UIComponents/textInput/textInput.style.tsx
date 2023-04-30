@@ -14,6 +14,7 @@ export const Label = styled.label`
   margin-left: 0.2rem;
 `;
 
+
 export const TextInputEl = styled(Input)`
   box-shadow: none;
   display: block;
@@ -39,3 +40,8 @@ export const TextInputEl = styled(Input)`
     border-bottom: 3px solid #f43535;
   }
 `;
+
+export const TextNoEditableInputEl = styled(TextInputEl)`
+cursor: not-allowed;
+background-color: #e2e1e1;
+  `

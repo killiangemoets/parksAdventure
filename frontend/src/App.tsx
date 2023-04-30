@@ -24,10 +24,12 @@ import { getUser } from "./api/authentication-requests";
 import { removeUser, setUser } from "./store/user/user.action";
 import Cart from "./routes/cart/cart.component";
 import CheckoutLine from "./components/checkoutPagesComponents/checkoutLine/checkoutLine.component";
-import OverviewStep from "./components/checkoutPagesComponents/overviewStep/overviewStep.component";
+import OverviewStep from "./routes/overviewStep/overviewStep.component";
 import { AppDispatch } from "./store/store";
 import { useDispatch } from "react-redux";
-import ConfirmationStep from "./components/checkoutPagesComponents/confirmationStep/confirmationStep.component";
+import ConfirmationStep from "./routes/confirmationStep/confirmationStep.component";
+import ValidationStep from "./routes/validationStep/validationStep.component";
+import NotFound from "./components/notFoundComponent/notFound.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -35,6 +37,7 @@ function App() {
   useEffect(() => {
     const handleIsLoggedIn = async () => {
       const response = await getUser();
+      // console.log("USER", response);
       if (response.user) {
         const {
           email,
@@ -68,12 +71,15 @@ function App() {
       handleIsLoggedIn();
   }, []);
 
+
   return (
     <Routes>
       <Route path="/" element={<NavbarAndFooter />}>
         <Route index element={<Home />} />
+
         <Route path="alltours" element={<AllTours />} />
         <Route path="tour/:slug" element={<Tour />} />
+
         <Route path="signup" element={<Signup />} />
         <Route
           path="signup/email-verification"
@@ -83,17 +89,26 @@ function App() {
           path="signup/email-confirmation/:token"
           element={<EmailConfirmation />}
         />
+
         <Route path="login" element={<Login />} />
         <Route path="login/forgot-password" element={<ForgotPassword />} />
         <Route path="login/reset-password/:token" element={<ResetPassword />} />
+
         <Route path="cart" element={<Cart />} />
+
         <Route path="checkout/" element={<CheckoutLine step={2} />}>
+          <Route path="step1" element={<Navigate to="/checkout/step2" />} />
           <Route path="step2" element={<OverviewStep />} />
+        </Route>
+        <Route path="checkout/" element={<CheckoutLine step={3} />}>
+          <Route path="step3/:token" element={<ValidationStep />} />
         </Route>
         <Route path="checkout/" element={<CheckoutLine step={4} />}>
           <Route path="step4" element={<ConfirmationStep />} />
         </Route>
       </Route>
+
+
       <Route path="profile/" element={<UserProfile />}>
         <Route index element={<Navigate to="/profile/wishlist" />} />
         <Route path="wishlist" element={<UserWishList />} />
@@ -102,11 +117,16 @@ function App() {
         <Route path="add-tour" element={<AddTour />} />
         <Route path="bookings/">
           <Route index element={<UserBookings />} />
-          <Route path="details" element={<UserBookingDetails />} />
+          <Route path="details/:id" element={<UserBookingDetails />} />
         </Route>
-        <Route path="*" element={<Navigate to="/" />}></Route>
+        {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
       </Route>
-      <Route path="*" element={<Navigate to="/" />}></Route>
+
+      {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
+
+      <Route path="/" element={<NavbarAndFooter />}>
+        <Route path="*" element={<NotFound/>}></Route>
+      </Route>
     </Routes>
   );
 }

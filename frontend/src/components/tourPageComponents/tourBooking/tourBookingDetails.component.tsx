@@ -13,6 +13,7 @@ import calculateTotalPrice from "../../../utils/dataManipulation/calculateTotalP
 import {
   niceDatesRange,
   niceMonth,
+  niceTime,
 } from "../../../utils/formatting/formatDates";
 import Button, {
   BUTTON_TYPE_CLASSES,
@@ -40,6 +41,7 @@ import {
   TourBookingTitle,
   TourBookingTotal,
 } from "./tourBookingDetails.style";
+import { selectUserId } from "../../../store/user/user.selector";
 
 type TourBookingDetailsProps = {
   availability: TAvailability;
@@ -50,12 +52,13 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
   availability,
   group,
 }) => {
+  const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+  const userId = useSelector(selectUserId);
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
   const [endDate, setEndDate] = useState<Date>(new Date(Date.now()));
   const [success, setSuccess] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (tour && availability) {
@@ -84,6 +87,21 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
     }, 2000);
   };
 
+  const handleBookNow = () => {
+    if (!tour) return;
+    setSuccess(true);
+    const newItem: TItem = {
+      tourId: tour._id,
+      startingDate: availability.date,
+      adults: group[0].value,
+      children: group[1].value,
+    };
+    console.log({ newItem });
+    dispatch(addItem(newItem));
+    if (userId) return navigate("/checkout/step2");
+    navigate("/login?uri=/checkout/step2");
+  }
+
   return (
     <TourBookingDetailsContainer>
       {!isLoading && availability && (
@@ -97,7 +115,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
                 {`${niceMonth(availability.date)} ${new Date(
                   availability.date
                 ).getDate()} at `}
-                <span>9.00 am</span>
+                <span>{niceTime(availability.time)}</span>
               </InfoContent>
             </Info>
             <Info>
@@ -166,7 +184,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
               </TotalPrice>
             </TourBookingTotal>
             <TourBookingButtons>
-              <Button buttonType={BUTTON_TYPE_CLASSES.cancel}>Book now</Button>
+              <Button buttonType={BUTTON_TYPE_CLASSES.cancel} onClick={() => {handleBookNow()}}>Book now</Button>
               <FormButton
                 loading={false}
                 success={success}

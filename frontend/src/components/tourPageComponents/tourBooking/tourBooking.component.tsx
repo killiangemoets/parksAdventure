@@ -107,7 +107,7 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
         tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity
           ? `The maximum group size for this tour is ${tour?.maxGroupSizeCapacity} people`
           : spotsLeft
-          ? `There is only ${spotsLeft} ${spotsString} left for this date`
+          ? `There is only ${spotsLeft > 0 ? spotsLeft : 0} ${spotsString} left for this date`
           : "There is no spot left for this date"
       );
       setTimeout(function () {
@@ -142,7 +142,7 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
       const spotsString = spotsLeft > 1 ? "spots" : "spot";
       setAlertMessage(
         spotsLeft
-          ? `There is only ${spotsLeft} ${spotsString} left for this date`
+          ? `There is only ${spotsLeft > 0 ? spotsLeft : 0} ${spotsString} left for this date`
           : `There is no spot left for this date`
       );
       setTimeout(function () {

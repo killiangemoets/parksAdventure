@@ -39,3 +39,5 @@ export const niceFullDate = (dateToFormat: string | Date) => {
 export const niceDatesRange = (startingDate: Date, endDate: Date) => {
   return `From ${niceFullDate(startingDate)} to ${niceFullDate(endDate)}`;
 };
+
+export const niceTime = (time: string) => time.replace('-', ':');

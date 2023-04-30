@@ -13,25 +13,62 @@ import {
   TitleWrapper,
   UserBookingDetailsContainer,
 } from "./userBookingDetails.style";
+import { useDispatch, useSelector } from "react-redux";
+import { selectRecommendations, selectTour, selectTourIsLoading } from "../../store/tour/tour.selector";
+import { useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
+import { fetchTourBookingAsync } from "../../store/tour/tour.action";
+import { AppDispatch } from "../../store/store";
+
+type UserBookingDetailsParams = {
+  id: string;
+};
 
 const UserBookingDetails = () => {
+  const tour = useSelector(selectTour);
+  const isLoading = useSelector(selectTourIsLoading);
+  const dispatch: AppDispatch = useDispatch();
+  const { id } = useParams<
+  keyof UserBookingDetailsParams
+>() as UserBookingDetailsParams;
+  const reviewsRef = useRef<HTMLDivElement | null>(null);
+  const recommendations = useSelector(selectRecommendations);
+
+  useEffect(() => {
+    dispatch(fetchTourBookingAsync(id));
+  }, []);
+
+  const handleScrollToReviews = () => {
+    window.scrollTo({
+      top: reviewsRef.current ? reviewsRef.current.offsetTop - 80 : 0,
+      behavior: "smooth",
+    });
+  };
+
+
   return (
     <UserBookingDetailsContainer>
       <TitleContainer>
         <TitleWrapper>
-          <Title titleType={TITLE_TYPE_CLASSES.main}>The Forest Hiker</Title>
-          <StarsRating linkOnReviews={true} rating={3.9} numRatings={12} />
+          <Title titleType={TITLE_TYPE_CLASSES.main}>
+            {!isLoading && tour?.name}
+          </Title>
+          {!isLoading && (
+            <StarsRating
+              linkOnReviews={true}
+              handleLinkTo={handleScrollToReviews}
+              rating={tour?.ratingsAverage || 0}
+              numRatings={tour?.ratingsQuantity || 0}
+            />
+          )}
         </TitleWrapper>
       </TitleContainer>
-      {/* <StarsRatingContainer>
-        <StarsRatingWrapper></StarsRatingWrapper>
-      </StarsRatingContainer> */}
       <ReservationInfoSection />
       <TourGallery />
       <TourInfos />
       <TourItinerary />
-      <TourReviews />
-      <TourRecommendations tours={[]} />
+      <TourReviews forwardRef={reviewsRef} />
+      <TourRecommendations tours={recommendations || []} />
     </UserBookingDetailsContainer>
   );
 };

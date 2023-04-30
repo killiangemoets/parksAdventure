@@ -1,4 +1,4 @@
-import { TItem, TItemWithTourInfo } from "../../types/booking";
+import { TItemWithTourInfo } from "../../types/booking";
 
 const calculateTotalPrice = (
   adults: number,

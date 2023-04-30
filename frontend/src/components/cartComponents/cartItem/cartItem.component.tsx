@@ -46,9 +46,11 @@ import {
   Rebook,
   CartItemEditButton,
 } from "./cartItem.style";
+import { Link } from "react-router-dom";
 
 type CartItemCommonProps = {
   tour: TTourItem;
+  editable?: boolean;
   startingDate: Date;
   adults: number;
   children: number;
@@ -67,6 +69,7 @@ type CartItemConditionalProps =
 
 const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
   soldout = false,
+  editable = true,
   tour,
   startingDate,
   kidPrice,
@@ -253,20 +256,24 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
   return (
     <>
       <CartItemContainer>
+        <Link to={`/tour/${tour.slug}`}>
         <CartItemPicture>
           <img src={tour.imageCover} alt="tour cover" />
         </CartItemPicture>
+        </Link>
         <CartItemContent>
           <CartItemHeader>
+          <Link to={`/tour/${tour.slug}`}>
             <CartItemTitle>{tour.name}</CartItemTitle>
-            <Button
+          </Link>
+            {editable && <Button
               buttonType={BUTTON_TYPE_CLASSES.empty}
               onClick={() => {
                 handleDelete();
               }}
             >
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
-            </Button>
+            </Button>}
           </CartItemHeader>
           <CartItemBody>
             <CartItemInfoList>
@@ -288,7 +295,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                       {niceDatesRange(startingDate, endDate)}
                     </CartItemInfoText>
                   </CartItemInfo>
-                  <Button
+                  {editable && <Button
                     buttonType={BUTTON_TYPE_CLASSES.empty}
                     onClick={() => {
                       handleEditItem();
@@ -299,7 +306,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                     ) : (
                       <Rebook>Make a new reservation for this tour</Rebook>
                     )}
-                  </Button>
+                  </Button>}
                 </>
               ) : (
                 <>

@@ -6,16 +6,16 @@ import { CheckIcon, FormButtonContainer } from "./formButton.style";
 type FormButtonProps = {
   buttonType?: BUTTON_TYPE_CLASSES;
   children: ReactNode | string;
-  loading: boolean;
-  success: boolean;
+  loading?: boolean;
+  success?: boolean;
   handleClick?: () => void;
 };
 
 const FormButton: FC<FormButtonProps> = ({
   buttonType,
   children,
-  loading,
-  success,
+  loading = false,
+  success = false,
   handleClick,
 }) => {
   return (

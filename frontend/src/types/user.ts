@@ -9,6 +9,14 @@ export type TUser = {
   id: string;
 };
 
+export type UpdateUserData = {
+  firstname?: string;
+  lastname?: string;
+  photo?: string;
+  phoneNumber?: string;
+  birthDate?: Date;
+};
+
 export type LoginData = {
   email: string;
   password: string;
@@ -28,9 +36,8 @@ export type PasswordsData = {
   logout: boolean;
 };
 
-export type CheckoutUserData = {
-  firstname: string;
-  lastname: string;
-  email: string;
-  phoneNumber: string;
+export type CheckoutInputsUserData = {
+  firstname?: string;
+  lastname?: string;
+  phoneNumber?: string;
 };

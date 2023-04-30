@@ -52,4 +52,8 @@ export const TitleWrapper = styled.div`
   gap: 1.8rem;
   width: 100%;
   max-width: 130rem;
+  min-height: 9rem;
+  h1 {
+    line-height: 3.6rem;
+  }
 `;

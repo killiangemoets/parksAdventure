@@ -49,6 +49,7 @@ export const CartCheckout = styled.div`
 `;
 
 export const CartEmpty = styled.div`
+  width: 100%;
   min-height: 24rem;
   display: flex;
   flex-direction: column;

@@ -13,6 +13,7 @@ export const CheckoutStepContainer = styled.div`
   justify-content: center;
   gap: 1rem;
 `;
+
 export const CheckoutStepCircle = styled.div<StateProp>`
   display: flex;
   align-items: center;

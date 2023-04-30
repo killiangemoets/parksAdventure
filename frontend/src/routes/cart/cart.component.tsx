@@ -51,7 +51,6 @@ const Cart = () => {
     const handleGetTourItems = async () => {
       setIsLoading(true);
       const tourIds = items.map((item) => item.tourId);
-      // if(tourIds){
       const response = await getTourItems(tourIds);
       if (response.status === "success") {
         const toursList: TTourItem[] = response.data.data;
@@ -186,13 +185,14 @@ const Cart = () => {
                   <CheckoutCard
                     numberOfItems={itemsWithTourInfo.length}
                     totalPrice={calculateBasketPrice(itemsWithTourInfo)}
+                    items={itemsWithTourInfo}
                   />
                 </CartCheckout>
               )}
             </RightColumn>
           )}
         </CartBody>
-        {recommendations.length && (
+        {recommendations.length > 0 && (
           <TourRecommendations tours={recommendations} />
         )}
       </CartWrapper>

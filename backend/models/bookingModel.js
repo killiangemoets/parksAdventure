@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const AppError = require('./../utils/appError');
+const Tour = require('./tourModel');
 
 const bookingSchema = new mongoose.Schema({
   tour: {
@@ -45,11 +46,39 @@ const bookingSchema = new mongoose.Schema({
     type: Date,
     default: Date.now(),
   },
-  paid: {
-    type: Boolean,
-    default: true,
+  status: {
+    type: String,
+    required: [true, 'booking must have a status.'],
+    enum: {
+      values: ['pending', 'paid'],
+      message: 'Status is either pending or paid',
+    },
+    selet: false,
   },
+  cartId: {
+    type: String,
+  },
+  pin: {
+    type: String,
+  },
+  orderNumber: {
+    type: String,
+  },
+  paymentToken: {
+    type: String,
+    select: false,
+  },
+  removeAt: {
+    type: Date,
+    required: false,
+  }
+},
+{
+  toJSON: { virtuals: true },
+  toObject: { virtuals: true },
 });
+
+bookingSchema.index({ "removeAt": 1 }, { expireAfterSeconds: 0 });
 
 bookingSchema.pre('save', function (next) {
   if (!this.kidPrice) this.kidPrice = this.price;
@@ -65,10 +94,10 @@ bookingSchema.pre('save', function (next) {
 bookingSchema.pre(/^find/, function (next) {
   this.populate('user').populate({
     path: 'tour',
-    select: 'name',
+    select: 'name duration imageCover',
   });
   next();
-});
+}); 
 
 const Booking = mongoose.model('Booking', bookingSchema);
 

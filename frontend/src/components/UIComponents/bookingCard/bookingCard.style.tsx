@@ -72,6 +72,7 @@ export const ConfirmationText = styled.p`
 `;
 
 export const BookingText = styled.p`
+  text-transform: capitalize;
   font-size: 1.2rem;
   font-weight: 400;
   letter-spacing: 0.4px;

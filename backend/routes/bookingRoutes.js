@@ -7,14 +7,24 @@ const router = express.Router();
 
 router.use(authController.protect);
 
-router.get(
-  '/checkout-session/:tourId/:date/:numAdults/:numKids',
-  bookingController.getCheckoutSession
+router.post(
+  '/payment-session',
+  bookingController.checkAvailabilities,
+  bookingController.getPaymentSession,
+  bookingController.saveCheckoutItems
 );
+
+router.delete('/unsave-checkout-items', bookingController.unsaveCheckoutItems);
+
+router.patch('/validate-order/:token', bookingController.validateOrder);
 
 router
   .route('/mine')
   .get(bookingController.getMe, bookingController.getAllBookings);
+
+router
+  .route('/mine/:id')
+  .get(bookingController.getMe, bookingController.getBookingDetails);
 
 router
   .route('/')

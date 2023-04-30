@@ -1,15 +1,17 @@
 import { FC, InputHTMLAttributes } from "react";
-import { Label, TextInputContainer, TextInputEl } from "./textInput.style";
+import { Label, TextInputContainer, TextInputEl, TextNoEditableInputEl } from "./textInput.style";
 
 export type TextInputProps = {
   label: string;
+  editable?: boolean
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const TextInput: FC<TextInputProps> = ({ label, ...otherInputProps }) => {
+const TextInput: FC<TextInputProps> = ({ label, editable = true , ...otherInputProps}) => {
   return (
     <TextInputContainer>
       <Label>{label}</Label>
-      <TextInputEl {...otherInputProps} />
+      {editable ? <TextInputEl {...otherInputProps} /> : 
+      <TextNoEditableInputEl {...otherInputProps} disabled />}
     </TextInputContainer>
   );
 };

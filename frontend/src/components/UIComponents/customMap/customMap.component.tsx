@@ -98,7 +98,6 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
 
   useEffect(() => {
     if (type === MAP_TYPE_CLASSES.tourItinerary) {
-      console.log("SET VIEW STATE", locations);
       setViewState({
         longitude:
           locations && locations.length > 0

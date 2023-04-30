@@ -48,3 +48,36 @@ export enum CHECKOUT_STATES {
   in_progress = "in progress",
   to_do = "to do",
 }
+
+export type BookingTourData = {
+  currentAvailabilities: TAvailability;
+  id: string;
+  name: string;
+  duration: number;
+  imageCover: string;
+  _id: string;
+}
+
+export type BookingUserData = {
+  email: string;
+  firstname: string;
+  lastname: string;
+  phoneNumber: string;
+  role: string;
+  _v: number;
+  _id: string;
+}
+
+export type TBooking = {
+  tour: BookingTourData;
+  user: BookingUserData;
+  date: Date;
+  price: number;
+  kidPrice?: number;
+  adults?: number;
+  kids?: number;
+  totalPrice: number;
+  orderNumber: number;
+  pin: number;
+  _id: string;
+}

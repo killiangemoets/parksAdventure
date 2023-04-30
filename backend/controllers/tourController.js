@@ -7,6 +7,9 @@ const factory = require('./handlerFactory');
 const uploadToCloudinary = require('./../utils/uploadToCloudinary');
 const TourAPIFeatures = require('../utils/tourApiFeatures');
 const APIFeaturesCopy = require('../utils/apiFeatureCopy');
+const Booking = require('../models/bookingModel');
+const formating = require('./../utils/formating');
+
 
 // UPLOAD IMAGES
 const multerStorage = multer.memoryStorage();
@@ -117,6 +120,30 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     .createAggregation();
   const doc = await featuresWithPagination.aggregation;
 
+  for (const tour of doc[0].data){
+    if(tour.currentAvailabilities){ 
+      const bookings = await Booking.aggregate([
+        { $match: {tour: tour._id}},
+        { $group: { 
+          _id:  "$date",
+          sum: {
+            $sum: {
+              $sum: ["$adults", "$kids"]
+            }
+          },
+          count: { $sum: 1}
+        }}
+      ])
+      for(availability of tour.currentAvailabilities){
+        const bookingData = bookings.find(booking => formating.compareDates(booking._id, availability.date));
+        const currentGroupSize = bookingData ? bookingData.sum : 0;
+        availability.currentGroupSize =  currentGroupSize;
+        // if(availability.currentGroupSize === availability.maxGroupSize) availability = undefined;
+      }
+    }
+  }
+
+
   // if(req.recommendations === )
   // const featuresWithPagination = new APIFeaturesCopy(Tour, req.query, next)
   //   .filter()
@@ -137,7 +164,13 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
         },
       };
     }
-    recommendations = await Tour.find(queryObj)
+    recommendations = await Tour.find(queryObj).populate({
+      path: 'bookings',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname photo',
+      },
+    })
       .sort('-popularityIndex -ratingsAvarage')
       .limit(3);
   }
@@ -172,6 +205,12 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
       path: 'user',
       select: 'firstname lastname photo',
     },
+  }).populate({
+    path: 'bookings',
+    populate: {
+      path: 'user',
+      select: 'firstname lastname photo',
+    },
   });
 
   if (!tour) {
@@ -181,6 +220,12 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     // categories: tour.categories[0],
+  }).populate({
+    path: 'bookings',
+    populate: {
+      path: 'user',
+      select: 'firstname lastname photo',
+    },
   })
     .sort('-popularityIndex -ratingsAvarage')
     .limit(3);

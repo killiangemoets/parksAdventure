@@ -189,7 +189,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
           date: selectedDate.format("YYYY-MM-DD"),
           price: modalInfos.price || 0,
           kidPrice: modalInfos.kidPrice,
-          time: modalInfos.startingTime?.format("hh-mm") || "",
+          time: modalInfos.startingTime?.format("hh-mm a") || "",
           groupSize: modalInfos.groupSize || 0,
         };
       }

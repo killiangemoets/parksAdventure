@@ -14,15 +14,13 @@ import {
   SelectDateFooterText2,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
-import {
-  selectTourAvailabilities,
-  // selectTourCurrentAvailabilities,
-} from "../../../store/tour/tour.selector";
+import {selectTourCurrentAvailabilities } from "../../../store/tour/tour.selector";
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
 import useDatesFromAvailabilities from "../../../hooks/datesFromAvailabilities";
 import useLabelFromGroupInfo from "../../../hooks/labelFromGroupInfo";
+import { cp } from "fs";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;
@@ -39,8 +37,8 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   handleChangeGroup,
   handleSeeDetails,
 }) => {
-  // const availabilities = useSelector(selectTourCurrentAvailabilities);
-  const availabilities = useSelector(selectTourAvailabilities);
+
+  const availabilities = useSelector(selectTourCurrentAvailabilities);
 
   const [groupError, setGroupError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);

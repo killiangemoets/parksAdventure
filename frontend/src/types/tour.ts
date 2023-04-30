@@ -1,6 +1,7 @@
 import { UploadFile } from "antd";
 import { TCoordinates } from "./map";
 import { TUser } from "./user";
+import { TBooking } from "./booking";
 
 export type TCreateStop = {
   latitude: number;
@@ -23,14 +24,17 @@ export type TStop = {
   _id: string;
 };
 
-export type TAvailability = {
+export type TAvailabilityWithoutCurrentGroup = {
   date: Date;
   price: number;
   kidPrice?: number;
   time: string;
   maxGroupSize: number;
-  currentGroupSize: number;
 };
+
+export type TAvailability = TAvailabilityWithoutCurrentGroup & {
+  currentGroupSize: number;
+}
 
 export type TCategory =
   | "mountain"
@@ -155,6 +159,7 @@ export enum TOUR_DATA {
   popularityIndex = "popularityIndex",
   reviews = "reviews",
   recommendations = "recommendations",
+  booking = "booking",
   lowerPrice = "lowerPrice",
   firstAvailability = "firstAvailability",
   minGroupSizeCapacity = "minGroupSizeCapacity",
@@ -178,13 +183,14 @@ export type TourData = {
   [TOUR_DATA.startLocation]: TStop;
   [TOUR_DATA.locations]?: TStop[];
   [TOUR_DATA.guides]?: TUser[];
-  [TOUR_DATA.availabilities]: TAvailability[];
+  [TOUR_DATA.availabilities]: TAvailabilityWithoutCurrentGroup[];
   [TOUR_DATA.currentAvailabilities]: TAvailability[];
   [TOUR_DATA.additionalInfo]?: string[];
   [TOUR_DATA.popularityIndex]: number;
   [TOUR_DATA.reviews]: TReview[];
   [TOUR_DATA.id]: string;
   [TOUR_DATA.recommendations]?: TourData[];
+  [TOUR_DATA.booking]?: TBooking;
   [TOUR_DATA.lowerPrice]: number;
   [TOUR_DATA.firstAvailability]: Date;
   [TOUR_DATA.minGroupSizeCapacity]: number;

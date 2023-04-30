@@ -23,6 +23,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  min-width: 40rem;
   /* margin-left: 4.8rem; */
 
   h2 {
@@ -52,6 +53,7 @@ export const ReservationInfoTitle = styled(InfoTitle)`
 `;
 
 export const InfoContent = styled.p`
+  text-transform: capitalize;
   font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 1px;

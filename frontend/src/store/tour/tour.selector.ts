@@ -21,9 +21,9 @@ export const selectRecommendations = createSelector(
   (tourSlice) => tourSlice.tour?.recommendations
 );
 
-export const selectTourAvailabilities = createSelector(
+export const selectBookingDetails = createSelector(
   [selectTourReducer],
-  (tourSlice) => tourSlice.tour?.availabilities
+  (tourSlice) => tourSlice.tour?.booking
 );
 
 export const selectTourCurrentAvailabilities = createSelector(
@@ -31,7 +31,19 @@ export const selectTourCurrentAvailabilities = createSelector(
   (tourSlice) => tourSlice.tour?.currentAvailabilities
 );
 
+export const selectTourAvailabilities = createSelector(
+  [selectTourReducer],
+  (tourSlice) => tourSlice.tour?.availabilities
+);
+
+export const selectTourMeetingAddress = createSelector(
+  [selectTourReducer],
+  (tourSlice) => tourSlice.tour?.meetingAddress
+);
+
 export const selectTourError = createSelector(
   [selectTourReducer],
   (tourSlice) => tourSlice.error
 );
+
+

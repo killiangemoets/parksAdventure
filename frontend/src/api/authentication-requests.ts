@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginData, SignUpData } from "../types/user";
+import { LoginData, SignUpData, UpdateUserData } from "../types/user";
 import axiosInstance from "../utils/axios/axios-instance";
 
 export const login = async (loginData: LoginData) => {
@@ -114,6 +114,18 @@ export const logout = async () => {
 export const getUser = async () => {
   try {
     const response = await axiosInstance.get("/users/isloggedin");
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const updateMe = async (userData: UpdateUserData) => {
+  try {
+    const response = await axiosInstance.patch("/users/updateMe", userData);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

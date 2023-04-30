@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
+const Booking = require('./bookingModel');
+const formating = require('./../utils/formating');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -166,10 +168,10 @@ const tourSchema = new mongoose.Schema(
             message: `Group capacity ({VALUE}) must be hight than 0`,
           },
         },
-        currentGroupSize: {
-          type: Number,
-          default: 0,
-        },
+        // currentGroupSize: {
+        //   type: Number,
+        //   default: 0,
+        // },
       },
     ],
     additionalInfo: {
@@ -207,13 +209,47 @@ tourSchema.index({
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
-tourSchema.virtual('currentAvailabilities').get(function () {
-  return this.availabilities
-    ? this.availabilities.filter(
-        (availability) => new Date(availability.date) >= new Date(Date.now())
-      )
-    : [];
+// Add the tour reviews to the query
+tourSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'tour',
+  localField: '_id',
 });
+
+// Add the tour reviews to the query
+tourSchema.virtual('bookings', {
+  ref: 'Booking',
+  foreignField: 'tour',
+  localField: '_id',
+});
+
+
+tourSchema.virtual('currentAvailabilities').get(function () {
+  const currentAvailabilitiesWithCurrentGroup = [];
+  if(this.availabilities && this.bookings){
+
+    this.availabilities.forEach(availability => {
+
+      if(!(new Date(availability.date) >= new Date(Date.now()))) return;
+
+      const currentGroupSize = this.bookings.reduce((acc, booking) => {
+        if(!formating.compareDates(booking.date, availability.date)) return acc;
+        return acc + (booking.adults || 0) + (booking.kids || 0);
+      }, 0);
+
+      currentAvailabilitiesWithCurrentGroup.push({date: availability.date, kidPrice: availability.kidPrice, maxGroupSize: availability.maxGroupSize, price: availability.price, time: availability.time, _id: availability._id, currentGroupSize});
+    })
+  }
+
+  return currentAvailabilitiesWithCurrentGroup;
+
+  // return this.availabilities
+  //   ? this.availabilities.filter(
+  //       (availability) => new Date(availability.date) >= new Date(Date.now())
+  //     )
+  //   : [];
+});
+
 tourSchema.virtual('firstAvailability').get(function () {
   return this.currentAvailabilities.sort(
     (a, b) => new Date(a.date) - new Date(b.date)
@@ -233,12 +269,6 @@ tourSchema.virtual('maxGroupSizeCapacity').get(function () {
   )[0]?.maxGroupSize;
 });
 
-// Add the tour reviews to the query
-tourSchema.virtual('reviews', {
-  ref: 'Review',
-  foreignField: 'tour',
-  localField: '_id',
-});
 
 // PRE SAVE MIDDLEWARES //
 // Pre-save hook: runs before .save() and .create()
