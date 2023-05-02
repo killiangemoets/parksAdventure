@@ -141,7 +141,7 @@ const Dropdown: FC<DropdownCommonProps & DropdownConditionalProps> = ({
       >
         <DropdownButtonLeft>
           {children}
-          {current && <p>{current.value}</p>}
+          {current && current.value}
         </DropdownButtonLeft>
         <DropdownIcon />
       </Button>

@@ -24,7 +24,7 @@ router
 
 router
   .route('/mine/:id')
-  .get(bookingController.getMe, bookingController.getBookingDetails);
+  .get(bookingController.getBookingDetails);
 
 router
   .route('/')

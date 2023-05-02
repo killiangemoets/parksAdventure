@@ -2,6 +2,7 @@ import { UploadFile } from "antd";
 import { TCoordinates } from "./map";
 import { TUser } from "./user";
 import { TBooking } from "./booking";
+import { TReview } from "./review";
 
 export type TCreateStop = {
   latitude: number;
@@ -96,14 +97,6 @@ export type TDifficultyOption =
       value: "Select a difficulty";
     };
 
-export type TReview = {
-  createdAt: Date;
-  id: string;
-  rating: number;
-  review: string;
-  tour: string;
-  user: { firstname: string; lastname: string; photo?: string; _id: string };
-};
 
 export enum CREATE_TOUR_DATA {
   name = "name",

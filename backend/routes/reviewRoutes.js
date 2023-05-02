@@ -20,13 +20,18 @@ router
   .post(
     authController.restrictTo('user'),
     reviewController.setTourAndUserId,
+    reviewController.checkIfTourIsCompleted,
     reviewController.createReview
   );
 
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(authController.restrictTo('user'), reviewController.updateReview)
+  .patch(
+    authController.restrictTo('user'),
+    reviewController.setEdited,
+    reviewController.updateReview
+  )
   .delete(
     authController.restrictTo('user', 'admin'),
     reviewController.deleteReview

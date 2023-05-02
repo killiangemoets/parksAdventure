@@ -1,6 +1,8 @@
+const Booking = require('../models/bookingModel');
 const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
+const AppError = require('./../utils/appError');
 
 exports.setTourAndUserId = (req, res, next) => {
   // Allow nested routes
@@ -11,8 +13,36 @@ exports.setTourAndUserId = (req, res, next) => {
   next();
 };
 
+exports.checkIfTourIsCompleted = catchAsync(async (req, res, next) => {
+  const bookings = await Booking.find({
+    tour: req.body.tour,
+    user: req.body.user,
+  });
+
+  const bookingCompleted = bookings.find((booking) => {
+    let endDate = new Date(booking.date);
+    endDate.setDate(new Date(booking.date).getDate() + booking.tour.duration);
+    return endDate < new Date(Date.now());
+  });
+
+  if (!bookingCompleted)
+    return next(
+      new AppError(
+        'Reviews can only be left once the activity is completed.',
+        500
+      )
+    );
+
+  next();
+});
+
 exports.getMe = catchAsync(async (req, res, next) => {
   req.query.user = req.user.id;
+  next();
+});
+
+exports.setEdited = catchAsync(async (req, res, next) => {
+  req.body.edited = true;
   next();
 });
 

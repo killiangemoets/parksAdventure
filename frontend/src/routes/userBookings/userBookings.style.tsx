@@ -26,7 +26,7 @@ export const BookingCards = styled.div`
 `;
 
 export const UserBookingsSpinner = styled.div`
-  margin-top: 8rem;
+  margin-top: 12rem;
 `;
 
 export const UserBookingsErrorMessage = styled.div`

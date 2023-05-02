@@ -13,20 +13,26 @@ import {
   ConfirmationText,
 } from "./bookingCard.style";
 import { TBooking } from "../../../types/booking";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { niceDatesRange } from "../../../utils/formatting/formatDates";
 import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
-
+import ReviewModal from "../reviewModal/reviewModal.component";
 
 type BookingCardProps = {
   booking: TBooking;
   allowReview?: boolean;
-}
+};
 
-const BookingCard: FC<BookingCardProps> = ({booking, allowReview = true}) => {
+const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
   const navigate = useNavigate();
   let endDate = new Date(booking.date);
   endDate.setDate(new Date(booking.date).getDate() + booking.tour.duration);
+
+  const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
+
+  const handleCloseReviewModal = () => {
+    setReviewModalOpen(false);
+  };
 
   return (
     <BookingCardContainer>
@@ -45,17 +51,37 @@ const BookingCard: FC<BookingCardProps> = ({booking, allowReview = true}) => {
             <span>{booking.pin}</span>
           </BookingText>
           <BookingText>{niceDatesRange(booking.date, endDate)}</BookingText>
-          <BookingText>{niceGroupDetailsString(booking.adults  || 0, booking.kids  ||  0)}</BookingText>
-          <Button buttonType={BUTTON_TYPE_CLASSES.empty} onClick={() => {navigate(`/profile/bookings/details/${booking._id}`)}}>
+          <BookingText>
+            {niceGroupDetailsString(booking.adults || 0, booking.kids || 0)}
+          </BookingText>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.empty}
+            onClick={() => {
+              navigate(`/profile/bookings/details/${booking._id}`);
+            }}>
             See reservation details
           </Button>
         </BookingInfos>
       </BookingPictureAndInfos>
-      {allowReview &&
+      {allowReview && (
         <BookingReviewButton>
-          <Button buttonType={BUTTON_TYPE_CLASSES.inverted}>Give a review</Button>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.inverted}
+            onClick={() => {
+              setReviewModalOpen(true);
+            }}>
+            Give a review
+          </Button>
         </BookingReviewButton>
-      }
+      )}
+      <ReviewModal
+        tourId={booking.tour._id}
+        tourImg={booking.tour.imageCover}
+        tourName={booking.tour.name}
+        tourSlug={booking.tour.slug}
+        open={reviewModalOpen}
+        handleClose={handleCloseReviewModal}
+      />
     </BookingCardContainer>
   );
 };

@@ -22,6 +22,7 @@ import ProfilePicture, {
   PROFILE_PICTURE_SIZE_CLASSES,
 } from "../UIComponents/profilePicture/profilePicture.component";
 import ProfileDropdown from "./profileDropdown.component";
+import getAuthenticationRedictionUri from "../../utils/formatting/formatAuthenticationUri";
 
 export const Navigation = () => {
   const navigate = useNavigate();
@@ -30,29 +31,15 @@ export const Navigation = () => {
   const [showProfileDropdown, setShowProfileDropdown] =
     useState<boolean>(false);
 
-  // useEffect(() => {
-  //   console.log({ user });
-  // }, [user]);
-
   const handleClickOnLogin = () => {
-    const uri = window.location.href
-      .split(`${process.env.REACT_APP_DOMAIN_URL}`)
-      .slice(-1)[0]
-      .split("uri=")
-      .slice(-1)[0]
-      .replaceAll("&", "%26");
+    const uri = getAuthenticationRedictionUri(window.location.href);
     if (uri.includes("signup") || uri.includes("login")) {
       return navigate(`/login`);
     }
     navigate(`/login?uri=${uri}`);
   };
   const handleClickOnSignUp = () => {
-    const uri = window.location.href
-      .split(`${process.env.REACT_APP_DOMAIN_URL}`)
-      .slice(-1)[0]
-      .split("uri=")
-      .slice(-1)[0]
-      .replaceAll("&", "%26");
+    const uri = getAuthenticationRedictionUri(window.location.href);
     if (uri.includes("signup") || uri.includes("login")) {
       return navigate(`/signup`);
     }
@@ -63,8 +50,7 @@ export const Navigation = () => {
     <NavBarContainer
       onMouseLeave={() => {
         setShowProfileDropdown(false);
-      }}
-    >
+      }}>
       <NavBarLogoContainer to="/">
         <img src={roundLogo} alt="hiking tour logo" />
       </NavBarLogoContainer>
@@ -81,8 +67,7 @@ export const Navigation = () => {
               to="/profile"
               onMouseOver={() => {
                 setShowProfileDropdown(true);
-              }}
-            >
+              }}>
               <ProfilePicture
                 pictureSize={PROFILE_PICTURE_SIZE_CLASSES.small}
                 pictureUrl={user.photo}

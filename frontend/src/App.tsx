@@ -71,7 +71,6 @@ function App() {
       handleIsLoggedIn();
   }, []);
 
-
   return (
     <Routes>
       <Route path="/" element={<NavbarAndFooter />}>
@@ -108,7 +107,6 @@ function App() {
         </Route>
       </Route>
 
-
       <Route path="profile/" element={<UserProfile />}>
         <Route index element={<Navigate to="/profile/wishlist" />} />
         <Route path="wishlist" element={<UserWishList />} />
@@ -125,7 +123,7 @@ function App() {
       {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
 
       <Route path="/" element={<NavbarAndFooter />}>
-        <Route path="*" element={<NotFound/>}></Route>
+        <Route path="*" element={<NotFound />}></Route>
       </Route>
     </Routes>
   );

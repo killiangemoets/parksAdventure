@@ -9,9 +9,9 @@ const reviewSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
-      min: [0, 'A rate cannot be below 0'],
+      min: [0.5, 'A rate cannot be below 0.5'],
       max: [5, 'A rate cannot be higher than 5'],
-      required: [true, 'A review need a rating'],
+      required: [true, 'A review must have a rating'],
     },
     createdAt: {
       type: Date,
@@ -27,6 +27,10 @@ const reviewSchema = new mongoose.Schema(
       ref: 'User',
       required: [true, 'Review must belong to a user'],
     },
+    edited: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -39,18 +43,18 @@ reviewSchema.index({ tour: 1, user: 1 }, { unique: true });
 reviewSchema.index({ createdAt: 1 });
 
 reviewSchema.pre(/^find/, function (next) {
-  // this.populate({
-  //   path: 'tour',
-  //   select: 'name',
-  // }).populate({
-  //   path: 'user',
-  //   select: 'name photo',
-  // });
-
   this.populate({
+    path: 'tour',
+    select: 'name imageCover slug',
+  }).populate({
     path: 'user',
     select: 'firstname lastname photo',
   });
+
+  // this.populate({
+  //   path: 'user',
+  //   select: 'firstname lastname photo',
+  // });
   next();
 });
 

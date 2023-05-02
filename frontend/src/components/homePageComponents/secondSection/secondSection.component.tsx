@@ -51,7 +51,7 @@ const SecondSection = () => {
           <SecondSectionElement
             name="Family Tours"
             iconUrl="images/familyTours.png"
-            link="/alltours.difficulty=family"
+            link="/alltours?difficulty=family"
           />
           <SecondSectionElement
             name="Expert Tours"

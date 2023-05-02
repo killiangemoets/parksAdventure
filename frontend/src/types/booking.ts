@@ -55,6 +55,7 @@ export type BookingTourData = {
   name: string;
   duration: number;
   imageCover: string;
+  slug: string;
   _id: string;
 }
 

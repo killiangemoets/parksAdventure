@@ -14,3 +14,7 @@ export const Reviews = styled.div`
   width: 100%;
   max-width: 100rem;
 `;
+
+export const UserReviewsSpinner = styled.div`
+padding-top: 12rem;
+`

@@ -99,7 +99,7 @@ export const FooterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 4rem;
-  z-index: 999;
+  z-index: 10;
   background-color: #fdfaf5;
 `;
 

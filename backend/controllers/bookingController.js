@@ -271,7 +271,6 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
 });
 
 exports.getMe = catchAsync(async (req, res, next) => {
-  if(req.params.id) req.query.id = req.params.id;
   req.query.user = req.user.id;
   req.query.status = "paid";
   next();

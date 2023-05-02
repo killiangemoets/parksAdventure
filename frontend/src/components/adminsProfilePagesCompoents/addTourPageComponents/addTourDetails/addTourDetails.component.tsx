@@ -88,7 +88,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
     );
     console.log({ newUnselectedTourGuides });
     setUnselectedTourGuides(newUnselectedTourGuides);
-  }, [tourGuides]);
+  }, [tourGuides, tourGuidesList]);
 
   useEffect(() => {
     let newCategoriesString = categories

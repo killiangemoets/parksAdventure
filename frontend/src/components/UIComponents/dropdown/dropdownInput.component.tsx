@@ -32,7 +32,7 @@ const DropdownInput: FC<DropdownPropsTotal> = ({
               !keeOpenAfterSelection && closeDropdown();
             }}
           >
-            <p>{info.value}</p>
+            {info.value}
           </Option>
         );
       })}

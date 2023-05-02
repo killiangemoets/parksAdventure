@@ -1,11 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Route } from "react-router-dom";
 import {
   selectTour,
   selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
-import { TReview } from "../../../types/tour";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -21,6 +19,7 @@ import {
   TourReviewsContainer,
   NoReviewsMessage,
 } from "./tourReviews.style";
+import { TReview } from "../../../types/review";
 
 export type TourReviewsProps = {
   forwardRef?: React.MutableRefObject<HTMLDivElement | null>;
@@ -67,6 +66,7 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
               userName={`${review.user.firstname} ${review.user.lastname}`}
               review={review.review}
               rating={review.rating}
+              edited={review.edited}
             />
           ))
         ) : (
