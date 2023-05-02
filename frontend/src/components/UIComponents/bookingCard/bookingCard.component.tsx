@@ -27,6 +27,7 @@ const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
   const navigate = useNavigate();
 
   let endDate = new Date(booking.date);
+
   endDate.setDate(new Date(booking.date).getDate() + booking.tour.duration);
 
   const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
