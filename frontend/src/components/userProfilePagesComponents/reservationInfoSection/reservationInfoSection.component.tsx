@@ -15,31 +15,45 @@ import {
   ReservationInfoTitle,
   ReservationInfoSectionWrapper,
 } from "./reservationInfoSection.style";
-import { selectBookingDetails, selectTourAvailabilities, selectTourIsLoading, selectTourMeetingAddress } from "../../../store/tour/tour.selector";
+import {
+  selectBookingDetails,
+  selectTourAvailabilities,
+  selectTourIsLoading,
+  selectTourMeetingAddress,
+} from "../../../store/tour/tour.selector";
 import { useEffect, useState } from "react";
-import { niceDatesRange, niceMonth, niceTime } from "../../../utils/formatting/formatDates";
+import {
+  niceDatesRange,
+  niceMonth,
+  niceTime,
+} from "../../../utils/formatting/formatDates";
 import compareDates from "../../../utils/comparison/compareDates";
 import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
+import getEndDate from "../../../utils/dataManipulation/getEndDate";
 
 const ReservationInfoSection = () => {
   const bookingDetails = useSelector(selectBookingDetails);
   const availabilities = useSelector(selectTourAvailabilities);
   const address = useSelector(selectTourMeetingAddress);
   const isLoading = useSelector(selectTourIsLoading);
-  const [endDate, setEndDate] = useState<Date| undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    if(!bookingDetails) return;
-    let newEndDate = new Date(bookingDetails.date);
-    newEndDate.setDate(new Date(bookingDetails.date).getDate() + bookingDetails.tour.duration);
-    setEndDate(newEndDate)
+    if (!bookingDetails) return;
+    const newEndDate = getEndDate(
+      bookingDetails.date,
+      bookingDetails.tour.duration
+    );
+    setEndDate(newEndDate);
   }, [bookingDetails]);
 
   useEffect(() => {
-    if(!bookingDetails || !availabilities) return;
-    const selectedAvailability = availabilities.find(availability => compareDates(availability.date, bookingDetails.date));
-    if(selectedAvailability) setTime(selectedAvailability.time);
+    if (!bookingDetails || !availabilities) return;
+    const selectedAvailability = availabilities.find((availability) =>
+      compareDates(availability.date, bookingDetails.date)
+    );
+    if (selectedAvailability) setTime(selectedAvailability.time);
   }, [bookingDetails, availabilities]);
   return (
     <ReservationInfoSectionContainer>
@@ -52,15 +66,22 @@ const ReservationInfoSection = () => {
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />
             <InfoTitle>Date</InfoTitle>
-            <InfoContent>{!isLoading && endDate && bookingDetails ? niceDatesRange(bookingDetails.date, endDate) : ""}</InfoContent>
+            <InfoContent>
+              {!isLoading && endDate && bookingDetails
+                ? niceDatesRange(bookingDetails.date, endDate)
+                : ""}
+            </InfoContent>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.time} />
             <InfoTitle>Starting Time</InfoTitle>
             <InfoContent>
-              {!isLoading && bookingDetails && `${niceMonth(bookingDetails.date)} ${new Date(
+              {!isLoading &&
+                bookingDetails &&
+                `${niceMonth(bookingDetails.date)} ${new Date(
                   bookingDetails.date
-                ).getDate()} at `} <span>{time && niceTime(time)}</span>
+                ).getDate()} at `}{" "}
+              <span>{time && niceTime(time)}</span>
             </InfoContent>
           </Info>
           <Info>
@@ -83,15 +104,26 @@ const ReservationInfoSection = () => {
           </Info>
           <Info>
             <ReservationInfoTitle>Hiker</ReservationInfoTitle>
-            <InfoContent>{!isLoading && `${bookingDetails?.user.firstname} ${bookingDetails?.user.lastname}`}</InfoContent>
+            <InfoContent>
+              {!isLoading &&
+                `${bookingDetails?.user.firstname} ${bookingDetails?.user.lastname}`}
+            </InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>Number of hikers</ReservationInfoTitle>
-            <InfoContent>{!isLoading && niceGroupDetailsString(bookingDetails?.adults  || 0, bookingDetails?.kids  || 0)}</InfoContent>
+            <InfoContent>
+              {!isLoading &&
+                niceGroupDetailsString(
+                  bookingDetails?.adults || 0,
+                  bookingDetails?.kids || 0
+                )}
+            </InfoContent>
           </Info>
           <Info>
             <ReservationInfoTitle>Price</ReservationInfoTitle>
-            <InfoContent>{!isLoading && `$${bookingDetails?.price}`}</InfoContent>
+            <InfoContent>
+              {!isLoading && `$${bookingDetails?.price}`}
+            </InfoContent>
           </Info>
         </InfoContainer>
       </ReservationInfoSectionWrapper>

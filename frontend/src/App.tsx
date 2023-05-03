@@ -18,7 +18,7 @@ import EmailVerification from "./routes/emailVerification/emailVerification.comp
 import EmailConfirmation from "./routes/emailConfirmation/emailConfirmation.component";
 import ForgotPassword from "./routes/forgotPassword/forgotPassword.component";
 import ResetPassword from "./routes/resetPassword/resetPassword.component";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUser } from "./api/authentication-requests";
 
 import { removeUser, setUser } from "./store/user/user.action";
@@ -30,6 +30,7 @@ import { useDispatch } from "react-redux";
 import ConfirmationStep from "./routes/confirmationStep/confirmationStep.component";
 import ValidationStep from "./routes/validationStep/validationStep.component";
 import NotFound from "./components/notFoundComponent/notFound.component";
+import { applyMiddleware } from "redux";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();

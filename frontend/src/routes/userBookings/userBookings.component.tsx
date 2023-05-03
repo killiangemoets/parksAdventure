@@ -15,6 +15,7 @@ import { getMyBookings } from "../../api/booking-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";
+import getEndDate from "../../utils/dataManipulation/getEndDate";
 
 const UserBookings = () => {
   const [comingBookings, setComingBookings] = useState<TBooking[]>([]);
@@ -33,7 +34,10 @@ const UserBookings = () => {
         const newPrevisouBookings: TBooking[] = [];
 
         response.data.data.forEach((booking: TBooking) => {
-          if (new Date(booking.date) > new Date(Date.now()))
+          if (
+            getEndDate(booking.date, booking.tour.duration) >
+            new Date(Date.now())
+          )
             newComingBookings.push(booking);
           else newPrevisouBookings.push(booking);
         });
@@ -66,9 +70,8 @@ const UserBookings = () => {
             Coming Reservations
           </Title>
           <BookingCards>
-            {/* {comingBookings.map((booking,i) => <BookingCard key={i} booking={booking} allowReview={false} />)} */}
             {comingBookings.map((booking, i) => (
-              <BookingCard key={i} booking={booking} />
+              <BookingCard key={i} booking={booking} allowReview={false} />
             ))}
           </BookingCards>
         </Reservations>

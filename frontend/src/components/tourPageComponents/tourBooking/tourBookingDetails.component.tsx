@@ -42,6 +42,7 @@ import {
   TourBookingTotal,
 } from "./tourBookingDetails.style";
 import { selectUserId } from "../../../store/user/user.selector";
+import getEndDate from "../../../utils/dataManipulation/getEndDate";
 
 type TourBookingDetailsProps = {
   availability: TAvailability;
@@ -62,10 +63,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
 
   useEffect(() => {
     if (tour && availability) {
-      let newEndDate = new Date(availability?.date);
-      newEndDate.setDate(
-        new Date(availability.date).getDate() + tour?.duration
-      );
+      const newEndDate = getEndDate(availability.date, tour.duration);
       setEndDate(newEndDate);
     }
   }, [tour, availability]);
@@ -100,7 +98,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
     dispatch(addItem(newItem));
     if (userId) return navigate("/checkout/step2");
     navigate("/login?uri=/checkout/step2");
-  }
+  };
 
   return (
     <TourBookingDetailsContainer>
@@ -184,14 +182,19 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
               </TotalPrice>
             </TourBookingTotal>
             <TourBookingButtons>
-              <Button buttonType={BUTTON_TYPE_CLASSES.cancel} onClick={() => {handleBookNow()}}>Book now</Button>
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.cancel}
+                onClick={() => {
+                  handleBookNow();
+                }}>
+                Book now
+              </Button>
               <FormButton
                 loading={false}
                 success={success}
                 handleClick={() => {
                   handleAddToCart();
-                }}
-              >
+                }}>
                 Add to cart
               </FormButton>
             </TourBookingButtons>

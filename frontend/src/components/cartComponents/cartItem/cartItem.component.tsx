@@ -47,6 +47,7 @@ import {
   CartItemEditButton,
 } from "./cartItem.style";
 import { Link } from "react-router-dom";
+import getEndDate from "../../../utils/dataManipulation/getEndDate";
 
 type CartItemCommonProps = {
   tour: TTourItem;
@@ -81,8 +82,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
   const cartItems = useSelector(selectCartItems);
 
   const availabilities = tour.currentAvailabilities;
-  let endDate = new Date(startingDate);
-  endDate.setDate(new Date(startingDate).getDate() + tour?.duration);
+  const endDate = getEndDate(startingDate, tour.duration);
 
   const [editing, setEditing] = useState<boolean>(false);
 
@@ -257,23 +257,24 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
     <>
       <CartItemContainer>
         <Link to={`/tour/${tour.slug}`}>
-        <CartItemPicture>
-          <img src={tour.imageCover} alt="tour cover" />
-        </CartItemPicture>
+          <CartItemPicture>
+            <img src={tour.imageCover} alt="tour cover" />
+          </CartItemPicture>
         </Link>
         <CartItemContent>
           <CartItemHeader>
-          <Link to={`/tour/${tour.slug}`}>
-            <CartItemTitle>{tour.name}</CartItemTitle>
-          </Link>
-            {editable && <Button
-              buttonType={BUTTON_TYPE_CLASSES.empty}
-              onClick={() => {
-                handleDelete();
-              }}
-            >
-              <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
-            </Button>}
+            <Link to={`/tour/${tour.slug}`}>
+              <CartItemTitle>{tour.name}</CartItemTitle>
+            </Link>
+            {editable && (
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.empty}
+                onClick={() => {
+                  handleDelete();
+                }}>
+                <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
+              </Button>
+            )}
           </CartItemHeader>
           <CartItemBody>
             <CartItemInfoList>
@@ -295,18 +296,19 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                       {niceDatesRange(startingDate, endDate)}
                     </CartItemInfoText>
                   </CartItemInfo>
-                  {editable && <Button
-                    buttonType={BUTTON_TYPE_CLASSES.empty}
-                    onClick={() => {
-                      handleEditItem();
-                    }}
-                  >
-                    {!soldout ? (
-                      "Change date or participant(s)"
-                    ) : (
-                      <Rebook>Make a new reservation for this tour</Rebook>
-                    )}
-                  </Button>}
+                  {editable && (
+                    <Button
+                      buttonType={BUTTON_TYPE_CLASSES.empty}
+                      onClick={() => {
+                        handleEditItem();
+                      }}>
+                      {!soldout ? (
+                        "Change date or participant(s)"
+                      ) : (
+                        <Rebook>Make a new reservation for this tour</Rebook>
+                      )}
+                    </Button>
+                  )}
                 </>
               ) : (
                 <>
@@ -316,8 +318,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                       buttonType={BUTTON_TYPE_CLASSES.light}
                       countInputsState={currentCountInputs}
                       handleCount={handleChangeGroup}
-                      error={groupError}
-                    >
+                      error={groupError}>
                       <>
                         <GroupIcon />
                         <p>{label}</p>
@@ -349,16 +350,14 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                       buttonType={BUTTON_TYPE_CLASSES.empty}
                       onClick={() => {
                         handleCancel();
-                      }}
-                    >
+                      }}>
                       <Rebook>Cancel</Rebook>
                     </Button>
                     <Button
                       buttonType={BUTTON_TYPE_CLASSES.empty}
                       onClick={() => {
                         handleSave();
-                      }}
-                    >
+                      }}>
                       <Rebook>Save</Rebook>
                     </Button>
                   </CartItemEditButton>

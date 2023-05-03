@@ -16,7 +16,8 @@ import { TBooking } from "../../../types/booking";
 import { FC, useState } from "react";
 import { niceDatesRange } from "../../../utils/formatting/formatDates";
 import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
-import ReviewModal from "../reviewModal/reviewModal.component";
+import CreateReviewModal from "../createReviewModal/createReviewModal.component";
+import getEndDate from "../../../utils/dataManipulation/getEndDate";
 
 type BookingCardProps = {
   booking: TBooking;
@@ -26,9 +27,7 @@ type BookingCardProps = {
 const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
   const navigate = useNavigate();
 
-  let endDate = new Date(booking.date);
-
-  endDate.setDate(new Date(booking.date).getDate() + booking.tour.duration);
+  const endDate = getEndDate(booking.date, booking.tour.duration);
 
   const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
 
@@ -76,11 +75,11 @@ const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
           </Button>
         </BookingReviewButton>
       )}
-      <ReviewModal
+      <CreateReviewModal
         tourId={booking.tour._id}
         tourImg={booking.tour.imageCover}
         tourName={booking.tour.name}
-        tourSlug={booking.tour.slug}
+        tourLink={`/tour/${booking.tour.slug}`}
         open={reviewModalOpen}
         handleClose={handleCloseReviewModal}
       />

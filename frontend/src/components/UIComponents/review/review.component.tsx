@@ -22,6 +22,7 @@ import FormButton from "../formButton/formButton.component";
 import { ErrorMessage } from "../../authenticationComponents/authentication.style";
 import { TReview } from "../../../types/review";
 import ReviewProfile from "../reviewProfile/reviewProfile.component";
+import ReviewModal from "../reviewModal/reviewModal.component";
 
 type ReviewCommonProps = {
   date: Date;
@@ -87,9 +88,8 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
     setEditModalOpen(false);
   };
 
-  const handleChangeReview = (event: ChangeEvent<HTMLTextAreaElement>) => {
+  const handleChangeReview = (newReview: string) => {
     setEditErrorMessage(undefined);
-    const { value: newReview } = event.target;
     if (newReview.length >= 500) return;
     setEditReview(newReview);
   };
@@ -183,46 +183,24 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
           </Button>
         </EditButtons>
       )}
-      <Modal
-        title="Edit review"
-        handleClose={handleCloseEditModal}
+      <ReviewModal
+        type={"edit"}
+        handleCloseModal={handleCloseEditModal}
         open={editModalOpen}
-        closeOnClickOnOverlay={false}>
-        <ReviewModalWrapper>
-          <ReviewProfile
-            userImg={userImg}
-            userName={userName}
-            link={link}
-            pictureSize={pictureSize}
-          />
-          <StarsRating
-            hiddenValue={false}
-            rating={editRating}
-            readonly={false}
-            handleChangeRating={handleChangeRating}
-          />
-          <ReviewInput
-            onChange={handleChangeReview}
-            name="review"
-            value={editReview}
-            placeholder="Write a review (optional)"
-          />
-          <ReviewModalButtons>
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.cancel}
-              onClick={handleCloseEditModal}>
-              Cancel
-            </Button>
-            <FormButton
-              loading={editIsLoading}
-              success={editSuccess}
-              handleClick={handlEditSave}>
-              Save
-            </FormButton>
-          </ReviewModalButtons>
-          <ErrorMessage>{editErrorMessage}</ErrorMessage>
-        </ReviewModalWrapper>
-      </Modal>
+        tourImg={userImg}
+        tourName={userName}
+        tourLink={link || ""}
+        isGetReviewLoading={false}
+        isRatingMissing={false}
+        handleChangeRating={handleChangeRating}
+        rating={editRating}
+        handleChangeReview={handleChangeReview}
+        review={editReview}
+        isSaveLoading={editIsLoading}
+        success={editSuccess}
+        handleSave={handlEditSave}
+        errorMessage={editErrorMessage}
+      />
       <Modal
         title={"Delete selection"}
         handleClose={handleCloseDeleteModal}
