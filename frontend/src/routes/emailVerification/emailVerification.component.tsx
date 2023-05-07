@@ -15,8 +15,10 @@ import { resendEmail } from "../../api/authentication-requests";
 import { useState } from "react";
 import FormButton from "../../components/UIComponents/formButton/formButton.component";
 import Title from "../../components/UIComponents/title/title.component";
+import { useSearchParams } from "react-router-dom";
 
 const EmailVerification = () => {
+  const [searchParams] = useSearchParams();
   const email = useSelector(selectEmail);
   const [loading, setLoading] = useState<boolean>(false);
   const [sent, setSent] = useState<boolean>(false);
@@ -24,19 +26,21 @@ const EmailVerification = () => {
 
   const handleResendEmail = async (email: string) => {
     setLoading(true);
-    const response = await resendEmail(email);
+    setError("");
+    const redirectUri = searchParams.get("uri");
+    const response = await resendEmail(email, redirectUri);
     console.log(response);
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSent(true);
       setTimeout(function () {
         setSent(false);
       }, 3000);
-      setError("");
     } else {
       if (
+        response &&
         response.message ===
-        "You have reached the limit of the number of emails you can send"
+          "You have reached the limit of the number of emails you can send"
       )
         setError(response.message);
       else setError("An error has occured. Please try again.");
@@ -70,8 +74,7 @@ const EmailVerification = () => {
             <FormButton
               loading={loading}
               success={sent}
-              handleClick={() => handleResendEmail(email)}
-            >
+              handleClick={() => handleResendEmail(email)}>
               Resend Email
             </FormButton>
             <EmailVerificationErrorMessage>

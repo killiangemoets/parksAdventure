@@ -12,24 +12,26 @@ import {
   TourThirdImage,
 } from "./tourGallery.style";
 
-import pic1 from "../../../assets/canadianRockies.jpg";
-import pic2 from "../../../assets/reviews-section-bg.webp";
-import pic3 from "../../../assets/family.jpg";
-import pic4 from "../../../assets/main-header-bg.jpg";
 import PicturesCarousel from "../../UIComponents/picturesCarousel/picturesCarousel.component";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   selectTour,
   selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
+import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
+import { AppDispatch } from "../../../store/store";
+import { updateUser } from "../../../store/user/user.action";
+import useIsInWishList from "../../../hooks/isInWishList";
 
 const TourGallery = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [picturesCarouselOpen, setPicturesCarouselOpen] =
     useState<boolean>(false);
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
   const [carouselImages, setCarouselImages] = useState<string[]>([]);
+  const inwishlist = useIsInWishList(tour?._id);
 
   useEffect(() => {
     let newCarouselImages = [];
@@ -41,6 +43,22 @@ const TourGallery = () => {
   const handleOpenCarousel = (state: boolean): void => {
     document.body.style.overflowY = state ? "hidden" : "scroll";
     setPicturesCarouselOpen(state);
+  };
+
+  const handleWishlist = async () => {
+    if (!tour?._id) return;
+    const response = inwishlist
+      ? await removeFromWishlist(tour?._id)
+      : await addToWishlist(tour?._id);
+
+    if (response && response.status === "success") {
+      const { wishlist } = response.data.user;
+      dispatch(
+        updateUser({
+          wishlist,
+        })
+      );
+    }
   };
 
   return (
@@ -70,12 +88,14 @@ const TourGallery = () => {
           <TourGalleryButtons>
             <Button
               buttonType={BUTTON_TYPE_CLASSES.gallery}
-              onClick={() => handleOpenCarousel(true)}
-            >
+              onClick={() => handleOpenCarousel(true)}>
               View all {carouselImages.length} images
             </Button>
-            <Button buttonType={BUTTON_TYPE_CLASSES.gallery}>
-              Add to wishlist <HeartIcon />
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.gallery}
+              onClick={handleWishlist}>
+              {inwishlist ? "Added to whishlist" : "Add to wishlist"}{" "}
+              <HeartIcon inwishlist={inwishlist} />
             </Button>
           </TourGalleryButtons>
         </TourGalleryGrid>

@@ -110,25 +110,6 @@ exports.getPaymentSession = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.createBookingCheckout = catchAsync(async (req, res, next) => {
-  // This is only TEMPORARY, because it's UNSECURE: everyone can make bookings without paying
-  const { tour, user, date, unitPrice, people, totalPrice } = req.query;
-  console.log({ tour, user, date, unitPrice, people, totalPrice });
-  if (!tour || !user || !date || !unitPrice || !people || !totalPrice)
-    return next();
-  await Booking.create({
-    tour,
-    user,
-    date: new Date(date),
-    unitPrice,
-    people,
-    totalPrice,
-  });
-  // res.redirect(`${req.protocol}://${req.get('host')}/`);
-  // same than:
-  res.redirect(`${req.originalUrl.split('?')[0]}`);
-});
-
 exports.saveCheckoutItems = catchAsync(async (req, res, next) => {
   // 1) Create bookings
   const cartId = crypto.randomBytes(32).toString('hex');
@@ -242,6 +223,8 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
       runValidators: true, // The validators run again when we upadate a tour
     }
   );
+
+  console.log('validateOrder', bookings);
 
   // 4) If no bookings updated -> error
   if (!bookings.nModified) {

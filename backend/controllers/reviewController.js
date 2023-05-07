@@ -46,6 +46,12 @@ exports.setEdited = catchAsync(async (req, res, next) => {
   next();
 });
 
+exports.top10 = catchAsync(async (req, res, next) => {
+  req.query.limit = '10';
+  req.query.sort = '-rating,-createdAt';
+  next();
+});
+
 exports.getReview = factory.getOne(Review);
 exports.getAllReviews = factory.getAll(Review);
 exports.createReview = factory.createOne(Review);

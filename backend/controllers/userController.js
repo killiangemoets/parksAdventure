@@ -4,10 +4,10 @@ const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
-const cloudinary = require('../utils/uploadToCloudinary');
+const uploadToCloudinary = require('./../utils/uploadToCloudinary');
 
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
-  if (req.body.imagePath) {
+  if (req.body.photo && req.body.photo.length > 0) {
     // Use the uploaded file's name as the asset's public ID and
     // allow overwriting the asset with new versions;
     const options = {
@@ -17,39 +17,12 @@ exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
     };
 
     // Upload the image
-    const result = await cloudinary.uploader.upload(
-      req.body.imagePath,
-      options
+    const imgurl = await uploadToCloudinary.uploadOneImage(
+      req.body.photo,
+      `parkAdventures/users`
     );
+    req.body.photo = imgurl;
   }
-  next();
-});
-
-// It's best to not save the file to the desk but instead save it to memory because we will then resize the image.
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError('Not an image! Please upload only images.', 400), false);
-  }
-};
-
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-
-exports.uploadUserPhoto = upload.single('photo');
-
-exports.resizeUserPhoto = catchAsync(async (req, res, next) => {
-  if (!req.file) return next();
-
-  req.file.filename = `user-${req.user.id}-${Date.now()}.jpeg`;
-
-  await sharp(req.file.buffer)
-    .resize(500, 500)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(`public/img/users/${req.file.filename}`);
 
   next();
 });
@@ -111,6 +84,42 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   res.status(204).json({
     status: 'success',
     data: null,
+  });
+});
+
+exports.addToWishList = catchAsync(async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { $addToSet: { wishlist: req.body.wishlist } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+exports.removeFromWishList = catchAsync(async (req, res, next) => {
+  const updatedUser = await User.findByIdAndUpdate(
+    req.user.id,
+    { $pull: { wishlist: req.body.wishlist } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
   });
 });
 

@@ -1,16 +1,14 @@
-import { TItem, TItemWithTourInfo } from "../../types/booking";
+import { TItem } from "../../types/booking";
 import compareDates from "../../utils/comparison/compareDates";
 import { CartDipatchTypes } from "./cart.action";
 import { CART_ACTION_TYPES } from "./cart.type";
 
 export type CartState = {
   readonly items: TItem[];
-  readonly order: TItemWithTourInfo[];
 };
 
 export const CART_INITIAL_STATE: CartState = {
   items: [],
-  order: [],
 };
 
 export const cartReducer = (
@@ -112,9 +110,6 @@ export const cartReducer = (
     case CART_ACTION_TYPES.CLEAR_CART:
       console.log("CLEAR CART REDUCER");
       return CART_INITIAL_STATE;
-    case CART_ACTION_TYPES.SET_ORDER:
-      console.log("SET ORDER", action.payload);
-      return { ...state, order: action.payload };
     default:
       return state;
   }

@@ -23,10 +23,12 @@ import ProfilePicture, {
 } from "../UIComponents/profilePicture/profilePicture.component";
 import ProfileDropdown from "./profileDropdown.component";
 import getAuthenticationRedictionUri from "../../utils/formatting/formatAuthenticationUri";
+import { selectCartNumberOfItems } from "../../store/cart/cart.selector";
 
 export const Navigation = () => {
   const navigate = useNavigate();
   const user = useSelector(selectUserReducer);
+  const cartNumberOfItems = useSelector(selectCartNumberOfItems);
 
   const [showProfileDropdown, setShowProfileDropdown] =
     useState<boolean>(false);
@@ -57,12 +59,14 @@ export const Navigation = () => {
       <LinksContainer>
         <NavBarLink to="/">Home</NavBarLink>
         <NavBarLink to="/alltours">All tours</NavBarLink>
+        <NavBarLink to="/wishlist">Wishlist</NavBarLink>
+        <NavBarLink to="/cart" addMargin={cartNumberOfItems > 0}>
+          {cartNumberOfItems > 0 && <span>{cartNumberOfItems}</span>}
+          Cart
+        </NavBarLink>
+        <NavBarLink to="/contact">Contact</NavBarLink>
         {user.id ? (
           <>
-            <NavBarLink to="/messages">Messages</NavBarLink>
-            <NavBarLink to="/profile/wishlist">Wishlist</NavBarLink>
-            <NavBarLink to="/cart">Cart</NavBarLink>
-
             <NavBarLink
               to="/profile"
               onMouseOver={() => {
@@ -78,16 +82,9 @@ export const Navigation = () => {
           </>
         ) : (
           <>
-            {" "}
-            <NavBarLink to="/contact">Contact</NavBarLink>
-            <NavBarLink to="/cart">Cart</NavBarLink>
-            {/* <NavBarLink to={`/login?uri=${window.location.href}`}>
-              Login
-            </NavBarLink> */}
             <NavBarButton onClick={() => handleClickOnLogin()}>
               Login
             </NavBarButton>
-            {/* <SignUpLink to="/signup">Sign up</SignUpLink> */}
             <SignUpButton onClick={() => handleClickOnSignUp()}>
               Sign up
             </SignUpButton>

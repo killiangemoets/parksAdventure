@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginData, SignUpData, UpdateUserData } from "../types/user";
+import { LoginData, SignUpData, UpdateUserPasswordData } from "../types/user";
 import axiosInstance from "../utils/axios/axios-instance";
 
 export const login = async (loginData: LoginData) => {
@@ -46,11 +46,14 @@ export const verifyEmail = async (token: string) => {
   }
 };
 
-export const resendEmail = async (email: string) => {
+export const resendEmail = async (
+  email: string,
+  redirectUri: string | null
+) => {
   try {
     const response = await axiosInstance.post(
       "/users/resend-email-verification",
-      { email }
+      { email, redirectUri }
     );
     return response.data;
   } catch (err) {
@@ -123,9 +126,14 @@ export const getUser = async () => {
   }
 };
 
-export const updateMe = async (userData: UpdateUserData) => {
+export const updateMyPassword = async (
+  userPasswords: UpdateUserPasswordData
+) => {
   try {
-    const response = await axiosInstance.patch("/users/updateMe", userData);
+    const response = await axiosInstance.patch(
+      "/users/updateMyPassword",
+      userPasswords
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

@@ -1,12 +1,15 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import {
+  DeleteButtonWrapper,
   ExtraLargeProfilePicture,
   LargeProfilePicture,
   MediumProfilePicture,
   SmallProfilePicture,
+  TrashIcon,
 } from "./profilePicture.style";
 
 import defaultUserImg from "../../../assets/default-user.jpg";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 
 export enum PROFILE_PICTURE_SIZE_CLASSES {
   small = "small",
@@ -28,15 +31,34 @@ const getProfilePicture = (
 export type ProfilePictureProps = {
   pictureUrl?: string;
   pictureSize?: PROFILE_PICTURE_SIZE_CLASSES;
+  handleDelete?: () => void;
 };
 const ProfilePicture: FC<ProfilePictureProps> = ({
   pictureUrl,
   pictureSize,
+  handleDelete,
 }) => {
   const CustomProfilePicture = getProfilePicture(pictureSize);
+  const [mouseOver, setMouseover] = useState<boolean>(false);
   return (
-    <CustomProfilePicture>
+    <CustomProfilePicture
+      onMouseEnter={() => {
+        setMouseover(true);
+      }}
+      onMouseLeave={() => {
+        setMouseover(false);
+      }}>
       <img src={pictureUrl || defaultUserImg} alt="profile" />
+      {handleDelete && pictureUrl && mouseOver && (
+        <DeleteButtonWrapper>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.empty}
+            type="button"
+            onClick={handleDelete}>
+            <TrashIcon />
+          </Button>
+        </DeleteButtonWrapper>
+      )}
     </CustomProfilePicture>
   );
 };

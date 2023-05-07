@@ -5,6 +5,10 @@ const authController = require('./../controllers/authController');
 const router = express.Router({ mergeParams: true });
 // mergeParams: true, bc by default each router only have access to the parameters of their specific routes
 
+router
+  .route('/top10')
+  .get(reviewController.top10, reviewController.getAllReviews);
+
 router.use(authController.protect);
 
 router

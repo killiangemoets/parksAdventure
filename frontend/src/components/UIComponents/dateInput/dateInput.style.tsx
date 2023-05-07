@@ -1,7 +1,31 @@
 import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
 
-export const DatePickerElement = styled(DatePicker)`
+type DatePickerElementProps = {
+  rectangular: boolean;
+};
+
+const rectangularStyle = css`
+  width: 100%;
+  height: 5.2rem;
+  padding: 0 3.2rem;
+  background-color: #faf2e5;
+  border-radius: 4px;
+  border: none;
+  font-size: 1.6rem;
+  transition: all 0.3s;
+  &:focus {
+    border: 1px solid #aaa;
+  }
+
+  .ant-picker-input > input {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+`;
+
+export const DatePickerElement = styled(DatePicker)<DatePickerElementProps>`
   width: 26rem;
   height: 5.2rem;
   padding: 0 3.2rem;
@@ -55,6 +79,8 @@ export const DatePickerElement = styled(DatePicker)`
   .ant-picker-dropdown .ant-picker-today-btn {
     display: none !important;
   }
+
+  ${({ rectangular }) => rectangular && rectangularStyle}
 `;
 
 const highlightStyle = css`

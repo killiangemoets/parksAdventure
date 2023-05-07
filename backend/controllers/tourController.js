@@ -10,57 +10,6 @@ const APIFeaturesCopy = require('../utils/apiFeatureCopy');
 const Booking = require('../models/bookingModel');
 const formating = require('./../utils/formating');
 
-
-// UPLOAD IMAGES
-const multerStorage = multer.memoryStorage();
-
-const multerFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true);
-  } else {
-    cb(new AppError('Not an image! Please upload only images.', 400), false);
-  }
-};
-
-const upload = multer({ storage: multerStorage, fileFilter: multerFilter });
-
-exports.uploadTourImages = upload.fields([
-  {
-    name: 'imageCover',
-    maxCount: 1,
-  },
-  { name: 'images', maxCount: 3 },
-]);
-
-exports.resizeTourImages = catchAsync(async (req, res, next) => {
-  if (!req.files.imageCover || !req.files.images) return next();
-
-  // 1) Cover image
-  req.body.imageCover = `tour-${req.params.id}-${Date.now()}-cover.jpeg`;
-  await sharp(req.files.imageCover[0].buffer)
-    .resize(2000, 1333)
-    .toFormat('jpeg')
-    .jpeg({ quality: 90 })
-    .toFile(`public/img/tours/${req.body.imageCover}`);
-
-  // 2) images
-  req.body.images = [];
-  await Promise.all(
-    req.files.images.map(async (file, i) => {
-      const filename = `tour-${req.params.id}-${Date.now()}-${i + 1}.jpeg`;
-      await sharp(file.buffer)
-        .resize(2000, 1333)
-        .toFormat('jpeg')
-        .jpeg({ quality: 90 })
-        .toFile(`public/img/tours/${filename}`);
-
-      req.body.images.push(filename);
-    })
-  );
-
-  next();
-});
-
 exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   // Prevent user to pass directly imageCover or images
   req.body.imageCover = undefined;
@@ -78,12 +27,6 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
 
   return next();
 });
-
-// exports.requiredFields = (req, res, next) => {
-//   req.query.fields =
-//     'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,availabilities,popularityIndex';
-//   next();
-// };
 
 exports.aggreagationRequiredFields = (req, res, next) => {
   req.query.fields =
@@ -108,6 +51,13 @@ exports.aliasRecommendations = (req, res, next) => {
   next();
 };
 
+exports.updatePopularityIndex = catchAsync(async (req, res, next) => {
+  await Tour.findByIdAndUpdate(req.params.id, {
+    $inc: { popularityIndex: req.params.increment },
+  });
+  next();
+});
+
 exports.getAllTours = factory.getAll(Tour);
 
 exports.getToursByAggregation = catchAsync(async (req, res, next) => {
@@ -120,29 +70,32 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     .createAggregation();
   const doc = await featuresWithPagination.aggregation;
 
-  for (const tour of doc[0].data){
-    if(tour.currentAvailabilities){ 
+  for (const tour of doc[0].data) {
+    if (tour.currentAvailabilities) {
       const bookings = await Booking.aggregate([
-        { $match: {tour: tour._id}},
-        { $group: { 
-          _id:  "$date",
-          sum: {
-            $sum: {
-              $sum: ["$adults", "$kids"]
-            }
+        { $match: { tour: tour._id } },
+        {
+          $group: {
+            _id: '$date',
+            sum: {
+              $sum: {
+                $sum: ['$adults', '$kids'],
+              },
+            },
+            count: { $sum: 1 },
           },
-          count: { $sum: 1}
-        }}
-      ])
-      for(availability of tour.currentAvailabilities){
-        const bookingData = bookings.find(booking => formating.compareDates(booking._id, availability.date));
+        },
+      ]);
+      for (availability of tour.currentAvailabilities) {
+        const bookingData = bookings.find((booking) =>
+          formating.compareDates(booking._id, availability.date)
+        );
         const currentGroupSize = bookingData ? bookingData.sum : 0;
-        availability.currentGroupSize =  currentGroupSize;
+        availability.currentGroupSize = currentGroupSize;
         // if(availability.currentGroupSize === availability.maxGroupSize) availability = undefined;
       }
     }
   }
-
 
   // if(req.recommendations === )
   // const featuresWithPagination = new APIFeaturesCopy(Tour, req.query, next)
@@ -164,13 +117,14 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
         },
       };
     }
-    recommendations = await Tour.find(queryObj).populate({
-      path: 'bookings',
-      populate: {
-        path: 'user',
-        select: 'firstname lastname photo',
-      },
-    })
+    recommendations = await Tour.find(queryObj)
+      .populate({
+        path: 'bookings',
+        populate: {
+          path: 'user',
+          select: 'firstname lastname photo',
+        },
+      })
       .sort('-popularityIndex -ratingsAvarage')
       .limit(3);
   }
@@ -199,19 +153,21 @@ exports.getTour = factory.getOne(Tour, [
 ]);
 
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findOne({ slug: req.params.slug }).populate({
-    path: 'reviews',
-    populate: {
-      path: 'user',
-      select: 'firstname lastname photo',
-    },
-  }).populate({
-    path: 'bookings',
-    populate: {
-      path: 'user',
-      select: 'firstname lastname photo',
-    },
-  });
+  const tour = await Tour.findOne({ slug: req.params.slug })
+    .populate({
+      path: 'reviews',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname photo',
+      },
+    })
+    .populate({
+      path: 'bookings',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname photo',
+      },
+    });
 
   if (!tour) {
     return next(new AppError('No tour found with that slug', 404));
@@ -220,13 +176,14 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     // categories: tour.categories[0],
-  }).populate({
-    path: 'bookings',
-    populate: {
-      path: 'user',
-      select: 'firstname lastname photo',
-    },
   })
+    .populate({
+      path: 'bookings',
+      populate: {
+        path: 'user',
+        select: 'firstname lastname photo',
+      },
+    })
     .sort('-popularityIndex -ratingsAvarage')
     .limit(3);
 

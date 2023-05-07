@@ -101,15 +101,8 @@ exports.signup = catchAsync(async (req, res, next) => {
 });
 
 exports.verifyEmail = catchAsync(async (req, res, next) => {
-
   // 1) Verify that token is present
-  if(!req.params.token)
-  return next(
-    new AppError(
-      'token is missing',
-      500
-    )
-  );
+  if (!req.params.token) return next(new AppError('token is missing', 500));
 
   // 2) Get user based on the token
   const hashedToken = crypto
@@ -196,8 +189,11 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
         508
       )
     );
+  const redirectUri = req.body.redirectUri;
+  console.log({ redirectUri });
+  const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
+  const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
 
-  const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}`;
   await new Email(user, emailVerificationUrl).sendEmailVerification();
 
   res.status(200).json({
@@ -245,11 +241,11 @@ exports.protect = catchAsync(async (req, res, next) => {
   // }
 
   // if (req.cookies.jwt)
-    if (!token) {
-      return next(
-        new AppError('You are not logged in! Please log in to get access')
-      );
-    }
+  if (!token) {
+    return next(
+      new AppError('You are not logged in! Please log in to get access')
+    );
+  }
 
   // 2) Verification token
   const decoded = await util.promisify(jwt.verify)(

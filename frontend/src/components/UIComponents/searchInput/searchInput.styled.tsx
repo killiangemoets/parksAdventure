@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ReactComponent as GlassSVG } from "../../../assets/glass.svg";
 import { ReactComponent as DeleteSVG } from "../../../assets/x-solid.svg";
@@ -35,7 +35,10 @@ export const Delete = styled(DeleteSVG)`
   }
 `;
 
-export const Input = styled.input`
+type InputProps = {
+  adminStyle?: boolean;
+};
+export const Input = styled.input<InputProps>`
   width: 52rem;
   padding: 0 5rem;
   height: 5.2rem;
@@ -58,6 +61,18 @@ export const Input = styled.input`
     border: 1px solid #aaa;
     /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
   }
+
+  ${({ adminStyle }) =>
+    adminStyle &&
+    css`
+      width: 40rem;
+      box-shadow: none;
+      border: 1px solid #cc704b;
+
+      &:focus {
+        border: 1px solid #cc704b;
+      }
+    `}
 `;
 
 export const ButtonWrapper = styled.div`

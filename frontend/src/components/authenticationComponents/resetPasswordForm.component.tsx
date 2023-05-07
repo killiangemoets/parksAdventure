@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { resetPassword } from "../../api/authentication-requests";
 import { PasswordsData } from "../../types/user";
@@ -123,7 +123,6 @@ const ResetPasswordForm = () => {
               }}
             />
           </LogoutCheckBox>
-
           <FormButton loading={loading} success={success}>
             Reset password
           </FormButton>

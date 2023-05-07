@@ -134,3 +134,17 @@ export const CancelButton = styled(BaseButton)`
     color: #b86544;
   }
 `;
+
+export const DeleteButton = styled(BaseButton)`
+  border: solid 2px #f9625b;
+  background: none;
+  color: #f9625b;
+
+  transition: all 0.5s;
+
+  &:hover {
+    color: #fff;
+    background: #f9625b;
+    border: solid 2px #f9625b;
+  }
+`;

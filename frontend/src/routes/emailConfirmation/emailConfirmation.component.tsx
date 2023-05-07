@@ -28,7 +28,6 @@ type EmailConfirmationRouteParams = {
 };
 
 const EmailConfirmation = () => {
-  const [searchParams] = useSearchParams();
   const dispatch: AppDispatch = useDispatch();
   const { token } = useParams<
     keyof EmailConfirmationRouteParams
@@ -50,6 +49,7 @@ const EmailConfirmation = () => {
             photo,
             phoneNumber,
             birthDate,
+            wishlist,
             role,
             _id: id,
           } = response.data.user;
@@ -61,6 +61,7 @@ const EmailConfirmation = () => {
               photo,
               phoneNumber,
               birthDate,
+              wishlist,
               role,
               id,
             })

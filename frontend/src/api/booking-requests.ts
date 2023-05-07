@@ -27,7 +27,7 @@ export const getTourItems = async (tourIds: string[]) => {
 
 export const getCheckoutSession = async (items: TItemWithTourInfo[]) => {
   try {
-    const formatedItems = items.map(item => {
+    const formatedItems = items.map((item) => {
       return {
         tourId: item.tour._id,
         tourName: item.tour.name,
@@ -38,9 +38,11 @@ export const getCheckoutSession = async (items: TItemWithTourInfo[]) => {
         kidPrice: item.kidPrice,
         adults: item.adults,
         kids: item.children,
-      }
-    })
-    const response = await axiosInstance.post('/bookings/payment-session', {items: formatedItems});
+      };
+    });
+    const response = await axiosInstance.post("/bookings/payment-session", {
+      items: formatedItems,
+    });
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -48,11 +50,13 @@ export const getCheckoutSession = async (items: TItemWithTourInfo[]) => {
     }
     return { status: "error", message: "An error occured. Please try again!" };
   }
-}
+};
 
 export const validateOrder = async (token: string) => {
   try {
-    const response = await axiosInstance.patch(`/bookings/validate-order/${token}`);
+    const response = await axiosInstance.patch(
+      `/bookings/validate-order/${token}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -60,7 +64,8 @@ export const validateOrder = async (token: string) => {
     }
     return { status: "error", message: "An error occured. Please try again!" };
   }
-}
+};
+
 export const getMyBookings = async () => {
   try {
     const response = await axiosInstance.get("/bookings/mine");
@@ -71,7 +76,7 @@ export const getMyBookings = async () => {
     }
     return { status: "error", message: "An error occured. Please try again!" };
   }
-}
+};
 
 export const getMyBookingDetails = async (bookingId: string) => {
   try {
@@ -83,5 +88,4 @@ export const getMyBookingDetails = async (bookingId: string) => {
     }
     return { status: "error", message: "An error occured. Please try again!" };
   }
-}
-
+};

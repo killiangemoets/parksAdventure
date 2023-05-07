@@ -1,8 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
 const { RangePicker } = DatePicker;
 
-export const RangeDatePickerElement = styled(RangePicker)`
+type RangeDatePickerElementProps = {
+  adminStyle?: boolean;
+};
+
+export const RangeDatePickerElement = styled(
+  RangePicker
+)<RangeDatePickerElementProps>`
   width: 30.8rem;
   padding: 1.4rem 3.2rem;
   height: 5.2rem;
@@ -51,4 +57,18 @@ export const RangeDatePickerElement = styled(RangePicker)`
   .ant-picker-suffix {
     margin-right: 0.2rem !important;
   }
+
+  ${({ adminStyle }) =>
+    adminStyle &&
+    css`
+      padding: 1.4rem 1.8rem;
+      width: 26.8rem;
+      font-size: 1rem;
+      box-shadow: none;
+      border: 1px solid #cc704b;
+
+      &:focus {
+        border: 1px solid #cc704b;
+      }
+    `}
 `;

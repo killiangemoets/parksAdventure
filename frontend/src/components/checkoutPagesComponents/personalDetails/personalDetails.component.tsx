@@ -1,6 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { CheckoutInputsUserData } from "../../../types/user";
-import { AuthenticationForm, ErrorMessage } from "../../authenticationComponents/authentication.style";
+import {
+  AuthenticationForm,
+  ErrorMessage,
+} from "../../authenticationComponents/authentication.style";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -18,7 +21,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectUserReducer } from "../../../store/user/user.selector";
 import { AppDispatch } from "../../../store/store";
 import { updateUser } from "../../../store/user/user.action";
-import { updateMe } from "../../../api/authentication-requests";
+import { updateMe } from "../../../api/user-requests";
 
 const PersonalDetails = () => {
   const [editModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -30,7 +33,7 @@ const PersonalDetails = () => {
     lastname,
     phoneNumber,
   });
-    const [errorMessage, setErrorMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
@@ -45,6 +48,8 @@ const PersonalDetails = () => {
     e.preventDefault();
     setLoading(true);
     const response = await updateMe(userInputsData);
+
+    console.log(userInputsData);
     console.log(response);
     setLoading(false);
     if (response.status === "success") {
@@ -54,8 +59,9 @@ const PersonalDetails = () => {
         setSuccess(false);
         return setEditModalOpen(false);
       }, 1000);
-    } else{
-      if(response.message.includes('phoneNumber')) setErrorMessage('Please provide a valid phone number')
+    } else {
+      if (response.message.includes("phoneNumber"))
+        setErrorMessage("Please provide a valid phone number");
       else setErrorMessage("An error occured. Please try again!");
     }
   };
@@ -70,10 +76,10 @@ const PersonalDetails = () => {
       firstname,
       lastname,
       phoneNumber,
-    })
+    });
     setErrorMessage("");
     setEditModalOpen(false);
-  }
+  };
 
   return (
     <PersonalDetailsContainer>
@@ -86,15 +92,15 @@ const PersonalDetails = () => {
         buttonType={BUTTON_TYPE_CLASSES.empty}
         onClick={() => {
           setEditModalOpen(true);
-        }}
-      >
+        }}>
         Edit
       </Button>
       <Modal
         title="Personal info"
-        handleClose={() => {handleCloseModal()}}
-        open={editModalOpen}
-      >
+        handleClose={() => {
+          handleCloseModal();
+        }}
+        open={editModalOpen}>
         <AuthenticationForm onSubmit={handleSubmit}>
           <TextInput
             label="Firstname"
@@ -131,12 +137,14 @@ const PersonalDetails = () => {
             value={userInputsData.phoneNumber || ""}
             onChange={handleChange}
           />
-           <ErrorMessage>{errorMessage}</ErrorMessage>
+          <ErrorMessage>{errorMessage}</ErrorMessage>
           <FormButton loading={loading} success={success}>
             Save
           </FormButton>
         </AuthenticationForm>
-        <ModalFooterNote>Your personal account information will be modified</ModalFooterNote>
+        <ModalFooterNote>
+          Your personal account information will be modified
+        </ModalFooterNote>
       </Modal>
     </PersonalDetailsContainer>
   );

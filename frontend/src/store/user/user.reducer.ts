@@ -1,15 +1,15 @@
-import { stat } from "fs";
 import { UserDipatchTypes } from "./user.action";
 import { USER_ACTION_TYPES } from "./user.type";
 
 export type UserState = {
-  readonly email?: string ;
+  readonly email?: string;
   readonly firstname?: string;
   readonly lastname?: string;
   readonly photo?: string;
   readonly phoneNumber?: string;
   readonly birthDate?: Date;
   readonly role?: "user" | "guide" | "lead-guide" | "admin";
+  readonly wishlist?: string[];
   readonly id?: string;
 };
 
@@ -39,10 +39,11 @@ export const userReducer = (
         phoneNumber: undefined,
         birthDate: undefined,
         role: undefined,
+        wishlist: undefined,
         id: undefined,
       };
     case USER_ACTION_TYPES.UPDATE_USER:
-      return {...state, ...action.payload}
+      return { ...state, ...action.payload };
     default:
       return state;
   }

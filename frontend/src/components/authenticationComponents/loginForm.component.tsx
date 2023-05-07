@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { login } from "../../api/authentication-requests";
-import {  useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TextInput from "../UIComponents/textInput/textInput.component";
 import Title, {
   TITLE_TYPE_CLASSES,
@@ -63,6 +63,7 @@ export const LoginForm = () => {
         photo,
         phoneNumber,
         birthDate,
+        wishlist,
         role,
         _id: id,
       } = response.data.user;
@@ -74,6 +75,7 @@ export const LoginForm = () => {
           photo,
           phoneNumber,
           birthDate,
+          wishlist,
           role,
           id,
         })

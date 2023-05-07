@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, MouseEvent, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import { TourData } from "../../../types/tour";
@@ -24,13 +24,21 @@ import {
   TourTitle,
   WishListIcon,
 } from "./tourCard.style";
+import { useDispatch } from "react-redux";
+import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
+import { AppDispatch } from "../../../store/store";
+import { updateUser } from "../../../store/user/user.action";
+import useIsInWishList from "../../../hooks/isInWishList";
 
 type TourCardProps = {
   tour: TourData;
   handleOver?: (id: string | undefined) => void;
 };
 const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const wishlistButton = useRef<HTMLElement | null>(null);
+  const inWishList = useIsInWishList(tour?._id);
 
   const {
     name,
@@ -42,12 +50,35 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
     imageCover,
     ratingsAverage,
     ratingsQuantity,
+    _id,
   } = tour;
 
-  const handleClickTour = () => {
+  const handleClickTour = (event: MouseEvent<HTMLElement>) => {
+    if (
+      wishlistButton.current &&
+      wishlistButton.current.contains(event.target as Node)
+    )
+      return;
+
     navigate(`/tour/${slug}`);
     // window.open(`${window.location.origin}/tour/${slug}`, "_blank");
   };
+
+  const handleWishlist = async () => {
+    const response = inWishList
+      ? await removeFromWishlist(_id)
+      : await addToWishlist(_id);
+
+    if (response && response.status === "success") {
+      const { wishlist } = response.data.user;
+      dispatch(
+        updateUser({
+          wishlist,
+        })
+      );
+    }
+  };
+
   // if (!tour) {
   //   return <></>;
   // } else {
@@ -59,10 +90,12 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
       }}
       onMouseLeave={() => {
         handleOver && handleOver(undefined);
-      }}
-    >
-      <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
-        <WishListIcon />
+      }}>
+      <Button
+        buttonType={BUTTON_TYPE_CLASSES.empty}
+        passRef={wishlistButton}
+        onClick={handleWishlist}>
+        <WishListIcon inWishList={inWishList} />
       </Button>
       <TourPictureContainer>
         <TourPicture imageUrl={imageCover}>

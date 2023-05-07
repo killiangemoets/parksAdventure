@@ -13,11 +13,13 @@ import {
 export type SearchInputProps = {
   handleSubmit: () => void;
   handleDelete: () => void;
+  adminStyle?: boolean;
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const SearchInput: FC<SearchInputProps> = ({
   handleSubmit,
   handleDelete,
+  adminStyle = false,
   ...props
 }) => {
   const searchInput = useRef<HTMLInputElement | null>(null);
@@ -42,14 +44,13 @@ const SearchInput: FC<SearchInputProps> = ({
           }}
           onClick={() => {
             handleDelete();
-          }}
-        >
+          }}>
           {showDelete ? <Delete /> : <Glass />}
         </Button>
       </SearchInputDeleteButton>
 
       <SearchInputForm onSubmit={onSubmit}>
-        <Input ref={searchInput} {...props} />
+        <Input ref={searchInput} {...props} adminStyle={adminStyle} />
         <ButtonWrapper>
           <Button buttonType={BUTTON_TYPE_CLASSES.input}>Search</Button>
         </ButtonWrapper>

@@ -223,22 +223,28 @@ tourSchema.virtual('bookings', {
   localField: '_id',
 });
 
-
 tourSchema.virtual('currentAvailabilities').get(function () {
   const currentAvailabilitiesWithCurrentGroup = [];
-  if(this.availabilities && this.bookings){
-
-    this.availabilities.forEach(availability => {
-
-      if(!(new Date(availability.date) >= new Date(Date.now()))) return;
+  if (this.availabilities && this.bookings) {
+    this.availabilities.forEach((availability) => {
+      if (!(new Date(availability.date) >= new Date(Date.now()))) return;
 
       const currentGroupSize = this.bookings.reduce((acc, booking) => {
-        if(!formating.compareDates(booking.date, availability.date)) return acc;
+        if (!formating.compareDates(booking.date, availability.date))
+          return acc;
         return acc + (booking.adults || 0) + (booking.kids || 0);
       }, 0);
 
-      currentAvailabilitiesWithCurrentGroup.push({date: availability.date, kidPrice: availability.kidPrice, maxGroupSize: availability.maxGroupSize, price: availability.price, time: availability.time, _id: availability._id, currentGroupSize});
-    })
+      currentAvailabilitiesWithCurrentGroup.push({
+        date: availability.date,
+        kidPrice: availability.kidPrice,
+        maxGroupSize: availability.maxGroupSize,
+        price: availability.price,
+        time: availability.time,
+        _id: availability._id,
+        currentGroupSize,
+      });
+    });
   }
 
   return currentAvailabilitiesWithCurrentGroup;
@@ -268,7 +274,6 @@ tourSchema.virtual('maxGroupSizeCapacity').get(function () {
     (a, b) => b.maxGroupSize - a.maxGroupSize
   )[0]?.maxGroupSize;
 });
-
 
 // PRE SAVE MIDDLEWARES //
 // Pre-save hook: runs before .save() and .create()

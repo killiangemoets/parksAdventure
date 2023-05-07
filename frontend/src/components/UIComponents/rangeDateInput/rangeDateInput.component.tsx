@@ -24,11 +24,13 @@ const rangePresets: {
 type RangeDateInputProps = {
   currentValues: [Dayjs, Dayjs] | null;
   handleChange: (values: any) => void;
+  adminStyle?: boolean;
 };
 
 const RangeDateInput: FC<RangeDateInputProps> = ({
   currentValues,
   handleChange,
+  adminStyle = false,
 }) => {
   const dateInputs = document.querySelectorAll(".ant-picker-input input");
 
@@ -54,8 +56,7 @@ const RangeDateInput: FC<RangeDateInputProps> = ({
             colorBgElevated: "#fdfaf5",
           },
         },
-      }}
-    >
+      }}>
       <RangeDatePickerElement
         presets={rangePresets}
         disabledDate={disabledDate}
@@ -65,6 +66,7 @@ const RangeDateInput: FC<RangeDateInputProps> = ({
         }}
         format="DD/MM/YYYY"
         className="range-date-picker"
+        adminStyle={adminStyle}
       />
     </ConfigProvider>
   );

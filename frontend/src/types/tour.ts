@@ -35,7 +35,7 @@ export type TAvailabilityWithoutCurrentGroup = {
 
 export type TAvailability = TAvailabilityWithoutCurrentGroup & {
   currentGroupSize: number;
-}
+};
 
 export type TCategory =
   | "mountain"
@@ -96,7 +96,6 @@ export type TDifficultyOption =
       id: "null";
       value: "Select a difficulty";
     };
-
 
 export enum CREATE_TOUR_DATA {
   name = "name",
@@ -205,7 +204,7 @@ type TFiltersMinMax = {
 };
 
 export const filtersMinMax: TFiltersMinMax = {
-  price: [0, 500],
+  price: [0, 1000],
   duration: [0, 20],
   groupSize: [0, 100],
 };

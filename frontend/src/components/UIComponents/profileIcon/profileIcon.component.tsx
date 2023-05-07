@@ -11,6 +11,10 @@ import {
   BookingsOrangeIcon,
   ReviewsOrangeIcon,
   LogoutOrangeIcon,
+  DashboardIcon,
+  ToursIcon,
+  UsersIcon,
+  TourGuidesIcon,
 } from "./profileIcon.style";
 
 export enum PROFILE_ICON_TYPE_CLASSES {
@@ -21,6 +25,10 @@ export enum PROFILE_ICON_TYPE_CLASSES {
   messages = "messages",
   logout = "logout",
   addTour = "add tour",
+  dashboard = "dashboard",
+  tours = "tours",
+  users = "users",
+  tourGuides = "tour guides",
   settingsOrange = "settingsOrange",
   bookingsOrange = "bookingsOrange",
   reviewsOrange = "reviewsOrange",
@@ -38,6 +46,10 @@ const getIcon = (
     [PROFILE_ICON_TYPE_CLASSES.messages]: MessagesIcon,
     [PROFILE_ICON_TYPE_CLASSES.logout]: LogoutIcon,
     [PROFILE_ICON_TYPE_CLASSES.addTour]: PlusIcon,
+    [PROFILE_ICON_TYPE_CLASSES.dashboard]: DashboardIcon,
+    [PROFILE_ICON_TYPE_CLASSES.tours]: ToursIcon,
+    [PROFILE_ICON_TYPE_CLASSES.users]: UsersIcon,
+    [PROFILE_ICON_TYPE_CLASSES.tourGuides]: TourGuidesIcon,
     [PROFILE_ICON_TYPE_CLASSES.settingsOrange]: SettingsOrangeIcon,
     [PROFILE_ICON_TYPE_CLASSES.bookingsOrange]: BookingsOrangeIcon,
     [PROFILE_ICON_TYPE_CLASSES.reviewsOrange]: ReviewsOrangeIcon,

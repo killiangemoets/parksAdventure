@@ -29,6 +29,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function (val) {
+        console.log({ val });
+        if (val.length === 0) return true;
         return /((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))/.test(
           val
         );
@@ -37,6 +39,11 @@ const userSchema = new mongoose.Schema({
     },
   },
   birthDate: Date,
+  wishlist: {
+    type: [mongoose.Schema.ObjectId],
+    ref: 'Tour',
+    default: [],
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -55,7 +62,6 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: {
     type: Date,
-    select: false,
   },
   passwordResetToken: {
     type: String,

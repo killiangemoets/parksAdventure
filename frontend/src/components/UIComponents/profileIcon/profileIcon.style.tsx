@@ -7,6 +7,10 @@ import { ReactComponent as WishListSVG } from "../../../assets/heart.svg";
 import { ReactComponent as MessagesSVG } from "../../../assets/chat-bubble.svg";
 import { ReactComponent as LogoutSVG } from "../../../assets/logout-icon.svg";
 import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
+import { ReactComponent as HomeSVG } from "../../../assets/home.svg";
+import { ReactComponent as MapSVG } from "../../../assets/map.svg";
+import { ReactComponent as UsersSVG } from "../../../assets/users.svg";
+import { ReactComponent as HikerSVG } from "../../../assets/person-hiking-solid.svg";
 
 export const SettingsIcon = styled(SettingsSVG)`
   width: 2rem;
@@ -67,6 +71,42 @@ export const LogoutIcon = styled(LogoutSVG)`
   height: 2rem;
 
   .path {
+    stroke: #fbf3e5;
+  }
+`;
+
+export const DashboardIcon = styled(HomeSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    stroke: #fbf3e5;
+  }
+`;
+
+export const ToursIcon = styled(MapSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    stroke: #fbf3e5;
+  }
+`;
+export const UsersIcon = styled(UsersSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    stroke: #fbf3e5;
+  }
+`;
+export const TourGuidesIcon = styled(HikerSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    fill: none;
+    stroke-width: 28;
     stroke: #fbf3e5;
   }
 `;

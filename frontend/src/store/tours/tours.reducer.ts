@@ -9,7 +9,7 @@ export type ToursState = {
   readonly error: string | null;
 };
 
-export const TOUR_INITIAL_STATE: ToursState = {
+export const TOURS_INITIAL_STATE: ToursState = {
   tours: [],
   total: 0,
   isLoading: false,
@@ -17,7 +17,7 @@ export const TOUR_INITIAL_STATE: ToursState = {
 };
 
 export const toursReducer = (
-  state = TOUR_INITIAL_STATE,
+  state = TOURS_INITIAL_STATE,
   action = {} as ToursDipatchTypes
 ): ToursState => {
   switch (action.type) {
@@ -35,6 +35,8 @@ export const toursReducer = (
         error: action.payload,
         isLoading: false,
       };
+    case TOURS_ACTION_TYPES.CLEAR_TOURS:
+      return TOURS_INITIAL_STATE;
     default:
       return state;
   }

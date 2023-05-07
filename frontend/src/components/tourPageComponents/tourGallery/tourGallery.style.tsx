@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
 
 export const TourGalleryContainer = styled.div`
@@ -79,7 +79,19 @@ export const TourGalleryButtons = styled.div`
   padding: 0.8rem 1.6rem;
 `;
 
-export const HeartIcon = styled(HeartSVG)`
+type HeartIconProps = {
+  inwishlist: boolean;
+};
+
+export const HeartIcon = styled(HeartSVG)<HeartIconProps>`
   width: 2.4rem;
   height: 2.4rem;
+
+  ${({ inwishlist }) =>
+    inwishlist &&
+    css`
+      .fill {
+        fill: #cc704b;
+      }
+    `}
 `;

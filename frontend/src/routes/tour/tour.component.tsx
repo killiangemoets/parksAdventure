@@ -5,7 +5,7 @@ import TourItinerary from "../../components/tourPageComponents/tourItinerary/tou
 import TourReviews from "../../components/tourPageComponents/tourReviews/tourReviews.component";
 import TourRecommendations from "../../components/UIComponents/tourRecommendations/tourRecommendations.component";
 import TourInfos from "../../components/tourPageComponents/tourInfos/tourInfos.component";
-import { TourContainer } from "./tour.style";
+import { FixAdminTourNavbar, TourContainer, TourWrapper } from "./tour.style";
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../store/store";
@@ -16,6 +16,9 @@ import {
   selectTourError,
 } from "../../store/tour/tour.selector";
 import NotFound from "../../components/notFoundComponent/notFound.component";
+import AdminTourNavbar from "../../components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
+import { selectUserRole } from "../../store/user/user.selector";
+import { USER_ROLE_TYPES } from "../../types/user";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -31,6 +34,7 @@ const Tour = () => {
   const reviewsRef = useRef<HTMLDivElement | null>(null);
   const error = useSelector(selectTourError);
   const recommendations = useSelector(selectRecommendations);
+  const userRole = useSelector(selectUserRole);
 
   useEffect(() => {
     if (error) {
@@ -59,16 +63,23 @@ const Tour = () => {
   } else {
     return (
       <TourContainer>
-        <TourHeader
-          handleScrollToBooking={handleScrollToBooking}
-          handleScrollToReviews={handleScrollToReviews}
-        />
-        <TourGallery />
-        <TourInfos />
-        <TourItinerary />
-        <TourBooking forwardRef={bookingRef} />
-        <TourReviews forwardRef={reviewsRef} />
-        <TourRecommendations tours={recommendations || []} />
+        {userRole === USER_ROLE_TYPES.ADMIN && (
+          <FixAdminTourNavbar>
+            <AdminTourNavbar />
+          </FixAdminTourNavbar>
+        )}
+        <TourWrapper paddingTop={userRole === USER_ROLE_TYPES.ADMIN}>
+          <TourHeader
+            handleScrollToBooking={handleScrollToBooking}
+            handleScrollToReviews={handleScrollToReviews}
+          />
+          <TourGallery />
+          <TourInfos />
+          <TourItinerary />
+          <TourBooking forwardRef={bookingRef} />
+          <TourReviews forwardRef={reviewsRef} />
+          <TourRecommendations tours={recommendations || []} />
+        </TourWrapper>
       </TourContainer>
     );
   }

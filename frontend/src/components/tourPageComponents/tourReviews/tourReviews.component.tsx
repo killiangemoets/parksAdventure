@@ -62,8 +62,10 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
             <Review
               key={i}
               date={review.createdAt}
-              userImg={review.user.photo}
-              userName={`${review.user.firstname} ${review.user.lastname}`}
+              userImg={review.user?.photo}
+              userName={`${
+                review.user ? review.user?.firstname : "Unkonwn Hiker"
+              } ${review.user ? review.user?.lastname : ""}`}
               review={review.review}
               rating={review.rating}
               edited={review.edited}
@@ -78,8 +80,7 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
           buttonType={BUTTON_TYPE_CLASSES.inverted}
           onClick={() => {
             handleRenderReviews();
-          }}
-        >
+          }}>
           See more reviews
         </Button>
       )}

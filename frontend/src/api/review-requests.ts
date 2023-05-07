@@ -65,9 +65,9 @@ export const createReview = async (
   }
 };
 
-export const getReviews = async () => {
+export const getTop10Reviews = async () => {
   try {
-    const response = await axiosInstance.get("/reviews/mine");
+    const response = await axiosInstance.get("/reviews/top10");
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

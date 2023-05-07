@@ -8,17 +8,20 @@ import TourCard from "../../UIComponents/tourCard/tourCard.component";
 import { ToursCardsContainer, ToursCardsWrapper } from "./toursCards.style";
 
 export type ToursCardsProps = {
-  mapOpen: boolean;
-  handleOverTourCard: (id: string | undefined) => void;
+  mapOpen?: boolean;
+  handleOverTourCard?: (id: string | undefined) => void;
 };
 
-const ToursCards: FC<ToursCardsProps> = ({ mapOpen, handleOverTourCard }) => {
+const ToursCards: FC<ToursCardsProps> = ({
+  mapOpen = false,
+  handleOverTourCard,
+}) => {
   const tours = useSelector(selectTours);
   const error = useSelector(selectToursError);
 
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
+  // useEffect(() => {
+  //   console.log(error);
+  // }, [error]);
 
   return (
     <ToursCardsContainer>

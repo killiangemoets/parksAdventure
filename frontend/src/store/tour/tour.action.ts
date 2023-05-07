@@ -40,7 +40,6 @@ export const fetchTourAsync =
   (slug: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getTour(slug);
-    console.log(response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({
@@ -56,13 +55,12 @@ export const fetchTourBookingAsync =
   (id: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getMyBookingDetails(id);
-    console.log(response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({
           ...response.data.tour,
           recommendations: response.data.recommendations,
-          booking: response.data.booking
+          booking: response.data.booking,
         })
       );
     else dispatch(fetchTourFailed(response.message));

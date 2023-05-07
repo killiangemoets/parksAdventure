@@ -55,13 +55,13 @@ export const SignupForm = () => {
     setErrorMessage("");
     const response = await signUp(signUpData, uri || undefined);
     setLoading(false);
-    console.log(response);
     if (response.status === "success") {
       setSuccess(true);
       dispatch(setEmail(email));
       setTimeout(function () {
         setSuccess(false);
-        return navigate("/signup/email-verification");
+        const uriString = uri ? `?uri=${uri}` : "";
+        return navigate(`/signup/email-verification${uriString}`);
       }, 2000);
     } else {
       if (response.message.includes("Duplicate field value"))

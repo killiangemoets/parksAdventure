@@ -81,8 +81,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
           // with `closeOnClick: true`
           e.originalEvent.stopPropagation();
           if (stop.popupContent) setPopupInfo(stop);
-        }}
-      >
+        }}>
         <InfoIcon
           iconType={
             (type === MAP_TYPE_CLASSES.tourItinerary && index === 0) ||
@@ -112,7 +111,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
 
   useEffect(() => {
     if (!initialViewState) return;
-    console.log("NEW VIEW STATE", initialViewState);
+    // console.log("NEW VIEW STATE", initialViewState);
     setViewState(initialViewState);
   }, [initialViewState]);
 
@@ -151,8 +150,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
       onMoveEnd={handleOnMove}
       dragRotate={false}
       mapStyle="mapbox://styles/killiangemoets/clcdpld4j009w14oxa2fmtnvx"
-      mapboxAccessToken={MAPBOX_TOKEN}
-    >
+      mapboxAccessToken={MAPBOX_TOKEN}>
       {geolocationControl && <GeolocateControl position="top-left" />}
       {fullscreenControl && <FullscreenControl position="top-left" />}
       {navigationControl && <NavigationControl position="top-left" />}
@@ -164,8 +162,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
           latitude={Number(popupInfo.coordinates[1])}
           onClose={() => {
             setPopupInfo(null);
-          }}
-        >
+          }}>
           {popupInfo.popupContent}
         </InfoPopup>
       )}

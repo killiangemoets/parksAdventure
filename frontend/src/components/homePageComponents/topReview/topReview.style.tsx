@@ -6,7 +6,7 @@ export const TopReviewContainer = styled.div`
   align-items: center;
   /* justify-content: center; */
   gap: 1.6rem;
-  cursor: default;
+  cursor: pointer;
 
   /* cursor: grab; */
 `;
@@ -16,6 +16,7 @@ export const ReviewTitle = styled.h4`
   font-weight: 700;
   letter-spacing: 1px;
   text-align: center;
+  text-transform: capitalize;
 `;
 
 export const ReviewDescription = styled.p`

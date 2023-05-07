@@ -126,7 +126,7 @@ const AllTours = () => {
               />
             )}
           </AllToursResultsCards>
-          {tours.length ? (
+          {tours.length && numberOfPages > 1 ? (
             <Pagination
               current={currentPage}
               total={numberOfPages}

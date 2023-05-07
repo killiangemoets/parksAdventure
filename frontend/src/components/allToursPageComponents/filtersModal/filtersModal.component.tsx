@@ -6,7 +6,9 @@ import {
   FiltersData,
   filtersMinMax,
 } from "../../../types/tour";
-import Button from "../../UIComponents/button/button.component";
+import Button, {
+  BUTTON_TYPE_CLASSES,
+} from "../../UIComponents/button/button.component";
 import CheckBoxes from "../../UIComponents/checkBoxes/checkBoxes.component";
 import Modal, { ModalProps } from "../../UIComponents/modal/modal.component";
 import SliderInput from "../../UIComponents/sliderInput/sliderInput.component";
@@ -143,12 +145,25 @@ const FiltersModal: FC<FiltersModalProps> = ({
     handleCloseFilters();
   };
 
+  const handleReset = () => {
+    setFilters(defaultFiltersState);
+    searchParams.delete("category");
+    searchParams.delete("difficulty");
+    searchParams.delete("price[gte]");
+    searchParams.delete("price[lte]");
+    searchParams.delete("duration[gte]");
+    searchParams.delete("duration[lte]");
+    searchParams.delete("groupSize[gte]");
+    searchParams.delete("groupSize[lte]");
+    searchParams.delete("page");
+    setSearchParams(searchParams);
+  };
+
   return (
     <Modal
       title={"Filters"}
       handleClose={handleCloseFilters}
-      open={filtersOpen}
-    >
+      open={filtersOpen}>
       <Filters>
         <FilterElement>
           <FilterTitle>Price</FilterTitle>
@@ -216,6 +231,11 @@ const FiltersModal: FC<FiltersModalProps> = ({
         </FilterElement>
       </Filters>
       <ButtonSection>
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.cancel}
+          onClick={() => handleReset()}>
+          Reset filters
+        </Button>
         <Button onClick={() => handleConfirm()}>Show Results</Button>
       </ButtonSection>
     </Modal>

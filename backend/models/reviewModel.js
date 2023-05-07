@@ -45,7 +45,7 @@ reviewSchema.index({ createdAt: 1 });
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tour',
-    select: 'name imageCover slug',
+    select: 'name imageCover slug duration',
   }).populate({
     path: 'user',
     select: 'firstname lastname photo',
@@ -60,6 +60,7 @@ reviewSchema.pre(/^find/, function (next) {
 
 reviewSchema.statics.calcAverageRatings = async function (tourId) {
   // since we use a static method, 'this' points to the model
+
   const stats = await this.aggregate([
     {
       $match: { tour: tourId },
@@ -88,11 +89,13 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
 
 reviewSchema.post('save', function () {
   //this points to current review and this.constructor points to the model
+  console.log('save');
   this.constructor.calcAverageRatings(this.tour);
 });
 
 // Behind the scene, findByIdAndUpdate and findByIdAndDelete are only a shorthand for findOneAndUpadate and findOneAndDelete
 reviewSchema.post(/^findOneAnd/, async function (doc) {
+  console.log('update');
   await doc.constructor.calcAverageRatings(doc.tour);
 });
 

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
 
@@ -56,7 +56,11 @@ export const TourCardContainer = styled.div`
   }
 `;
 
-export const WishListIcon = styled(HeartSVG)`
+type WishListIconProps = {
+  inWishList: boolean;
+};
+
+export const WishListIcon = styled(HeartSVG)<WishListIconProps>`
   width: 2.4rem;
   height: 2.4rem;
   cursor: pointer;
@@ -64,7 +68,7 @@ export const WishListIcon = styled(HeartSVG)`
     fill: #cc704b;
   }
   .fill {
-    fill: rgba(204, 112, 75, 0.4);
+    fill: rgba(204, 112, 75, 0.32);
     transition: all 0.3s;
   }
 
@@ -73,6 +77,14 @@ export const WishListIcon = styled(HeartSVG)`
       fill: #cc704b;
     }
   }
+
+  ${({ inWishList }) =>
+    inWishList &&
+    css`
+      .fill {
+        fill: #cc704b;
+      }
+    `}
 `;
 
 export const TourTitle = styled.h3`

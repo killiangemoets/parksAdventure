@@ -32,7 +32,7 @@ import {
 import QuickFactInput, {
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-import { NewTourDataValueTypes } from "../../../../routes/addTour/addTour.component";
+import { NewTourDataValueTypes } from "../../../../routes/adminRoutes/adminAddTour/adminAddTour.component";
 import {
   categoriesInfoList,
   CREATE_TOUR_DATA,
@@ -170,8 +170,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 name={CREATE_TOUR_DATA.categories}
                 selection={categories}
                 options={categoriesInfoList}
-                error={categoriesError}
-              >
+                error={categoriesError}>
                 {categories.length > 0 ? (
                   <p>{categoriesString}</p>
                 ) : (
@@ -190,8 +189,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                     buttonType={BUTTON_TYPE_CLASSES.empty}
                     onClick={() => {
                       removeTourGuide(i);
-                    }}
-                  >
+                    }}>
                     <CloseIcon />
                   </Button>
                 </TourGuideSelected>
@@ -215,8 +213,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
               })}
               current={{ id: "null", value: "" }}
               handleInput={handleTourGuides}
-              keeOpenAfterSelection={true}
-            >
+              keeOpenAfterSelection={true}>
               Select Tour Guides
             </Dropdown>
             <ErrorMessage>

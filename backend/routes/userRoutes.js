@@ -17,6 +17,9 @@ router.patch('/reset-password/:token', authController.resetPassword);
 // /!\ This will protect all the routes that come after this middleware, because middlewares run in sequence
 router.use(authController.protect);
 
+router.patch('/addToWishlist', userController.addToWishList);
+router.patch('/removeFromWishlist', userController.removeFromWishList);
+
 router.get('/isloggedin', authController.isLoggedIn);
 
 router.patch('/updateMyPassword', authController.updatePassword);

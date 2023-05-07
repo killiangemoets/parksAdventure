@@ -1,9 +1,5 @@
 import { FC } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../api/authentication-requests";
-import { AppDispatch } from "../../store/store";
-import { removeUser } from "../../store/user/user.action";
 import ProfileIcon, {
   PROFILE_ICON_TYPE_CLASSES,
 } from "../UIComponents/profileIcon/profileIcon.component";
@@ -20,16 +16,11 @@ type ProfileDropdownProps = {
 };
 
 const ProfileDropdown: FC<ProfileDropdownProps> = ({ onLogout }) => {
-  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    const response = await logout();
-    if (response.status === "success") {
-      dispatch(removeUser());
-      onLogout();
-      return navigate("/");
-    }
+    onLogout();
+    navigate("/profile/logout");
   };
 
   return (
@@ -52,8 +43,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({ onLogout }) => {
       <ProfileDropdownDivElement
         onClick={() => {
           handleLogout();
-        }}
-      >
+        }}>
         <ProfileIcon iconType={PROFILE_ICON_TYPE_CLASSES.logoutOrange} />
         <ProfileDropdownText>Logout</ProfileDropdownText>
       </ProfileDropdownDivElement>

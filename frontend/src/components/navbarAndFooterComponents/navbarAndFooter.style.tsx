@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as DropdownSVG } from "./../../assets/chevron-down.svg";
@@ -29,7 +29,12 @@ export const LinksContainer = styled.div`
   gap: 2rem;
 `;
 
-export const NavBarLink = styled(Link)`
+type NavBarLinkProps = {
+  addMargin?: boolean;
+};
+
+export const NavBarLink = styled(Link)<NavBarLinkProps>`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.8rem;
@@ -40,9 +45,35 @@ export const NavBarLink = styled(Link)`
   font-weight: 400;
   letter-spacing: 0.2px;
 
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    text-align: center;
+    top: -0.2rem;
+    right: -2rem;
+    background-color: #cc704b;
+    color: #fbf3e5;
+    border-radius: 999px;
+    width: 1.6rem;
+    height: 1.6rem;
+    font-size: 1rem;
+    line-height: 1rem;
+  }
+
   &:hover {
     color: #cc704b;
+    span {
+      color: #fbf3e5;
+    }
   }
+
+  ${({ addMargin }) =>
+    addMargin &&
+    css`
+      margin-right: 1.6rem;
+    `}
 `;
 
 export const NavBarButton = styled.button`

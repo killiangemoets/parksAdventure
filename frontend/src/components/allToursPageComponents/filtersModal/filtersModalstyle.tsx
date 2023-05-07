@@ -37,5 +37,5 @@ export const ButtonSection = styled.div`
   /* padding: 1.6rem 0rem 4.8rem 0rem; */
 
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;

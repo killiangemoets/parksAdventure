@@ -8,17 +8,22 @@ import {
   TopReviewContainer,
   UserName,
 } from "./topReview.style";
-import { Review } from "../reviewsSection/reviewsSection.component";
+import { useNavigate } from "react-router-dom";
+import { TopReviewData } from "../../../types/review";
 
 export type TopReviewProps = {
-  review: Review;
+  review: TopReviewData;
 };
 
 const TopReview: FC<TopReviewProps> = ({ review }) => {
+  const navigate = useNavigate();
+  const handleClickTitle = () => {
+    navigate(`/tour/${review.slug}`);
+  };
   return (
-    <TopReviewContainer>
+    <TopReviewContainer onClick={handleClickTitle}>
       <ReviewTitle>{review.title}</ReviewTitle>
-      <StarsRating hiddenValue={true} rating={4.5} numRatings={6} />
+      <StarsRating hiddenValue={true} rating={review.rate} />
       <ReviewDescription>{review.description}</ReviewDescription>
       <ReviewUser>
         <ProfilePicture pictureUrl={review.profilePicture} />

@@ -32,20 +32,13 @@ export const SettingsInputs = styled.div`
   gap: 3.2rem;
 `;
 
-export const CurrentPicture = styled.div`
-  display: flex;
-  /* flex-direction: column; */
-  align-items: center;
-  justify-content: center;
-  gap: 3.2rem;
-
-  button {
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`;
 export const SaveButtonContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const UpdateButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: flex-end;

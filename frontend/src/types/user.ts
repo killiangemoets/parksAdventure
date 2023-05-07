@@ -1,3 +1,10 @@
+export enum USER_ROLE_TYPES {
+  USER = "user",
+  GUIDE = "guide",
+  LEAD_GUIDE = "lead-guide",
+  ADMIN = "admin",
+}
+
 export type TUser = {
   email: string;
   firstname: string;
@@ -5,7 +12,8 @@ export type TUser = {
   photo?: string;
   phoneNumber?: string;
   birthDate?: Date;
-  role: "user" | "guide" | "lead-guide" | "admin";
+  role: USER_ROLE_TYPES;
+  wishlist: string[];
   id: string;
 };
 
@@ -15,6 +23,14 @@ export type UpdateUserData = {
   photo?: string;
   phoneNumber?: string;
   birthDate?: Date;
+  wishlist?: string[];
+};
+
+export type UpdateUserPasswordData = {
+  passwordCurrent?: string;
+  password?: string;
+  passwordConfirm?: string;
+  stayConnected?: boolean;
 };
 
 export type LoginData = {
@@ -40,4 +56,12 @@ export type CheckoutInputsUserData = {
   firstname?: string;
   lastname?: string;
   phoneNumber?: string;
+};
+
+export type UpdateUserInputData = {
+  firstname?: string;
+  lastname?: string;
+  photo?: string;
+  phoneNumber?: string;
+  birthDate?: Date;
 };

@@ -17,7 +17,10 @@ export type FetchToursFailed = ActionWithPayload<
 export type ToursDipatchTypes =
   | FetchToursStart
   | FetchToursSuccess
-  | FetchToursFailed;
+  | FetchToursFailed
+  | ClearTours;
+
+export type ClearTours = Action<TOURS_ACTION_TYPES.CLEAR_TOURS>;
 
 const fetchToursStart = (): FetchToursStart => {
   return { type: TOURS_ACTION_TYPES.FETCH_TOURS_START };
@@ -43,9 +46,12 @@ export const fetchToursAsync =
   async (dispatch: Dispatch<ToursDipatchTypes>) => {
     dispatch(fetchToursStart());
     const response = await getTours(requestString);
-    console.log(response);
 
     if (response.status === "success")
       dispatch(fetchToursSuccess(response.data.data, response.totalResults));
     else dispatch(fetchToursFailed(response.message));
   };
+
+export const clearTours = (): ClearTours => {
+  return { type: TOURS_ACTION_TYPES.CLEAR_TOURS };
+};

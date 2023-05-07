@@ -11,7 +11,7 @@ export const selectCartItems = createSelector(
   (cartSlice) => cartSlice.items
 );
 
-export const selectOrder = createSelector(
+export const selectCartNumberOfItems = createSelector(
   [selectCartReducer],
-  (cartSlice) => cartSlice.order
+  (cartSlice) => cartSlice.items.length
 );

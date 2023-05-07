@@ -11,58 +11,47 @@ import {
   ReviewsSecPicture,
   ReviewsSecWrapper,
 } from "./reviewsSection.style";
-
-export type Review = {
-  title: string;
-  description: string;
-  name: string;
-  profilePicture: string;
-  rate: number;
-};
-
-const reviewsData: Review[] = [
-  {
-    title: "Banff National Park Experience - 3 days",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem. Ullam dignissimos, quia repudiandae impedit quas harum maiores.eum quas autem. Ullam dignissimos, quia repudiandae impedit quas harummaiores.",
-    name: "Lucas Scott",
-    profilePicture: "images/user.jpg",
-    rate: 4,
-  },
-  {
-    title: "Rocky mountains- 7 days",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem. Ullam dignissimos, quia repudiandae impedit quas harum maiores.eum quas autem. Ullam dignissimos, quia repudiandae impedit quas harummaiores. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus voluptatibus quia hic ipsam fugiat nemo consectetur error, quo molestias aut placeat voluptatem labore? Maiores eligendi atque omnis est ab quam.",
-    name: "Nathan Scott",
-    profilePicture: "images/user.jpg",
-    rate: 4,
-  },
-  {
-    title: "Great Smoky Mountains National Park - 4 days",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus!.",
-    name: "Tom Saywer",
-    profilePicture: "images/user.jpg",
-    rate: 4,
-  },
-  {
-    title: "Jasper Nation Park - 2 days",
-    description:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ut at corporiaut debitis tempore? Nam quod voluptatibus, eos obcaecati eum qua autem!.",
-    name: "David Goggins",
-    profilePicture: "images/user.jpg",
-    rate: 4,
-  },
-];
+import { TReview } from "../../../types/review";
+import { getTop10Reviews } from "../../../api/review-requests";
 
 const ReviewsSection = () => {
   const [reviews, setReviews] = useState<React.ReactNode[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    const reviewsEl = reviewsData.map((reviewData) => (
-      <TopReview review={reviewData} />
-    ));
-    setReviews(reviewsEl);
+    const handleGetReviews = async () => {
+      setIsLoading(true);
+      const response = await getTop10Reviews();
+      console.log(response);
+      if (response && response.status === "success") {
+        const reviewsList = response.data.data;
+        const reviewCards = reviewsList.map((review: TReview) => {
+          const title = `${review.tour.name} - ${review.tour.duration} ${
+            review.tour.duration > 1 ? "days" : "days"
+          }`.toLowerCase();
+          const description = review.review;
+          const name = `${review.user.firstname} ${review.user.lastname}`;
+          const profilePicture = review.user.photo;
+          const rate = review.rating;
+          const slug = review.tour.slug;
+          return (
+            <TopReview
+              review={{ title, description, name, rate, profilePicture, slug }}
+            />
+          );
+        });
+        setReviews(reviewCards);
+
+        setErrorMessage(undefined);
+      } else {
+        setErrorMessage("An error occured. Try to reload the page!");
+      }
+      setIsLoading(false);
+    };
+    handleGetReviews();
   }, []);
 
   return (

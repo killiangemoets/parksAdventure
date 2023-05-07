@@ -15,3 +15,13 @@ export const selectUserId = createSelector(
   [selectUserReducer],
   (userSlice) => userSlice.id
 );
+
+export const selectUserWishlist = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.wishlist
+);
+
+export const selectUserRole = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.role
+);
