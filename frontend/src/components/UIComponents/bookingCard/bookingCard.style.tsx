@@ -91,3 +91,5 @@ export const BookingReviewButton = styled.div`
     padding: 1rem 2rem;
   }
 `;
+
+export const BookingReviewUserInfo = styled.div``;

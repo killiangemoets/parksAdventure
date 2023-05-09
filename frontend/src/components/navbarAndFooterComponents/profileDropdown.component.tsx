@@ -1,52 +1,54 @@
-import { FC } from "react";
-import { useNavigate } from "react-router-dom";
-import ProfileIcon, {
-  PROFILE_ICON_TYPE_CLASSES,
-} from "../UIComponents/profileIcon/profileIcon.component";
+import { useEffect, useState } from "react";
+import ProfileIcon from "../UIComponents/profileIcon/profileIcon.component";
 import {
   ProfileDropdownContainer,
-  ProfileDropdownDivElement,
   ProfileDropdownElement,
   ProfileDropdownLine,
   ProfileDropdownText,
 } from "./profileDropdown.style";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../store/user/user.selector";
+import { USER_ROLE_TYPES } from "../../types/user";
+import {
+  ProfileSectionElement,
+  adminDropdownSections,
+  userDropdownSections,
+} from "../../utils/profileSections/profileSectionLists";
 
-type ProfileDropdownProps = {
-  onLogout: () => void;
-};
+const ProfileDropdown = () => {
+  const userRole = useSelector(selectUserRole);
+  const [profileSections, setProfileSection] = useState<
+    ProfileSectionElement[]
+  >([]);
 
-const ProfileDropdown: FC<ProfileDropdownProps> = ({ onLogout }) => {
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    onLogout();
-    navigate("/profile/logout");
-  };
+  useEffect(() => {
+    if (!userRole) return;
+    if (userRole === USER_ROLE_TYPES.ADMIN)
+      setProfileSection(adminDropdownSections);
+    else setProfileSection(userDropdownSections);
+  }, [userRole]);
 
   return (
     <ProfileDropdownContainer>
-      <ProfileDropdownElement to="/profile/bookings">
-        <ProfileIcon iconType={PROFILE_ICON_TYPE_CLASSES.bookingsOrange} />
-        <ProfileDropdownText>My Bookings</ProfileDropdownText>
-      </ProfileDropdownElement>
-      <ProfileDropdownLine />
-      <ProfileDropdownElement to="/profile/reviews">
-        <ProfileIcon iconType={PROFILE_ICON_TYPE_CLASSES.reviewsOrange} />
-        <ProfileDropdownText>My Reviews</ProfileDropdownText>
-      </ProfileDropdownElement>
-      <ProfileDropdownLine />
-      <ProfileDropdownElement to="/profile/settings">
-        <ProfileIcon iconType={PROFILE_ICON_TYPE_CLASSES.settingsOrange} />
-        <ProfileDropdownText>Settings</ProfileDropdownText>
-      </ProfileDropdownElement>
-      <ProfileDropdownLine />
-      <ProfileDropdownDivElement
-        onClick={() => {
-          handleLogout();
-        }}>
-        <ProfileIcon iconType={PROFILE_ICON_TYPE_CLASSES.logoutOrange} />
-        <ProfileDropdownText>Logout</ProfileDropdownText>
-      </ProfileDropdownDivElement>
+      {profileSections.map((section, i) => {
+        if (i === 0)
+          return (
+            <ProfileDropdownElement to={section.link}>
+              <ProfileIcon iconType={section.iconType} />
+              <ProfileDropdownText>{section.label}</ProfileDropdownText>
+            </ProfileDropdownElement>
+          );
+        else
+          return (
+            <>
+              <ProfileDropdownLine />
+              <ProfileDropdownElement to={section.link}>
+                <ProfileIcon iconType={section.iconType} />
+                <ProfileDropdownText>{section.label}</ProfileDropdownText>
+              </ProfileDropdownElement>
+            </>
+          );
+      })}
     </ProfileDropdownContainer>
   );
 };

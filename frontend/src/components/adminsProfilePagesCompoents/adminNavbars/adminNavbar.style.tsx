@@ -35,3 +35,11 @@ export const AdminNavbarLeftContainer = styled.div`
   justify-content: center;
   gap: 2rem;
 `;
+
+export const FixAdminTourNavbar = styled.div`
+  padding-top: 8rem;
+  position: fixed;
+  left: 0%;
+  width: 100vw;
+  z-index: 9;
+`;

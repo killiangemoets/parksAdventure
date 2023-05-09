@@ -57,8 +57,9 @@ const AllTours = () => {
     const updatedRequestStringFromUrl =
       requestStringFromUrl &&
       requestStringFromUrl.replace(/(&viewstate|viewstate).*zoom/, "");
+    // onlyAvailables=true&
     const requestString =
-      `?onlyAvailables=true&limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
+      `?limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
       (updatedRequestStringFromUrl ? `&${updatedRequestStringFromUrl}` : "");
     dispatch(fetchToursAsync(requestString));
   }, [searchParams]);

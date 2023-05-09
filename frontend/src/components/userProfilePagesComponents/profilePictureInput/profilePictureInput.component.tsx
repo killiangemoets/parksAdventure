@@ -1,4 +1,5 @@
 import { Upload, UploadProps } from "antd";
+import ImgCrop from "antd-img-crop";
 import ProfilePicture, {
   PROFILE_PICTURE_SIZE_CLASSES,
 } from "../../UIComponents/profilePicture/profilePicture.component";
@@ -49,16 +50,19 @@ const ProfilePictureInput: FC<ProfilePictureInputProps> = ({
         pictureUrl={image}
         handleDelete={handleDeleteImage}
       />
-      <Upload
-        accept="image/*"
-        customRequest={uploadImage}
-        fileList={[]}
-        onChange={onChangeImage}>
-        <Button type="button" buttonType={BUTTON_TYPE_CLASSES.empty}>
-          <UploadOutlined />
-          Upload profile picture
-        </Button>
-      </Upload>
+      <ImgCrop rotationSlider>
+        <Upload
+          accept="image/*"
+          customRequest={uploadImage}
+          // listType="picture-card"
+          // fileList={[]}
+          onChange={onChangeImage}>
+          <Button type="button" buttonType={BUTTON_TYPE_CLASSES.empty}>
+            <UploadOutlined />
+            Upload profile picture
+          </Button>
+        </Upload>
+      </ImgCrop>
     </ProfilePictureContainer>
   );
 };

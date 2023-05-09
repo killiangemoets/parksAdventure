@@ -7,6 +7,7 @@ import {
   BookingPicture,
   BookingPictureAndInfos,
   BookingReviewButton,
+  BookingReviewUserInfo,
   BookingText,
   BookingTitle,
   ConfirmationIcon,
@@ -18,16 +19,22 @@ import { niceDatesRange } from "../../../utils/formatting/formatDates";
 import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
 import CreateReviewModal from "../createReviewModal/createReviewModal.component";
 import getEndDate from "../../../utils/dataManipulation/getEndDate";
+import ReviewProfile from "../reviewProfile/reviewProfile.component";
 
 type BookingCardProps = {
   booking: TBooking;
   allowReview?: boolean;
+  showUserInfo?: boolean;
 };
 
-const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
+const BookingCard: FC<BookingCardProps> = ({
+  booking,
+  allowReview = true,
+  showUserInfo = false,
+}) => {
   const navigate = useNavigate();
 
-  const endDate = getEndDate(booking.date, booking.tour.duration);
+  const endDate = getEndDate(booking.date, booking.tour?.duration || 0);
 
   const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
 
@@ -39,10 +46,10 @@ const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
     <BookingCardContainer>
       <BookingPictureAndInfos>
         <BookingPicture>
-          <img src={booking.tour.imageCover} alt="tour illustration" />
+          <img src={booking.tour?.imageCover} alt="tour illustration" />
         </BookingPicture>
         <BookingInfos>
-          <BookingTitle>{booking.tour.name}</BookingTitle>
+          <BookingTitle>{booking.tour?.name}</BookingTitle>
           <BookingConfirmation>
             <ConfirmationIcon />
             <ConfirmationText>Confirmed Reservation</ConfirmationText>
@@ -75,11 +82,19 @@ const BookingCard: FC<BookingCardProps> = ({ booking, allowReview = true }) => {
           </Button>
         </BookingReviewButton>
       )}
+      {showUserInfo && (
+        <BookingReviewUserInfo>
+          <ReviewProfile
+            userName={`${booking.user.firstname} ${booking.user.lastname}`}
+            userImg={booking.user.photo}
+          />
+        </BookingReviewUserInfo>
+      )}
       <CreateReviewModal
-        tourId={booking.tour._id}
-        tourImg={booking.tour.imageCover}
-        tourName={booking.tour.name}
-        tourLink={`/tour/${booking.tour.slug}`}
+        tourId={booking.tour?._id}
+        tourImg={booking.tour?.imageCover}
+        tourName={booking.tour?.name}
+        tourLink={`/tour/${booking.tour?.slug}`}
         open={reviewModalOpen}
         handleClose={handleCloseReviewModal}
       />

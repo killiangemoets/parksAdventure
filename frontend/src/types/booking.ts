@@ -57,17 +57,18 @@ export type BookingTourData = {
   imageCover: string;
   slug: string;
   _id: string;
-}
+};
 
 export type BookingUserData = {
   email: string;
   firstname: string;
   lastname: string;
   phoneNumber: string;
+  photo: string;
   role: string;
   _v: number;
   _id: string;
-}
+};
 
 export type TBooking = {
   tour: BookingTourData;
@@ -81,4 +82,4 @@ export type TBooking = {
   orderNumber: number;
   pin: number;
   _id: string;
-}
+};

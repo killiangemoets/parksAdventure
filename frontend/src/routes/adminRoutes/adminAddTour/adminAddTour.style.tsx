@@ -1,12 +1,22 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { BaseButton } from "../../../components/UIComponents/button/button.style";
 import { CheckBoxesContainer } from "../../../components/UIComponents/checkBoxes/checkBoxes.style";
 
-export const AddTourContainer = styled.div`
+type AddTourContainerProps = {
+  paddingTop?: boolean;
+};
+
+export const AddTourContainer = styled.div<AddTourContainerProps>`
   display: flex;
   flex-direction: column;
   /* gap: 6.4rem; */
   width: 100%;
+
+  ${({ paddingTop }) =>
+    paddingTop &&
+    css`
+      padding-top: 18rem;
+    `}
 `;
 
 export const AddTourButtons = styled.div`

@@ -90,13 +90,7 @@ export const Navigation = () => {
             </SignUpButton>
           </>
         )}
-        {showProfileDropdown && (
-          <ProfileDropdown
-            onLogout={() => {
-              setShowProfileDropdown(false);
-            }}
-          />
-        )}
+        {showProfileDropdown && <ProfileDropdown />}
       </LinksContainer>
     </NavBarContainer>
   );

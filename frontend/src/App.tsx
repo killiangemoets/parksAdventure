@@ -22,7 +22,7 @@ import { removeUser, setUser } from "./store/user/user.action";
 import Cart from "./routes/cart/cart.component";
 import CheckoutLine from "./components/checkoutPagesComponents/checkoutLine/checkoutLine.component";
 import { AppDispatch } from "./store/store";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ConfirmationStep from "./routes/checkoutRoutes/confirmationStep/confirmationStep.component";
 import NotFound from "./components/notFoundComponent/notFound.component";
 import AdminAllBookings from "./routes/adminRoutes/adminAllBookings/adminAllBookings.component";
@@ -36,9 +36,13 @@ import AdminAllReviews from "./routes/adminRoutes/adminAllReviews/adminAllReview
 import AdminDashboard from "./routes/adminRoutes/adminDashboard/adminDashboard.component";
 import AdminAllUsers from "./routes/adminRoutes/adminAllUsers/adminAllUsers.component";
 import AdminGuides from "./routes/adminRoutes/adminGuides/adminGuides.component";
+import { selectUserRole } from "./store/user/user.selector";
+import { USER_ROLE_TYPES } from "./types/user";
+import AdminTourNavbar from "./components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
+  const userRole = useSelector(selectUserRole);
 
   useEffect(() => {
     const handleIsLoggedIn = async () => {
@@ -85,7 +89,10 @@ function App() {
         <Route index element={<Home />} />
 
         <Route path="alltours" element={<AllTours />} />
-        <Route path="tour/:slug" element={<Tour />} />
+        <Route path="tour/:slug/" element={<AdminTourNavbar />}>
+          <Route index element={<Tour />} />
+          <Route path="edit" element={<AdminAddTour />} />
+        </Route>
 
         <Route path="signup" element={<Signup />} />
         <Route
@@ -117,7 +124,18 @@ function App() {
       </Route>
 
       <Route path="profile/" element={<UserProfile />}>
-        <Route index element={<Navigate to="/profile/bookings" />} />
+        <Route
+          index
+          element={
+            <Navigate
+              to={
+                userRole === USER_ROLE_TYPES.ADMIN
+                  ? "/profile/dashboard"
+                  : "/profile/bookings"
+              }
+            />
+          }
+        />
         <Route path="bookings/">
           <Route index element={<UserBookings />} />
           <Route path="details/:id" element={<UserBookingDetails />} />
@@ -125,12 +143,12 @@ function App() {
         <Route path="reviews" element={<UserReviews />} />
         <Route path="settings" element={<UserSettings />} />
         <Route path="logout" element={<UserLogout />} />
-        <Route path="add-tour" element={<AdminAddTour />} />
         <Route path="dashboard" element={<AdminDashboard />} />
         <Route path="all-bookings" element={<AdminAllBookings />} />
         <Route path="all-reviews" element={<AdminAllReviews />} />
         <Route path="all-users" element={<AdminAllUsers />} />
         <Route path="guides" element={<AdminGuides />} />
+        <Route path="add-tour" element={<AdminAddTour />} />
         {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
       </Route>
 

@@ -76,3 +76,15 @@ export const getTop10Reviews = async () => {
     return { status: "error", message: "An error occured. Please try again!" };
   }
 };
+
+export const getAllReviews = async () => {
+  try {
+    const response = await axiosInstance.get(`/reviews`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};

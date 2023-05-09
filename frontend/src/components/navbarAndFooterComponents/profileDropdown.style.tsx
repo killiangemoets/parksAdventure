@@ -22,16 +22,6 @@ export const ProfileDropdownElement = styled(Link)`
   }
 `;
 
-export const ProfileDropdownDivElement = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 2rem 3.2rem;
-  cursor: pointer;
-  &:hover {
-    color: #cc704b;
-  }
-`;
 export const ProfileDropdownText = styled.p`
   padding: 0 1.6rem;
   font-size: 1.6rem;

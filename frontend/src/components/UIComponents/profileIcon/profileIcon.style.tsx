@@ -144,3 +144,12 @@ export const LogoutOrangeIcon = styled(LogoutSVG)`
     stroke: #cc704b;
   }
 `;
+
+export const DashboardOrangeIcon = styled(HomeSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;

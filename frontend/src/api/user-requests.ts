@@ -41,3 +41,15 @@ export const removeFromWishlist = async (tourId: string) => {
     return err;
   }
 };
+
+export const getAllUsers = async (requestString: string = "") => {
+  try {
+    const response = await axiosInstance.get(`/users${requestString}`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};

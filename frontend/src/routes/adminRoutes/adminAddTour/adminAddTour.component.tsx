@@ -27,7 +27,9 @@ import {
 } from "../../../types/tour";
 import { createTour, getTourGuides } from "../../../api/tour-requests";
 import Spinner from "../../../components/UIComponents/spinner/spinner.component";
-import { TUser } from "../../../types/user";
+import { TUser, USER_ROLE_TYPES } from "../../../types/user";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../../store/user/user.selector";
 
 export type NewTourDataValueTypes =
   | string
@@ -114,6 +116,7 @@ const AdminAddTour = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
   const [tourGuidesList, setTourGuidesList] = useState<TUser[]>([]);
+  const userRole = useSelector(selectUserRole);
 
   useEffect(() => {
     const loadTourGuides = async () => {
@@ -194,7 +197,7 @@ const AdminAddTour = () => {
   };
 
   return (
-    <AddTourContainer>
+    <AddTourContainer paddingTop={userRole === USER_ROLE_TYPES.ADMIN}>
       <AddTourTitle
         title={name}
         handleChange={handleChange}

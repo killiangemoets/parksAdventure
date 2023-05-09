@@ -1,11 +1,11 @@
 import { FC } from "react";
-import { ProfileSectionElement } from "../../userProfilePagesComponents/userProfile/userProfile.component";
 import ProfileIcon from "../profileIcon/profileIcon.component";
 import {
   ProfileColumnContainer,
   ProfileSectionContainer,
   ProfileSectionLabel,
 } from "./profileColumns.style";
+import { ProfileSectionElement } from "../../../utils/profileSections/profileSectionLists";
 
 export type ProfileColumnProps = {
   profileSections: ProfileSectionElement[];

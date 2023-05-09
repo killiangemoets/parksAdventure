@@ -89,3 +89,15 @@ export const getMyBookingDetails = async (bookingId: string) => {
     return { status: "error", message: "An error occured. Please try again!" };
   }
 };
+
+export const getAllBookings = async () => {
+  try {
+    const response = await axiosInstance.get(`/bookings`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};
