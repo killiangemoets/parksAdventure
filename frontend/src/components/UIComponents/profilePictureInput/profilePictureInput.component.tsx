@@ -2,10 +2,8 @@ import { Upload, UploadProps } from "antd";
 import ImgCrop from "antd-img-crop";
 import ProfilePicture, {
   PROFILE_PICTURE_SIZE_CLASSES,
-} from "../../UIComponents/profilePicture/profilePicture.component";
-import Button, {
-  BUTTON_TYPE_CLASSES,
-} from "../../UIComponents/button/button.component";
+} from "../profilePicture/profilePicture.component";
+import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import { UploadOutlined } from "@ant-design/icons";
 import { FC } from "react";
 import convertToBase64 from "../../../utils/images-treatment/convert-base-64";

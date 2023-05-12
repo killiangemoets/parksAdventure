@@ -25,7 +25,7 @@ import { ErrorMessage } from "../../authenticationComponents/authentication.styl
 import { updateMe } from "../../../api/user-requests";
 import { updateUser } from "../../../store/user/user.action";
 import FormButton from "../../UIComponents/formButton/formButton.component";
-import ProfilePictureInput from "../profilePictureInput/profilePictureInput.component";
+import ProfilePictureInput from "../../UIComponents/profilePictureInput/profilePictureInput.component";
 
 const AccountSettings = () => {
   const dispatch: AppDispatch = useDispatch();

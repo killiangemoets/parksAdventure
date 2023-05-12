@@ -156,6 +156,7 @@ export enum TOUR_DATA {
   firstAvailability = "firstAvailability",
   minGroupSizeCapacity = "minGroupSizeCapacity",
   maxGroupSizeCapacity = "maxGroupSizeCapacity",
+  hiddenTour = "hiddenTour",
   id = "_id",
 }
 
@@ -166,7 +167,7 @@ export type TourData = {
   [TOUR_DATA.description]?: string;
   [TOUR_DATA.location]: string;
   [TOUR_DATA.imageCover]: string;
-  [TOUR_DATA.images]?: string[];
+  [TOUR_DATA.images]: string[];
   [TOUR_DATA.difficulty]: TDifficulty;
   [TOUR_DATA.categories]: TCategory[];
   [TOUR_DATA.ratingsAverage]: number;
@@ -187,6 +188,7 @@ export type TourData = {
   [TOUR_DATA.firstAvailability]: Date;
   [TOUR_DATA.minGroupSizeCapacity]: number;
   [TOUR_DATA.maxGroupSizeCapacity]: number;
+  [TOUR_DATA.hiddenTour]?: boolean;
 };
 
 export type FiltersData = {

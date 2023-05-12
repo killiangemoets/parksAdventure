@@ -28,8 +28,13 @@ import {
 import { createTour, getTourGuides } from "../../../api/tour-requests";
 import Spinner from "../../../components/UIComponents/spinner/spinner.component";
 import { TUser, USER_ROLE_TYPES } from "../../../types/user";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../../../store/user/user.selector";
+import { AppDispatch } from "../../../store/store";
+import { useParams } from "react-router-dom";
+import { fetchTourAsync } from "../../../store/tour/tour.action";
+import { selectTour } from "../../../store/tour/tour.selector";
+import getTourDataInEditFormat from "../../../utils/dataManipulation/getTourDataInEditFormat";
 
 export type NewTourDataValueTypes =
   | string
@@ -94,7 +99,15 @@ const defaultErrorsState: ErrorsProps = {
   generalMessage: "",
 };
 
+type TourSlugRouteParams = {
+  slug: string;
+};
+
 const AdminAddTour = () => {
+  const dispatch: AppDispatch = useDispatch();
+  const { slug } = useParams<
+    keyof TourSlugRouteParams
+  >() as TourSlugRouteParams;
   const [newTourData, setNewTourData] = useState<CreateTourData>(
     newTourDataDefaultState
   );
@@ -117,6 +130,23 @@ const AdminAddTour = () => {
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
   const [tourGuidesList, setTourGuidesList] = useState<TUser[]>([]);
   const userRole = useSelector(selectUserRole);
+  const tour = useSelector(selectTour);
+
+  useEffect(() => {
+    console.log("DISPATCH");
+    if (!slug || tour) return;
+    dispatch(fetchTourAsync(slug));
+  }, [slug]);
+
+  useEffect(() => {
+    const test = async () => {
+      if (!slug || !tour) return;
+      const editTourData = await getTourDataInEditFormat(tour);
+      setNewTourData(editTourData);
+    };
+    test();
+    console.log("TOUR", tour);
+  }, [tour]);
 
   useEffect(() => {
     const loadTourGuides = async () => {
@@ -197,7 +227,8 @@ const AdminAddTour = () => {
   };
 
   return (
-    <AddTourContainer paddingTop={userRole === USER_ROLE_TYPES.ADMIN}>
+    <AddTourContainer
+      paddingTop={Boolean(slug && userRole === USER_ROLE_TYPES.ADMIN)}>
       <AddTourTitle
         title={name}
         handleChange={handleChange}

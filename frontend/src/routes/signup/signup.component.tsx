@@ -7,7 +7,9 @@ export const Signup = () => {
 
   return (
     <SignupContainer>
-      <SignupWrapper>{true && <SignupForm />}</SignupWrapper>
+      <SignupWrapper>
+        <SignupForm />
+      </SignupWrapper>
     </SignupContainer>
   );
 };

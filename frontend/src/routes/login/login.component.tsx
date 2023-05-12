@@ -7,7 +7,9 @@ export const Login = () => {
 
   return (
     <LoginContainer>
-      <LoginWrapper>{true && <LoginForm />}</LoginWrapper>
+      <LoginWrapper>
+        <LoginForm />
+      </LoginWrapper>
     </LoginContainer>
   );
 };

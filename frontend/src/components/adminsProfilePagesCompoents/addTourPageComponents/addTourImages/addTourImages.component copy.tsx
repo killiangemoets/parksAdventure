@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { ConfigProvider, Upload } from "antd";
 import type { RcFile, UploadProps } from "antd/es/upload";
@@ -15,7 +15,6 @@ import Title, {
 } from "../../../UIComponents/title/title.component";
 import { CREATE_TOUR_DATA } from "../../../../types/tour";
 import convertToBase64 from "../../../../utils/images-treatment/convert-base-64";
-import ImagesInput from "../../../UIComponents/imagesInput/imagesInput.component";
 
 export type AddTourImagesProps = {
   images: UploadFile[];
@@ -30,7 +29,6 @@ const AddTourImages: FC<AddTourImagesProps> = ({
 }) => {
   const maxImages = 20;
   const [previewOpen, setPreviewOpen] = useState(false);
-  // const [currentImageUrl, setCurrentImageUrl] = useState<string>();
   const [previewImage, setPreviewImage] = useState("");
 
   console.log("IMAGES", images);
@@ -75,7 +73,7 @@ const AddTourImages: FC<AddTourImagesProps> = ({
         <AddTourImagesTitle>
           <Title titleType={TITLE_TYPE_CLASSES.section}>Tour images</Title>
         </AddTourImagesTitle>
-        {/* <ConfigProvider
+        <ConfigProvider
           theme={{
             hashed: false,
           }}>
@@ -90,8 +88,7 @@ const AddTourImages: FC<AddTourImagesProps> = ({
             onChange={onChange}>
             {images.length >= maxImages ? null : uploadButton}
           </Upload>
-        </ConfigProvider> */}
-        <ImagesInput />
+        </ConfigProvider>
         <Modal
           handleClose={handleCloseModal}
           open={previewOpen}

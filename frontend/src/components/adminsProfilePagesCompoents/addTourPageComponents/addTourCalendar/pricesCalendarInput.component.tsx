@@ -234,8 +234,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
                   buttonType={BUTTON_TYPE_CLASSES.inverted}
                   onClick={() => {
                     setDeleteModalOpen(true);
-                  }}
-                >
+                  }}>
                   Delete selected info
                 </Button>
               )}
@@ -244,15 +243,13 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
             <Button
               onClick={() => {
                 setPriceModalOpen(true);
-              }}
-            >
+              }}>
               Edit selection
             </Button>
 
             <Button
               buttonType={BUTTON_TYPE_CLASSES.empty}
-              onClick={resetSelectedDates}
-            >
+              onClick={resetSelectedDates}>
               <ResetIcon />
             </Button>
           </>
@@ -279,8 +276,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         title={"Edit selection"}
         handleClose={handleClosePriceModal}
         open={priceModalOpen}
-        closeOnClickOnOverlay={false}
-      >
+        closeOnClickOnOverlay={false}>
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}
           handleChange={handleChangeInput}
@@ -328,8 +324,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         <PriceModalButtons>
           <Button
             buttonType={BUTTON_TYPE_CLASSES.cancel}
-            onClick={handleClosePriceModal}
-          >
+            onClick={handleClosePriceModal}>
             Cancel
           </Button>
           <Button onClick={handleModalConfirm}>Confirm</Button>
@@ -338,8 +333,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       <Modal
         title={"Delete selection"}
         handleClose={handleCloseDeleteModal}
-        open={deleteModalOpen}
-      >
+        open={deleteModalOpen}>
         <DeleteMessage>
           Are you sure you want to delete the <br />
           selected availabilities?
@@ -347,8 +341,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         <PriceModalButtons>
           <Button
             buttonType={BUTTON_TYPE_CLASSES.cancel}
-            onClick={handleCloseDeleteModal}
-          >
+            onClick={handleCloseDeleteModal}>
             No
           </Button>
           <Button onClick={handleDeleteConfirm}>Yes</Button>

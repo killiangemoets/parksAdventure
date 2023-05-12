@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CreateTourData} from "../types/tour";
+import { CreateTourData } from "../types/tour";
 import type { RcFile } from "antd/es/upload";
 import convertToBase64 from "../utils/images-treatment/convert-base-64";
 import { TUser } from "../types/user";

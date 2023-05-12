@@ -40,4 +40,15 @@ export const niceDatesRange = (startingDate: Date, endDate: Date) => {
   return `From ${niceFullDate(startingDate)} to ${niceFullDate(endDate)}`;
 };
 
-export const niceTime = (time: string) => time.replace('-', ':');
+export const niceTime = (time: string) => time.replace("-", ":");
+
+export const getCreateAvailabilityDateFormat = (
+  dateToFormat: Date | string
+) => {
+  const date = new Date(dateToFormat);
+  const day = `0${date.getDate()}`.slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2);
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+};

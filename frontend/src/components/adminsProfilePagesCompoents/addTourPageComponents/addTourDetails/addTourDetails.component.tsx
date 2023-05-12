@@ -77,8 +77,6 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   const [unselectedTourGuides, setUnselectedTourGuides] =
     useState<TUser[]>(tourGuidesList);
 
-  console.log({ tourGuides, tourGuidesList });
-
   useEffect(() => {
     const newUnselectedTourGuides = tourGuidesList.filter(
       (guide) =>
@@ -86,7 +84,6 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
           (selectedTourGuide) => selectedTourGuide.id === guide.id
         )
     );
-    console.log({ newUnselectedTourGuides });
     setUnselectedTourGuides(newUnselectedTourGuides);
   }, [tourGuides, tourGuidesList]);
 
@@ -116,7 +113,6 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
       ...tourGuides.slice(0, index),
       ...tourGuides.slice(index + 1),
     ];
-    console.log({ tourGuides, newTourGuides });
     handleChange(newTourGuides, CREATE_TOUR_DATA.tourGuides);
   };
 
