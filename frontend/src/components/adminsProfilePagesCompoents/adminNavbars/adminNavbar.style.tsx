@@ -43,3 +43,24 @@ export const FixAdminTourNavbar = styled.div`
   width: 100vw;
   z-index: 9;
 `;
+
+export const DeleteQuestion = styled.h1`
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+
+  span {
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+`;
+
+export const ErrorMessage = styled.p`
+  width: 100%;
+  text-align: center;
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+`;

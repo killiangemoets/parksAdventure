@@ -15,6 +15,7 @@ export type TUser = {
   role: USER_ROLE_TYPES;
   wishlist: string[];
   id: string;
+  _id?: string;
 };
 
 export type UpdateUserData = {

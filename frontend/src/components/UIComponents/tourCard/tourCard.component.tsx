@@ -9,10 +9,12 @@ import InfoIcon, {
 } from "../infoIcon/infoIcon.component";
 import StarsRating from "../starsRating/starsRating.component";
 import {
+  CornerBannner,
   Info,
   InfoText,
   Price,
   TourCardContainer,
+  TourCardHidden,
   TourContent,
   TourFooter,
   TourInfos,
@@ -40,19 +42,6 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
   const wishlistButton = useRef<HTMLElement | null>(null);
   const inWishList = useIsInWishList(tour?._id);
 
-  const {
-    name,
-    slug,
-    categories,
-    difficulty,
-    duration,
-    location,
-    imageCover,
-    ratingsAverage,
-    ratingsQuantity,
-    _id,
-  } = tour;
-
   const handleClickTour = (event: MouseEvent<HTMLElement>) => {
     if (
       wishlistButton.current &&
@@ -60,14 +49,14 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
     )
       return;
 
-    navigate(`/tour/${slug}`);
+    navigate(`/tour/${tour.slug}`);
     // window.open(`${window.location.origin}/tour/${slug}`, "_blank");
   };
 
   const handleWishlist = async () => {
     const response = inWishList
-      ? await removeFromWishlist(_id)
-      : await addToWishlist(_id);
+      ? await removeFromWishlist(tour._id)
+      : await addToWishlist(tour._id);
 
     if (response && response.status === "success") {
       const { wishlist } = response.data.user;
@@ -91,6 +80,11 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
       onMouseLeave={() => {
         handleOver && handleOver(undefined);
       }}>
+      {tour.hiddenTour && (
+        <TourCardHidden>
+          <CornerBannner>Hidden Tour</CornerBannner>
+        </TourCardHidden>
+      )}
       <Button
         buttonType={BUTTON_TYPE_CLASSES.empty}
         passRef={wishlistButton}
@@ -98,20 +92,22 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
         <WishListIcon inWishList={inWishList} />
       </Button>
       <TourPictureContainer>
-        <TourPicture imageUrl={imageCover}>
+        <TourPicture imageUrl={tour.imageCover}>
           <GreenOpacity />
         </TourPicture>
       </TourPictureContainer>
       <TourTitle>
-        <span>{name}</span>
+        <span>{tour.name}</span>
       </TourTitle>
       <TourContent>
         <TourNextDate>
-          Next start: {niceDate(tour.firstAvailability)}
+          {tour.firstAvailability
+            ? `Next start: ${niceDate(tour.firstAvailability)}`
+            : "Not available at the moment"}
         </TourNextDate>
         <TourTags>
-          {categories &&
-            categories.map((category) => (
+          {tour.categories &&
+            tour.categories.map((category) => (
               <TourTag key={category}>
                 {category[0].toUpperCase() + category.slice(1).toLowerCase()}
               </TourTag>
@@ -121,35 +117,43 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
         <TourInfos>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
-            <InfoText>{location}</InfoText>
+            <InfoText>{tour.location}</InfoText>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.duration} />
             <InfoText>
-              {duration > 1 ? `${duration} days` : `${duration} day`}
+              {tour.duration > 1
+                ? `${tour.duration} days`
+                : `${tour.duration} day`}
             </InfoText>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.difficulty} />
             <InfoText>
-              {difficulty[0].toUpperCase() + difficulty.slice(1).toLowerCase()}
+              {tour.difficulty[0].toUpperCase() +
+                tour.difficulty.slice(1).toLowerCase()}
             </InfoText>
           </Info>
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.group} />
             <InfoText>
-              {tour.maxGroupSizeCapacity === tour.minGroupSizeCapacity
-                ? tour.maxGroupSizeCapacity
-                : `${tour.minGroupSizeCapacity}-${tour.maxGroupSizeCapacity}`}{" "}
-              people
+              {!tour.maxGroupSizeCapacity
+                ? "Not available"
+                : tour.maxGroupSizeCapacity === tour.minGroupSizeCapacity
+                ? `${tour.maxGroupSizeCapacity} people`
+                : `${tour.minGroupSizeCapacity}-${tour.maxGroupSizeCapacity} people`}
             </InfoText>
           </Info>
         </TourInfos>
       </TourContent>
       <TourFooter>
-        <StarsRating rating={ratingsAverage} numRatings={ratingsQuantity} />
+        <StarsRating
+          rating={tour.ratingsAverage}
+          numRatings={tour.ratingsQuantity}
+        />
         <Price>
-          <span>From ${tour.lowerPrice}</span> per person
+          <span>{tour.lowerPrice ? `From ${tour.lowerPrice}` : ""}</span>{" "}
+          {tour.lowerPrice ? "per person" : "No price available"}
         </Price>
       </TourFooter>
     </TourCardContainer>

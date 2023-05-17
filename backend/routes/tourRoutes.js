@@ -13,6 +13,8 @@ router
   .get(
     tourController.aggreagationRequiredFields,
     tourController.aliasTopRecommendations,
+    authController.getLoggedInUser,
+    tourController.showHiddenToursIfAllowed,
     tourController.getToursByAggregation
   );
 
@@ -20,17 +22,17 @@ router
   .route('/all/aggregation')
   .get(
     tourController.aggreagationRequiredFields,
+    authController.getLoggedInUser,
+    tourController.showHiddenToursIfAllowed,
     tourController.getToursByAggregation
   );
 
-router
-  .route('/cart-items')
-  .get(
-    tourController.tourItemsRequiredFields,
-    tourController.aliasRecommendations,
-    tourController.getToursByAggregation
-    // tourController.getAllTours
-  );
+router.route('/cart-items').get(
+  tourController.tourItemsRequiredFields,
+  tourController.aliasRecommendations,
+  tourController.getToursByAggregation
+  // tourController.getAllTours
+);
 
 router
   .route('/')
@@ -43,20 +45,22 @@ router
     tourController.createTour
   );
 
-router.route('/slug/:slug').get(tourController.getTourBySlug);
+router
+  .route('/slug/:slug')
+  .get(authController.getLoggedInUser, tourController.getTourBySlug);
 router
   .route('/:id')
   .get(tourController.getTour)
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    // tourController.uploadTourImages,
-    // tourController.resizeTourImages,
+    tourController.uploadImagesToCloudinary,
     tourController.updateTour
   )
   .delete(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
+    tourController.checkIfBookingsExist,
     tourController.deleteTour
   );
 

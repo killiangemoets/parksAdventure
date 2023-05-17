@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const Booking = require('./bookingModel');
 const formating = require('./../utils/formating');
+const ObjectId = require('mongodb').ObjectID;
 
 const tourSchema = new mongoose.Schema(
   {
@@ -216,7 +217,7 @@ tourSchema.virtual('reviews', {
   localField: '_id',
 });
 
-// Add the tour reviews to the query
+// Add the tour bookings to the query
 tourSchema.virtual('bookings', {
   ref: 'Booking',
   foreignField: 'tour',
@@ -225,9 +226,19 @@ tourSchema.virtual('bookings', {
 
 tourSchema.virtual('currentAvailabilities').get(function () {
   const currentAvailabilitiesWithCurrentGroup = [];
+
+  // const bookings = await Booking.find({ tour: ObjectId(this._id) });
+  // console.log('BOOKINGS', bookings);
+
   if (this.availabilities && this.bookings) {
     this.availabilities.forEach((availability) => {
       if (!(new Date(availability.date) >= new Date(Date.now()))) return;
+
+      // const currentGroupSize = this.bookings.reduce((acc, booking) => {
+      //   if (!formating.compareDates(booking.date, availability.date))
+      //     return acc;
+      //   return acc + (booking.adults || 0) + (booking.kids || 0);
+      // }, 0);
 
       const currentGroupSize = this.bookings.reduce((acc, booking) => {
         if (!formating.compareDates(booking.date, availability.date))
@@ -293,10 +304,10 @@ tourSchema.pre('save', function (next) {
 
 // QUERY MIDDLEWARES //
 // Pre-find hook: run before any find query is executed
-tourSchema.pre(/^find/, function (next) {
-  this.find({ hiddenTour: { $ne: true } });
-  next();
-});
+// tourSchema.pre(/^find/, function (next) {
+//   // this.find({ hiddenTour: { $ne: true } });
+//   next();
+// });
 
 tourSchema.pre(/^findOne/, function (next) {
   this.populate({

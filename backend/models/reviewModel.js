@@ -45,7 +45,7 @@ reviewSchema.index({ createdAt: 1 });
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'tour',
-    select: 'name imageCover slug duration',
+    select: 'name imageCover slug duration hiddenTour',
   }).populate({
     path: 'user',
     select: 'firstname lastname photo',

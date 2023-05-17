@@ -383,3 +383,44 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
     user: req.user,
   });
 });
+
+exports.getLoggedInUser = catchAsync(async (req, res, next) => {
+  // 1) Getting token and check if it's there
+  let token = req.cookies.jwt;
+  // if (
+  //   req.headers.authorization &&
+  //   req.headers.authorization.startsWith('Bearer')
+  // ) {
+  //   token = req.headers.authorization.split(' ')[1];
+  // }
+
+  // if (req.cookies.jwt)
+  if (!token) {
+    return next();
+  }
+
+  // 2) Verification token
+  const decoded = await util.promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET
+  );
+
+  // 3) Check if user still exists
+  const currentUser = await User.findOne({
+    _id: decoded.id,
+    active: { $ne: false },
+  });
+
+  if (!currentUser) {
+    return next();
+  }
+
+  // 4) Check if user changed password after the token was issued
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
+    return next();
+  }
+
+  // GRANT ACCESS TO PROTECTED ROUTE
+  req.user = currentUser;
+  next();
+});

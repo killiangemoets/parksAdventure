@@ -10,7 +10,7 @@ export const OrderSummaryContainer = styled.div`
   align-items: center;
   /* gap: 3.2rem; */
 
-  button{
+  button {
     height: 5rem !important;
   }
 `;
@@ -19,6 +19,7 @@ export const OrderSummaryItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
+  width: 100%;
 `;
 
 export const OrderSummaryItemTitle = styled.h4`
@@ -49,7 +50,7 @@ export const OrderSummaryItemContent = styled.p`
 
 type OrderSummaryItemTotalProps = {
   showTotalPrice: boolean;
-}
+};
 export const OrderSummaryItemTotal = styled.div<OrderSummaryItemTotalProps>`
   display: flex;
   justify-content: space-between;
@@ -57,13 +58,13 @@ export const OrderSummaryItemTotal = styled.div<OrderSummaryItemTotalProps>`
   border-top: solid 2px #cc704b;
   padding: 1rem 2.4rem;
 
-  ${({ showTotalPrice }) => !showTotalPrice && css`
-    padding: 0;
-    height: 0px;
-    border-top: none;
-  `}
-
-
+  ${({ showTotalPrice }) =>
+    !showTotalPrice &&
+    css`
+      padding: 0;
+      height: 0px;
+      border-top: none;
+    `}
 `;
 
 export const OrderSummaryItemTotalText = styled.p`
@@ -145,10 +146,10 @@ export const OrderSummaryPriceNote = styled.p`
   text-align: right;
 `;
 
-
 export const ValidatePaymentError = styled.p`
   text-align: center;
   height: 2rem;
+  width: 38rem;
   color: #ff0033;
   font-size: 1.6rem;
   font-weight: 600;

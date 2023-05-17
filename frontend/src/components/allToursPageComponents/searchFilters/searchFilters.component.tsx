@@ -22,9 +22,9 @@ const SearchFilters: FC = () => {
 
   const sortPossibilites: Info[] = [
     { id: "-popularityIndex", value: "Popularity" },
-    { id: "lowerPrice", value: "Pricing" },
+    { id: "-hasCurrentAvailabilities,lowerPrice", value: "Pricing" },
     { id: "-ratingsAverage", value: "Rating" },
-    { id: "firstAvailability", value: "Last minute" },
+    { id: "-hasCurrentAvailabilities,firstAvailability", value: "Last minute" },
   ];
 
   const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
@@ -98,8 +98,7 @@ const SearchFilters: FC = () => {
             dropdownType={DROPDOWN_TYPE_CLASSES.input}
             current={currentSort}
             list={sortPossibilites}
-            handleInput={handleDropdown}
-          >
+            handleInput={handleDropdown}>
             <SortIcon />
           </Dropdown>
         </Filters>

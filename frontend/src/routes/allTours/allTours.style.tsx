@@ -7,7 +7,7 @@ export const AllToursContainer = styled.div`
 
 export const AllTourFixElements = styled.div`
   width: 100%;
-  z-index: 2;
+  z-index: 3;
 `;
 
 export const AllToursResults = styled.div`

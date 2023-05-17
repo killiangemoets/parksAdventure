@@ -12,8 +12,12 @@ const formating = require('./../utils/formating');
 
 exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   // Prevent user to pass directly imageCover or images
-  req.body.imageCover = undefined;
-  req.body.images = undefined;
+  req.body.imageCover = req.body.uploadedImages
+    ? req.body.uploadedImages[0]
+    : undefined;
+  req.body.images = req.body.uploadedImages
+    ? req.body.uploadedImages.slice(1)
+    : undefined;
 
   // Upload images to cloudinary
   if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
@@ -21,8 +25,14 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
       req.body.imagesBase64,
       `parkAdventures/tours`
     );
-    req.body.imageCover = imgUrls[0];
-    req.body.images = imgUrls.slice(1);
+
+    if (req.body.uploadedImages && req.body.uploadedImages.length > 0) {
+      req.body.imageCover = req.body.uploadedImages[0];
+      req.body.images = [...req.body.uploadedImages.slice(1), ...imgUrls];
+    } else {
+      req.body.imageCover = imgUrls[0];
+      req.body.images = imgUrls.slice(1);
+    }
   }
 
   return next();
@@ -30,13 +40,14 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
 
 exports.aggreagationRequiredFields = (req, res, next) => {
   req.query.fields =
-    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity';
+    'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity,hiddenTour,hasCurrentAvailabilities';
   next();
 };
 
 exports.tourItemsRequiredFields = (req, res, next) => {
   req.query.fields =
     'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities,maxGroupSizeCapacity';
+  req.query.hiddenTour = false;
   next();
 };
 
@@ -59,6 +70,15 @@ exports.updatePopularityIndex = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllTours = factory.getAll(Tour);
+
+exports.showHiddenToursIfAllowed = async (req, res, next) => {
+  if (!req.user || req.user.role === 'user') {
+    req.query.hiddenTour = false;
+    // req.query.onlyAvailables = undefined;
+  }
+
+  next();
+};
 
 exports.getToursByAggregation = catchAsync(async (req, res, next) => {
   const featuresWithPagination = new TourAPIFeatures(Tour, req.query, next)
@@ -115,6 +135,7 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
             ? [...req.query.id]
             : [req.query.id],
         },
+        hiddenTour: false,
       };
     }
     recommendations = await Tour.find(queryObj)
@@ -153,7 +174,9 @@ exports.getTour = factory.getOne(Tour, [
 ]);
 
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findOne({ slug: req.params.slug })
+  const findObj = { slug: req.params.slug };
+  if (!req.user || req.user.role === 'user') findObj.hiddenTour = false;
+  const tour = await Tour.findOne(findObj)
     .populate({
       path: 'reviews',
       populate: {
@@ -164,8 +187,8 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     .populate({
       path: 'bookings',
       populate: {
-        path: 'user',
-        select: 'firstname lastname photo',
+        path: 'tour',
+        select: 'adults kids',
       },
     });
 
@@ -175,6 +198,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
 
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
+    hiddenTour: false,
     // categories: tour.categories[0],
   })
     .populate({
@@ -190,10 +214,47 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
-      tour,
+      tour: {
+        additionalInfos: tour.additionalInfos,
+        availabilities: tour.availabilities,
+        categories: tour.categories,
+        currentAvailabilities: tour.currentAvailabilities,
+        description: tour.description,
+        difficulty: tour.difficulty,
+        duration: tour.duration,
+        firstAvailability: tour.firstAvailability,
+        guides: tour.guides,
+        hiddenTour: tour.hiddenTour,
+        id: tour.id,
+        imageCover: tour.imageCover,
+        images: tour.images,
+        location: tour.location,
+        locations: tour.locations,
+        lowPrice: tour.lowPrice,
+        maxGroupSizeCapacity: tour.maxGroupSizeCapacity,
+        meetingAddress: tour.meetingAddress,
+        minGroupSizeCapacity: tour.minGroupSizeCapacity,
+        name: tour.name,
+        popularityIndex: tour.popularityIndex,
+        ratingsAverage: tour.ratingsAverage,
+        ratingsQuantity: tour.ratingsQuantity,
+        reviews: tour.reviews,
+        slug: tour.slug,
+        startLocation: tour.startLocation,
+        _id: tour._id,
+      },
       recommendations,
     },
   });
+});
+
+exports.checkIfBookingsExist = catchAsync(async (req, res, next) => {
+  const booking = await Booking.findOne({ tour: req.params.id });
+
+  if (booking)
+    return next(new AppError('A tour with bookings cannot be deleted', 404));
+
+  next();
 });
 
 exports.createTour = factory.createOne(Tour);

@@ -14,7 +14,6 @@ import {
   MainButton,
 } from "./adminAddTour.style";
 import type { Dayjs } from "dayjs";
-import type { UploadFile } from "antd/es/upload/interface";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../components/UIComponents/button/button.component";
@@ -24,14 +23,19 @@ import {
   TCreateStop,
   CreateTourData,
   CREATE_TOUR_DATA,
+  TUploadTourImage,
 } from "../../../types/tour";
-import { createTour, getTourGuides } from "../../../api/tour-requests";
+import {
+  createTour,
+  getTourGuides,
+  updateTour,
+} from "../../../api/tour-requests";
 import Spinner from "../../../components/UIComponents/spinner/spinner.component";
 import { TUser, USER_ROLE_TYPES } from "../../../types/user";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUserRole } from "../../../store/user/user.selector";
 import { AppDispatch } from "../../../store/store";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchTourAsync } from "../../../store/tour/tour.action";
 import { selectTour } from "../../../store/tour/tour.selector";
 import getTourDataInEditFormat from "../../../utils/dataManipulation/getTourDataInEditFormat";
@@ -44,7 +48,7 @@ export type NewTourDataValueTypes =
   | Info[]
   | TCreateStop[]
   | TCreateAvailability[]
-  | UploadFile[]
+  | TUploadTourImage[]
   | undefined
   | null
   | boolean
@@ -108,7 +112,7 @@ const AdminAddTour = () => {
   const { slug } = useParams<
     keyof TourSlugRouteParams
   >() as TourSlugRouteParams;
-  const [newTourData, setNewTourData] = useState<CreateTourData>(
+  const [tourData, setTourData] = useState<CreateTourData>(
     newTourDataDefaultState
   );
   const {
@@ -125,7 +129,8 @@ const AdminAddTour = () => {
     address,
     additionalInfo,
     hidden,
-  } = newTourData;
+  } = tourData;
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
   const [tourGuidesList, setTourGuidesList] = useState<TUser[]>([]);
@@ -133,19 +138,17 @@ const AdminAddTour = () => {
   const tour = useSelector(selectTour);
 
   useEffect(() => {
-    console.log("DISPATCH");
     if (!slug || tour) return;
     dispatch(fetchTourAsync(slug));
   }, [slug]);
 
   useEffect(() => {
-    const test = async () => {
+    const geTourToUploadData = async () => {
       if (!slug || !tour) return;
       const editTourData = await getTourDataInEditFormat(tour);
-      setNewTourData(editTourData);
+      setTourData(editTourData);
     };
-    test();
-    console.log("TOUR", tour);
+    geTourToUploadData();
   }, [tour]);
 
   useEffect(() => {
@@ -159,16 +162,21 @@ const AdminAddTour = () => {
   }, []);
 
   const handleChange = (value: NewTourDataValueTypes, name: string) => {
-    setNewTourData({ ...newTourData, [name]: value });
+    setTourData({ ...tourData, [name]: value });
+    setErrors({ ...errors, [name]: "" });
   };
 
   const handleCancel = () => {
-    setNewTourData(newTourDataDefaultState);
-    setErrors(defaultErrorsState);
+    if (slug) navigate(`/tour/${slug}`);
+    else {
+      setTourData(newTourDataDefaultState);
+      setErrors(defaultErrorsState);
+    }
   };
 
   const handleConfirm = async () => {
     setLoading(true);
+    console.log("TOUR DATA", tourData);
 
     const newErrorsState = {
       ...defaultErrorsState,
@@ -207,15 +215,20 @@ const AdminAddTour = () => {
       // availabilities.length &&
       address?.length
     ) {
-      const response = await createTour(newTourData);
+      const response =
+        slug && tour?._id
+          ? await updateTour(tourData, tour?._id)
+          : await createTour(tourData);
       console.log(response);
       if (response.status === "success") {
-        setNewTourData(newTourDataDefaultState);
+        navigate(`/tour/${response.data.data.slug}`);
+        // setTourData(newTourDataDefaultState);
       } else {
         if (response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";
           newErrorsState.name = true;
         } else {
+          console.log(response.message);
           newErrorsState.generalMessage = response.message;
         }
       }
@@ -302,7 +315,7 @@ const AdminAddTour = () => {
               }}
             />
             <Button onClick={handleConfirm}>
-              {loading ? <Spinner /> : "Add Tour"}
+              {loading ? <Spinner /> : slug ? "Update Tour" : "Add Tour"}
             </Button>
             <ErrorMessage>{errors.generalMessage}</ErrorMessage>
           </MainButton>

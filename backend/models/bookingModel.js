@@ -85,9 +85,9 @@ bookingSchema.index({ removeAt: 1 }, { expireAfterSeconds: 0 });
 bookingSchema.statics.incrementPopularityIndex = async function (tourId) {
   // since we use a static method, 'this' points to the model
   console.log('tourId', tourId);
-  await Tour.findByIdAndUpdate(tourId, {
-    $inc: { popularityIndex: 10 },
-  });
+  // await Tour.findByIdAndUpdate(tourId, {
+  //   $inc: { popularityIndex: 10 },
+  // });
 };
 
 bookingSchema.pre('save', function (next) {

@@ -148,3 +148,31 @@ export const DeleteButton = styled(BaseButton)`
     border: solid 2px #f9625b;
   }
 `;
+
+export const DeleteConfirmButton = styled(BaseButton)`
+  border: solid 2px #f9625b;
+  background: #f9625b;
+  color: #fff;
+
+  transition: all 0.5s;
+
+  &:hover {
+    border: solid 2px #f85149;
+    background: #f85149;
+    color: #fff;
+  }
+`;
+
+export const DeleteCancelButton = styled(BaseButton)`
+  border: solid 2px #f9625b;
+  background: none;
+  color: #f9625b;
+
+  transition: all 0.5s;
+
+  &:hover {
+    border: solid 2px #f85149;
+    background: none;
+    color: #f85149;
+  }
+`;

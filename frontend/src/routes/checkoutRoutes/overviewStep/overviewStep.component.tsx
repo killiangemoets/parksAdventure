@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import CartItem from "../../../components/cartComponents/cartItem/cartItem.component";
 import Title, {
@@ -23,8 +23,11 @@ import Spinner, {
 } from "../../../components/UIComponents/spinner/spinner.component";
 import Button from "../../../components/UIComponents/button/button.component";
 import { CartEmpty, CartMessage } from "../../cart/cart.style";
+import { AppDispatch } from "../../../store/store";
+import { removeItem } from "../../../store/cart/cart.action";
 
 const OverviewStep = () => {
+  const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
   const items = useSelector(selectCartItems);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -35,58 +38,61 @@ const OverviewStep = () => {
     TItemWithTourInfo[]
   >([]);
 
-  useEffect(() => {
-    const handleGetTourItems = async () => {
-      setIsLoading(true);
-      const tourIds = items.map((item) => item.tourId);
-      const response = await getTourItems(tourIds);
-      if (response.status === "success") {
-        const toursList: TTourItem[] = response.data.data;
-        const newItemsWithTourInfo: TItemWithTourInfo[] = [];
+  const handleGetTourItems = async () => {
+    setIsLoading(true);
+    const tourIds = items.map((item) => item.tourId);
+    const response = await getTourItems(tourIds);
+    if (response && response.status === "success") {
+      const toursList: TTourItem[] = response.data.data;
+      const newItemsWithTourInfo: TItemWithTourInfo[] = [];
 
-        items.forEach((item) => {
-          const tour = toursList.find((tour) => tour._id === item.tourId);
-          if (!tour) return;
-          const selectedAvailability = tour.currentAvailabilities.find(
-            (availability) => {
-              return compareDates(availability.date, item.startingDate);
-            }
-          );
-
-          // a tour can be soldout in 3 different cases:
-          // - the availibility has been removed (by admin or guide)
-          // - the group is full
-          // - the date has passed
-          if (
-            !(
-              !selectedAvailability ||
-              item.adults + item.children >
-                selectedAvailability?.maxGroupSize -
-                  selectedAvailability?.currentGroupSize ||
-              new Date(selectedAvailability.date) < new Date(Date.now())
-            )
-          ) {
-            newItemsWithTourInfo.push({
-              ...item,
-              tour,
-              kidPrice: selectedAvailability.kidPrice,
-              price: selectedAvailability.price,
-            });
+      items.forEach((item) => {
+        const tour = toursList.find((tour) => tour._id === item.tourId);
+        if (!tour) {
+          dispatch(removeItem(item.tourId, item.startingDate));
+          return;
+        }
+        const selectedAvailability = tour.currentAvailabilities.find(
+          (availability) => {
+            return compareDates(availability.date, item.startingDate);
           }
-        });
-
-        if (!newItemsWithTourInfo.length) navigate("/cart");
-
-        setItemsWithTourInfo(newItemsWithTourInfo);
-        console.log({ newItemsWithTourInfo });
-      } else {
-        setErrorMessage(
-          "An error occured. Please refresh the page or go back to the cart"
         );
-      }
-      setIsLoading(false);
-    };
 
+        // a tour can be soldout in 3 different cases:
+        // - the availibility has been removed (by admin or guide)
+        // - the group is full
+        // - the date has passed
+        if (
+          !(
+            !selectedAvailability ||
+            item.adults + item.children >
+              selectedAvailability?.maxGroupSize -
+                selectedAvailability?.currentGroupSize ||
+            new Date(selectedAvailability.date) < new Date(Date.now())
+          )
+        ) {
+          newItemsWithTourInfo.push({
+            ...item,
+            tour,
+            kidPrice: selectedAvailability.kidPrice,
+            price: selectedAvailability.price,
+          });
+        }
+      });
+
+      if (!newItemsWithTourInfo.length) navigate("/cart");
+
+      setItemsWithTourInfo(newItemsWithTourInfo);
+      console.log({ newItemsWithTourInfo });
+    } else {
+      setErrorMessage(
+        "An error occured. Please refresh the page or go back to the cart"
+      );
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
     if (items.length) {
       handleGetTourItems();
     }

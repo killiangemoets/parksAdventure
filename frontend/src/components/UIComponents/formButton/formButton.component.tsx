@@ -21,10 +21,10 @@ const FormButton: FC<FormButtonProps> = ({
   return (
     <FormButtonContainer>
       <Button
+        buttonType={buttonType}
         onClick={() => {
           handleClick && handleClick();
-        }}
-      >
+        }}>
         {loading ? (
           <Spinner spinnerType={SPINNER_TYPE_CLASSES.small} />
         ) : success ? (

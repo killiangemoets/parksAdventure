@@ -40,6 +40,7 @@ export const fetchTourAsync =
   (slug: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getTour(slug);
+    console.log("TOUR", response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({

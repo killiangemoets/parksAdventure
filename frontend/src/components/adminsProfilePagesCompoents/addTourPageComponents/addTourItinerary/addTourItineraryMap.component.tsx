@@ -54,9 +54,9 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   addStop,
 }) => {
   const [viewState, setViewState] = useState({
-    longitude: -100,
-    latitude: 40,
-    zoom: 3.5,
+    longitude: 0,
+    latitude: 0,
+    zoom: 0,
   });
   const [pins, setPins] = useState<JSX.Element[]>([]);
   const [newStop, setNewStop] = useState<TCreateStop>(defaultNewStopState);
@@ -65,7 +65,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   const [popupInfo, setPopupInfo] = useState<TCreateStop | null>(null);
   const [showPopupAddInfo, setShowPopupAddInfo] = useState<boolean>(false);
   const [showErrorStopText, setShowErrorStopText] = useState<string>("");
-  const [itinerary, setItinerary] = useState<[number, number][]>([]);
+  // const [itinerary, setItinerary] = useState<[number, number][]>([]);
 
   useEffect(() => {
     const updatedPins = stops.map((stop, index) => (
@@ -79,8 +79,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
           // with `closeOnClick: true`
           e.originalEvent.stopPropagation();
           setPopupInfo(stop);
-        }}
-      >
+        }}>
         <InfoIcon
           iconType={
             index
@@ -94,12 +93,20 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   }, [stops]);
 
   useEffect(() => {
-    const updateItinerary = async () => {
-      const itinerary = await getDirection(stops);
-      setItinerary(itinerary);
-    };
-    updateItinerary();
+    if (!stops.length) return;
+    setViewState({
+      longitude: stops[0].longitude,
+      latitude: stops[0].latitude,
+      zoom: 5,
+    });
   }, [stops]);
+  // useEffect(() => {
+  //   const updateItinerary = async () => {
+  //     const itinerary = await getDirection(stops);
+  //     setItinerary(itinerary);
+  //   };
+  //   updateItinerary();
+  // }, [stops]);
 
   const handleRenderNewStopInfo = (longitude: number, latitude: number) => {
     setShowErrorStopText("");
@@ -151,9 +158,8 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
         mapboxAccessToken={MAPBOX_TOKEN}
         onClick={(e) => {
           handleRenderNewStopInfo(e.lngLat.lng, e.lngLat.lat);
-        }}
-      >
-        <Source
+        }}>
+        {/* <Source
           id="polylineLayer"
           type="geojson"
           data={{
@@ -163,8 +169,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
               type: "LineString",
               coordinates: itinerary,
             },
-          }}
-        >
+          }}>
           <Layer
             id="lineLayer"
             type="line"
@@ -178,7 +183,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
               "line-width": 5,
             }}
           />
-        </Source>
+        </Source> */}
         <GeolocateControl position="top-left" />
         <FullscreenControl position="top-left" />
         <NavigationControl position="top-left" />
@@ -192,8 +197,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
             latitude={Number(popupInfo.latitude)}
             onClose={() => {
               setPopupInfo(null);
-            }}
-          >
+            }}>
             <div>
               <p>{popupInfo.text}</p>
             </div>
@@ -205,8 +209,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
             longitude={newStop.longitude}
             latitude={newStop.latitude}
             onClose={handleCloseAddPopup}
-            closeOnClick={false}
-          >
+            closeOnClick={false}>
             <PopupInputContainer error={Boolean(showErrorStopText.length)}>
               <ConfigProvider
                 theme={{
@@ -224,8 +227,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
                     },
                     DatePicker: {},
                   },
-                }}
-              >
+                }}>
                 <InputWrapper>
                   <Input
                     name={"stop description"}
@@ -239,8 +241,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
                 <PopupButton>
                   <Button
                     buttonType={BUTTON_TYPE_CLASSES.cancel}
-                    onClick={handleCloseAddPopup}
-                  >
+                    onClick={handleCloseAddPopup}>
                     Cancel
                   </Button>
                   <Button onClick={handleAddStop}>Add</Button>

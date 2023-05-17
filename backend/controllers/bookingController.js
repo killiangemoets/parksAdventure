@@ -20,7 +20,10 @@ exports.checkAvailabilities = catchAsync(async (req, res, next) => {
 
   // 2) Check that all the tour ids exist
   const tourIds = req.body.items.map((item) => item.tourId);
-  const toursList = await Tour.find({ _id: tourIds }).populate({
+  const toursList = await Tour.find({
+    _id: tourIds,
+    hiddenTour: false,
+  }).populate({
     path: 'bookings',
     populate: {
       path: 'user',
@@ -276,6 +279,7 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
 
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
+    hiddenTour: false,
     // categories: tour.categories[0],
   })
     .populate({

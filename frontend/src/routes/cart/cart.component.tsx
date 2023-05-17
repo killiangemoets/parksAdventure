@@ -33,6 +33,7 @@ import { TTourItem } from "../../types/booking";
 import compareDates from "../../utils/comparison/compareDates";
 import { AppDispatch } from "../../store/store";
 import { setOrder } from "../../store/cart/cart.action";
+import { removeItem } from "../../store/cart/cart.action";
 
 const Cart = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -59,7 +60,10 @@ const Cart = () => {
 
         items.forEach((item) => {
           const tour = toursList.find((tour) => tour._id === item.tourId);
-          if (!tour) return;
+          if (!tour) {
+            dispatch(removeItem(item.tourId, item.startingDate));
+            return;
+          }
           const selectedAvailability = tour.currentAvailabilities.find(
             (availability) => {
               return compareDates(availability.date, item.startingDate);

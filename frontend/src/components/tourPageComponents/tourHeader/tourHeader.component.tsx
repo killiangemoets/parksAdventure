@@ -48,7 +48,15 @@ const TourHeader: FC<TourHeaderProps> = ({
         <TourHeaderRight>
           <Button onClick={handleScrollToBooking}>Book Now</Button>
           <Price>
-            <span>{`From $${tour?.lowerPrice || 0}`}</span> per person
+            <span>
+              {tour?.currentAvailabilities &&
+                tour?.currentAvailabilities.length > 0 &&
+                `From $${tour?.lowerPrice || 0}`}
+            </span>{" "}
+            {tour?.currentAvailabilities &&
+            tour?.currentAvailabilities.length > 0
+              ? "per person"
+              : "No availabilities at the moment!"}
           </Price>
         </TourHeaderRight>
       </TourHeaderWrapper>

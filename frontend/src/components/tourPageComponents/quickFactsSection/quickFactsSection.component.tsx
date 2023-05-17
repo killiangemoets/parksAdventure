@@ -59,7 +59,9 @@ const QuickFactsSection = () => {
           name={"Group Size"}
           info={
             !isLoading
-              ? tour?.maxGroupSizeCapacity === tour?.minGroupSizeCapacity
+              ? !tour?.maxGroupSizeCapacity
+                ? "Not available"
+                : tour.maxGroupSizeCapacity === tour.minGroupSizeCapacity
                 ? `${tour?.maxGroupSizeCapacity} people`
                 : `${tour?.minGroupSizeCapacity}-${tour?.maxGroupSizeCapacity} people`
               : ""

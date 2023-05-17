@@ -15,13 +15,15 @@ class APIFeatures {
       delete queryObj[el];
     });
 
+    console.log('QUERY OBJECT', queryObj);
+
     if (queryObj.search) {
       queryObj['$text'] = { $search: queryObj.search };
       delete queryObj.search;
     }
 
-    if(queryObj.id){
-      queryObj._id = queryObj.id
+    if (queryObj.id) {
+      queryObj._id = queryObj.id;
       delete queryObj.id;
     }
 

@@ -39,6 +39,7 @@ import AdminGuides from "./routes/adminRoutes/adminGuides/adminGuides.component"
 import { selectUserRole } from "./store/user/user.selector";
 import { USER_ROLE_TYPES } from "./types/user";
 import AdminTourNavbar from "./components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
+import AdminTourCalendar from "./routes/adminRoutes/adminTourCalendar/adminTourCalendar.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -92,6 +93,7 @@ function App() {
         <Route path="tour/:slug/" element={<AdminTourNavbar />}>
           <Route index element={<Tour />} />
           <Route path="edit" element={<AdminAddTour />} />
+          <Route path="calendar" element={<AdminTourCalendar />} />
         </Route>
 
         <Route path="signup" element={<Signup />} />

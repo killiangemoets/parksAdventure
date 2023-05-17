@@ -1,4 +1,3 @@
-import { UploadFile } from "antd";
 import TourGuide from "../../components/tourPageComponents/tourGuide/tourGuide.component";
 import {
   CreateTourData,
@@ -9,22 +8,29 @@ import {
   difficultiesInfoList,
 } from "../../types/tour";
 import { getCreateAvailabilityDateFormat } from "../formatting/formatDates";
-import convertUrlToFile from "../images-treatment/convert-url-to-file";
 
 const getTourDataInEditFormat = async (tour: TourData) => {
-  const images = [tour.imageCover, ...tour.images];
-  const imagesToFile: any[] = [];
+  const locations =
+    tour.locations?.map((location) => ({
+      latitude: location.coordinates[1],
+      longitude: location.coordinates[0],
+      text: location.description,
+    })) || [];
 
-  for (const image of images) {
-    const imageToFile = await convertUrlToFile(image, `image.webp`);
-    console.log("imegaeToFile", imageToFile);
-    imagesToFile.push(imageToFile);
-  }
+  const startLocation = {
+    latitude: tour.startLocation.coordinates[1],
+    longitude: tour.startLocation.coordinates[0],
+    text: tour.startLocation.description,
+  };
+
+  console.log(tour);
 
   const tourEditData: CreateTourData = {
     name: tour.name,
-    images: imagesToFile,
-    // images: [],
+    images: [tour.imageCover, ...tour.images].map((image) => ({
+      state: "uploaded",
+      url: image,
+    })),
     duration: tour.duration,
     difficulty: difficultiesInfoList.find(
       (difficultyInfo) => difficultyInfo.id === tour.difficulty
@@ -36,7 +42,7 @@ const getTourDataInEditFormat = async (tour: TourData) => {
     summary: tour.description,
     tourGuides:
       tour.guides?.map((guide) => ({
-        id: guide.id,
+        id: guide?._id || "",
         value: (
           <TourGuide
             pictureUrl={guide.photo}
@@ -45,12 +51,7 @@ const getTourDataInEditFormat = async (tour: TourData) => {
           />
         ),
       })) || [],
-    locations:
-      tour.locations?.map((location) => ({
-        latitude: location.coordinates[1],
-        longitude: location.coordinates[0],
-        text: location.description,
-      })) || [],
+    locations: [startLocation, ...locations],
     availabilities:
       tour.availabilities.map((availability) => ({
         date: getCreateAvailabilityDateFormat(availability.date),

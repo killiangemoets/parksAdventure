@@ -35,7 +35,7 @@ const UserBookings = () => {
 
         response.data.data.forEach((booking: TBooking) => {
           if (
-            getEndDate(booking.date, booking.tour.duration) >
+            getEndDate(booking.date, booking.tour?.duration) >
             new Date(Date.now())
           )
             newComingBookings.push(booking);

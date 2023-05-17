@@ -10,7 +10,7 @@ export const AddTourCalendarContainer = styled.div`
 
 export const AddTourCalendarWrapper = styled.div`
   width: 100%;
-  max-width: 100rem;
+  max-width: 110rem;
 
   display: flex;
   flex-direction: column;

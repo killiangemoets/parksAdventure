@@ -1,4 +1,3 @@
-import { UploadFile } from "antd";
 import { TCoordinates } from "./map";
 import { TUser } from "./user";
 import { TBooking } from "./booking";
@@ -113,9 +112,13 @@ export enum CREATE_TOUR_DATA {
   hidden = "hidden",
 }
 
+export type TUploadTourImage =
+  | { state: "uploaded"; url: string }
+  | { state: "new"; file: File; preview: string };
+
 export type CreateTourData = {
   [CREATE_TOUR_DATA.name]: string;
-  [CREATE_TOUR_DATA.images]: UploadFile[];
+  [CREATE_TOUR_DATA.images]: TUploadTourImage[];
   [CREATE_TOUR_DATA.duration]: number | undefined;
   [CREATE_TOUR_DATA.difficulty]: TDifficultyOption;
   [CREATE_TOUR_DATA.location]: string | undefined;

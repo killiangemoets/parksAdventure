@@ -164,6 +164,12 @@ class TourAPIFeatures {
       queryObj.duration = { ...durationQuery };
     }
 
+    // if (!queryObj.showHiddenTours) {
+    //   queryObj.hiddenTour = { $ne: true };
+    // } else {
+    //   delete queryObj.showHiddenTours;
+    // }
+
     this.aggregateQuery = queryObj;
 
     return this;
@@ -189,6 +195,7 @@ class TourAPIFeatures {
         }
         sortMap[key] = value;
       });
+      console.log('sortMap', sortMap);
       this.aggregateSort = sortMap;
     } else {
       this.aggregateSort = { popularityIndex: -1, ratingsAvarage: -1 };
@@ -226,7 +233,7 @@ class TourAPIFeatures {
     console.log('PAGINATION', this.aggregatePagination);
     this.aggregation = this.model.aggregate([
       { $match: this.aggregateSearch || {} },
-      { $match: { hiddenTour: { $ne: true } } },
+      // { $match: { hiddenTour: { $ne: true } } },
       {
         $addFields: {
           currentAvailabilities: {
@@ -253,6 +260,17 @@ class TourAPIFeatures {
           },
           maxGroupSizeCapacity: {
             $max: '$currentAvailabilities.maxGroupSize',
+          },
+        },
+      },
+      {
+        $addFields: {
+          hasCurrentAvailabilities: {
+            $cond: {
+              if: { $ne: ['$firstAvailability', null] },
+              then: true,
+              else: false,
+            },
           },
         },
       },

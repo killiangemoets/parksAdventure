@@ -13,6 +13,9 @@ import {
 } from "./reviewsSection.style";
 import { TReview } from "../../../types/review";
 import { getTop10Reviews } from "../../../api/review-requests";
+import Spinner, {
+  SPINNER_TYPE_CLASSES,
+} from "../../UIComponents/spinner/spinner.component";
 
 const ReviewsSection = () => {
   const [reviews, setReviews] = useState<React.ReactNode[]>([]);
@@ -25,18 +28,18 @@ const ReviewsSection = () => {
     const handleGetReviews = async () => {
       setIsLoading(true);
       const response = await getTop10Reviews();
-      console.log(response);
+      console.log("TOP 10", response);
       if (response && response.status === "success") {
         const reviewsList = response.data.data;
         const reviewCards = reviewsList.map((review: TReview) => {
-          const title = `${review.tour.name} - ${review.tour.duration} ${
-            review.tour.duration > 1 ? "days" : "days"
+          const title = `${review.tour?.name} - ${review.tour?.duration} ${
+            review.tour?.duration > 1 ? "days" : "days"
           }`.toLowerCase();
           const description = review.review;
           const name = `${review.user.firstname} ${review.user.lastname}`;
           const profilePicture = review.user.photo;
           const rate = review.rating;
-          const slug = review.tour.slug;
+          const slug = review.tour?.slug;
           return (
             <TopReview
               review={{ title, description, name, rate, profilePicture, slug }}
@@ -64,7 +67,11 @@ const ReviewsSection = () => {
           <Title titleType={TITLE_TYPE_CLASSES.homeSection}>
             Our Top Reviews
           </Title>
-          <Carousel elements={reviews} />
+          {isLoading ? (
+            <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+          ) : (
+            <Carousel elements={reviews} />
+          )}
         </ReviewsSecContent>
       </ReviewsSecWrapper>
     </ReviewsSecContainer>

@@ -18,10 +18,37 @@ exports.deleteOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true, // The validators run again when we upadate a tour
-    });
+    let doc = null;
+    if (req.body.startLocation) {
+      console.log(req.body.startLocation, req.body.locations);
+      const bodyObj = { ...req.body };
+      delete bodyObj.startLocation;
+      doc = await Model.findByIdAndUpdate(
+        req.params.id,
+        {
+          ...bodyObj,
+          $set: {
+            startLocation: {
+              type: 'Point',
+              coordinates: [
+                req.body.startLocation.coordinates[0],
+                req.body.startLocation.coordinates[1],
+              ],
+              description: req.body.startLocation.description,
+            },
+          },
+        },
+        {
+          new: true,
+          runValidators: true, // The validators run again when we upadate a tour
+        }
+      );
+    } else {
+      doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true, // The validators run again when we upadate a tour
+      });
+    }
 
     if (!doc) {
       return next(new AppError('No document found with that id', 404));

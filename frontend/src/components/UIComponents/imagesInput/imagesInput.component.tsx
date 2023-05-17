@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import {
   EyeIcon,
   ImageElement,
@@ -13,54 +13,39 @@ import {
 } from "./imagesInput.style";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import Modal from "../modal/modal.component";
-
-type ImageFiles = {
-  preview: string;
-};
+import { CREATE_TOUR_DATA, TUploadTourImage } from "../../../types/tour";
 
 const maxImages = 20;
 
-const ImagesInput = () => {
-  const [currentImageFiles, setCurrentImageFiles] = useState<ImageFiles[]>([]);
+export type ImagesInputProps = {
+  images: TUploadTourImage[];
+  handleChange: (images: TUploadTourImage[], name: string) => void;
+};
+
+const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
   const [previewImage, setPreviewImage] = useState<string | null>();
 
   const handleChangeImages = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(
-      "FILES",
-      event.target.files,
-      event.target.files && event.target.files.length
-    );
-
     const file = event.target.files ? event.target?.files[0] : null;
     if (!file || !file.type.match("image.*") || !event?.target?.files) {
       return;
     }
-    let newImageFiles: ImageFiles[] = [];
+    let newImageFiles: TUploadTourImage[] = [];
+
+    console.log("FILES", event.target.files);
+
     for (const file of event.target.files) {
-      if (currentImageFiles.length + newImageFiles.length < maxImages) {
-        const img = Object.assign(file as any, {
-          preview: URL.createObjectURL(file as any),
-        });
+      if (images.length + newImageFiles.length < maxImages) {
+        const img: TUploadTourImage = {
+          state: "new",
+          file,
+          preview: URL.createObjectURL(file),
+        };
         newImageFiles.push(img);
       }
     }
 
-    console.log(newImageFiles);
-    setCurrentImageFiles((currentImageFiles) => [
-      ...newImageFiles,
-      ...currentImageFiles,
-    ]);
-
-    // const reader = new FileReader();
-    // reader.onload = (function (_) {
-    //   return function (e: ProgressEvent<FileReader>) {
-    //     const imgUrl = e.target?.result;
-    //     console.log(imgUrl);
-    //     setCurrentImageFiles(imgUrl as string);
-    //     // imgUrl && onChange(imgUrl as string);
-    //   };
-    // })(file);
-    // reader.readAsDataURL(file);
+    handleChange([...images, ...newImageFiles], CREATE_TOUR_DATA.images);
   };
 
   const handlePreview = (imgUrl: string) => {
@@ -69,22 +54,23 @@ const ImagesInput = () => {
 
   const handleDelete = (index: number) => {
     const newImageFiles = [
-      ...currentImageFiles.slice(0, index),
-      ...currentImageFiles.slice(index + 1),
+      ...images.slice(0, index),
+      ...images.slice(index + 1),
     ];
-    setCurrentImageFiles(newImageFiles);
+    handleChange(newImageFiles, CREATE_TOUR_DATA.images);
   };
+
   const handleCloseModal = () => {
     setPreviewImage(null);
   };
 
   return (
     <ImagesInputContainer>
-      {currentImageFiles.map((imgFile, index) => (
+      {images.map((imgFile, index) => (
         <ImageElement>
           <img
             alt="preview content"
-            src={imgFile.preview}
+            src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
             style={{ width: "20rem" }}
           />
           <ImageElementHover>
@@ -92,7 +78,9 @@ const ImagesInput = () => {
               buttonType={BUTTON_TYPE_CLASSES.empty}
               type="button"
               onClick={() => {
-                handlePreview(imgFile.preview);
+                handlePreview(
+                  imgFile.state === "new" ? imgFile.preview : imgFile.url
+                );
               }}>
               <EyeIcon />
             </Button>
@@ -107,7 +95,7 @@ const ImagesInput = () => {
           </ImageElementHover>
         </ImageElement>
       ))}
-      {currentImageFiles.length < maxImages && (
+      {images.length < maxImages && (
         <InputWrapper>
           <ImagesInputElement
             type="file"
@@ -115,7 +103,6 @@ const ImagesInput = () => {
             multiple
             accept="image/*"
             name="files[]"
-            // value={currentImageFiles}
             onChange={(e) => handleChangeImages(e)}
             draggable={true}
           />

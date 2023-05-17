@@ -1,6 +1,4 @@
-import type { RcFile } from "antd/es/upload";
-
-const convertToBase64 = (file: RcFile): Promise<string> =>
+const convertToBase64 = (file: File): Promise<string> =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);

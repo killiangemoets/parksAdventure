@@ -30,6 +30,7 @@ import QuickFactInput, {
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
 import { TCreateAvailability, CREATE_TOUR_DATA } from "../../../../types/tour";
+import { niceTime } from "../../../../utils/formatting/formatDates";
 
 type ModalInfosProps = {
   price: number | undefined;
@@ -47,11 +48,13 @@ const defaultModalInfo: ModalInfosProps = {
 
 type ErrorsProps = {
   price: boolean;
+  kidPrice: boolean;
   groupSize: boolean;
   startingTime: boolean;
 };
 const defaultErrorsState: ErrorsProps = {
   price: false,
+  kidPrice: false,
   groupSize: false,
   startingTime: false,
 };
@@ -98,6 +101,16 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
           color: "#db9b81",
         });
       }
+      newPricesEvents.push({
+        title: `GC.: ${availability.groupSize}ppl`,
+        start: availability.date,
+        color: "#85907c",
+      });
+      newPricesEvents.push({
+        title: `Time: ${niceTime(availability.time)}`,
+        start: availability.date,
+        color: "#db9b81",
+      });
     });
     setPricesEvents(newPricesEvents);
   }, [availabilities]);
@@ -176,11 +189,24 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       ...defaultErrorsState,
     };
     if (!modalInfos.price) newErrorsState.price = true;
+    if (
+      modalInfos.kidPrice &&
+      modalInfos.price &&
+      modalInfos.kidPrice > modalInfos.price
+    )
+      newErrorsState.kidPrice = true;
     if (!modalInfos.groupSize) newErrorsState.groupSize = true;
     if (!modalInfos.startingTime) newErrorsState.startingTime = true;
     setErrors(newErrorsState);
 
-    if (!modalInfos.price || !modalInfos.groupSize || !modalInfos.startingTime)
+    if (
+      !modalInfos.price ||
+      !modalInfos.groupSize ||
+      !modalInfos.startingTime ||
+      (modalInfos.kidPrice &&
+        modalInfos.price &&
+        modalInfos.kidPrice > modalInfos.price)
+    )
       return;
 
     const updatedAvailabilities: TCreateAvailability[] = selectedDates.map(
@@ -298,6 +324,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
           addonAfter="$"
           placeholder="Enter a value"
           min={0}
+          error={errors.kidPrice}
         />
         <QuickFactInput
           type={QUICK_FACT_INPUT_TYPE.number}

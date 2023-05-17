@@ -33,6 +33,7 @@ export const TourCardContainer = styled.div`
   position: relative;
   cursor: pointer;
   width: 32rem;
+  height: 100%;
   border-radius: 12px;
   background-color: #fefdfa;
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
@@ -204,4 +205,35 @@ export const Price = styled.p`
     font-size: 1.5rem;
     font-weight: 600;
   }
+`;
+
+export const TourCardHidden = styled.div`
+  position: absolute;
+  background-color: rgba(170, 170, 170, 0.3);
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: hidden;
+
+  font-size: 2rem;
+  color: #fff;
+`;
+
+export const CornerBannner = styled.div`
+  color: #fff;
+  background-color: #bbb;
+  -moz-transform: rotate(-45deg);
+  -moz-transform-origin: 50% 50%;
+  -webkit-transform: rotate(-45deg);
+  -webkit-transform-origin: 50% 50%;
+  position: absolute;
+  width: 300px;
+  top: 40px;
+  left: -100px;
+  text-align: center;
+
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1.6rem;
 `;

@@ -36,11 +36,6 @@ const Tour = () => {
   const userRole = useSelector(selectUserRole);
 
   useEffect(() => {
-    if (error) {
-    }
-  }, [error]);
-
-  useEffect(() => {
     dispatch(fetchTourAsync(slug));
   }, [slug]);
 
@@ -58,7 +53,14 @@ const Tour = () => {
   };
 
   if (error) {
-    return <NotFound title="No tour found wih this name" />;
+    return (
+      <NotFound
+        title="No tour found with this name."
+        message={
+          "This tour name is incorrect or this tour is no longer available."
+        }
+      />
+    );
   } else {
     return (
       <TourContainer>

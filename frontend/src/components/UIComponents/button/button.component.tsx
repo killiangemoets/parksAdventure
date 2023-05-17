@@ -9,6 +9,8 @@ import {
   RectangularButton,
   CancelButton,
   DeleteButton,
+  DeleteCancelButton,
+  DeleteConfirmButton,
 } from "./button.style";
 
 export enum BUTTON_TYPE_CLASSES {
@@ -21,6 +23,8 @@ export enum BUTTON_TYPE_CLASSES {
   rectangular = "rectangular",
   cancel = "cancel",
   delete = "delete",
+  deleteConfirm = "deleteConfirm",
+  deleteCancel = "deleteCancel",
 }
 
 const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseButton =>
@@ -34,6 +38,8 @@ const getButton = (buttonType = BUTTON_TYPE_CLASSES.base): typeof BaseButton =>
     [BUTTON_TYPE_CLASSES.rectangular]: RectangularButton,
     [BUTTON_TYPE_CLASSES.cancel]: CancelButton,
     [BUTTON_TYPE_CLASSES.delete]: DeleteButton,
+    [BUTTON_TYPE_CLASSES.deleteConfirm]: DeleteConfirmButton,
+    [BUTTON_TYPE_CLASSES.deleteCancel]: DeleteCancelButton,
   }[buttonType]);
 
 export type ButtonProps = {

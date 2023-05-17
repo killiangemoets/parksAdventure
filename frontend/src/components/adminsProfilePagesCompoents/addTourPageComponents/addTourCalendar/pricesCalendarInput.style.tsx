@@ -52,6 +52,7 @@ export const CalendarInputContainer = styled.div`
     transition: all 0.3s;
     background-color: #627057;
     border-color: #627057;
+    font-size: 1.4rem;
 
     &:hover {
       background-color: #b86544;
@@ -68,6 +69,19 @@ export const CalendarInputContainer = styled.div`
   .fc .fc-col-header-cell-cushion,
   .fc .fc-daygrid-day-number {
     color: #506044;
+  }
+
+  .fc-h-event .fc-event-title {
+    font-size: 1.4rem;
+  }
+
+  .fc .fc-col-header-cell-cushion {
+    font-size: 1.4rem;
+  }
+
+  .fc .fc-col-header-cell-cushion,
+  .fc .fc-daygrid-day-number {
+    font-size: 1.4rem;
   }
 `;
 
