@@ -33,6 +33,8 @@ router.patch(
   userController.updateMe
 );
 
+router.route('/names').get(userController.getAllUserNames);
+
 router.delete('/deleteMe', userController.deleteMe);
 
 // router.use(authController.restrictTo('admin'));

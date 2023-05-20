@@ -250,11 +250,19 @@ exports.getMe = catchAsync(async (req, res, next) => {
 });
 
 exports.getBookingDetails = catchAsync(async (req, res, next) => {
-  const bookings = await Booking.find({
+  const queryObj = {
     _id: req.params.id,
     status: 'paid',
     user: req.user.id,
-  });
+  };
+  if (
+    req.user.role === 'admin' ||
+    req.user.role === 'lead-guide' ||
+    req.user.role === 'guide'
+  )
+    delete queryObj.user;
+
+  const bookings = await Booking.find(queryObj);
 
   if (!bookings.length) return next(new AppError('No booking found', 500));
 
@@ -277,6 +285,10 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
       },
     });
 
+  tour.availabilities = tour.availabilities.filter((availability) =>
+    formating.compareDates(availability.date, booking.date)
+  );
+
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     hiddenTour: false,
@@ -296,7 +308,35 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       booking,
-      tour,
+      tour: {
+        additionalInfos: tour.additionalInfos,
+        availabilities: tour.availabilities,
+        categories: tour.categories,
+        // currentAvailabilities: tour.currentAvailabilities,
+        description: tour.description,
+        difficulty: tour.difficulty,
+        duration: tour.duration,
+        firstAvailability: tour.firstAvailability,
+        guides: tour.guides,
+        hiddenTour: tour.hiddenTour,
+        id: tour.id,
+        imageCover: tour.imageCover,
+        images: tour.images,
+        location: tour.location,
+        locations: tour.locations,
+        lowPrice: tour.lowPrice,
+        maxGroupSizeCapacity: tour.maxGroupSizeCapacity,
+        meetingAddress: tour.meetingAddress,
+        minGroupSizeCapacity: tour.minGroupSizeCapacity,
+        name: tour.name,
+        popularityIndex: tour.popularityIndex,
+        ratingsAverage: tour.ratingsAverage,
+        ratingsQuantity: tour.ratingsQuantity,
+        reviews: tour.reviews,
+        slug: tour.slug,
+        startLocation: tour.startLocation,
+        _id: tour._id,
+      },
       recommendations,
     },
   });

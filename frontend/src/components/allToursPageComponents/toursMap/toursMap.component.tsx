@@ -45,7 +45,8 @@ const ToursMap: FC<ToursMapProps> = ({
       searchParams.delete("box");
       searchParams.delete("viewstate");
     }
-    searchParams.delete("page");
+    // searchParams.delete("page"); // side effect: it deletes the page parameter when
+    // we reload the page!
     setSearchParams(searchParams);
   }, [mapOpen]);
 
@@ -113,8 +114,7 @@ const ToursMap: FC<ToursMapProps> = ({
         <ToursMapButtonWrapper>
           <Button
             buttonType={BUTTON_TYPE_CLASSES.gallery}
-            onClick={handleClickMap}
-          >
+            onClick={handleClickMap}>
             {mapOpen ? <RightArrowIcon /> : <LeftArrowIcon />}
           </Button>
         </ToursMapButtonWrapper>

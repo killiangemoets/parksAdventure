@@ -93,6 +93,7 @@ export const MainButton = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
+  text-align: center;
   height: 2.6rem;
   padding-left: 0.8rem;
   color: #ff0033;

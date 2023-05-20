@@ -39,6 +39,10 @@ const bookingSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    group: {
+      type: Number,
+      default: 0,
+    },
     totalPrice: {
       type: Number,
       required: [true, 'Booking mut have a total price.'],
@@ -54,7 +58,7 @@ const bookingSchema = new mongoose.Schema(
         values: ['pending', 'paid'],
         message: 'Status is either pending or paid',
       },
-      selet: false,
+      select: false,
     },
     cartId: {
       type: String,
@@ -81,6 +85,9 @@ const bookingSchema = new mongoose.Schema(
 );
 
 bookingSchema.index({ removeAt: 1 }, { expireAfterSeconds: 0 });
+bookingSchema.index({
+  orderNumber: 'text',
+});
 
 bookingSchema.statics.incrementPopularityIndex = async function (tourId) {
   // since we use a static method, 'this' points to the model
@@ -97,6 +104,8 @@ bookingSchema.pre('save', function (next) {
     return next(
       new AppError('A booking must have a number of adults or kids!', 400)
     );
+
+  this.group = this.kids + this.adults;
 
   next();
 });

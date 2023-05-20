@@ -6,9 +6,9 @@ const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 const uploadToCloudinary = require('./../utils/uploadToCloudinary');
 const TourAPIFeatures = require('../utils/tourApiFeatures');
-const APIFeaturesCopy = require('../utils/apiFeatureCopy');
 const Booking = require('../models/bookingModel');
 const formating = require('./../utils/formating');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   // Prevent user to pass directly imageCover or images
@@ -216,7 +216,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     data: {
       tour: {
         additionalInfos: tour.additionalInfos,
-        availabilities: tour.availabilities,
+        // availabilities: tour.availabilities,
         categories: tour.categories,
         currentAvailabilities: tour.currentAvailabilities,
         description: tour.description,
@@ -255,6 +255,92 @@ exports.checkIfBookingsExist = catchAsync(async (req, res, next) => {
     return next(new AppError('A tour with bookings cannot be deleted', 404));
 
   next();
+});
+
+exports.checkGroupCapacity = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findById(req.params.id).populate({
+    path: 'bookings',
+    populate: {
+      path: 'tour',
+      select: 'adults kids',
+    },
+  });
+
+  if (!tour) return next(new AppError('No tour found with this Id', 404));
+
+  console.log('UPDATE', req.body.availabilities);
+
+  if (
+    req.body.availabilities &&
+    req.body.availabilities.find((updatedAvailability) =>
+      tour.currentAvailabilities?.find(
+        (tourCurrentAvailability) =>
+          formating.compareDates(
+            tourCurrentAvailability.date,
+            updatedAvailability.date
+          ) &&
+          tourCurrentAvailability.currentGroupSize >
+            updatedAvailability.maxGroupSize
+      )
+    )
+  )
+    return next(
+      new AppError(
+        'A date already has bookings for a number of people higher than the new group capacity',
+        404
+      )
+    );
+
+  next();
+});
+
+exports.getTourCalendar = catchAsync(async (req, res, next) => {
+  const findObj = { slug: req.params.slug };
+  // if (!req.user || req.user.role === 'user') findObj.hiddenTour = false;
+  const tour = await Tour.findOne(findObj).select('availabilities name');
+
+  if (!tour) {
+    return next(new AppError('No tour found with that slug', 404));
+  }
+
+  const bookings = await Booking.find({ tour: ObjectId(tour._id) });
+
+  const availabilities = tour.availabilities.map((availability) => {
+    const currentGroupSize = bookings.reduce((acc, booking) => {
+      if (!formating.compareDates(booking.date, availability.date)) return acc;
+      return acc + (booking.adults || 0) + (booking.kids || 0);
+    }, 0);
+
+    return {
+      date: availability.date,
+      time: availability.time,
+      kidPrice: availability.kidPrice,
+      price: availability.price,
+      maxGroupSize: availability.maxGroupSize,
+      currentGroupSize,
+      _id: availability._id,
+    };
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      availabilities,
+      name: tour.name,
+      tourId: tour._id,
+    },
+  });
+});
+
+exports.getAllTourNames = catchAsync(async (req, res, next) => {
+  const tours = await Tour.find().select('name');
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tours,
+    },
+  });
 });
 
 exports.createTour = factory.createOne(Tour);

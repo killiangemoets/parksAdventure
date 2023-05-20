@@ -66,3 +66,10 @@ export type UpdateUserInputData = {
   phoneNumber?: string;
   birthDate?: Date;
 };
+
+export type UserNameData = {
+  _id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+};

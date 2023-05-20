@@ -56,6 +56,7 @@ export const fetchTourBookingAsync =
   (id: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getMyBookingDetails(id);
+    console.log("TOUR FROM BOOKINGS", response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({

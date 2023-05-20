@@ -26,7 +26,7 @@ import {
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";
-import { selectUserRole } from "../../store/user/user.selector";
+// import { selectUserRole } from "../../store/user/user.selector";
 
 const AllTours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +34,7 @@ const AllTours = () => {
   const totalResults = useSelector(selectToursTotal);
   const isLoading = useSelector(selectToursIsLoading);
   const tours = useSelector(selectTours);
-  const role = useSelector(selectUserRole);
+  // const role = useSelector(selectUserRole);
 
   const filtersRef = useRef<HTMLDivElement | null>(null);
   const allToursRef = useRef<HTMLDivElement | null>(null);
@@ -55,7 +55,6 @@ const AllTours = () => {
   useEffect(() => {
     if (window.scrollY > 400) window.scrollTo(0, 400);
     const requestStringFromUrl = window.location.href.split("?")[1];
-    console.log({ requestStringFromUrl });
     const updatedRequestStringFromUrl =
       requestStringFromUrl &&
       requestStringFromUrl.replace(/(&viewstate|viewstate).*zoom/, "");
@@ -63,7 +62,6 @@ const AllTours = () => {
     const requestString =
       `?limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
       (updatedRequestStringFromUrl ? `&${updatedRequestStringFromUrl}` : "");
-    console.log(requestString);
     dispatch(fetchToursAsync(requestString));
   }, [searchParams]);
 

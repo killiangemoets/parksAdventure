@@ -15,10 +15,11 @@ class APIFeatures {
       delete queryObj[el];
     });
 
-    console.log('QUERY OBJECT', queryObj);
-
     if (queryObj.search) {
-      queryObj['$text'] = { $search: queryObj.search };
+      queryObj['$text'] = {
+        $search: queryObj.search,
+        $diacriticSensitive: true,
+      };
       delete queryObj.search;
     }
 

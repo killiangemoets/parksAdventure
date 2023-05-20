@@ -41,7 +41,7 @@ const AllToursHeader: FC<AllTourHeaderProps> = ({ forwardRef }) => {
   }, [searchParams]);
 
   const handleSearch = () => {
-    if (search.length) searchParams.set("search", search.toLowerCase());
+    if (search.length) searchParams.set("search", search.toLowerCase().trim());
     else searchParams.delete("search");
     searchParams.delete("page");
     setSearchParams(searchParams);

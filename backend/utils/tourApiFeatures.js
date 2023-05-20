@@ -195,7 +195,6 @@ class TourAPIFeatures {
         }
         sortMap[key] = value;
       });
-      console.log('sortMap', sortMap);
       this.aggregateSort = sortMap;
     } else {
       this.aggregateSort = { popularityIndex: -1, ratingsAvarage: -1 };

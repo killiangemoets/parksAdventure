@@ -53,3 +53,15 @@ export const getAllUsers = async (requestString: string = "") => {
     return { status: "error", message: "An error occured. Please try again!" };
   }
 };
+
+export const getAllUserNames = async () => {
+  try {
+    const response = await axiosInstance.get(`/users/names`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};

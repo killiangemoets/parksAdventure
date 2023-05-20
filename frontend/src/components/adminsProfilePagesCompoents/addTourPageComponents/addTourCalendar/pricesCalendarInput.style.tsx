@@ -141,3 +141,13 @@ export const DeleteMessage = styled.p`
 export const DeleteButtonWrapper = styled.div`
   width: 18.8rem;
 `;
+
+export const ErrorMessage = styled.p`
+  max-width: 38rem;
+  text-align: center;
+  height: 2rem;
+  color: #ff0033;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+`;

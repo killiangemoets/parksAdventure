@@ -23,8 +23,4 @@ export const ReviewProfileName = styled.p`
   font-size: 1.6rem;
   letter-spacing: 1px;
   color: #333;
-
-  &:hover {
-    color: #333;
-  }
 `;

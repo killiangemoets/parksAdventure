@@ -7,14 +7,12 @@ import {
   ReviewContent,
   ReviewDate,
   ReviewInfos,
-  ReviewInput,
   ReviewModalButtons,
-  ReviewModalWrapper,
   ReviewText,
 } from "./review.style";
 
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import { ChangeEvent, FC, useState } from "react";
+import { FC, useState } from "react";
 import niceDate from "../../../utils/formatting/formatDates";
 import Modal from "../modal/modal.component";
 import { deleteMyReview, editMyReview } from "../../../api/review-requests";
@@ -37,13 +35,19 @@ type ReviewCommonProps = {
 
 type ReviewConditionalProps =
   | {
-      enableEditing: true;
+      enableEditing: "editing";
       reviewId: string;
       handlePassUpdatedReview?: (review: TReview) => void;
       handlePassDeletedReview?: (reviewId: string) => void;
     }
   | {
-      enableEditing?: false;
+      enableEditing: "deleting";
+      reviewId: string;
+      handlePassUpdatedReview?: never;
+      handlePassDeletedReview?: (reviewId: string) => void;
+    }
+  | {
+      enableEditing?: "none";
       reviewId?: never;
       handlePassUpdatedReview?: never;
       handlePassDeletedReview?: never;
@@ -58,7 +62,7 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
   link,
   pictureSize,
   edited,
-  enableEditing = false,
+  enableEditing = "none",
   reviewId,
   handlePassUpdatedReview,
   handlePassDeletedReview,
@@ -165,8 +169,8 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
         <StarsRating hiddenValue={true} rating={rating} />
         <ReviewText>{review}</ReviewText>
       </ReviewContent>
-      {enableEditing && (
-        <EditButtons>
+      <EditButtons>
+        {enableEditing === "editing" && (
           <Button
             buttonType={BUTTON_TYPE_CLASSES.empty}
             onClick={() => {
@@ -174,6 +178,8 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
             }}>
             Edit
           </Button>
+        )}
+        {(enableEditing === "deleting" || enableEditing === "editing") && (
           <Button
             buttonType={BUTTON_TYPE_CLASSES.empty}
             onClick={() => {
@@ -181,8 +187,8 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
             }}>
             Delete
           </Button>
-        </EditButtons>
-      )}
+        )}
+      </EditButtons>
       <ReviewModal
         type={"edit"}
         handleCloseModal={handleCloseEditModal}

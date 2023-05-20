@@ -29,3 +29,13 @@ export const AdminBookingsCalendarContainer = styled.div`
   width: 100%;
   max-width: 110rem;
 `;
+
+export const ErrorMessage = styled.p`
+  padding-top: 16rem;
+  text-align: center;
+  height: 2.6rem;
+  padding-left: 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+`;

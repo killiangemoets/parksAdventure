@@ -64,3 +64,19 @@ export const ErrorMessage = styled.p`
   font-weight: 700;
   letter-spacing: 0.6px;
 `;
+
+export const UserContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0.8rem 0;
+`;
+
+export const UserName = styled.p`
+  font-size: 1.6rem;
+  font-weight: 600;
+`;
+export const UserEmail = styled.p`
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #aaa;
+`;

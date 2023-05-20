@@ -12,7 +12,7 @@ export type TCreateStop = {
 export type TCreateAvailability = {
   date: string;
   price: number;
-  kidPrice: number | undefined;
+  kidPrice?: number;
   time: string;
   groupSize: number;
 };
@@ -213,6 +213,8 @@ export const filtersMinMax: TFiltersMinMax = {
   duration: [0, 20],
   groupSize: [0, 100],
 };
+
+export type TourNameData = { _id: string; name: string };
 
 // export type TourRequestFields = {
 //   "price[gte]"?: number;

@@ -23,7 +23,7 @@ const getTourDataInEditFormat = async (tour: TourData) => {
     text: tour.startLocation.description,
   };
 
-  console.log(tour);
+  console.log("getTourDataInEditFormat", tour);
 
   const tourEditData: CreateTourData = {
     name: tour.name,
@@ -53,7 +53,7 @@ const getTourDataInEditFormat = async (tour: TourData) => {
       })) || [],
     locations: [startLocation, ...locations],
     availabilities:
-      tour.availabilities.map((availability) => ({
+      tour.currentAvailabilities.map((availability) => ({
         date: getCreateAvailabilityDateFormat(availability.date),
         price: availability.price,
         kidPrice: availability.kidPrice || availability.price,

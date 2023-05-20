@@ -9,16 +9,18 @@ import {
   AddTourCalendarWrapper,
 } from "./addTourCalendar.style";
 import { FC } from "react";
-import { TCreateAvailability } from "../../../../types/tour";
+import { TAvailability, TCreateAvailability } from "../../../../types/tour";
 
 export type AddTourCalendarProps = {
   availabilities: TCreateAvailability[];
   handleChange: (availabilities: TCreateAvailability[], name: string) => void;
+  tourCurrentAvailabilities?: TAvailability[];
 };
 
 const AddTourCalendar: FC<AddTourCalendarProps> = ({
   availabilities,
   handleChange,
+  tourCurrentAvailabilities,
 }) => {
   return (
     <AddTourCalendarContainer>
@@ -30,6 +32,7 @@ const AddTourCalendar: FC<AddTourCalendarProps> = ({
           <PricesCalendarInput
             availabilities={availabilities}
             handleChange={handleChange}
+            tourCurrentAvailabilities={tourCurrentAvailabilities}
           />
         </AddTourCalendarContent>
       </AddTourCalendarWrapper>

@@ -85,7 +85,7 @@ const UserReviews = () => {
             key={review._id}
             handlePassUpdatedReview={handleUpdateReview}
             handlePassDeletedReview={handleDeleteReview}
-            enableEditing={true}
+            enableEditing="editing"
             date={review.createdAt}
             edited={review.edited}
             reviewId={review._id}

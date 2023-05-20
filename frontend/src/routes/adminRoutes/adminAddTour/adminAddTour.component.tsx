@@ -24,6 +24,7 @@ import {
   CreateTourData,
   CREATE_TOUR_DATA,
   TUploadTourImage,
+  TAvailability,
 } from "../../../types/tour";
 import {
   createTour,
@@ -37,7 +38,10 @@ import { selectUserRole } from "../../../store/user/user.selector";
 import { AppDispatch } from "../../../store/store";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchTourAsync } from "../../../store/tour/tour.action";
-import { selectTour } from "../../../store/tour/tour.selector";
+import {
+  selectTour,
+  selectTourCurrentAvailabilities,
+} from "../../../store/tour/tour.selector";
 import getTourDataInEditFormat from "../../../utils/dataManipulation/getTourDataInEditFormat";
 
 export type NewTourDataValueTypes =
@@ -134,6 +138,11 @@ const AdminAddTour = () => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
   const [tourGuidesList, setTourGuidesList] = useState<TUser[]>([]);
+  const tourCurrentAvailabilities = useSelector(
+    selectTourCurrentAvailabilities
+  );
+  const [currentAvailabilities, setCurrentAvailabilities] =
+    useState<TAvailability[]>();
   const userRole = useSelector(selectUserRole);
   const tour = useSelector(selectTour);
 
@@ -143,11 +152,21 @@ const AdminAddTour = () => {
   }, [slug]);
 
   useEffect(() => {
+    if (
+      slug &&
+      tourCurrentAvailabilities &&
+      tourCurrentAvailabilities?.length > 0
+    )
+      setCurrentAvailabilities(tourCurrentAvailabilities);
+  }, [slug, tourCurrentAvailabilities]);
+
+  useEffect(() => {
     const geTourToUploadData = async () => {
       if (!slug || !tour) return;
       const editTourData = await getTourDataInEditFormat(tour);
       setTourData(editTourData);
     };
+
     geTourToUploadData();
   }, [tour]);
 
@@ -176,7 +195,6 @@ const AdminAddTour = () => {
 
   const handleConfirm = async () => {
     setLoading(true);
-    console.log("TOUR DATA", tourData);
 
     const newErrorsState = {
       ...defaultErrorsState,
@@ -219,7 +237,6 @@ const AdminAddTour = () => {
         slug && tour?._id
           ? await updateTour(tourData, tour?._id)
           : await createTour(tourData);
-      console.log(response);
       if (response.status === "success") {
         navigate(`/tour/${response.data.data.slug}`);
         // setTourData(newTourDataDefaultState);
@@ -228,7 +245,6 @@ const AdminAddTour = () => {
           newErrorsState.generalMessage = "This tour title is already used";
           newErrorsState.name = true;
         } else {
-          console.log(response.message);
           newErrorsState.generalMessage = response.message;
         }
       }
@@ -276,6 +292,7 @@ const AdminAddTour = () => {
       <AddTourCalendar
         availabilities={availabilities}
         handleChange={handleChange}
+        tourCurrentAvailabilities={currentAvailabilities}
       />
       <AddTourPracticalInfos
         address={address}

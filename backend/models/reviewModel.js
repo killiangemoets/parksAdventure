@@ -95,7 +95,9 @@ reviewSchema.post('save', function () {
 
 // Behind the scene, findByIdAndUpdate and findByIdAndDelete are only a shorthand for findOneAndUpadate and findOneAndDelete
 reviewSchema.post(/^findOneAnd/, async function (doc) {
-  console.log('update');
+  if (!doc) {
+    return;
+  }
   await doc.constructor.calcAverageRatings(doc.tour);
 });
 

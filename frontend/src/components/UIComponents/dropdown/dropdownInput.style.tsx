@@ -3,12 +3,14 @@ import styled from "styled-components";
 export const DropdownContainer = styled.div`
   position: absolute;
   top: 112%;
-  width: 100%;
+  min-width: 100%;
   background-color: #fdfaf5;
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 3;
   padding: 0.6rem 0;
+  max-height: 40rem;
+  overflow: auto;
 `;
 
 type OptionProps = {
@@ -25,7 +27,7 @@ export const Option = styled.li<OptionProps>`
   cursor: pointer;
 
   padding: 0 1.6rem;
-  height: 4.4rem;
+  min-height: 4.4rem;
   font-size: 1.6rem;
   font-weight: 600;
 

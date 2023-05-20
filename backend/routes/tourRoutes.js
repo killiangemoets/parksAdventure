@@ -45,15 +45,19 @@ router
     tourController.createTour
   );
 
+router.route('/names').get(tourController.getAllTourNames);
+
 router
   .route('/slug/:slug')
   .get(authController.getLoggedInUser, tourController.getTourBySlug);
+
 router
   .route('/:id')
   .get(tourController.getTour)
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
+    tourController.checkGroupCapacity,
     tourController.uploadImagesToCloudinary,
     tourController.updateTour
   )
@@ -64,6 +68,13 @@ router
     tourController.deleteTour
   );
 
+router
+  .route('/:slug/calendar')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin', 'lead-guide'),
+    tourController.getTourCalendar
+  );
 /*
 // MIGHT BE USEFUL FOR ADMIN
 router.route('/tour-stats').get(tourController.getTourStats);

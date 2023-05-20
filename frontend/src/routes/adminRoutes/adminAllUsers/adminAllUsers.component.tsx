@@ -6,6 +6,7 @@ import {
   AdminContentErrorMessage,
   AdminContentSpinner,
   AdminFixHeader,
+  AdminLargeContent,
   AdminSectionContainer,
 } from "../adminRoutes.style";
 import { TUser } from "../../../types/user";
@@ -13,6 +14,7 @@ import { getAllUsers } from "../../../api/user-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
+import UsersTable from "../../../components/UIComponents/usersTable/usersTable.component";
 
 const AdminAllUsers = () => {
   const [users, setUsers] = useState<TUser[]>([]);
@@ -43,7 +45,7 @@ const AdminAllUsers = () => {
         <AdminSectionTitle>Users</AdminSectionTitle>
         <AllUsersNavbar />
       </AdminFixHeader>
-      <AdminContent>
+      <AdminLargeContent>
         {isLoading && (
           <AdminContentSpinner>
             <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
@@ -52,7 +54,8 @@ const AdminAllUsers = () => {
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>
         )}
-      </AdminContent>
+        <UsersTable />
+      </AdminLargeContent>
     </AdminSectionContainer>
   );
 };

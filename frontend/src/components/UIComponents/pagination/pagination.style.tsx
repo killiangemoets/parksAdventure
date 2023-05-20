@@ -37,6 +37,11 @@ export const PaginationElement = styled(Pagination)`
     }
   }
 
+  .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    display: flex;
+    align-items: center;
+  }
+
   .ant-pagination-item-active {
     background-color: #cc704b;
     border-radius: 999px;

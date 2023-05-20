@@ -1,10 +1,14 @@
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndDelete(req.params.id);
+    const queryObj = { _id: ObjectId(req.params.id) };
+    if (req.user.role === 'user') queryObj.user = ObjectId(req.user._id);
+    console.log('queryObj', queryObj);
+    const doc = await Model.findOneAndDelete(queryObj);
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
@@ -20,7 +24,6 @@ exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     let doc = null;
     if (req.body.startLocation) {
-      console.log(req.body.startLocation, req.body.locations);
       const bodyObj = { ...req.body };
       delete bodyObj.startLocation;
       doc = await Model.findByIdAndUpdate(

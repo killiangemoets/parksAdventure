@@ -18,13 +18,17 @@ export const AdminFixHeader = styled.div`
 `;
 
 export const AdminContent = styled.div`
-  max-width: 80rem;
+  max-width: 90rem;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 3.2rem;
+`;
+
+export const AdminLargeContent = styled(AdminContent)`
+  max-width: 140rem;
 `;
 
 export const AdminContentSpinner = styled.div`

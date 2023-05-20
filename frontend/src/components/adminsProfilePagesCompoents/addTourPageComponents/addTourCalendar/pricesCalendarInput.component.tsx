@@ -10,6 +10,7 @@ import {
   CalendarInputTopBarContainer,
   DeleteButtonWrapper,
   DeleteMessage,
+  ErrorMessage,
   PriceModalButtons,
   ResetIcon,
 } from "./pricesCalendarInput.style";
@@ -29,8 +30,13 @@ import QuickFactInput, {
   HandleChangeValueType,
   QUICK_FACT_INPUT_TYPE,
 } from "../quickFactInput/quickFactInput.component";
-import { TCreateAvailability, CREATE_TOUR_DATA } from "../../../../types/tour";
+import {
+  TCreateAvailability,
+  CREATE_TOUR_DATA,
+  TAvailability,
+} from "../../../../types/tour";
 import { niceTime } from "../../../../utils/formatting/formatDates";
+import compareDates from "../../../../utils/comparison/compareDates";
 
 type ModalInfosProps = {
   price: number | undefined;
@@ -51,22 +57,26 @@ type ErrorsProps = {
   kidPrice: boolean;
   groupSize: boolean;
   startingTime: boolean;
+  errorMessage: string | null;
 };
 const defaultErrorsState: ErrorsProps = {
   price: false,
   kidPrice: false,
   groupSize: false,
   startingTime: false,
+  errorMessage: null,
 };
 
 export type PricesCalendarInputProps = {
   availabilities: TCreateAvailability[];
   handleChange: (availabilities: TCreateAvailability[], name: string) => void;
+  tourCurrentAvailabilities?: TAvailability[];
 };
 
 const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
   availabilities,
   handleChange,
+  tourCurrentAvailabilities,
 }) => {
   const dateFormats: [Info, Info] = [
     { value: "US Format", id: "us" },
@@ -86,9 +96,18 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
   const [pricesEvents, setPricesEvents] = useState<EventInput[]>([]);
   const [errors, setErrors] = useState<ErrorsProps>(defaultErrorsState);
 
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
   useEffect(() => {
     let newPricesEvents: EventInput[] = [];
     availabilities.forEach((availability) => {
+      newPricesEvents.push({
+        title: `Time: ${niceTime(availability.time)}`,
+        start: availability.date,
+        color: "#c5b8a2",
+      });
       newPricesEvents.push({
         title: `Adults: $${availability.price}`,
         start: availability.date,
@@ -98,22 +117,29 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         newPricesEvents.push({
           title: `Children: $${availability.kidPrice}`,
           start: availability.date,
-          color: "#db9b81",
+          color: "#85907c",
         });
       }
       newPricesEvents.push({
         title: `GC.: ${availability.groupSize}ppl`,
         start: availability.date,
-        color: "#85907c",
-      });
-      newPricesEvents.push({
-        title: `Time: ${niceTime(availability.time)}`,
-        start: availability.date,
         color: "#db9b81",
       });
+      const currentAvailability = tourCurrentAvailabilities?.find(
+        (tourCurrentAvailability) =>
+          compareDates(tourCurrentAvailability.date, availability.date)
+      );
+
+      if (currentAvailability && currentAvailability.currentGroupSize > 0) {
+        newPricesEvents.push({
+          title: `Current G.: ${currentAvailability.currentGroupSize}ppl`,
+          start: availability.date,
+          color: "#f9625b",
+        });
+      }
     });
     setPricesEvents(newPricesEvents);
-  }, [availabilities]);
+  }, [availabilities, tourCurrentAvailabilities]);
 
   useEffect(() => {
     const events = selectedDates.map((date) => {
@@ -193,11 +219,13 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       modalInfos.kidPrice &&
       modalInfos.price &&
       modalInfos.kidPrice > modalInfos.price
-    )
+    ) {
       newErrorsState.kidPrice = true;
+      newErrorsState.errorMessage =
+        "Kid price cannot be higher than adult price";
+    }
     if (!modalInfos.groupSize) newErrorsState.groupSize = true;
     if (!modalInfos.startingTime) newErrorsState.startingTime = true;
-    setErrors(newErrorsState);
 
     if (
       !modalInfos.price ||
@@ -206,8 +234,10 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       (modalInfos.kidPrice &&
         modalInfos.price &&
         modalInfos.kidPrice > modalInfos.price)
-    )
+    ) {
+      setErrors(newErrorsState);
       return;
+    }
 
     const updatedAvailabilities: TCreateAvailability[] = selectedDates.map(
       (selectedDate) => {
@@ -220,6 +250,25 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         };
       }
     );
+
+    if (
+      updatedAvailabilities.find((updatedAvailability) =>
+        tourCurrentAvailabilities?.find(
+          (tourCurrentAvailability) =>
+            compareDates(
+              tourCurrentAvailability.date,
+              updatedAvailability.date
+            ) &&
+            tourCurrentAvailability.currentGroupSize >
+              updatedAvailability.groupSize
+        )
+      )
+    ) {
+      newErrorsState.errorMessage = `A date already has bookings for a number of people higher than ${modalInfos.groupSize}`;
+      setErrors(newErrorsState);
+      return;
+    }
+
     availabilities.forEach((availability) => {
       if (!updatedAvailabilities.find((el) => el.date === availability.date))
         updatedAvailabilities.push(availability);
@@ -292,7 +341,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         selectable={true}
         select={handleSelect}
         validRange={{
-          start: new Date(),
+          start: tomorrow,
         }}
         events={[...backgroundEventsSelectedDates, ...pricesEvents]}
         locales={[gbLocale]}
@@ -347,6 +396,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
           format={selectedDateFormat.id === "us" ? "HH:mm A" : "HH:mm"}
           error={errors.startingTime}
         />
+        <ErrorMessage>{errors?.errorMessage}</ErrorMessage>
 
         <PriceModalButtons>
           <Button

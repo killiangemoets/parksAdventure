@@ -90,9 +90,9 @@ export const getMyBookingDetails = async (bookingId: string) => {
   }
 };
 
-export const getAllBookings = async () => {
+export const getAllBookings = async (requestString: string) => {
   try {
-    const response = await axiosInstance.get(`/bookings`);
+    const response = await axiosInstance.get(`/bookings${requestString}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

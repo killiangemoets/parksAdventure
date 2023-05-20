@@ -133,3 +133,27 @@ export const deleteTour = async (tourId: string) => {
     return err;
   }
 };
+
+export const getTourCalendar = async (slug: string) => {
+  try {
+    const response = await axiosInstance.get(`/tours/${slug}/calendar`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const getAllTourNames = async () => {
+  try {
+    const response = await axiosInstance.get(`/tours/names`);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};

@@ -130,6 +130,17 @@ exports.createUser = (req, res) => {
   });
 };
 
+exports.getAllUserNames = catchAsync(async (req, res, next) => {
+  const users = await User.find().select('firstname lastname email');
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      users,
+    },
+  });
+});
+
 // Do NOT update password with this!
 exports.getUser = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);

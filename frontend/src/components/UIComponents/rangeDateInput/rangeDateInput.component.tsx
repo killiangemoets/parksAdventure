@@ -3,13 +3,9 @@ import dayjs, { Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { RangeDatePickerElement } from "./rangeDateInput.style";
 import { ConfigProvider } from "antd";
-import { FC, useRef } from "react";
+import { FC } from "react";
 
 dayjs.extend(customParseFormat);
-
-const disabledDate: RangePickerProps["disabledDate"] = (current) => {
-  return current && current <= dayjs().add(-1, "d");
-};
 
 const rangePresets: {
   label: string;
@@ -25,14 +21,21 @@ type RangeDateInputProps = {
   currentValues: [Dayjs, Dayjs] | null;
   handleChange: (values: any) => void;
   adminStyle?: boolean;
+  enableAllDates?: boolean;
 };
 
 const RangeDateInput: FC<RangeDateInputProps> = ({
   currentValues,
   handleChange,
   adminStyle = false,
+  enableAllDates,
 }) => {
   const dateInputs = document.querySelectorAll(".ant-picker-input input");
+
+  const disabledDate: RangePickerProps["disabledDate"] = (current) => {
+    if (enableAllDates) return false;
+    return current && current <= dayjs().add(-1, "d");
+  };
 
   const onChange = (values: any) => {
     dateInputs.forEach((dateInput) => {

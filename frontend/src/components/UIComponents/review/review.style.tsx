@@ -14,6 +14,9 @@ export const ReviewInfos = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  p {
+    margin: 0 !important;
+  }
 `;
 
 export const ReviewDate = styled.p`
@@ -122,5 +125,17 @@ export const ReviewModalWrapper = styled.div`
   img {
     max-height: 68vh;
     max-width: 80vh;
+  }
+`;
+
+export const ReviewTourName = styled.p`
+  color: #333;
+  letter-spacing: 1px;
+  font-size: 1.6rem;
+  font-weight: 500;
+
+  span {
+    font-weight: 600;
+    text-transform: uppercase;
   }
 `;
