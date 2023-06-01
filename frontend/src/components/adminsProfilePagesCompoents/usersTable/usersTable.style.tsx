@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const UserTableContainer = styled.div`
@@ -99,36 +100,47 @@ export const UserTableContainer = styled.div`
     margin: 0;
   }
 
-  .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-    padding: 1.2rem 3.2rem !important;
+  .ant-pagination .ant-pagination-options {
+    .ant-select-selector {
+      padding: 1.2rem 3.2rem !important;
 
-    font-size: 1.8rem !important;
-    letter-spacing: 1px !important;
-    background: none !important;
-    border: solid 2px #cc704b !important;
-    color: #cc704b !important;
-    border-radius: 999px !important;
-    cursor: pointer !important;
+      font-size: 1.8rem !important;
+      letter-spacing: 1px !important;
+      background: none !important;
+      border: solid 2px #cc704b !important;
+      color: #cc704b !important;
+      border-radius: 999px !important;
+      cursor: pointer !important;
 
-    transition: all 0.3s !important;
+      transition: all 0.3s !important;
 
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 1rem !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 1rem !important;
+    }
 
-    .ant-select-arrow {
+    .anticon {
       color: #cc704b !important;
     }
 
     &:hover {
-      background-color: #cc704b !important;
-      border: solid 2px #cc704b !important;
-      color: #fff !important;
-      .ant-select-arrow {
+      .anticon {
+        color: #fff !important;
+      }
+
+      .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
+        background-color: #cc704b !important;
+        border: solid 2px #cc704b !important;
         color: #fff !important;
       }
     }
+  }
+
+  .ant-select-item.ant-select-item-option.ant-select-item-option-selected,
+  .ant-select-item.ant-select-item-option.ant-select-item-option-active {
+    background-color: #d68d6f;
+    color: #fff;
   }
 
   :where(.css-dev-only-do-not-override-ixblex).ant-pagination
@@ -154,18 +166,6 @@ export const UserTableContainer = styled.div`
   }
 `;
 
-export const ActionButtons = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  button {
-    font-size: 1.4rem;
-    font-weight: 400;
-    letter-spacing: 0.4px;
-  }
-`;
-
 export const UserPictureContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -179,4 +179,36 @@ export const UserName = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.4px;
+`;
+
+export const Tours = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+`;
+
+export const Tour = styled(Link)`
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  text-transform: capitalize;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: #cc704b;
+  }
+`;
+
+export const Role = styled.p`
+  font-size: 1.4rem;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  text-transform: capitalize;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    color: #cc704b;
+  }
 `;

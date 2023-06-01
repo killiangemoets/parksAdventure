@@ -20,6 +20,7 @@ import { useSearchParams } from "react-router-dom";
 import { isValidDate } from "@fullcalendar/core/internal";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import CheckBoxes from "../../UIComponents/checkBoxes/checkBoxes.component";
 
 export type AllReviewsNavbarProps = {
   tourNames: TourNameData[];
@@ -54,6 +55,10 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
   const [toursSelection, setToursSelection] = useState<Info[]>([
     { id: "allTours", value: "All Tours" },
   ]);
+
+  const [showHidden, setShowHidden] = useState<TInfo<string>[]>([
+    { value: "Show Hidden Reviews", id: "showHidden" },
+  ]);
   const [selectedTour, setSelectedTour] = useState<Info>(toursSelection[0]);
 
   const [selectedSort, setSelectedSort] = useState<Info>(sortSelection[0]);
@@ -66,6 +71,12 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
   const handleUsersDropdown = (value: Info): void => {
     if (value.id === "allUsers") searchParams.delete("user");
     else searchParams.set("user", value.id.toString());
+    setSearchParams(searchParams);
+  };
+
+  const handleShowHidden = (value: TInfo<string>[]): void => {
+    if (value.length > 0) searchParams.delete("hidden");
+    else searchParams.set("hidden", "false");
     setSearchParams(searchParams);
   };
 
@@ -150,6 +161,12 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
   }, [searchParams, userNames]);
 
   useEffect(() => {
+    const showHiddenParam = searchParams.get("hidden");
+    if (showHiddenParam) setShowHidden([]);
+    else setShowHidden([{ value: "Show Hidden Reviews", id: "showHidden" }]);
+  }, [searchParams, showHidden]);
+
+  useEffect(() => {
     const currentTourId = searchParams.get("tour");
     if (currentTourId) {
       const tour = tourNames.find((tour) => tour._id === currentTourId);
@@ -197,7 +214,16 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
 
   return (
     <AdminNavbarContainer>
-      <AdminNavbarLeftContainer></AdminNavbarLeftContainer>
+      <AdminNavbarLeftContainer>
+        <CheckBoxes
+          options={[{ value: "Show Hidden Reviews", id: "showHidden" }]}
+          allowSelectAll={false}
+          selection={showHidden}
+          handler={(newValues) => {
+            handleShowHidden(newValues as TInfo<string>[]);
+          }}
+        />
+      </AdminNavbarLeftContainer>
       <AdminNavbarCenterContainer>
         <Dropdown
           dropdownType={DROPDOWN_TYPE_CLASSES.input}

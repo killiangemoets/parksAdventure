@@ -7,6 +7,7 @@ export type TReview = {
   user: ReviewUserData;
   edited: boolean;
   id: string;
+  hidden: boolean;
 };
 
 export type ReviewUserData = {

@@ -87,8 +87,16 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: false,
-    select: false,
+    // select: false,
   },
+});
+
+userSchema.index({ lastname: 1, firstname: 1 });
+userSchema.index({
+  firstname: 'text',
+  lastname: 'text',
+  email: 'text',
+  phoneNumber: 'text',
 });
 
 // PRE SAVE MIDDLEWARES //
@@ -114,12 +122,12 @@ userSchema.pre('save', async function (next) {
 // QUERY MIDDLEWARES //
 // userSchema.pre(/^find/, function (next) {
 //   this.find({ active: { $ne: false } });
-//   this.find({
-//     $or: [
-//       { emailVerificationToken: { $ne: undefined } },
-//       { emailVerificationToken: { $eq: undefined }, active: { $ne: false } },
-//     ],
-//   });
+//   // this.find({
+//   //   $or: [
+//   //     { emailVerificationToken: { $ne: undefined } },
+//   //     { emailVerificationToken: { $eq: undefined }, active: { $ne: false } },
+//   //   ],
+//   // });
 //   next();
 // });
 

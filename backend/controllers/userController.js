@@ -5,6 +5,11 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const factory = require('./handlerFactory');
 const uploadToCloudinary = require('./../utils/uploadToCloudinary');
+const APIFeatures = require('../utils/apiFeatures');
+const Review = require('../models/reviewModel');
+const Booking = require('../models/bookingModel');
+const Tour = require('../models/tourModel');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
   if (req.body.photo && req.body.photo.length > 0) {
@@ -34,8 +39,6 @@ const filterObj = (obj, ...allowedFields) => {
   });
   return newObj;
 };
-
-exports.getAllUsers = factory.getAll(User);
 
 exports.getMe = (req, res, next) => {
   req.params.id = req.user.id;
@@ -141,7 +144,192 @@ exports.getAllUserNames = catchAsync(async (req, res, next) => {
   });
 });
 
-// Do NOT update password with this!
+exports.requireHiddenFields = (req, res, next) => {
+  console.log(req.query);
+  req.query.fields = '+active';
+  next();
+};
+
+exports.getAllUsersWithDetails = catchAsync(async (req, res, next) => {
+  let features = new APIFeatures(User.find(), req.query, next)
+    .filter()
+    .sort()
+    .limitFields();
+
+  const featuresWithPagination = new APIFeatures(User.find(), req.query, next)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const count = await features.query.countDocuments();
+  const docs = await featuresWithPagination.query;
+
+  const newDocs = await Promise.all(
+    docs.map(async (doc) => {
+      const bookingsStats = await Booking.aggregate([
+        {
+          $match: { user: doc._id },
+        },
+        {
+          $group: {
+            _id: '$user',
+            nBookings: { $sum: 1 },
+          },
+        },
+      ]);
+      const reviewsStats = await Review.aggregate([
+        {
+          $match: { user: doc._id },
+        },
+        {
+          $group: {
+            _id: '$user',
+            nRatings: { $sum: 1 },
+            avgRating: { $avg: '$rating' },
+          },
+        },
+      ]);
+
+      return {
+        _id: doc._id,
+        role: doc.role,
+        firstname: doc.firstname,
+        lastname: doc.lastname,
+        email: doc.email,
+        photo: doc.photo,
+        phoneNumber: doc.phoneNumber,
+        birthDate: doc.birthDate,
+        active: doc.active,
+        numOfBookings:
+          bookingsStats.length > 0 ? bookingsStats[0].nBookings : 0,
+        numOfRatings: reviewsStats.length > 0 ? reviewsStats[0].nRatings : 0,
+        avgRating:
+          reviewsStats.length > 0
+            ? Math.round(reviewsStats[0].avgRating * 100) / 100
+            : 4.5,
+      };
+    })
+  );
+
+  res.status(200).json({
+    status: 'success',
+    results: docs.length,
+    totalResults: count,
+    data: {
+      data: newDocs,
+    },
+  });
+});
+
+exports.getAllGuidesWithDetails = catchAsync(async (req, res, next) => {
+  req.query.role = ['guide', 'lead-guide'];
+  let features = new APIFeatures(User.find(), req.query, next)
+    .filter()
+    .sort()
+    .limitFields();
+
+  const featuresWithPagination = new APIFeatures(User.find(), req.query, next)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+
+  const count = await features.query.countDocuments();
+  const docs = await featuresWithPagination.query;
+
+  const newDocs = await Promise.all(
+    docs.map(async (doc) => {
+      const tours = await Tour.aggregate([
+        {
+          $match: {
+            guides: {
+              $elemMatch: {
+                $eq: ObjectId(doc._id),
+              },
+            },
+          },
+        },
+        { $project: { name: 1, slug: 1 } },
+      ]);
+
+      return {
+        _id: doc._id,
+        role: doc.role,
+        firstname: doc.firstname,
+        lastname: doc.lastname,
+        email: doc.email,
+        photo: doc.photo,
+        phoneNumber: doc.phoneNumber,
+        birthDate: doc.birthDate,
+        active: doc.active,
+        tours,
+      };
+    })
+  );
+
+  res.status(200).json({
+    status: 'success',
+    results: docs.length,
+    totalResults: count,
+    data: {
+      data: newDocs,
+    },
+  });
+});
+
+exports.deleteUserReviews = catchAsync(async (req, res, next) => {
+  const reviews = await Review.find({ user: ObjectId(req.params.id) });
+  // console.log({ reviews });
+  reviews.forEach(async (review) => {
+    const deletedReview = await Review.findByIdAndDelete(review._id);
+    // console.log(deletedReview);
+  });
+
+  next();
+});
+
+exports.hideUserReviews = catchAsync(async (req, res, next) => {
+  if (req.body.active === false) {
+    const reviews = await Review.updateMany(
+      { user: ObjectId(req.params.id) },
+      { hidden: true }
+    );
+    console.log({ reviews });
+  } else if (req.body.active === true) {
+    const reviews = await Review.updateMany(
+      { user: ObjectId(req.params.id) },
+      { hidden: false }
+    );
+    console.log({ reviews });
+  }
+
+  next();
+});
+
+exports.deleteGuideTours = catchAsync(async (req, res, next) => {
+  if (
+    req.method === 'DELETE' ||
+    (req.method === 'PATCH' && req.body.active === false)
+  ) {
+    const tours = await Tour.find({
+      guides: {
+        $elemMatch: {
+          $eq: ObjectId(req.params.id),
+        },
+      },
+    });
+
+    for (const tour of tours) {
+      tour.guides.pull(ObjectId(req.params.id));
+      await tour.save();
+    }
+  }
+
+  next();
+});
+
+exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

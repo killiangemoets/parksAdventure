@@ -1,13 +1,13 @@
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const Review = require('../models/reviewModel');
 const ObjectId = require('mongodb').ObjectID;
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const queryObj = { _id: ObjectId(req.params.id) };
     if (req.user.role === 'user') queryObj.user = ObjectId(req.user._id);
-    console.log('queryObj', queryObj);
     const doc = await Model.findOneAndDelete(queryObj);
 
     if (!doc) {
@@ -102,8 +102,10 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
+    // console.log('GET ALL', req.query);
     // To allow for nested GET reviews on tour (hack)
     let filter = {};
+
     if (req.params.tourId) filter = { tour: req.params.tourId };
 
     let features = new APIFeatures(Model.find(filter), req.query, next)
@@ -122,14 +124,14 @@ exports.getAll = (Model) =>
       .paginate();
 
     const count = await features.query.countDocuments();
-    const doc = await featuresWithPagination.query;
+    const docs = await featuresWithPagination.query;
 
     res.status(200).json({
       status: 'success',
-      results: doc.length,
+      results: docs.length,
       totalResults: count,
       data: {
-        data: doc,
+        data: docs,
       },
     });
   });

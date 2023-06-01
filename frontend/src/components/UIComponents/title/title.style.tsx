@@ -18,6 +18,13 @@ export const MainTitle = styled.h1`
   text-transform: uppercase;
 `;
 
+export const SoftTitle = styled(MainTitle)`
+  text-transform: none;
+  font-weight: 700;
+  text-align: center;
+  font-size: 3rem;
+`;
+
 export const HomeSectionTitle = styled.h2`
   font-weight: 700;
   width: fit-content;

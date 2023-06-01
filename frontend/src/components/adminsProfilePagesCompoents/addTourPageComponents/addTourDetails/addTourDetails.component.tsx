@@ -214,7 +214,8 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             </Dropdown>
             <ErrorMessage>
               {tourGuidesError
-                ? "A tour must have at least one LEAD guide"
+                ? // ? "A tour must have at least one LEAD guide"
+                  "A tour must have at least one guide"
                 : ""}
             </ErrorMessage>
           </TourGuidesSelectSectionContainer>

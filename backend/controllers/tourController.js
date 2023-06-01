@@ -176,13 +176,15 @@ exports.getTour = factory.getOne(Tour, [
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const findObj = { slug: req.params.slug };
   if (!req.user || req.user.role === 'user') findObj.hiddenTour = false;
+
+  console.log('HEEERE');
   const tour = await Tour.findOne(findObj)
     .populate({
       path: 'reviews',
-      populate: {
-        path: 'user',
-        select: 'firstname lastname photo',
-      },
+      // populate: {
+      // path: 'user',
+      // select: 'firstname lastname photo active',
+      // },
     })
     .populate({
       path: 'bookings',
@@ -195,6 +197,8 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   if (!tour) {
     return next(new AppError('No tour found with that slug', 404));
   }
+
+  tour.reviews = tour.reviews.filter((review) => review.user.active !== false);
 
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },

@@ -40,6 +40,7 @@ import { selectUserRole } from "./store/user/user.selector";
 import { USER_ROLE_TYPES } from "./types/user";
 import AdminTourNavbar from "./components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
 import AdminTourCalendar from "./routes/adminRoutes/adminTourCalendar/adminTourCalendar.component";
+import GuideAccountActivation from "./routes/guideRoutes/guideAccountActivation/guideAccountActivation.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -123,6 +124,11 @@ function App() {
         <Route path="checkout/" element={<CheckoutLine step={4} />}>
           <Route path="step4" element={<ConfirmationStep />} />
         </Route>
+
+        <Route
+          path="guide-activation/:token"
+          element={<GuideAccountActivation />}
+        />
       </Route>
 
       <Route path="profile/" element={<UserProfile />}>

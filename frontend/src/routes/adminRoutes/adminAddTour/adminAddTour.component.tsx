@@ -43,6 +43,7 @@ import {
   selectTourCurrentAvailabilities,
 } from "../../../store/tour/tour.selector";
 import getTourDataInEditFormat from "../../../utils/dataManipulation/getTourDataInEditFormat";
+import { TourGuidesSectionContainer } from "../../../components/tourPageComponents/tourGuidesSection/tourGuidesSection.style";
 
 export type NewTourDataValueTypes =
   | string
@@ -209,11 +210,12 @@ const AdminAddTour = () => {
     if (!summary?.length) newErrorsState.summary = true;
     // if (!tourGuides?.length) newErrorsState.tourGuides = true;
     if (
-      !tourGuidesList.find(
-        (guide) =>
-          guide.role === "lead-guide" &&
-          tourGuides.find((tourGuide) => tourGuide.id === guide.id)
-      )
+      // !tourGuidesList.find(
+      //   (guide) =>
+      //     guide.role === "lead-guide" &&
+      //     tourGuides.find((tourGuide) => tourGuide.id === guide.id)
+      // )
+      tourGuides.length === 0
     )
       newErrorsState.tourGuides = true;
     if (!locations.length) newErrorsState.locations = true;

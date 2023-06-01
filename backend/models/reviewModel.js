@@ -31,6 +31,10 @@ const reviewSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    hidden: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     toJSON: { virtuals: true },
@@ -48,7 +52,7 @@ reviewSchema.pre(/^find/, function (next) {
     select: 'name imageCover slug duration hiddenTour',
   }).populate({
     path: 'user',
-    select: 'firstname lastname photo',
+    select: 'firstname lastname photo active',
   });
 
   // this.populate({

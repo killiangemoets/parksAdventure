@@ -85,8 +85,12 @@ const BookingCard: FC<BookingCardProps> = ({
       {showUserInfo && (
         <BookingReviewUserInfo>
           <ReviewProfile
-            userName={`${booking.user.firstname} ${booking.user.lastname}`}
-            userImg={booking.user.photo}
+            userName={
+              booking.user?.firstname
+                ? `${booking.user?.firstname} ${booking.user?.lastname}`
+                : "deleted user"
+            }
+            userImg={booking.user?.photo}
           />
         </BookingReviewUserInfo>
       )}

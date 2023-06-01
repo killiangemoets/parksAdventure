@@ -33,6 +33,7 @@ type ReviewCommonProps = {
   pictureSize?: PROFILE_PICTURE_SIZE_CLASSES;
   edited?: boolean;
   reviewId: string;
+  hidden?: boolean;
   handlePassDeletedReview?: (reviewId: string) => void;
 };
 
@@ -41,6 +42,7 @@ const AdminReview: FC<ReviewCommonProps> = ({
   review,
   rating,
   userImg,
+  hidden,
   userName,
   tourImg,
   tourName,
@@ -69,7 +71,6 @@ const AdminReview: FC<ReviewCommonProps> = ({
       setDeleteIsLoading(true);
       const response = await deleteMyReview(reviewId);
       setDeleteIsLoading(false);
-      console.log(response);
       if (response && response.status === "success") {
         setDeleteSuccess(true);
         setTimeout(function () {
@@ -94,7 +95,8 @@ const AdminReview: FC<ReviewCommonProps> = ({
           pictureSize={pictureSize}
         />
         <ReviewTourName>
-          By <span>{userName}</span>
+          By <span>{userName}</span>{" "}
+          {hidden === true ? "(DESACTIVATED USER)" : ""}
         </ReviewTourName>
         {/* <ReviewProfile
           userImg={userImg}

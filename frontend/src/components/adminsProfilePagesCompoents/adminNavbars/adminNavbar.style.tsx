@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { CheckboxGroupElement } from "../../UIComponents/checkBoxes/checkBoxes.style";
 
 export const AdminNavbarContainer = styled.div`
   position: relative;
@@ -11,6 +12,13 @@ export const AdminNavbarContainer = styled.div`
   border-bottom: 1px solid #cc704b;
   background-color: #fdfaf5;
   padding: 0 6.4rem;
+
+  ${CheckboxGroupElement} {
+    label {
+      font-size: 1.6rem !important;
+      letter-spacing: 0.2px !important;
+    }
+  }
 `;
 
 export const AdminNavbarCenterContainer = styled.div`
@@ -45,7 +53,8 @@ export const FixAdminTourNavbar = styled.div`
 `;
 
 export const DeleteQuestion = styled.h1`
-  font-size: 2rem;
+  text-align: center;
+  font-size: 1.8rem;
   font-weight: 500;
   letter-spacing: 0.2px;
 
@@ -58,11 +67,11 @@ export const DeleteQuestion = styled.h1`
 export const ErrorMessage = styled.p`
   width: 100%;
   text-align: center;
-  height: 2rem;
+  height: 1.8rem;
   color: #ff0033;
-  font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 0.6px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 `;
 
 export const UserContainer = styled.div`
@@ -79,4 +88,45 @@ export const UserEmail = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   color: #aaa;
+`;
+
+export const ModalSuccessContainer = styled.div`
+  min-width: 48rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6.4rem;
+`;
+export const ModalSuccessMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3.2rem;
+`;
+
+export const ModalSuccessMessageMainElement = styled.p`
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+
+  span {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+`;
+
+export const ModalSuccessMessageElement = styled.p`
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+  line-height: 2.6rem;
+
+  span {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
 `;

@@ -1,3 +1,5 @@
+import { ReactElement, ReactNode } from "react";
+
 export enum USER_ROLE_TYPES {
   USER = "user",
   GUIDE = "guide",
@@ -18,6 +20,21 @@ export type TUser = {
   _id?: string;
 };
 
+export type TExtendedUser = TUser & {
+  active: boolean;
+  numOfBookings: number;
+  numOfRatings: number;
+  avgRating: number;
+};
+export type TExtendedGuide = TUser & {
+  active: boolean;
+  tours: {
+    _id: string;
+    name: string;
+    slug: string;
+  }[];
+};
+
 export type UpdateUserData = {
   firstname?: string;
   lastname?: string;
@@ -25,6 +42,7 @@ export type UpdateUserData = {
   phoneNumber?: string;
   birthDate?: Date;
   wishlist?: string[];
+  active?: boolean;
 };
 
 export type UpdateUserPasswordData = {
@@ -47,11 +65,22 @@ export type SignUpData = {
   passwordConfirm: string;
 };
 
+export type TGuideRole = "guide" | "lead-guide";
+
+export type CreateTourGuideData = {
+  firstname: string;
+  lastname: string;
+  email: string;
+  role: TGuideRole;
+};
+
 export type PasswordsData = {
   password: string;
   passwordConfirm: string;
   logout: boolean;
 };
+
+export type GuidePasswordsData = Omit<PasswordsData, "logout">;
 
 export type CheckoutInputsUserData = {
   firstname?: string;
@@ -73,3 +102,44 @@ export type UserNameData = {
   lastname: string;
   email: string;
 };
+
+export type UserTableInfo = {
+  key: React.Key;
+  name: ReactElement;
+  email: string;
+  phoneNumber: string;
+  birthDate: string;
+  bookingsNumber: number;
+  reviewsNumber: number;
+  ratingAverage: number;
+  status: "active" | "desactivated";
+};
+
+export type GuideTableInfo = {
+  key: React.Key;
+  role: ReactElement;
+  name: ReactElement;
+  email: string;
+  phoneNumber: string;
+  birthDate: string;
+  tours: ReactNode;
+  status: "active" | "desactivated";
+};
+
+export type GeneralUserTableInfo = {
+  key: React.Key;
+  name: ReactElement;
+  email: string;
+  phoneNumber: string;
+  birthDate: string;
+  bookingsNumber?: number;
+  reviewsNumber?: number;
+  ratingAverage?: number;
+  tours?: ReactNode;
+  status: "active" | "desactivated";
+};
+
+export const guideRolesList = [
+  { value: "guide", id: "guide" },
+  { value: "lead-guide", id: "lead-guide" },
+];

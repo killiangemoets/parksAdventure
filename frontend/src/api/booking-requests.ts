@@ -90,7 +90,7 @@ export const getMyBookingDetails = async (bookingId: string) => {
   }
 };
 
-export const getAllBookings = async (requestString: string) => {
+export const getAllBookings = async (requestString: string = "") => {
   try {
     const response = await axiosInstance.get(`/bookings${requestString}`);
     return response.data;

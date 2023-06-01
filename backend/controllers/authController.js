@@ -75,7 +75,8 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    role: req.body.role, // TODO: remove it!!
+    // role: req.body.role, // TODO: remove it!!
+    role: 'user',
     emailVerificationTokens: [emailVerificationToken],
     emailVerificationSessionToken,
   });
@@ -423,4 +424,85 @@ exports.getLoggedInUser = catchAsync(async (req, res, next) => {
   // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
   next();
+});
+
+exports.createTourGuide = catchAsync(async (req, res, next) => {
+  if (!(req.body.role === 'guide' || req.body.role === 'lead-guide')) {
+    return next(
+      new AppError('The route is only to create guides and lead-guides')
+    );
+  }
+
+  const temporaryPassword = crypto.randomBytes(4).toString('hex');
+
+  const verificationToken = crypto.randomBytes(32).toString('hex');
+
+  // Encrypt the token using the sha256 algorithms
+  const emailVerificationToken = crypto
+    .createHash('sha256')
+    .update(verificationToken)
+    .digest('hex');
+
+  const newUser = await User.create({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    password: temporaryPassword,
+    passwordConfirm: temporaryPassword,
+    role: req.body.role,
+    emailVerificationTokens: [emailVerificationToken],
+  });
+
+  try {
+    const emailVerificationUrl = `${process.env.TOUR_GUIDE_EMAIL_VERIFICATION_URL}/${verificationToken}`;
+    await new Email(newUser, emailVerificationUrl).sendEmailVerification();
+    res.status(200).json({
+      status: 'success',
+      data: null,
+    });
+  } catch (err) {
+    console.log({ err });
+    newUser.emailVerificationTokens = undefined;
+    await newUser.save({ validateBeforeSave: false });
+    return next(
+      new AppError(
+        'There was an error sending the verification email. Try again or contact us!',
+        500
+      )
+    );
+  }
+});
+
+exports.activateTourGuide = catchAsync(async (req, res, next) => {
+  // 1) Verify that token is present
+  if (!req.params.token) return next(new AppError('token is missing', 500));
+
+  // 2) Get user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    emailVerificationTokens: { $in: [hashedToken] },
+  });
+
+  // 3) If there is no updated user return error
+  if (!user)
+    return next(new AppError('Token is invalid or has already been used', 400));
+
+  user.active = true;
+  user.emailVerificationTokens = undefined;
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+
+  await user.save({ validateBeforeSave: false });
+
+  // 4) Send response
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: undefined,
+    },
+  });
 });

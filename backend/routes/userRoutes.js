@@ -14,6 +14,8 @@ router.post('/resend-email-verification', authController.resendEmail);
 router.post('/forgot-password', authController.forgotPassword);
 router.patch('/reset-password/:token', authController.resetPassword);
 
+router.patch('/guides/activation/:token', authController.activateTourGuide);
+
 // /!\ This will protect all the routes that come after this middleware, because middlewares run in sequence
 router.use(authController.protect);
 
@@ -37,15 +39,40 @@ router.route('/names').get(userController.getAllUserNames);
 
 router.delete('/deleteMe', userController.deleteMe);
 
-// router.use(authController.restrictTo('admin'));
+router.use(authController.restrictTo('admin'));
 router
   .route('/')
-  .get(userController.getAllUsers)
+  .get(userController.requireHiddenFields, userController.getAllUsers)
   .post(userController.createUser);
+
+router
+  .route('/details')
+  .get(
+    userController.requireHiddenFields,
+    userController.getAllUsersWithDetails
+  );
+
+router
+  .route('/guides-details')
+  .get(
+    userController.requireHiddenFields,
+    userController.getAllGuidesWithDetails
+  );
+
 router
   .route('/:id')
   .get(userController.getUser)
-  .patch(userController.updateUser)
-  .delete(userController.deleteUser);
+  .patch(
+    userController.hideUserReviews,
+    userController.deleteGuideTours,
+    userController.updateUser
+  )
+  .delete(
+    userController.deleteUserReviews,
+    userController.deleteGuideTours,
+    userController.deleteUser
+  );
+
+router.post('/guides/creation', authController.createTourGuide);
 
 module.exports = router;

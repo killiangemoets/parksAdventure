@@ -112,6 +112,10 @@ export const DeleteReviewMessage = styled.div`
   letter-spacing: 1px;
   color: #333;
   text-align: center;
+
+  span {
+    font-weight: 700;
+  }
 `;
 
 export const ReviewModalWrapper = styled.div`

@@ -77,7 +77,7 @@ export const getTop10Reviews = async () => {
   }
 };
 
-export const getAllReviews = async (requestString: string) => {
+export const getAllReviews = async (requestString: string = "") => {
   try {
     const response = await axiosInstance.get(`/reviews${requestString}`);
     return response.data;

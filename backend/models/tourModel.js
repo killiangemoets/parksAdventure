@@ -128,7 +128,14 @@ const tourSchema = new mongoose.Schema(
           ref: 'User',
         },
       ],
-      required: [true, 'A tour must have at least one guide'],
+      required: [true, 'Tour Guides are required'],
+      validate: {
+        validator: function (val) {
+          console.log('VALIDATOR', val);
+          return val.length >= 1;
+        },
+        message: 'A tour must have at least one guide',
+      },
     },
     availabilities: [
       {

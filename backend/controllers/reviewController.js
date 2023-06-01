@@ -48,6 +48,7 @@ exports.setEdited = catchAsync(async (req, res, next) => {
 
 exports.top10 = catchAsync(async (req, res, next) => {
   req.query.limit = '10';
+  req.query.hidden = { $ne: true };
   req.query.sort = '-rating,-createdAt';
   next();
 });

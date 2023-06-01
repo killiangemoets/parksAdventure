@@ -13,7 +13,6 @@ import { getAllReviews } from "../../../api/review-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
-import Review from "../../../components/UIComponents/review/review.component";
 import { getAllTourNames } from "../../../api/tour-requests";
 import { TourNameData } from "../../../types/tour";
 import { getAllUserNames } from "../../../api/user-requests";
@@ -45,6 +44,8 @@ const AdminAllReviews = () => {
       if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 
       const response = await getAllReviews(requestString);
+
+      console.log("REVIEWS", response);
 
       if (response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
@@ -132,9 +133,10 @@ const AdminAllReviews = () => {
             date={review.createdAt}
             review={review.review}
             rating={review.rating}
-            userImg={review.user.photo}
-            userName={`${review.user.firstname} ${review.user.lastname}`}
+            userImg={review.user?.photo}
+            userName={`${review.user?.firstname} ${review.user?.lastname}`}
             tourImg={review.tour?.imageCover}
+            hidden={review.hidden}
             tourName={review.tour?.name}
             edited={review.edited}
             reviewId={review._id}

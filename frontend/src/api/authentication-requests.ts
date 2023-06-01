@@ -1,5 +1,10 @@
 import axios from "axios";
-import { LoginData, SignUpData, UpdateUserPasswordData } from "../types/user";
+import {
+  CreateTourGuideData,
+  LoginData,
+  SignUpData,
+  UpdateUserPasswordData,
+} from "../types/user";
 import axiosInstance from "../utils/axios/axios-instance";
 
 export const login = async (loginData: LoginData) => {
@@ -133,6 +138,45 @@ export const updateMyPassword = async (
     const response = await axiosInstance.patch(
       "/users/updateMyPassword",
       userPasswords
+    );
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const createTourGuide = async (
+  createTourGuideData: CreateTourGuideData
+) => {
+  try {
+    const response = await axiosInstance.post(
+      "/users/guides/creation",
+      createTourGuideData
+    );
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return err;
+  }
+};
+
+export const activateTourGuide = async (
+  token: string,
+  password: string,
+  passwordConfirm: string
+) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/users/guides/activation/${token}`,
+      {
+        password,
+        passwordConfirm,
+      }
     );
     return response.data;
   } catch (err) {

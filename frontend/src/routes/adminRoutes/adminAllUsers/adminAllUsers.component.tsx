@@ -2,42 +2,53 @@ import { useEffect, useState } from "react";
 import AllUsersNavbar from "../../../components/adminsProfilePagesCompoents/adminNavbars/allUsersNavbar.component";
 import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
 import {
-  AdminContent,
   AdminContentErrorMessage,
   AdminContentSpinner,
   AdminFixHeader,
   AdminLargeContent,
   AdminSectionContainer,
 } from "../adminRoutes.style";
-import { TUser } from "../../../types/user";
-import { getAllUsers } from "../../../api/user-requests";
+import { TExtendedUser } from "../../../types/user";
+import { getAllUsersWithDetails } from "../../../api/user-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
-import UsersTable from "../../../components/UIComponents/usersTable/usersTable.component";
+import UsersTable from "../../../components/adminsProfilePagesCompoents/usersTable/usersTable.component";
+import { useSearchParams } from "react-router-dom";
 
 const AdminAllUsers = () => {
-  const [users, setUsers] = useState<TUser[]>([]);
+  const [searchParams] = useSearchParams();
+  const [users, setUsers] = useState<TExtendedUser[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const handleGetUsers = async () => {
+    setIsLoading(true);
+
+    const requestStringFromUrl = window.location.href.split("?")[1];
+    // const pageRequest = currentPage > 1 ? `&page=${currentPage}` : "";
+    const pageRequest = "";
+
+    // let requestString = `&limit=${process.env.REACT_APP_BOOKINGS_PER_PAGE}${pageRequest}`;
+    let requestString = `${pageRequest}`;
+    if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
+
+    const response = await getAllUsersWithDetails(`?role=user${requestString}`);
+    console.log(response);
+    if (response.status === "success") {
+      setUsers(response.data.data);
+      setErrorMessage(undefined);
+    } else {
+      setErrorMessage("An error occured. Try to reload the page!");
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const handleGetUsers = async () => {
-      setIsLoading(true);
-      const response = await getAllUsers("?role=user");
-      console.log(response);
-      if (response.status === "success") {
-        setUsers(response.data.data);
-        setErrorMessage(undefined);
-      } else {
-        setErrorMessage("An error occured. Try to reload the page!");
-      }
-      setIsLoading(false);
-    };
     handleGetUsers();
-  }, []);
+  }, [searchParams]);
 
   return (
     <AdminSectionContainer>
@@ -54,7 +65,9 @@ const AdminAllUsers = () => {
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>
         )}
-        <UsersTable />
+        {!isLoading && !errorMessage && (
+          <UsersTable users={users} handleChange={handleGetUsers} />
+        )}
       </AdminLargeContent>
     </AdminSectionContainer>
   );
