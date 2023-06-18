@@ -1,3 +1,4 @@
+import { USER_ROLE_TYPES } from "../../types/user";
 import { UserDipatchTypes } from "./user.action";
 import { USER_ACTION_TYPES } from "./user.type";
 
@@ -8,7 +9,7 @@ export type UserState = {
   readonly photo?: string;
   readonly phoneNumber?: string;
   readonly birthDate?: Date;
-  readonly role?: "user" | "guide" | "lead-guide" | "admin";
+  readonly role?: USER_ROLE_TYPES;
   readonly wishlist?: string[];
   readonly id?: string;
 };

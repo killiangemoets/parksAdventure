@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Tour = require('./tourModel');
+const ObjectId = require('mongodb').ObjectID;
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -62,12 +63,14 @@ reviewSchema.pre(/^find/, function (next) {
   next();
 });
 
-reviewSchema.statics.calcAverageRatings = async function (tourId) {
+reviewSchema.statics.calcAverageRatings = async function (tour) {
   // since we use a static method, 'this' points to the model
+
+  const tourId = tour?._id || tour;
 
   const stats = await this.aggregate([
     {
-      $match: { tour: tourId },
+      $match: { tour: tourId, hidden: { $ne: true } },
     },
     {
       $group: {
@@ -77,6 +80,8 @@ reviewSchema.statics.calcAverageRatings = async function (tourId) {
       },
     },
   ]);
+
+  console.log({ tourId, stats });
 
   if (stats.length > 0) {
     await Tour.findByIdAndUpdate(tourId, {

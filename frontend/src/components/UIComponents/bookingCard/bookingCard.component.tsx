@@ -15,7 +15,9 @@ import {
 } from "./bookingCard.style";
 import { TBooking } from "../../../types/booking";
 import { FC, useState } from "react";
-import { niceDatesRange } from "../../../utils/formatting/formatDates";
+import niceDate, {
+  niceDatesRange,
+} from "../../../utils/formatting/formatDates";
 import niceGroupDetailsString from "../../../utils/formatting/formatGroup";
 import CreateReviewModal from "../createReviewModal/createReviewModal.component";
 import getEndDate from "../../../utils/dataManipulation/getEndDate";
@@ -48,6 +50,7 @@ const BookingCard: FC<BookingCardProps> = ({
         <BookingPicture>
           <img src={booking.tour?.imageCover} alt="tour illustration" />
         </BookingPicture>
+
         <BookingInfos>
           <BookingTitle>{booking.tour?.name}</BookingTitle>
           <BookingConfirmation>
@@ -55,13 +58,19 @@ const BookingCard: FC<BookingCardProps> = ({
             <ConfirmationText>Confirmed Reservation</ConfirmationText>
           </BookingConfirmation>
           <BookingText>
+            Reservation made on {niceDate(booking.createdAt)}
+          </BookingText>
+          <BookingText>
             Reference number: <span>{booking.orderNumber}</span> | PIN:{" "}
             <span>{booking.pin}</span>
           </BookingText>
-          <BookingText>{niceDatesRange(booking.date, endDate)}</BookingText>
           <BookingText>
-            {niceGroupDetailsString(booking.adults || 0, booking.kids || 0)}
+            Hike {niceDatesRange(booking.date, endDate)}
           </BookingText>
+          <BookingText>
+            For {niceGroupDetailsString(booking.adults || 0, booking.kids || 0)}
+          </BookingText>
+
           <Button
             buttonType={BUTTON_TYPE_CLASSES.empty}
             onClick={() => {

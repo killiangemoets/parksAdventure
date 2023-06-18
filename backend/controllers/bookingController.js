@@ -4,13 +4,13 @@ const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
-const mongoose = require('mongoose');
 const util = require('util');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const formating = require('./../utils/formating');
 const uid2 = require('uid2');
-const APIFeatures = require('../utils/apiFeatures');
+const ObjectId = require('mongodb').ObjectID;
+const Email = require('./../utils/email');
 
 exports.checkAvailabilities = catchAsync(async (req, res, next) => {
   // 1) Check is there is items
@@ -234,6 +234,7 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
     return next(new AppError('No booking found with this token', 500));
   }
 
+  await new Email(req.user, '').sendOrderConfirmation();
   // 5) Send response
   res.status(200).json({
     status: 'success',
@@ -341,6 +342,22 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+exports.filterOnlyAuthorizedTours = async (req, res, next) => {
+  if (req.user.role === 'admin') return next();
+
+  const tour = await Tour.find({
+    guides: { $in: ObjectId(req.user._id) },
+  }).select('_id');
+  req.query.tour = tour.map((tour) => ObjectId(tour._id));
+
+  next();
+};
+
+exports.requireTotalHikers = (req, res, next) => {
+  req.params.getHikers = true;
+  next();
+};
 
 exports.createBooking = factory.createOne(Booking);
 exports.getBooking = factory.getOne(Booking);

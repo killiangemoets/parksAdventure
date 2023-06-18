@@ -9,9 +9,15 @@ import {
   UserPictureContainer,
   UserTableContainer,
 } from "./usersTable.style";
-import { TExtendedUser, UserTableInfo } from "../../../types/user";
+import {
+  TExtendedUser,
+  USER_ROLE_TYPES,
+  UserTableInfo,
+} from "../../../types/user";
 import niceDate from "../../../utils/formatting/formatDates";
 import ActionButtons from "./actionButtons.component";
+import { selectUserRole } from "../../../store/user/user.selector";
+import { useSelector } from "react-redux";
 
 export type UsersTableProps = {
   users: TExtendedUser[];
@@ -19,6 +25,7 @@ export type UsersTableProps = {
 };
 
 const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
+  const userRole = useSelector(selectUserRole);
   const [data, setData] = useState<UserTableInfo[]>([]);
   const columns: ColumnsType<UserTableInfo> = [
     {
@@ -78,7 +85,10 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
         return 0;
       },
     },
-    {
+  ];
+
+  if (userRole === USER_ROLE_TYPES.ADMIN)
+    columns.push({
       title: "",
       dataIndex: "actions",
       key: "actions",
@@ -94,8 +104,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
           />
         );
       },
-    },
-  ];
+    });
 
   const handleDeleteUser = (userId: string) => {
     const newData = data.filter(

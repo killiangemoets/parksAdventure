@@ -72,7 +72,7 @@ exports.updatePopularityIndex = catchAsync(async (req, res, next) => {
 exports.getAllTours = factory.getAll(Tour);
 
 exports.showHiddenToursIfAllowed = async (req, res, next) => {
-  if (!req.user || req.user.role === 'user') {
+  if (!req.user || req.user.role !== 'admin') {
     req.query.hiddenTour = false;
     // req.query.onlyAvailables = undefined;
   }
@@ -234,7 +234,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
         images: tour.images,
         location: tour.location,
         locations: tour.locations,
-        lowPrice: tour.lowPrice,
+        lowerPrice: tour.lowerPrice,
         maxGroupSizeCapacity: tour.maxGroupSizeCapacity,
         meetingAddress: tour.meetingAddress,
         minGroupSizeCapacity: tour.minGroupSizeCapacity,
@@ -261,42 +261,53 @@ exports.checkIfBookingsExist = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.checkGroupCapacity = catchAsync(async (req, res, next) => {
-  const tour = await Tour.findById(req.params.id).populate({
-    path: 'bookings',
-    populate: {
-      path: 'tour',
-      select: 'adults kids',
-    },
-  });
+exports.checkGroupCapacityAndIsLeadGuideAuthorized = catchAsync(
+  async (req, res, next) => {
+    const tour = await Tour.findById(req.params.id).populate({
+      path: 'bookings',
+      populate: {
+        path: 'tour',
+        select: 'adults kids',
+      },
+    });
 
-  if (!tour) return next(new AppError('No tour found with this Id', 404));
+    if (!tour) return next(new AppError('No tour found with this Id', 404));
 
-  console.log('UPDATE', req.body.availabilities);
+    if (
+      req.user.role === 'lead-guide' &&
+      !tour.guides.find(
+        (guide) => guide._id.toString() === req.user._id.toString()
+      )
+    ) {
+      return next(
+        new AppError('You are not authorized to edit this tour', 404)
+      );
+    }
 
-  if (
-    req.body.availabilities &&
-    req.body.availabilities.find((updatedAvailability) =>
-      tour.currentAvailabilities?.find(
-        (tourCurrentAvailability) =>
-          formating.compareDates(
-            tourCurrentAvailability.date,
-            updatedAvailability.date
-          ) &&
-          tourCurrentAvailability.currentGroupSize >
-            updatedAvailability.maxGroupSize
+    if (
+      req.body.availabilities &&
+      req.body.availabilities.find((updatedAvailability) =>
+        tour.currentAvailabilities?.find(
+          (tourCurrentAvailability) =>
+            formating.compareDates(
+              tourCurrentAvailability.date,
+              updatedAvailability.date
+            ) &&
+            tourCurrentAvailability.currentGroupSize >
+              updatedAvailability.maxGroupSize
+        )
       )
     )
-  )
-    return next(
-      new AppError(
-        'A date already has bookings for a number of people higher than the new group capacity',
-        404
-      )
-    );
+      return next(
+        new AppError(
+          'A date already has bookings for a number of people higher than the new group capacity',
+          404
+        )
+      );
 
-  next();
-});
+    next();
+  }
+);
 
 exports.getTourCalendar = catchAsync(async (req, res, next) => {
   const findObj = { slug: req.params.slug };
@@ -305,6 +316,20 @@ exports.getTourCalendar = catchAsync(async (req, res, next) => {
 
   if (!tour) {
     return next(new AppError('No tour found with that slug', 404));
+  }
+
+  if (
+    (req.user.role === 'lead-guide' || req.user.role === 'guide') &&
+    !tour.guides.find(
+      (guide) => guide._id.toString() === req.user._id.toString()
+    )
+  ) {
+    return next(
+      new AppError(
+        'You are not authorized to consult the calendar of this tour',
+        404
+      )
+    );
   }
 
   const bookings = await Booking.find({ tour: ObjectId(tour._id) });
@@ -336,8 +361,13 @@ exports.getTourCalendar = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getAllTourNames = catchAsync(async (req, res, next) => {
-  const tours = await Tour.find().select('name');
+exports.getMyTourNames = catchAsync(async (req, res, next) => {
+  let filter = {};
+  if (req.user.role === 'lead-guide' || req.user.role === 'guide') {
+    filter = { guides: { $in: ObjectId(req.user._id) } };
+  }
+
+  const tours = await Tour.find(filter).select('name');
 
   res.status(200).json({
     status: 'success',

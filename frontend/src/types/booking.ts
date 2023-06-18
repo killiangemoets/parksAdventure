@@ -81,5 +81,6 @@ export type TBooking = {
   totalPrice: number;
   orderNumber: number;
   pin: number;
-  _id: string;
+  createdAt: string;
+  _id: Date;
 };

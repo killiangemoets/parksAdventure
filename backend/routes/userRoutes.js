@@ -39,15 +39,19 @@ router.route('/names').get(userController.getAllUserNames);
 
 router.delete('/deleteMe', userController.deleteMe);
 
-router.use(authController.restrictTo('admin'));
 router
   .route('/')
-  .get(userController.requireHiddenFields, userController.getAllUsers)
+  .get(
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
+    userController.requireHiddenFields,
+    userController.getAllUsers
+  )
   .post(userController.createUser);
 
 router
   .route('/details')
   .get(
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
     userController.requireHiddenFields,
     userController.getAllUsersWithDetails
   );
@@ -55,9 +59,12 @@ router
 router
   .route('/guides-details')
   .get(
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
     userController.requireHiddenFields,
     userController.getAllGuidesWithDetails
   );
+
+router.use(authController.restrictTo('admin'));
 
 router
   .route('/:id')

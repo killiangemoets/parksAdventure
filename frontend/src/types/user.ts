@@ -36,6 +36,7 @@ export type TExtendedGuide = TUser & {
 };
 
 export type UpdateUserData = {
+  role?: USER_ROLE_TYPES;
   firstname?: string;
   lastname?: string;
   photo?: string;

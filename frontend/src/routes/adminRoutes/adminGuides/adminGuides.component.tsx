@@ -7,6 +7,10 @@ import {
   AdminFixHeader,
   AdminLargeContent,
   AdminSectionContainer,
+  AdminStatContainer,
+  AdminStatTitle,
+  AdminStatValue,
+  AdminStatsSection,
 } from "../adminRoutes.style";
 import { TExtendedGuide } from "../../../types/user";
 import { getAllGuidesWithDetails } from "../../../api/user-requests";
@@ -23,6 +27,10 @@ const AdminGuides = () => {
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [stats, setStats] = useState<{ guides: number; leadGuides: number }>({
+    guides: 0,
+    leadGuides: 0,
+  });
 
   const handleGetGuides = async () => {
     setIsLoading(true);
@@ -40,8 +48,23 @@ const AdminGuides = () => {
     );
     console.log(response);
     if (response.status === "success") {
-      setGuides(response.data.data);
+      const guidesList: TExtendedGuide[] = response.data.data;
+      setGuides(guidesList);
       setErrorMessage(undefined);
+
+      const newStats = guidesList.reduce(
+        (acc, guide) => {
+          if (guide.role === "guide")
+            return { guides: acc.guides + 1, leadGuides: acc.leadGuides };
+          else return { guides: acc.guides, leadGuides: acc.leadGuides + 1 };
+        },
+        {
+          guides: 0,
+          leadGuides: 0,
+        }
+      );
+
+      setStats(newStats);
     } else {
       setErrorMessage("An error occured. Try to reload the page!");
     }
@@ -57,6 +80,16 @@ const AdminGuides = () => {
         <AdminSectionTitle>Tour Guides</AdminSectionTitle>
         <TourGuidesNavbar onCreateGuide={handleGetGuides} />
       </AdminFixHeader>
+      <AdminStatsSection>
+        <AdminStatContainer>
+          <AdminStatTitle>Guides:</AdminStatTitle>
+          <AdminStatValue>{stats.guides}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Lead-Guides:</AdminStatTitle>
+          <AdminStatValue>{stats.leadGuides}</AdminStatValue>
+        </AdminStatContainer>
+      </AdminStatsSection>
       <AdminLargeContent>
         {isLoading && (
           <AdminContentSpinner>

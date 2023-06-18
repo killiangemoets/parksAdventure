@@ -97,6 +97,7 @@ userSchema.index({
   lastname: 'text',
   email: 'text',
   phoneNumber: 'text',
+  role: 'text',
 });
 
 // PRE SAVE MIDDLEWARES //
@@ -152,13 +153,19 @@ userSchema.methods.createPasswordResetToken = function () {
   // Create a token
   const resetToken = crypto.randomBytes(32).toString('hex');
 
+  if (this.passwordResetTokenResend >= 5)
+    return next(
+      new AppError(
+        'You have reached the limit of the number of emails you can send',
+        508
+      )
+    );
+
   // Encrypt the token using the sha256 algorithms
   this.passwordResetToken = crypto
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
-
-  // console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires =
     Date.now() + process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN * 60 * 1000;

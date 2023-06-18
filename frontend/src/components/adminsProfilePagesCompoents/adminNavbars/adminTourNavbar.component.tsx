@@ -10,10 +10,14 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
 import { Outlet, useNavigate } from "react-router-dom";
-import { selectUserRole } from "../../../store/user/user.selector";
+import {
+  selectUserId,
+  selectUserRole,
+} from "../../../store/user/user.selector";
 import { useSelector } from "react-redux";
 import { USER_ROLE_TYPES } from "../../../types/user";
 import {
+  selectTourGuides,
   selectTourId,
   selectTourName,
 } from "../../../store/tour/tour.selector";
@@ -27,11 +31,17 @@ import WarningMessage from "../../UIComponents/warningMessage/waringMessage.comp
 const AdminTourNavbar = () => {
   const navigate = useNavigate();
   const userRole = useSelector(selectUserRole);
+  const userId = useSelector(selectUserId);
   const tourId = useSelector(selectTourId);
   const tourName = useSelector(selectTourName);
+  const tourGuides = useSelector(selectTourGuides);
   const [deleteTourModal, setDeleteTourModal] = useState<boolean>(false);
   const [confirmTourName, setConfirmTourName] = useState<string>("");
   const [deleteErrorMessage, setDeleteErrorMessage] = useState<string>("");
+
+  const isGuideForThisTour = tourGuides
+    ? tourGuides.find((tourGuide) => tourGuide._id === userId)
+    : false;
 
   const handleGoToEdit = () => {
     navigate(`edit`);
@@ -39,6 +49,10 @@ const AdminTourNavbar = () => {
 
   const handleGoToCalendar = () => {
     navigate(`calendar`);
+  };
+
+  const handleGoToQuickStats = () => {
+    navigate(`stats`);
   };
 
   const handleDeleteTour = async () => {
@@ -66,7 +80,7 @@ const AdminTourNavbar = () => {
           <AdminNavbarContainer>
             <AdminNavbarLeftContainer>
               <Button onClick={handleGoToCalendar}>Calendar</Button>
-              <Button>Quick stats</Button>
+              <Button onClick={handleGoToQuickStats}>Quick stats</Button>
             </AdminNavbarLeftContainer>
             <AdminNavbarRightContainer>
               <Button onClick={handleGoToEdit}>Edit</Button>
@@ -120,6 +134,31 @@ const AdminTourNavbar = () => {
               </Button>
             </ButtonSection>
           </Modal>
+        </FixAdminTourNavbar>
+      )}
+      {userRole === USER_ROLE_TYPES.LEAD_GUIDE && isGuideForThisTour && (
+        <FixAdminTourNavbar>
+          <AdminNavbarContainer>
+            <AdminNavbarLeftContainer>
+              <Button onClick={handleGoToCalendar}>Calendar</Button>
+              <Button>Quick stats</Button>
+            </AdminNavbarLeftContainer>
+            <AdminNavbarRightContainer>
+              <Button onClick={handleGoToEdit}>Edit</Button>
+            </AdminNavbarRightContainer>
+          </AdminNavbarContainer>
+        </FixAdminTourNavbar>
+      )}
+      {userRole === USER_ROLE_TYPES.GUIDE && isGuideForThisTour && (
+        <FixAdminTourNavbar>
+          <AdminNavbarContainer>
+            <AdminNavbarLeftContainer>
+              <Button onClick={handleGoToCalendar}>Calendar</Button>
+            </AdminNavbarLeftContainer>
+            <AdminNavbarRightContainer>
+              <Button>Quick stats</Button>
+            </AdminNavbarRightContainer>
+          </AdminNavbarContainer>
         </FixAdminTourNavbar>
       )}
 

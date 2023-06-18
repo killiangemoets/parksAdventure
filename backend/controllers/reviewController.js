@@ -3,6 +3,8 @@ const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
+const Tour = require('../models/tourModel');
+const ObjectId = require('mongodb').ObjectID;
 
 exports.setTourAndUserId = (req, res, next) => {
   // Allow nested routes
@@ -52,6 +54,22 @@ exports.top10 = catchAsync(async (req, res, next) => {
   req.query.sort = '-rating,-createdAt';
   next();
 });
+
+exports.filterOnlyAuthorizedTours = async (req, res, next) => {
+  if (req.user.role === 'admin') return next();
+
+  const tour = await Tour.find({
+    guides: { $in: ObjectId(req.user._id) },
+  }).select('_id');
+  req.query.tour = tour.map((tour) => ObjectId(tour._id));
+
+  next();
+};
+
+exports.requireAvgRating = (req, res, next) => {
+  req.params.getAvgRating = true;
+  next();
+};
 
 exports.getReview = factory.getOne(Review);
 exports.getAllReviews = factory.getAll(Review);

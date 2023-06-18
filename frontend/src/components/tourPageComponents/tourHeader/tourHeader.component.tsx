@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { useSelector } from "react-redux";
 import {
   selectTour,
@@ -16,6 +16,8 @@ import {
   TourHeaderRight,
   TourHeaderWrapper,
 } from "./tourHeader.style";
+import { selectUserRole } from "../../../store/user/user.selector";
+import { isUserAdminOrGuide } from "../../../utils/dataManipulation/IsUserRole";
 
 export type TourHeaderProps = {
   handleScrollToBooking: () => void;
@@ -26,6 +28,7 @@ const TourHeader: FC<TourHeaderProps> = ({
   handleScrollToBooking,
   handleScrollToReviews,
 }) => {
+  const userRole = useSelector(selectUserRole);
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
 
@@ -45,20 +48,22 @@ const TourHeader: FC<TourHeaderProps> = ({
             />
           )}
         </TourHeaderLeft>
-        <TourHeaderRight>
-          <Button onClick={handleScrollToBooking}>Book Now</Button>
-          <Price>
-            <span>
+        {!isUserAdminOrGuide(userRole) && (
+          <TourHeaderRight>
+            <Button onClick={handleScrollToBooking}>Book Now</Button>
+            <Price>
+              <span>
+                {tour?.currentAvailabilities &&
+                  tour?.currentAvailabilities.length > 0 &&
+                  `From $${tour?.lowerPrice || 0}`}
+              </span>{" "}
               {tour?.currentAvailabilities &&
-                tour?.currentAvailabilities.length > 0 &&
-                `From $${tour?.lowerPrice || 0}`}
-            </span>{" "}
-            {tour?.currentAvailabilities &&
-            tour?.currentAvailabilities.length > 0
-              ? "per person"
-              : "No availabilities at the moment!"}
-          </Price>
-        </TourHeaderRight>
+              tour?.currentAvailabilities.length > 0
+                ? "per person"
+                : "No availabilities at the moment!"}
+            </Price>
+          </TourHeaderRight>
+        )}
       </TourHeaderWrapper>
     </TourHeaderContainer>
   );

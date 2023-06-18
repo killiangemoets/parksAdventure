@@ -58,6 +58,13 @@ class TourAPIFeatures {
       queryObj.difficulty = { $in: difficultyQuery };
     }
 
+    if (queryObj.guides) {
+      const guideQuery = Array.isArray(queryObj.guides)
+        ? queryObj.guides.map((guide) => ObjectId(guide))
+        : [ObjectId(queryObj.guides)];
+      queryObj.guides = { $in: guideQuery };
+    }
+
     if (queryObj.id) {
       const isArray = Array.isArray(queryObj.id);
       let idQuery = [];

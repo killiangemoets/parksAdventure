@@ -8,6 +8,10 @@ import {
   AdminContentSpinner,
   AdminFixHeader,
   AdminSectionContainer,
+  AdminStatContainer,
+  AdminStatTitle,
+  AdminStatValue,
+  AdminStatsSection,
 } from "../adminRoutes.style";
 import { TBooking } from "../../../types/booking";
 import { getAllBookings } from "../../../api/booking-requests";
@@ -30,6 +34,10 @@ const AdminAllBookings = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tourNames, setTourNames] = useState<TourNameData[]>([]);
   const [userNames, setUserNames] = useState<UserNameData[]>([]);
+  const [stats, setStats] = useState<{ bookings: number; hikers: number }>({
+    bookings: 0,
+    hikers: 0,
+  });
 
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
   const currentPage = useHitBottomPagination(numberOfPages);
@@ -43,10 +51,19 @@ const AdminAllBookings = () => {
       let requestString = `?limit=${process.env.REACT_APP_BOOKINGS_PER_PAGE}${pageRequest}`;
       if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 
+      if (!requestString.includes("sort")) requestString += "&sort=-createdAt";
+      console.log({ requestString });
+
       const response = await getAllBookings(requestString);
+
       if (response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
         else setErrorMessage(undefined);
+
+        setStats({
+          bookings: response.totalResults,
+          hikers: response.numberOfHikers,
+        });
 
         if (currentPage > 1)
           setBookings((bookings) => [...bookings, ...response.data.data]);
@@ -90,10 +107,10 @@ const AdminAllBookings = () => {
         const newUserNames: UserNameData[] = userNamesResponse.data.users;
         setUserNames(
           newUserNames.sort((userA, userB) => {
-            if (userA.lastname < userB.lastname) {
+            if (userA.lastname.toLowerCase() < userB.lastname.toLowerCase()) {
               return -1;
             }
-            if (userA.lastname > userB.lastname) {
+            if (userA.lastname.toLowerCase() > userB.lastname.toLowerCase()) {
               return 1;
             }
 
@@ -111,6 +128,17 @@ const AdminAllBookings = () => {
         <AdminSectionTitle>Bookings</AdminSectionTitle>
         <AllBookingsNavbar tourNames={tourNames} userNames={userNames} />
       </AdminFixHeader>
+      <AdminStatsSection>
+        <AdminStatContainer>
+          <AdminStatTitle>Bookings:</AdminStatTitle>
+          <AdminStatValue>{stats.bookings}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Hikers:</AdminStatTitle>
+          <AdminStatValue>{stats.hikers}</AdminStatValue>
+        </AdminStatContainer>
+      </AdminStatsSection>
+
       <AdminContent>
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>

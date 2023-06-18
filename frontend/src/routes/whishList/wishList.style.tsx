@@ -14,8 +14,7 @@ export const UserWishListContainer = styled.div`
 
 export const WishListCards = styled.div`
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto auto;
+  display: flex;
   align-items: center;
   justify-content: center;
   column-gap: 3.2rem;

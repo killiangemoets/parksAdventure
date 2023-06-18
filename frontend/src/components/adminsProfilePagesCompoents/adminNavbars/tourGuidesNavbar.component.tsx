@@ -15,19 +15,26 @@ import { useSearchParams } from "react-router-dom";
 import { FC, FormEvent, useEffect, useState } from "react";
 import Modal from "../../UIComponents/modal/modal.component";
 import TextInput from "../../UIComponents/textInput/textInput.component";
-import { CreateTourGuideData, guideRolesList } from "../../../types/user";
+import {
+  CreateTourGuideData,
+  USER_ROLE_TYPES,
+  guideRolesList,
+} from "../../../types/user";
 import FormButton from "../../UIComponents/formButton/formButton.component";
 import { PriceModalButtons } from "../addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
 import SelectInput from "../../UIComponents/selectInput/selectInput.component";
 import SearchInput from "../../UIComponents/searchInput/searchInput.component";
 import { AuthenticationForm } from "../../authenticationComponents/authentication.style";
 import { createTourGuide } from "../../../api/authentication-requests";
+import { selectUserRole } from "../../../store/user/user.selector";
+import { useSelector } from "react-redux";
 
 export type TourGuidesNavbarProps = {
   onCreateGuide: () => void;
 };
 
 const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
+  const userRole = useSelector(selectUserRole);
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchGuide, setSearchGuide] = useState<string>("");
@@ -123,14 +130,16 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
           style={{ width: "52rem" }}
         />
       </AdminNavbarCenterContainer>
-      <AdminNavbarRightContainer>
-        <Button
-          onClick={() => {
-            setShowAddGuideModal(true);
-          }}>
-          Add Tour Guide
-        </Button>
-      </AdminNavbarRightContainer>
+      {userRole === USER_ROLE_TYPES.ADMIN && (
+        <AdminNavbarRightContainer>
+          <Button
+            onClick={() => {
+              setShowAddGuideModal(true);
+            }}>
+            Add Tour Guide
+          </Button>
+        </AdminNavbarRightContainer>
+      )}
       <Modal
         title={"Add Tour Guide"}
         handleClose={handleCloseModal}

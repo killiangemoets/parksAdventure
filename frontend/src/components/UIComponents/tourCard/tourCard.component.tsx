@@ -26,11 +26,17 @@ import {
   TourTitle,
   WishListIcon,
 } from "./tourCard.style";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
 import { AppDispatch } from "../../../store/store";
 import { updateUser } from "../../../store/user/user.action";
 import useIsInWishList from "../../../hooks/isInWishList";
+import {
+  selectUserId,
+  selectUserRole,
+} from "../../../store/user/user.selector";
+import getAuthenticationRedictionUri from "../../../utils/formatting/formatAuthenticationUri";
+import { isUserAdminOrGuide } from "../../../utils/dataManipulation/IsUserRole";
 
 type TourCardProps = {
   tour: TourData;
@@ -39,6 +45,8 @@ type TourCardProps = {
 const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
   const dispatch: AppDispatch = useDispatch();
   const navigate = useNavigate();
+  const userId = useSelector(selectUserId);
+  const userRole = useSelector(selectUserRole);
   const wishlistButton = useRef<HTMLElement | null>(null);
   const inWishList = useIsInWishList(tour?._id);
 
@@ -54,6 +62,11 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
   };
 
   const handleWishlist = async () => {
+    if (!userId) {
+      const uri = getAuthenticationRedictionUri(window.location.href);
+      navigate(`/login?uri=${uri}`);
+    }
+
     const response = inWishList
       ? await removeFromWishlist(tour._id)
       : await addToWishlist(tour._id);
@@ -85,12 +98,14 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
           <CornerBannner>Hidden Tour</CornerBannner>
         </TourCardHidden>
       )}
-      <Button
-        buttonType={BUTTON_TYPE_CLASSES.empty}
-        passRef={wishlistButton}
-        onClick={handleWishlist}>
-        <WishListIcon inWishList={inWishList} />
-      </Button>
+      {!isUserAdminOrGuide(userRole) && (
+        <Button
+          buttonType={BUTTON_TYPE_CLASSES.empty}
+          passRef={wishlistButton}
+          onClick={handleWishlist}>
+          <WishListIcon inWishList={inWishList} />
+        </Button>
+      )}
       <TourPictureContainer>
         <TourPicture imageUrl={tour.imageCover}>
           <GreenOpacity />

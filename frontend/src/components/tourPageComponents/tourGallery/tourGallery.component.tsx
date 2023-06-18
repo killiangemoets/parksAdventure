@@ -23,8 +23,18 @@ import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
 import { AppDispatch } from "../../../store/store";
 import { updateUser } from "../../../store/user/user.action";
 import useIsInWishList from "../../../hooks/isInWishList";
+import getAuthenticationRedictionUri from "../../../utils/formatting/formatAuthenticationUri";
+import { useNavigate } from "react-router-dom";
+import {
+  selectUserId,
+  selectUserRole,
+} from "../../../store/user/user.selector";
+import { isUserAdminOrGuide } from "../../../utils/dataManipulation/IsUserRole";
 
 const TourGallery = () => {
+  const navigate = useNavigate();
+  const userId = useSelector(selectUserId);
+  const userRole = useSelector(selectUserRole);
   const dispatch: AppDispatch = useDispatch();
   const [picturesCarouselOpen, setPicturesCarouselOpen] =
     useState<boolean>(false);
@@ -46,6 +56,11 @@ const TourGallery = () => {
   };
 
   const handleWishlist = async () => {
+    if (!userId) {
+      const uri = getAuthenticationRedictionUri(window.location.href);
+      navigate(`/login?uri=${uri}`);
+    }
+
     if (!tour?._id) return;
     const response = inwishlist
       ? await removeFromWishlist(tour?._id)
@@ -91,12 +106,14 @@ const TourGallery = () => {
               onClick={() => handleOpenCarousel(true)}>
               View all {carouselImages.length} images
             </Button>
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.gallery}
-              onClick={handleWishlist}>
-              {inwishlist ? "Added to whishlist" : "Add to wishlist"}{" "}
-              <HeartIcon inwishlist={inwishlist} />
-            </Button>
+            {!isUserAdminOrGuide(userRole) && (
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.gallery}
+                onClick={handleWishlist}>
+                {inwishlist ? "Added to whishlist" : "Add to wishlist"}{" "}
+                <HeartIcon inwishlist={inwishlist} />
+              </Button>
+            )}
           </TourGalleryButtons>
         </TourGalleryGrid>
       </TourGalleryContainer>

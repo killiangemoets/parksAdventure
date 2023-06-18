@@ -26,6 +26,7 @@ const ForgotPasswordForm = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
+    setSuccessMessage("");
     const response = await forgotPassword(email);
     console.log(response);
     setLoading(false);

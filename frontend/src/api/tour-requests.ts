@@ -148,7 +148,7 @@ export const getTourCalendar = async (slug: string) => {
 
 export const getAllTourNames = async () => {
   try {
-    const response = await axiosInstance.get(`/tours/names`);
+    const response = await axiosInstance.get(`/tours/my-tours-names`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

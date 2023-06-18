@@ -41,6 +41,8 @@ import { USER_ROLE_TYPES } from "./types/user";
 import AdminTourNavbar from "./components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
 import AdminTourCalendar from "./routes/adminRoutes/adminTourCalendar/adminTourCalendar.component";
 import GuideAccountActivation from "./routes/guideRoutes/guideAccountActivation/guideAccountActivation.component";
+import AdminMyTours from "./routes/adminRoutes/adminMyTours/adminMyTours.component";
+import AdminTourDashboard from "./routes/adminRoutes/adminTourDashboard/adminTourDashboard.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -95,6 +97,7 @@ function App() {
           <Route index element={<Tour />} />
           <Route path="edit" element={<AdminAddTour />} />
           <Route path="calendar" element={<AdminTourCalendar />} />
+          <Route path="stats" element={<AdminTourDashboard />} />
         </Route>
 
         <Route path="signup" element={<Signup />} />
@@ -139,6 +142,9 @@ function App() {
               to={
                 userRole === USER_ROLE_TYPES.ADMIN
                   ? "/profile/dashboard"
+                  : userRole === USER_ROLE_TYPES.GUIDE ||
+                    userRole === USER_ROLE_TYPES.LEAD_GUIDE
+                  ? "/profile/my-tours"
                   : "/profile/bookings"
               }
             />
@@ -157,6 +163,7 @@ function App() {
         <Route path="all-users" element={<AdminAllUsers />} />
         <Route path="guides" element={<AdminGuides />} />
         <Route path="add-tour" element={<AdminAddTour />} />
+        <Route path="my-tours" element={<AdminMyTours />} />
         {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
       </Route>
 

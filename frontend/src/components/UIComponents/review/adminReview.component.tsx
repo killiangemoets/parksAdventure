@@ -20,6 +20,9 @@ import { deleteMyReview } from "../../../api/review-requests";
 import FormButton from "../formButton/formButton.component";
 import { ErrorMessage } from "../../authenticationComponents/authentication.style";
 import ReviewProfile from "../reviewProfile/reviewProfile.component";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../../store/user/user.selector";
+import { USER_ROLE_TYPES } from "../../../types/user";
 
 type ReviewCommonProps = {
   date: Date;
@@ -52,6 +55,7 @@ const AdminReview: FC<ReviewCommonProps> = ({
   reviewId,
   handlePassDeletedReview,
 }) => {
+  const userRole = useSelector(selectUserRole);
   const [deleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
   const [deleteIsLoading, setDeleteIsLoading] = useState<boolean>(false);
   const [deleteSuccess, setDeleteSuccess] = useState<boolean>(false);
@@ -117,15 +121,17 @@ const AdminReview: FC<ReviewCommonProps> = ({
         </ReviewInfos>
         <ReviewText>{review}</ReviewText>
       </ReviewContent>
-      <EditButtons>
-        <Button
-          buttonType={BUTTON_TYPE_CLASSES.empty}
-          onClick={() => {
-            setDeleteModalOpen(true);
-          }}>
-          Delete
-        </Button>
-      </EditButtons>
+      {userRole === USER_ROLE_TYPES.ADMIN && (
+        <EditButtons>
+          <Button
+            buttonType={BUTTON_TYPE_CLASSES.empty}
+            onClick={() => {
+              setDeleteModalOpen(true);
+            }}>
+            Delete
+          </Button>
+        </EditButtons>
+      )}
       <Modal
         title={"Delete selection"}
         handleClose={handleCloseDeleteModal}

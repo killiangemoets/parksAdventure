@@ -16,6 +16,7 @@ import {
   GuideTableInfo,
   TExtendedGuide,
   TGuideRole,
+  USER_ROLE_TYPES,
   guideRolesList,
 } from "../../../types/user";
 import niceDate from "../../../utils/formatting/formatDates";
@@ -32,6 +33,9 @@ import {
 } from "../../authenticationComponents/authentication.style";
 import SelectInput from "../../UIComponents/selectInput/selectInput.component";
 import Modal from "../../UIComponents/modal/modal.component";
+import { updateUserRequest } from "../../../api/user-requests";
+import { useSelector } from "react-redux";
+import { selectUserRole } from "../../../store/user/user.selector";
 
 export type GuidesTableProps = {
   guides: TExtendedGuide[];
@@ -39,13 +43,15 @@ export type GuidesTableProps = {
 };
 
 const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
+  const userRole = useSelector(selectUserRole);
   const [data, setData] = useState<GuideTableInfo[]>([]);
 
   const [showEditRoleModal, setShowEditRoleModal] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
-  const [roleInput, setRoleInout] = useState<TGuideRole>("guide");
+  const [roleInput, setRoleInput] = useState<TGuideRole>("guide");
+  const [guideToEdit, setGuideToEdit] = useState<TExtendedGuide>();
 
   const columns: ColumnsType<GuideTableInfo> = [
     {
@@ -121,7 +127,10 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
         return 0;
       },
     },
-    {
+  ];
+
+  if (userRole === USER_ROLE_TYPES.ADMIN)
+    columns.push({
       title: "",
       dataIndex: "actions",
       key: "actions",
@@ -137,8 +146,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
           />
         );
       },
-    },
-  ];
+    });
 
   const handleDeleteUser = (userId: string) => {
     const newData = data.filter(
@@ -167,7 +175,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
     const newData: GuideTableInfo[] = guides.map((guide) => ({
       key: guide._id || "",
       role: (
-        <Role onClick={() => handleOpenModal(guide.role as TGuideRole)}>
+        <Role onClick={() => handleOpenModal(guide)}>
           {capitalizeString(guide.role)}
         </Role>
       ),
@@ -206,25 +214,37 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
 
   const handleCloseModal = () => {
     setShowEditRoleModal(false);
+    setErrorMessage("");
   };
-  const handleOpenModal = (role: TGuideRole) => {
+  const handleOpenModal = (guide: TExtendedGuide) => {
     setShowEditRoleModal(true);
-    setRoleInout(role);
+    setRoleInput(guide.role as TGuideRole);
+    setGuideToEdit(guide);
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
-    // const response = await createTourGuide(createTourGuideData);
+    let response;
+    if (guideToEdit?.role === roleInput) response = { status: "success" };
+    else
+      response = await updateUserRequest(guideToEdit?._id || "", {
+        role: roleInput as USER_ROLE_TYPES,
+      });
     setLoading(false);
-    // if (response.status === "success") {
-    //   setSuccess(true);
-    // } else {
-    //   if (response.message.includes("E11000"))
-    //     setErrorMessage("This email address is already used");
-    //   else setErrorMessage("Something went wrong. Please try again!");
-    // }
+    if (response.status === "success") {
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+        handleCloseModal();
+        handleChange();
+      }, 1000);
+    } else {
+      if (response.message.includes("E11000"))
+        setErrorMessage("This email address is already used");
+      else setErrorMessage("Something went wrong. Please try again!");
+    }
   };
   return (
     <UserTableContainer>
@@ -258,7 +278,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
             current={roleInput}
             list={guideRolesList}
             onChange={(e) => {
-              setRoleInout(e.target.value as TGuideRole);
+              setRoleInput(e.target.value as TGuideRole);
             }}
           />
           <PriceModalButtons>

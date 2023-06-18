@@ -26,6 +26,8 @@ router
   .route('/')
   .get(
     authController.restrictTo('admin', 'lead-guide', 'guide'),
+    bookingController.filterOnlyAuthorizedTours,
+    bookingController.requireTotalHikers,
     bookingController.getAllBookings
   )
   .post(

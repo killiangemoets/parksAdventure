@@ -207,7 +207,7 @@ exports.getAllUsersWithDetails = catchAsync(async (req, res, next) => {
         avgRating:
           reviewsStats.length > 0
             ? Math.round(reviewsStats[0].avgRating * 100) / 100
-            : 4.5,
+            : undefined,
       };
     })
   );
@@ -291,17 +291,19 @@ exports.deleteUserReviews = catchAsync(async (req, res, next) => {
 
 exports.hideUserReviews = catchAsync(async (req, res, next) => {
   if (req.body.active === false) {
-    const reviews = await Review.updateMany(
-      { user: ObjectId(req.params.id) },
-      { hidden: true }
-    );
-    console.log({ reviews });
+    const reviews = await Review.find({ user: ObjectId(req.params.id) });
+
+    for (const review of reviews) {
+      review.hidden = true;
+      await review.save();
+    }
   } else if (req.body.active === true) {
-    const reviews = await Review.updateMany(
-      { user: ObjectId(req.params.id) },
-      { hidden: false }
-    );
-    console.log({ reviews });
+    const reviews = await Review.find({ user: ObjectId(req.params.id) });
+
+    for (const review of reviews) {
+      review.hidden = false;
+      await review.save();
+    }
   }
 
   next();

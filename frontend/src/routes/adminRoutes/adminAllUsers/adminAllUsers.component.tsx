@@ -7,6 +7,10 @@ import {
   AdminFixHeader,
   AdminLargeContent,
   AdminSectionContainer,
+  AdminStatContainer,
+  AdminStatTitle,
+  AdminStatValue,
+  AdminStatsSection,
 } from "../adminRoutes.style";
 import { TExtendedUser } from "../../../types/user";
 import { getAllUsersWithDetails } from "../../../api/user-requests";
@@ -23,6 +27,17 @@ const AdminAllUsers = () => {
     undefined
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [stats, setStats] = useState<{
+    users: number;
+    bookings: number;
+    reviews: number;
+    avgRating: number;
+  }>({
+    users: 0,
+    bookings: 0,
+    reviews: 0,
+    avgRating: 0,
+  });
 
   const handleGetUsers = async () => {
     setIsLoading(true);
@@ -38,8 +53,30 @@ const AdminAllUsers = () => {
     const response = await getAllUsersWithDetails(`?role=user${requestString}`);
     console.log(response);
     if (response.status === "success") {
-      setUsers(response.data.data);
+      const usersList: TExtendedUser[] = response.data.data;
+      setUsers(usersList);
       setErrorMessage(undefined);
+
+      const newStats = usersList.reduce(
+        (acc, user) => ({
+          users: acc.users + 1,
+          bookings: acc.bookings + user.numOfBookings,
+          reviews: acc.reviews + user.numOfRatings,
+          avgRating:
+            acc.avgRating +
+            (user?.avgRating ? user.avgRating * user.numOfRatings : 0),
+        }),
+        {
+          users: 0,
+          bookings: 0,
+          reviews: 0,
+          avgRating: 0,
+        }
+      );
+      newStats.avgRating =
+        Math.round((newStats.avgRating / newStats.reviews) * 100) / 100 || 0;
+
+      setStats(newStats);
     } else {
       setErrorMessage("An error occured. Try to reload the page!");
     }
@@ -56,6 +93,24 @@ const AdminAllUsers = () => {
         <AdminSectionTitle>Users</AdminSectionTitle>
         <AllUsersNavbar />
       </AdminFixHeader>
+      <AdminStatsSection>
+        <AdminStatContainer>
+          <AdminStatTitle>Users:</AdminStatTitle>
+          <AdminStatValue>{stats.users}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Bookings:</AdminStatTitle>
+          <AdminStatValue>{stats.bookings}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Reviews:</AdminStatTitle>
+          <AdminStatValue>{stats.reviews}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Avg Rating:</AdminStatTitle>
+          <AdminStatValue>{stats.avgRating}</AdminStatValue>
+        </AdminStatContainer>
+      </AdminStatsSection>
       <AdminLargeContent>
         {isLoading && (
           <AdminContentSpinner>

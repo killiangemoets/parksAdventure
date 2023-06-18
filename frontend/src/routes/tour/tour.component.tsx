@@ -16,8 +16,9 @@ import {
   selectTourError,
 } from "../../store/tour/tour.selector";
 import NotFound from "../../components/notFoundComponent/notFound.component";
+import useHasTourNavbar from "../../hooks/useHasTourNavbar";
 import { selectUserRole } from "../../store/user/user.selector";
-import { USER_ROLE_TYPES } from "../../types/user";
+import { isUserAdminOrGuide } from "../../utils/dataManipulation/IsUserRole";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -28,12 +29,12 @@ const Tour = () => {
   const { slug } = useParams<
     keyof TourSlugRouteParams
   >() as TourSlugRouteParams;
-
+  const userRole = useSelector(selectUserRole);
   const bookingRef = useRef<HTMLDivElement | null>(null);
   const reviewsRef = useRef<HTMLDivElement | null>(null);
   const error = useSelector(selectTourError);
   const recommendations = useSelector(selectRecommendations);
-  const userRole = useSelector(selectUserRole);
+  const hasTourNavbar = useHasTourNavbar();
 
   useEffect(() => {
     dispatch(fetchTourAsync(slug));
@@ -64,7 +65,7 @@ const Tour = () => {
   } else {
     return (
       <TourContainer>
-        <TourWrapper paddingTop={userRole === USER_ROLE_TYPES.ADMIN}>
+        <TourWrapper paddingTop={hasTourNavbar}>
           <TourHeader
             handleScrollToBooking={handleScrollToBooking}
             handleScrollToReviews={handleScrollToReviews}
@@ -72,7 +73,9 @@ const Tour = () => {
           <TourGallery />
           <TourInfos />
           <TourItinerary />
-          <TourBooking forwardRef={bookingRef} />
+          {!isUserAdminOrGuide(userRole) && (
+            <TourBooking forwardRef={bookingRef} />
+          )}
           <TourReviews forwardRef={reviewsRef} />
           <TourRecommendations tours={recommendations || []} />
         </TourWrapper>

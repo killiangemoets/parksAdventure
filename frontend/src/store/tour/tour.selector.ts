@@ -21,6 +21,11 @@ export const selectTourId = createSelector(
   (tourSlice) => tourSlice.tour?._id
 );
 
+export const selectTourGuides = createSelector(
+  [selectTourReducer],
+  (tourSlice) => tourSlice.tour?.guides
+);
+
 export const selectTourName = createSelector(
   [selectTourReducer],
   (tourSlice) => tourSlice.tour?.name

@@ -19,6 +19,8 @@ router
   .route('/')
   .get(
     authController.restrictTo('admin', 'lead-guide', 'guide'),
+    reviewController.filterOnlyAuthorizedTours,
+    reviewController.requireAvgRating,
     reviewController.getAllReviews
   )
   .post(

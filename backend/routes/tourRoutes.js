@@ -45,7 +45,13 @@ router
     tourController.createTour
   );
 
-router.route('/names').get(tourController.getAllTourNames);
+router
+  .route('/my-tours-names')
+  .get(
+    authController.protect,
+    authController.restrictTo('admin', 'guide', 'lead-guide'),
+    tourController.getMyTourNames
+  );
 
 router
   .route('/slug/:slug')
@@ -57,13 +63,13 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'lead-guide'),
-    tourController.checkGroupCapacity,
+    tourController.checkGroupCapacityAndIsLeadGuideAuthorized,
     tourController.uploadImagesToCloudinary,
     tourController.updateTour
   )
   .delete(
     authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
+    authController.restrictTo('admin'),
     tourController.checkIfBookingsExist,
     tourController.deleteTour
   );
@@ -72,7 +78,7 @@ router
   .route('/:slug/calendar')
   .get(
     authController.protect,
-    authController.restrictTo('admin', 'lead-guide'),
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
     tourController.getTourCalendar
   );
 /*

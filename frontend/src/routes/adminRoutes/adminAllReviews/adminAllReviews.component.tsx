@@ -8,6 +8,10 @@ import {
   AdminContentSpinner,
   AdminFixHeader,
   AdminSectionContainer,
+  AdminStatContainer,
+  AdminStatTitle,
+  AdminStatValue,
+  AdminStatsSection,
 } from "../adminRoutes.style";
 import { getAllReviews } from "../../../api/review-requests";
 import Spinner, {
@@ -31,6 +35,11 @@ const AdminAllReviews = () => {
   const [tourNames, setTourNames] = useState<TourNameData[]>([]);
   const [userNames, setUserNames] = useState<UserNameData[]>([]);
 
+  const [stats, setStats] = useState<{ ratings: number; avgRating: number }>({
+    ratings: 0,
+    avgRating: 0,
+  });
+
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
   const currentPage = useHitBottomPagination(numberOfPages);
 
@@ -50,6 +59,11 @@ const AdminAllReviews = () => {
       if (response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
         else setErrorMessage(undefined);
+
+        setStats({
+          ratings: response.totalResults,
+          avgRating: response.avgRating || 0,
+        });
 
         if (currentPage > 1)
           setReviews((reviews) => [...reviews, ...response.data.data]);
@@ -119,6 +133,16 @@ const AdminAllReviews = () => {
         <AdminSectionTitle>Reviews</AdminSectionTitle>
         <AllReviewsNavbar tourNames={tourNames} userNames={userNames} />
       </AdminFixHeader>
+      <AdminStatsSection>
+        <AdminStatContainer>
+          <AdminStatTitle>Ratings:</AdminStatTitle>
+          <AdminStatValue>{stats.ratings}</AdminStatValue>
+        </AdminStatContainer>
+        <AdminStatContainer>
+          <AdminStatTitle>Avg Rating:</AdminStatTitle>
+          <AdminStatValue>{stats.avgRating}</AdminStatValue>
+        </AdminStatContainer>
+      </AdminStatsSection>
       <AdminContent>
         {isLoading && (
           <AdminContentSpinner>

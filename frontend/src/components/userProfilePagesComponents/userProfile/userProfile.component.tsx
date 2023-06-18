@@ -16,6 +16,7 @@ import {
   ProfileSectionElement,
   adminSections,
   userSections,
+  guideSections,
 } from "../../../utils/profileSections/profileSectionLists";
 
 const UserProfile = () => {
@@ -29,8 +30,13 @@ const UserProfile = () => {
   useEffect(() => {
     if (!userId) navigate("/login?uri=/profile");
     if (userRole === USER_ROLE_TYPES.ADMIN) setProfileSection(adminSections);
+    else if (
+      userRole === USER_ROLE_TYPES.GUIDE ||
+      userRole === USER_ROLE_TYPES.LEAD_GUIDE
+    )
+      setProfileSection(guideSections);
     else setProfileSection(userSections);
-  }, [userId, userRole]);
+  }, [navigate, userId, userRole]);
 
   return (
     <>

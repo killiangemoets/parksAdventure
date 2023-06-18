@@ -75,8 +75,13 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
   };
 
   const handleShowHidden = (value: TInfo<string>[]): void => {
-    if (value.length > 0) searchParams.delete("hidden");
-    else searchParams.set("hidden", "false");
+    if (value.length > 0) {
+      searchParams.delete("hidden");
+      setShowHidden([{ value: "Show Hidden Reviews", id: "showHidden" }]);
+    } else {
+      searchParams.set("hidden", "false");
+      setShowHidden([]);
+    }
     setSearchParams(searchParams);
   };
 
@@ -164,7 +169,7 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
     const showHiddenParam = searchParams.get("hidden");
     if (showHiddenParam) setShowHidden([]);
     else setShowHidden([{ value: "Show Hidden Reviews", id: "showHidden" }]);
-  }, [searchParams, showHidden]);
+  }, [searchParams]);
 
   useEffect(() => {
     const currentTourId = searchParams.get("tour");

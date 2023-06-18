@@ -24,6 +24,10 @@ import ProfilePicture, {
 import ProfileDropdown from "./profileDropdown.component";
 import getAuthenticationRedictionUri from "../../utils/formatting/formatAuthenticationUri";
 import { selectCartNumberOfItems } from "../../store/cart/cart.selector";
+import {
+  isUser,
+  isUserAdminOrGuide,
+} from "../../utils/dataManipulation/IsUserRole";
 
 export const Navigation = () => {
   const navigate = useNavigate();
@@ -59,12 +63,14 @@ export const Navigation = () => {
       <LinksContainer>
         <NavBarLink to="/">Home</NavBarLink>
         <NavBarLink to="/alltours">All tours</NavBarLink>
-        <NavBarLink to="/wishlist">Wishlist</NavBarLink>
-        <NavBarLink to="/cart" addMargin={cartNumberOfItems > 0}>
-          {cartNumberOfItems > 0 && <span>{cartNumberOfItems}</span>}
-          Cart
-        </NavBarLink>
-        <NavBarLink to="/contact">Contact</NavBarLink>
+        {/* <NavBarLink to="/contact">Contact</NavBarLink> */}
+        {isUser(user.role) && <NavBarLink to="/wishlist">Wishlist</NavBarLink>}
+        {!isUserAdminOrGuide(user.role) && (
+          <NavBarLink to="/cart" addMargin={cartNumberOfItems > 0}>
+            {cartNumberOfItems > 0 && <span>{cartNumberOfItems}</span>}
+            Cart
+          </NavBarLink>
+        )}
         {user.id ? (
           <>
             <NavBarLink

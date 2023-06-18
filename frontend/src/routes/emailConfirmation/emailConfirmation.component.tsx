@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { verifyEmail } from "../../api/authentication-requests";
 import NotFound from "../../components/notFoundComponent/notFound.component";
 import Spinner, {
