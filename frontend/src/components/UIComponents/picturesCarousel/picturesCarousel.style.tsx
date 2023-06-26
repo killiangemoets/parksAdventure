@@ -15,12 +15,8 @@ export const PicturesCarouselOverlay = styled.div`
 `;
 
 export const PicturesCarouselContainer = styled.div`
-  /* background-color: #fdfaf5efc; */
-  /* border-radius: 24px; */
-  /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1); */
   width: 56vw;
   height: calc((56vw / 3) * 2);
-  /* height: 60rem; */
   transform: scale(1);
 
   .swiper {
@@ -31,9 +27,7 @@ export const PicturesCarouselContainer = styled.div`
   .swiper-slide {
     text-align: center;
     font-size: 18px;
-    /* background: #fdfaf5; */
 
-    /* Center slide text vertically */
     display: flex;
     justify-content: center;
     align-items: center;

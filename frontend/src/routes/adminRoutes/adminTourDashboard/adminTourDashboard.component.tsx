@@ -28,96 +28,9 @@ import { TTourStats } from "../../../types/stats";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
-
-export const doughnutData = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
-const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
-export const barData = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map(() => Math.random() * 1000),
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => Math.random() * 1000),
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
-
-export const pieData = {
-  labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-  datasets: [
-    {
-      label: "# of Votes",
-      data: [12, 19, 3, 5, 2, 3],
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-      ],
-      borderColor: [
-        "rgba(255, 99, 132, 1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
-export const lineData = {
-  labels,
-  datasets: [
-    {
-      label: "Dataset 1",
-      data: labels.map(() => Math.random() * 1000),
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-    {
-      label: "Dataset 2",
-      data: labels.map(() => Math.random() * 1000),
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgba(53, 162, 235, 0.5)",
-    },
-  ],
-};
+import { AppDispatch } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { fetchTourAsync } from "../../../store/tour/tour.action";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -127,6 +40,7 @@ const AdminTourDashboard = () => {
   const { slug } = useParams<
     keyof TourSlugRouteParams
   >() as TourSlugRouteParams;
+  const dispatch: AppDispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [tourStats, setTourStats] = useState<TTourStats>();
@@ -144,6 +58,10 @@ const AdminTourDashboard = () => {
       setIsLoading(false);
     };
     loadTourStats();
+  }, [slug]);
+
+  useEffect(() => {
+    dispatch(fetchTourAsync(slug));
   }, [slug]);
 
   const bookedUnbookadBarsOptions = {
@@ -175,24 +93,17 @@ const AdminTourDashboard = () => {
       },
     ],
   };
-  const totalBookedUnbooked = tourStats?.statsByMonth.reduce(
-    (acc, curr) => {
-      return {
-        booked: acc.booked + curr.totalBookings,
-        unbooked:
-          acc.unbooked + (curr.totalAvailabilities - curr.totalBookings),
-      };
-    },
-    { booked: 0, unbooked: 0 }
-  );
+
   const bookedUnbookedTotalData = {
     labels: ["Booked", "Unbooked"],
     datasets: [
       {
         label: "slots",
         data: [
-          totalBookedUnbooked?.booked || 0,
-          totalBookedUnbooked?.unbooked || 0,
+          tourStats?.hikersCount || 0,
+          tourStats?.availabilitiesCount && tourStats?.hikersCount
+            ? tourStats?.availabilitiesCount - tourStats?.hikersCount
+            : 0,
         ],
         backgroundColor: [
           "rgba(214, 140, 111, 0.8)",
@@ -268,12 +179,6 @@ const AdminTourDashboard = () => {
 
   return (
     <AdminTourCalendarContainer>
-      <AdminTourCalendarTitle>
-        <Title titleType={TITLE_TYPE_CLASSES.section}>
-          {/* {tourName} - Calendar */}
-          The Green Tour - Quick Stats
-        </Title>
-      </AdminTourCalendarTitle>
       {isLoading && (
         <LoadingDashboardContainer>
           <LoadingMessage>Calculation in progress</LoadingMessage>
@@ -283,60 +188,69 @@ const AdminTourDashboard = () => {
         </LoadingDashboardContainer>
       )}
       {!isLoading && errorMessage.length === 0 && (
-        <LargeAdminContent>
-          <AdminDashboardGrid>
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.users}
-              value={tourStats?.userCount || 0}
-              title="users"
-            />
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.start}
-              value={tourStats?.userCount || 0}
-              title="starts"
-            />
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.reviews}
-              value={tourStats?.ratingAverage || 0}
-              decimals={2}
-              title="rating. avg"
-            />
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.bookings}
-              value={tourStats?.bookingsCount || 0}
-              title="bookings"
-            />
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.hikers}
-              value={tourStats?.hikersCount || 0}
-              title="hikers"
-            />
-            <Counter
-              iconType={STAT_ICON_TYPE_CLASSES.dollar}
-              value={tourStats?.totalRevenue || 0}
-              title="revenue"
-            />
-            <BarChart
-              title="Booked / Unbooked slots over the last 6 months"
-              data={bookedUnbookedBarsData}
-              options={bookedUnbookadBarsOptions}
-            />
-            <DoughnutChart
-              title="Total booked / unbooked slots"
-              data={bookedUnbookedTotalData}
-            />
-            <PieChart title="Bookings by user" data={bookingsByUserData} />
-            <BarChart
-              title="Rating distribution"
-              data={ratingDistributionData}
-              options={ratingDistributionOptions}
-            />
-            <LineChart
-              title="Income over the last 6 months"
-              data={incomeEvolutionData}
-            />
-          </AdminDashboardGrid>
-        </LargeAdminContent>
+        <>
+          <AdminTourCalendarTitle>
+            <Title titleType={TITLE_TYPE_CLASSES.section}>
+              {/* {tourName} - Calendar */}
+              {tourStats?.tourName} - Quick Stats
+            </Title>
+          </AdminTourCalendarTitle>
+
+          <LargeAdminContent>
+            <AdminDashboardGrid>
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.users}
+                value={tourStats?.userCount || 0}
+                title="users"
+              />
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.start}
+                value={tourStats?.startsCount || 0}
+                title="starts"
+              />
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.reviews}
+                value={tourStats?.ratingAverage || 4.5}
+                decimals={2}
+                title="rating. avg"
+              />
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.bookings}
+                value={tourStats?.bookingsCount || 0}
+                title="bookings"
+              />
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.hikers}
+                value={tourStats?.hikersCount || 0}
+                title="hikers"
+              />
+              <Counter
+                iconType={STAT_ICON_TYPE_CLASSES.dollar}
+                value={tourStats?.totalRevenue || 0}
+                title="revenue"
+              />
+              <BarChart
+                title="Booked / Unbooked slots over the last 6 months"
+                data={bookedUnbookedBarsData}
+                options={bookedUnbookadBarsOptions}
+              />
+              <DoughnutChart
+                title="Total booked / unbooked slots"
+                data={bookedUnbookedTotalData}
+              />
+              <PieChart title="Bookings by user" data={bookingsByUserData} />
+              <BarChart
+                title="Rating distribution"
+                data={ratingDistributionData}
+                options={ratingDistributionOptions}
+              />
+              <LineChart
+                title="Income over the last 6 months"
+                data={incomeEvolutionData}
+              />
+            </AdminDashboardGrid>
+          </LargeAdminContent>
+        </>
       )}
       {errorMessage.length > 0 && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </AdminTourCalendarContainer>

@@ -34,6 +34,23 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       dataIndex: "name",
       key: "name",
       fixed: "left",
+      sorter: (a, b) => {
+        console.log({ a, b });
+        const nameA = a.name.props.children[1].props.children
+          .split(" ")
+          .slice(1)
+          .join("")
+          .toUpperCase();
+        const nameB = b.name.props.children[1].props.children
+          .split(" ")
+          .slice(1)
+          .join("")
+          .toUpperCase();
+
+        if (nameA > nameB) return 1;
+        if (nameA < nameB) return -1;
+        return 0;
+      },
     },
     {
       title: "Email",

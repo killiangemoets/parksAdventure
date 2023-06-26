@@ -66,10 +66,13 @@ export const Navigation = () => {
         {/* <NavBarLink to="/contact">Contact</NavBarLink> */}
         {isUser(user.role) && <NavBarLink to="/wishlist">Wishlist</NavBarLink>}
         {!isUserAdminOrGuide(user.role) && (
-          <NavBarLink to="/cart" addMargin={cartNumberOfItems > 0}>
-            {cartNumberOfItems > 0 && <span>{cartNumberOfItems}</span>}
-            Cart
-          </NavBarLink>
+          <>
+            <NavBarLink to="/cart" addMargin={cartNumberOfItems > 0}>
+              {cartNumberOfItems > 0 && <span>{cartNumberOfItems}</span>}
+              Cart
+            </NavBarLink>
+            <NavBarLink to="/contact">Contact</NavBarLink>
+          </>
         )}
         {user.id ? (
           <>

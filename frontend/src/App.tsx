@@ -38,11 +38,12 @@ import AdminAllUsers from "./routes/adminRoutes/adminAllUsers/adminAllUsers.comp
 import AdminGuides from "./routes/adminRoutes/adminGuides/adminGuides.component";
 import { selectUserRole } from "./store/user/user.selector";
 import { USER_ROLE_TYPES } from "./types/user";
-import AdminTourNavbar from "./components/adminsProfilePagesCompoents/adminNavbars/adminTourNavbar.component";
+import AdminTourNavbar from "./components/adminsProfilePagesComponents/adminNavbars/adminTourNavbar.component";
 import AdminTourCalendar from "./routes/adminRoutes/adminTourCalendar/adminTourCalendar.component";
 import GuideAccountActivation from "./routes/guideRoutes/guideAccountActivation/guideAccountActivation.component";
 import AdminMyTours from "./routes/adminRoutes/adminMyTours/adminMyTours.component";
 import AdminTourDashboard from "./routes/adminRoutes/adminTourDashboard/adminTourDashboard.component";
+import Contact from "./routes/contact/contact.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -91,6 +92,8 @@ function App() {
     <Routes>
       <Route path="/" element={<NavbarAndFooter />}>
         <Route index element={<Home />} />
+
+        <Route path="contact" element={<Contact />} />
 
         <Route path="alltours" element={<AllTours />} />
         <Route path="tour/:slug/" element={<AdminTourNavbar />}>

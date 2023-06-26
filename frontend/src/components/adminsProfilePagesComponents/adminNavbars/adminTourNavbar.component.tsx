@@ -22,7 +22,7 @@ import {
   selectTourName,
 } from "../../../store/tour/tour.selector";
 import { deleteTour } from "../../../api/tour-requests";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import Modal from "../../UIComponents/modal/modal.component";
 import TextInput from "../../UIComponents/textInput/textInput.component";
 import { ButtonSection } from "../../allToursPageComponents/filtersModal/filtersModalstyle";
@@ -40,7 +40,7 @@ const AdminTourNavbar = () => {
   const [deleteErrorMessage, setDeleteErrorMessage] = useState<string>("");
 
   const isGuideForThisTour = tourGuides
-    ? tourGuides.find((tourGuide) => tourGuide._id === userId)
+    ? Boolean(tourGuides.find((tourGuide) => tourGuide._id === userId))
     : false;
 
   const handleGoToEdit = () => {
@@ -73,6 +73,7 @@ const AdminTourNavbar = () => {
       );
     else setDeleteErrorMessage("Something went wrong, please try again!");
   };
+
   return (
     <>
       {userRole === USER_ROLE_TYPES.ADMIN && (
@@ -141,7 +142,7 @@ const AdminTourNavbar = () => {
           <AdminNavbarContainer>
             <AdminNavbarLeftContainer>
               <Button onClick={handleGoToCalendar}>Calendar</Button>
-              <Button>Quick stats</Button>
+              <Button onClick={handleGoToQuickStats}>Quick stats</Button>
             </AdminNavbarLeftContainer>
             <AdminNavbarRightContainer>
               <Button onClick={handleGoToEdit}>Edit</Button>

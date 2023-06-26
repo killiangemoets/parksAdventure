@@ -1,19 +1,23 @@
 import { ChangeEvent, FC, useState } from "react";
 import {
   EyeIcon,
-  ImageElement,
-  ImageElementHover,
+  ImageButtons,
   ImagesInputContainer,
   ImagesInputElement,
   ImagesInputText,
   InputWrapper,
+  LargeTourImage,
   PlusIcon,
+  TourImage,
   TrashIcon,
   UploadText,
 } from "./imagesInput.style";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import Modal from "../modal/modal.component";
 import { CREATE_TOUR_DATA, TUploadTourImage } from "../../../types/tour";
+
+import SortableDragAndDrop from "./sortableDragAndDrop";
+import { arrayMove } from "@dnd-kit/sortable";
 
 const maxImages = 20;
 
@@ -32,14 +36,13 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
     }
     let newImageFiles: TUploadTourImage[] = [];
 
-    console.log("FILES", event.target.files);
-
     for (const file of event.target.files) {
       if (images.length + newImageFiles.length < maxImages) {
         const img: TUploadTourImage = {
           state: "new",
           file,
           preview: URL.createObjectURL(file),
+          id: Math.trunc(Math.random() * 1000).toString(),
         };
         newImageFiles.push(img);
       }
@@ -53,6 +56,7 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
   };
 
   const handleDelete = (index: number) => {
+    console.log("delete");
     const newImageFiles = [
       ...images.slice(0, index),
       ...images.slice(index + 1),
@@ -64,37 +68,69 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
     setPreviewImage(null);
   };
 
+  const handleDragEnd = (event: any) => {
+    const { active, over } = event;
+
+    console.log(active, over);
+
+    if (active !== over) {
+      const activeIndex = images.findIndex((img) => img.id === active.id);
+      const overIndex = images.findIndex((img) => img.id === over.id);
+      handleChange(
+        arrayMove(images, activeIndex, overIndex),
+        CREATE_TOUR_DATA.images
+      );
+    }
+  };
+
   return (
     <ImagesInputContainer>
-      {images.map((imgFile, index) => (
-        <ImageElement>
-          <img
-            alt="preview content"
-            src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
-            style={{ width: "20rem" }}
-          />
-          <ImageElementHover>
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.empty}
-              type="button"
-              onClick={() => {
-                handlePreview(
-                  imgFile.state === "new" ? imgFile.preview : imgFile.url
-                );
-              }}>
-              <EyeIcon />
-            </Button>
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.empty}
-              type="button"
-              onClick={() => {
-                handleDelete(index);
-              }}>
-              <TrashIcon />
-            </Button>
-          </ImageElementHover>
-        </ImageElement>
-      ))}
+      <SortableDragAndDrop
+        handleDragEnd={handleDragEnd}
+        items={images.map((imgFile, index) => {
+          return {
+            id: imgFile.id,
+            first: index === 0,
+            content:
+              index > 0 ? (
+                <TourImage
+                  alt="preview content"
+                  src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
+                  // style={{ width: "20rem" }}
+                />
+              ) : (
+                <LargeTourImage
+                  alt="preview content"
+                  src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
+                  // style={{ width: "20rem" }}
+                />
+              ),
+            contentHover: (
+              <ImageButtons>
+                <Button
+                  buttonType={BUTTON_TYPE_CLASSES.empty}
+                  type="button"
+                  onClick={() => {
+                    handlePreview(
+                      imgFile.state === "new" ? imgFile.preview : imgFile.url
+                    );
+                  }}>
+                  <EyeIcon />
+                </Button>
+                <Button
+                  buttonType={BUTTON_TYPE_CLASSES.empty}
+                  type="button"
+                  onClick={() => {
+                    handleDelete(index);
+                  }}>
+                  <TrashIcon />
+                </Button>
+              </ImageButtons>
+            ),
+          };
+        })}
+      />
+
       {images.length < maxImages && (
         <InputWrapper>
           <ImagesInputElement

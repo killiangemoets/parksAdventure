@@ -1,7 +1,7 @@
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../components/UIComponents/title/title.component";
-import AdminBookingsCalendar from "../../../components/adminsProfilePagesCompoents/adminTourCalendarElement/adminTourCalendarElement.component";
+import AdminBookingsCalendar from "../../../components/adminsProfilePagesComponents/adminTourCalendarElement/adminTourCalendarElement.component";
 import {
   AdminBookingsCalendarContainer,
   AdminTourCalendarContainer,
@@ -16,6 +16,9 @@ import Spinner, {
 } from "../../../components/UIComponents/spinner/spinner.component";
 import { getTourCalendar } from "../../../api/tour-requests";
 import { TAvailability } from "../../../types/tour";
+import { AppDispatch } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { fetchTourAsync } from "../../../store/tour/tour.action";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -25,7 +28,7 @@ const AdminTourCalendar = () => {
   const { slug } = useParams<
     keyof TourSlugRouteParams
   >() as TourSlugRouteParams;
-
+  const dispatch: AppDispatch = useDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [tourName, setTourName] = useState<string>("");
   const [tourId, setTourId] = useState<string>("");
@@ -53,6 +56,10 @@ const AdminTourCalendar = () => {
       setIsLoading(false);
     };
     loadTourCalendar();
+  }, [slug]);
+
+  useEffect(() => {
+    dispatch(fetchTourAsync(slug));
   }, [slug]);
 
   return (

@@ -8,6 +8,8 @@ export const ChartContainer = styled.div`
   gap: 0.4rem;
   border-radius: 12px;
   padding: 3.2rem;
+  width: 100%;
+  height: 100%;
   background-color: #fefdfa;
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
@@ -16,6 +18,11 @@ export const ChartContainer = styled.div`
 export const SmallChartContainer = styled(ChartContainer)`
   grid-row: span 2;
   grid-column: span 2;
+`;
+
+export const MediumSmallChartContainer = styled(ChartContainer)`
+  grid-row: span 2;
+  grid-column: span 3;
 `;
 
 export const MediumChartContainer = styled(ChartContainer)`

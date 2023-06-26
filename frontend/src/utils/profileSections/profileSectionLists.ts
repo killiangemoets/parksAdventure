@@ -165,3 +165,31 @@ export const adminDropdownSections: ProfileSectionElement[] = [
     link: "/profile/logout",
   },
 ];
+
+export const guideDropdownSections: ProfileSectionElement[] = [
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.tourOrange,
+    label: "My Tours",
+    link: "/profile/my-tours",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.bookingsOrange,
+    label: "Bookings",
+    link: "/profile/all-bookings",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.reviewsOrange,
+    label: "Reviews",
+    link: "/profile/all-reviews",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.settingsOrange,
+    label: " Settings",
+    link: "/profile/settings",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.logoutOrange,
+    label: " Logout",
+    link: "/profile/logout",
+  },
+];

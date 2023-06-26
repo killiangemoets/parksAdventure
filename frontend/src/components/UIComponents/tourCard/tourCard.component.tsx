@@ -50,18 +50,8 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
   const wishlistButton = useRef<HTMLElement | null>(null);
   const inWishList = useIsInWishList(tour?._id);
 
-  const handleClickTour = (event: MouseEvent<HTMLElement>) => {
-    if (
-      wishlistButton.current &&
-      wishlistButton.current.contains(event.target as Node)
-    )
-      return;
-
-    navigate(`/tour/${tour.slug}`);
-    // window.open(`${window.location.origin}/tour/${slug}`, "_blank");
-  };
-
-  const handleWishlist = async () => {
+  const handleWishlist = async (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (!userId) {
       const uri = getAuthenticationRedictionUri(window.location.href);
       navigate(`/login?uri=${uri}`);
@@ -81,12 +71,9 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
     }
   };
 
-  // if (!tour) {
-  //   return <></>;
-  // } else {
   return (
     <TourCardContainer
-      onClick={handleClickTour}
+      to={`/tour/${tour.slug}`}
       onMouseEnter={() => {
         handleOver && handleOver(tour._id);
       }}

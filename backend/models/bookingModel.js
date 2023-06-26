@@ -89,14 +89,6 @@ bookingSchema.index({
   orderNumber: 'text',
 });
 
-bookingSchema.statics.incrementPopularityIndex = async function (tourId) {
-  // since we use a static method, 'this' points to the model
-  console.log('tourId', tourId);
-  // await Tour.findByIdAndUpdate(tourId, {
-  //   $inc: { popularityIndex: 10 },
-  // });
-};
-
 bookingSchema.pre('save', function (next) {
   if (!this.kidPrice) this.kidPrice = this.price;
 
@@ -108,11 +100,6 @@ bookingSchema.pre('save', function (next) {
   this.group = this.kids + this.adults;
 
   next();
-});
-
-bookingSchema.post('save', function () {
-  console.log('post save');
-  this.constructor.incrementPopularityIndex(this.tour);
 });
 
 bookingSchema.pre(/^find/, function (next) {

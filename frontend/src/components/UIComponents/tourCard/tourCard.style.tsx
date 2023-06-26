@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
+import { Link } from "react-router-dom";
 
 export const TourPictureContainer = styled.div`
   width: 100%;
@@ -29,7 +30,7 @@ export const TourPicture = styled.div<TourPictureProps>`
   transition: transform 0.3s cubic-bezier(0.25, 0.45, 0.45, 0.95);
 `;
 
-export const TourCardContainer = styled.div`
+export const TourCardContainer = styled(Link)`
   position: relative;
   cursor: pointer;
   width: 32rem;

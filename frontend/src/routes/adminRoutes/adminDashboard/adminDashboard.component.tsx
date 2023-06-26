@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import {
   BarChart,
   DoughnutChart,
-  LineChart,
   MapChart,
   PieChart,
+  SmallBarChart,
+  SmallLineChart,
 } from "../../../components/UIComponents/charts/charts.component";
 import Counter from "../../../components/UIComponents/counter/counter.component";
 import { STAT_ICON_TYPE_CLASSES } from "../../../components/UIComponents/statIcon/statIcon.component";
-import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
+import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/adminSectionTitle/adminSectionTitle.component";
 import {
   AdminFixHeader,
   AdminSectionContainer,
@@ -26,6 +27,7 @@ import { ErrorMessage } from "../adminTourCalendar/adminTourCalendar.style";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
+import { capitalizeString } from "../../../utils/formatting/formatString";
 
 const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -76,24 +78,17 @@ const AdminDashboard = () => {
       },
     ],
   };
-  const totalBookedUnbooked = generalStats?.statsByMonth.reduce(
-    (acc, curr) => {
-      return {
-        booked: acc.booked + curr.totalBookings,
-        unbooked:
-          acc.unbooked + (curr.totalAvailabilities - curr.totalBookings),
-      };
-    },
-    { booked: 0, unbooked: 0 }
-  );
+
   const bookedUnbookedTotalData = {
     labels: ["Booked", "Unbooked"],
     datasets: [
       {
         label: "slots",
         data: [
-          totalBookedUnbooked?.booked || 0,
-          totalBookedUnbooked?.unbooked || 0,
+          generalStats?.hikersCount || 0,
+          generalStats?.availabilitiesCount && generalStats?.hikersCount
+            ? generalStats?.availabilitiesCount - generalStats?.hikersCount
+            : 0,
         ],
         backgroundColor: [
           "rgba(214, 140, 111, 0.8)",
@@ -158,6 +153,28 @@ const AdminDashboard = () => {
       },
     ],
   };
+  const toursWithTheMostHikersData = {
+    labels: generalStats?.toursWithTheMostHikers.map((tour) =>
+      capitalizeString(tour.tourData.name)
+    ),
+    datasets: [
+      {
+        label: "Number of Hikers",
+        data:
+          generalStats?.toursWithTheMostHikers.map((tour) => tour.totalGroup) ||
+          [],
+        backgroundColor: "rgba(214, 140, 111, 0.8)",
+      },
+      {
+        label: "Number of Bookings",
+        data:
+          generalStats?.toursWithTheMostHikers.map(
+            (tour) => tour.totalBookings
+          ) || [],
+        backgroundColor: "rgba(115, 128, 105, 0.8)",
+      },
+    ],
+  };
   const incomeEvolutionData = {
     labels: generalStats?.statsByMonth.map((stat) => stat.month),
     datasets: [
@@ -205,7 +222,7 @@ const AdminDashboard = () => {
             />
             <Counter
               iconType={STAT_ICON_TYPE_CLASSES.reviews}
-              value={generalStats?.ratingAverage || 0}
+              value={generalStats?.ratingAverage || 4.5}
               decimals={2}
               title="rating. avg"
             />
@@ -239,7 +256,12 @@ const AdminDashboard = () => {
               data={ratingDistributionData}
               options={ratingDistributionOptions}
             />
-            <LineChart
+            <SmallBarChart
+              title="Tours with the most hikers"
+              data={toursWithTheMostHikersData}
+              options={ratingDistributionOptions}
+            />
+            <SmallLineChart
               title="Income over the last 6 months"
               data={incomeEvolutionData}
             />

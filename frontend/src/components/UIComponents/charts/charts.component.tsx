@@ -3,6 +3,7 @@ import {
   ChartTitle,
   LargeChartContainer,
   MediumChartContainer,
+  MediumSmallChartContainer,
   Popup,
   PopupContent,
   PopupTitle,
@@ -51,6 +52,15 @@ export const BarChart: FC<BarChartProps> = ({ title, data, options }) => {
   );
 };
 
+export const SmallBarChart: FC<BarChartProps> = ({ title, data, options }) => {
+  return (
+    <MediumSmallChartContainer>
+      <ChartTitle>{title}</ChartTitle>
+      <Bar options={options} data={data} />
+    </MediumSmallChartContainer>
+  );
+};
+
 type PieChartProps = {
   title: string;
   data: ChartData<"pie", number[], string>;
@@ -76,6 +86,15 @@ export const LineChart: FC<LineChartProps> = ({ title, data }) => {
       <ChartTitle>{title}</ChartTitle>
       <Line data={data} />
     </LargeChartContainer>
+  );
+};
+
+export const SmallLineChart: FC<LineChartProps> = ({ title, data }) => {
+  return (
+    <MediumSmallChartContainer>
+      <ChartTitle>{title}</ChartTitle>
+      <Line data={data} />
+    </MediumSmallChartContainer>
   );
 };
 

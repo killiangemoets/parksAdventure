@@ -6,6 +6,7 @@ export type TGeneralStats = {
     userCount: number;
   }[];
   bookingsCount: number;
+  availabilitiesCount: number;
   hikersCount: number;
   ratingAverage: number;
   ratingsStats: {
@@ -28,6 +29,17 @@ export type TGeneralStats = {
     totalRevenue: number;
     totalAvailabilities: number;
   }[];
+  toursWithTheMostHikers: {
+    _id: string;
+    totalBookings: number;
+    totalGroup: number;
+    tourData: {
+      name: string;
+    };
+  }[];
 };
 
-export type TTourStats = Omit<TGeneralStats, "revenueByTour">;
+export type TTourStats = Omit<TGeneralStats, "revenueByTour" | "tourCount"> & {
+  startsCount: number;
+  tourName: string;
+};

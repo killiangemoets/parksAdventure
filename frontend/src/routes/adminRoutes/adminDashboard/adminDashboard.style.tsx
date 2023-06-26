@@ -5,7 +5,10 @@ export const AdminDashboardGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 3.2rem;
+  justify-content: space-between;
   padding-bottom: 6.4rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const LoadingDashboardContainer = styled.div`

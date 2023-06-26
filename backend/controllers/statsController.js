@@ -2,6 +2,7 @@ const User = require('./../models/userModel');
 const Tour = require('./../models/tourModel');
 const Booking = require('./../models/bookingModel');
 const Review = require('./../models/reviewModel');
+const AppError = require('./../utils/appError');
 
 exports.getAllStats = catchAsync(async (req, res, next) => {
   const userCount = await User.find().count();
@@ -36,6 +37,39 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
   ]);
 
   const currentDate = new Date();
+  const totalAvailabilities = await Tour.aggregate([
+    // Match tours with availabilities having dates smaller than the current date
+    // {
+    //   $match: {
+    //     'availabilities.date': { $lt: currentDate },
+    //   },
+    // },
+    // Unwind the availabilities array
+    {
+      $unwind: '$availabilities',
+    },
+    // Match availabilities with dates smaller than the current date
+    // {
+    //   $match: {
+    //     'availabilities.date': { $lt: currentDate },
+    //   },
+    // },
+    // Group and calculate the combined sum of maxGroupSize
+    {
+      $group: {
+        _id: null,
+        totalMaxGroupSize: { $sum: '$availabilities.maxGroupSize' },
+      },
+    },
+    // Optionally, you can shape the output
+    {
+      $project: {
+        _id: 0,
+        totalMaxGroupSize: 1,
+      },
+    },
+  ]);
+
   const currentYear = currentDate.getFullYear();
   const currentMonth = currentDate.getMonth();
 
@@ -228,14 +262,6 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       totalRevenue: bookingsStat?.totalRevenue || 0,
     });
     currentMonthValue = currentMonthValue === 11 ? 0 : currentMonthValue + 1;
-
-    console.log({
-      monthValue: currentMonthValue + 1,
-      month: monthsList[currentMonthValue],
-      totalAvailabilities: availabilitiesStat?.totalAvailabilities || 0,
-      totalBookings: bookingsStat?.totalBookings || 0,
-      totalRevenue: bookingsStat?.totalRevenue || 0,
-    });
   }
 
   const ratings = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -245,6 +271,46 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       ratingsStatsFromDB.find((stat) => stat.rating === rating)?.count || 0,
   }));
 
+  const toursWithTheMostHikers = await Booking.aggregate([
+    {
+      $lookup: {
+        from: 'tours',
+        let: { tourId: '$tour' },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ['$_id', '$$tourId'] },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              name: 1,
+            },
+          },
+        ],
+        as: 'tourData',
+      },
+    },
+    {
+      $unwind: '$tourData',
+    },
+    {
+      $group: {
+        _id: '$tour',
+        totalGroup: { $sum: '$group' },
+        totalBookings: { $sum: 1 },
+        tourData: { $first: '$tourData' },
+      },
+    },
+    {
+      $sort: { totalGroup: -1 },
+    },
+    {
+      $limit: 5,
+    },
+  ]);
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -252,6 +318,7 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       tourCount,
       ratingAverage: ratingAverage[0].ratingAverage,
       bookingsCount: bookingCounts[0].totalCount,
+      availabilitiesCount: totalAvailabilities[0].totalMaxGroupSize,
       hikersCount: bookingCounts[0].totalKids + bookingCounts[0].totalAdults,
       totalRevenue:
         bookingCounts[0].totalKidsRevenue + bookingCounts[0].totalAdultRevenue,
@@ -259,14 +326,64 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       bookingsByUserStats,
       revenueByTour,
       statsByMonth,
+      toursWithTheMostHikers,
     },
   });
 });
 
 exports.getTourStats = catchAsync(async (req, res, next) => {
-  const userCount = await User.find().count();
-  const tourCount = await Tour.find().count();
+  const tour = await Tour.find({ slug: req.params.slug });
+  if (!tour) return next(new AppError('No tour found with that slug', 404));
+
+  if (
+    req.user.role === 'lead-guide' &&
+    !tour[0].guides.find(
+      (guide) => guide._id.toString() === req.user._id.toString()
+    )
+  ) {
+    return next(
+      new AppError(
+        'You are not authorized to consult the stats of this tour',
+        404
+      )
+    );
+  }
+
+  const tourId = tour[0]._id;
+
+  const userCountRequest = await Booking.aggregate([
+    {
+      $match: {
+        tour: { $eq: tourId },
+      },
+    },
+    {
+      $group: {
+        _id: '$user',
+        userCount: { $sum: 1 },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        user: '$_id',
+        userCount: 1,
+      },
+    },
+  ]);
+  const userCount = userCountRequest.length;
+
+  const startsCount = tour[0].availabilities.reduce((acc, curr) => {
+    if (new Date(curr.date) < new Date()) return acc + 1;
+    else return acc;
+  }, 0);
+
   const ratingAverage = await Review.aggregate([
+    {
+      $match: {
+        tour: { $eq: tourId },
+      },
+    },
     {
       $group: {
         _id: null,
@@ -275,6 +392,11 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     },
   ]);
   const bookingCounts = await Booking.aggregate([
+    {
+      $match: {
+        tour: { $eq: tourId },
+      },
+    },
     {
       $group: {
         _id: null,
@@ -294,6 +416,43 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
       },
     },
   ]);
+  const totalAvailabilities = await Tour.aggregate([
+    {
+      $match: {
+        _id: { $eq: tourId },
+      },
+    },
+    // Match tours with availabilities having dates smaller than the current date
+    // {
+    //   $match: {
+    //     'availabilities.date': { $lt: currentDate },
+    //   },
+    // },
+    // Unwind the availabilities array
+    {
+      $unwind: '$availabilities',
+    },
+    // Match availabilities with dates smaller than the current date
+    // {
+    //   $match: {
+    //     'availabilities.date': { $lt: currentDate },
+    //   },
+    // },
+    // Group and calculate the combined sum of maxGroupSize
+    {
+      $group: {
+        _id: null,
+        totalMaxGroupSize: { $sum: '$availabilities.maxGroupSize' },
+      },
+    },
+    // Optionally, you can shape the output
+    {
+      $project: {
+        _id: 0,
+        totalMaxGroupSize: 1,
+      },
+    },
+  ]);
 
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
@@ -308,6 +467,7 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
   const bookingsStats = await Booking.aggregate([
     {
       $match: {
+        tour: { $eq: tourId },
         date: {
           $gte: new Date(
             `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 1}`.slice(-2)}-01`
@@ -346,6 +506,11 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
   ]);
 
   const availabilitiesStats = await Tour.aggregate([
+    {
+      $match: {
+        _id: { $eq: tourId },
+      },
+    },
     { $unwind: '$availabilities' },
     {
       $match: {
@@ -377,6 +542,7 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
   const ratingsStatsFromDB = await Review.aggregate([
     {
       $match: {
+        tour: { $eq: tourId },
         rating: {
           $in: [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5],
         },
@@ -399,6 +565,11 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
 
   const bookingsByUserStats = await Booking.aggregate([
     {
+      $match: {
+        tour: { $eq: tourId },
+      },
+    },
+    {
       $group: {
         _id: '$user',
         bookingCount: { $sum: 1 },
@@ -415,44 +586,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     {
       $project: {
         _id: 0,
-      },
-    },
-  ]);
-
-  const revenueByTour = await Tour.aggregate([
-    {
-      $lookup: {
-        from: 'bookings',
-        localField: '_id',
-        foreignField: 'tour',
-        as: 'bookings',
-      },
-    },
-    {
-      $addFields: {
-        totalRevenue: {
-          $sum: {
-            $map: {
-              input: '$bookings',
-              as: 'booking',
-              in: {
-                $add: [
-                  { $multiply: ['$$booking.kids', '$$booking.kidPrice'] },
-                  { $multiply: ['$$booking.adults', '$$booking.price'] },
-                ],
-              },
-            },
-          },
-        },
-      },
-    },
-    {
-      $project: {
-        _id: 0,
-        tourId: '$_id',
-        name: 1,
-        totalRevenue: 1,
-        startLocation: 1,
       },
     },
   ]);
@@ -488,14 +621,6 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
       totalRevenue: bookingsStat?.totalRevenue || 0,
     });
     currentMonthValue = currentMonthValue === 11 ? 0 : currentMonthValue + 1;
-
-    console.log({
-      monthValue: currentMonthValue + 1,
-      month: monthsList[currentMonthValue],
-      totalAvailabilities: availabilitiesStat?.totalAvailabilities || 0,
-      totalBookings: bookingsStat?.totalBookings || 0,
-      totalRevenue: bookingsStat?.totalRevenue || 0,
-    });
   }
 
   const ratings = [0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -508,172 +633,19 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: {
+      tourName: tour[0].name,
       userCount,
-      tourCount,
-      ratingAverage: ratingAverage[0].ratingAverage,
-      bookingsCount: bookingCounts[0].totalCount,
-      hikersCount: bookingCounts[0].totalKids + bookingCounts[0].totalAdults,
+      startsCount,
+      ratingAverage: ratingAverage[0]?.ratingAverage,
+      bookingsCount: bookingCounts[0]?.totalCount,
+      availabilitiesCount: totalAvailabilities[0]?.totalMaxGroupSize,
+      hikersCount: bookingCounts[0]?.totalKids + bookingCounts[0]?.totalAdults,
       totalRevenue:
-        bookingCounts[0].totalKidsRevenue + bookingCounts[0].totalAdultRevenue,
+        bookingCounts[0]?.totalKidsRevenue +
+        bookingCounts[0]?.totalAdultRevenue,
       ratingsStats,
       bookingsByUserStats,
-      revenueByTour,
       statsByMonth,
     },
   });
 });
-
-// const toursStats = await Tour.aggregate([
-//     {
-//       $lookup: {
-//         from: 'bookings',
-//         localField: '_id',
-//         foreignField: 'tour',
-//         as: 'bookingsData',
-//       },
-//     },
-//     {
-//       $addFields: {
-//         totalBookings: { $size: '$bookingsData' },
-//         bookingsByMonth: {
-//           $map: {
-//             input: { $range: [0, 12] },
-//             as: 'month',
-//             in: {
-//               month: { $add: [{ $sum: ['$kids', '$adults'] }, '$$month'] },
-//               count: {
-//                 $size: {
-//                   $filter: {
-//                     input: '$bookingsData',
-//                     as: 'booking',
-//                     cond: {
-//                       $and: [
-//                         {
-//                           $eq: [
-//                             { $month: '$$booking.date' },
-//                             {
-//                               $add: [{ $sum: ['$kids', '$adults'] }, '$$month'],
-//                             },
-//                           ],
-//                         },
-//                         {
-//                           $eq: [{ $year: '$$booking.date' }, 2023],
-//                         },
-//                       ],
-//                     },
-//                   },
-//                 },
-//               },
-//             },
-//           },
-//         },
-//       },
-//     },
-//     // {
-//     //   $project: {
-//     //     name: 1,
-//     //     totalBookings: 1,
-//     //     bookingsByMonth: 1,
-//     //   },
-//     // },
-//   ]);
-
-// const year = 2023;
-// const toursStats = await Tour.aggregate([
-//   // Match the tours based on your criteria (if any)
-//   // ...
-
-//   // Populate the bookings for each tour
-//   {
-//     $lookup: {
-//       from: 'bookings', // Assuming your bookings collection is named 'bookings'
-//       localField: '_id',
-//       foreignField: 'tour',
-//       as: 'bookings',
-//     },
-//   },
-
-//   // Unwind the bookings array
-//   { $unwind: '$bookings' },
-
-//   // Match the bookings for the specified year
-//   {
-//     $match: {
-//       'bookings.date': {
-//         $gte: new Date(`${year}-01-01`),
-//         $lte: new Date(`${year}-12-31`),
-//       },
-//     },
-//   },
-
-//   // Group by month and calculate the sum of kids and adults
-//   {
-//     $group: {
-//       _id: { $month: '$bookings.date' },
-//       totalKids: { $sum: '$bookings.kids' },
-//       totalAdults: { $sum: '$bookings.adults' },
-//     },
-//   },
-
-//   // Project the results with month and combined count
-//   {
-//     $project: {
-//       _id: 0,
-//       month: '$_id',
-//       totalBookings: { $add: ['$totalKids', '$totalAdults'] },
-//     },
-//   },
-// ]);
-
-// await Tour.aggregate([
-//     {
-//       $match: {
-//         // Add any specific match conditions if needed
-//       },
-//     },
-//     {
-//       $lookup: {
-//         from: 'bookings', // Assuming the bookings collection name is 'bookings'
-//         localField: '_id',
-//         foreignField: 'tour',
-//         as: 'bookings',
-//       },
-//     },
-//     {
-//       $addFields: {
-//         totalBookingPrice: {
-//           $sum: {
-//             $add: [
-//               { $multiply: ['$bookings.kids', '$bookings.kidPrice'] },
-//               { $multiply: ['$bookings.adults', '$bookings.price'] },
-//             ],
-//           },
-//         },
-//       },
-//     },
-//     {
-//       $project: {
-//         _id: 0,
-//         month: '$_id',
-//         totalBookingPrice: 1,
-//         startLocation: 1,
-//       },
-//     },
-//   ]);
-
-//   await Booking.aggregate([
-//     // Group bookings by tour and calculate the sum of kids*kidPrice+adults*price for each tour
-//     {
-//       $group: {
-//         _id: '$tour',
-//         totalAmount: {
-//           $sum: {
-//             $add: [
-//               { $multiply: ['$kids', '$kidPrice'] },
-//               { $multiply: ['$adults', '$price'] },
-//             ],
-//           },
-//         },
-//       },
-//     },
-//   ]);

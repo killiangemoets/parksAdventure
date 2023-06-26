@@ -12,6 +12,7 @@ import { USER_ROLE_TYPES } from "../../types/user";
 import {
   ProfileSectionElement,
   adminDropdownSections,
+  guideDropdownSections,
   userDropdownSections,
 } from "../../utils/profileSections/profileSectionLists";
 
@@ -25,6 +26,11 @@ const ProfileDropdown = () => {
     if (!userRole) return;
     if (userRole === USER_ROLE_TYPES.ADMIN)
       setProfileSection(adminDropdownSections);
+    else if (
+      userRole === USER_ROLE_TYPES.GUIDE ||
+      userRole === USER_ROLE_TYPES.LEAD_GUIDE
+    )
+      setProfileSection(guideDropdownSections);
     else setProfileSection(userDropdownSections);
   }, [userRole]);
 

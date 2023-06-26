@@ -2,19 +2,27 @@ import { CreateTourData } from "../../types/tour";
 import convertToBase64 from "../images-treatment/convert-base-64";
 
 const getTourDataInSendFormat = async (tourData: CreateTourData) => {
-  const uploadedImages: string[] = [];
-  const newImages: File[] = [];
+  const uploadedImages: { img: string; index: number }[] = [];
+  const newImages: { img: File; index: number }[] = [];
 
-  tourData.images.forEach((image) => {
-    if (image.state === "uploaded") uploadedImages.push(image.url);
-    if (image.state === "new") newImages.push(image.file);
+  tourData.images.forEach((image, index) => {
+    if (image.state === "uploaded")
+      uploadedImages.push({ img: image.url, index });
+    if (image.state === "new") newImages.push({ img: image.file, index });
   });
 
-  const imagesBase64 = await Promise.all(
-    newImages.map((img) => {
+  const imgBase64 = await Promise.all(
+    newImages.map(({ img }) => {
       return convertToBase64(img);
     })
   );
+
+  const imagesBase64 = newImages.map((newImage, index) => ({
+    img: imgBase64[index],
+    index: newImage.index,
+  }));
+
+  console.log({ imagesBase64, uploadedImages });
 
   const tourBody = {
     name: tourData.name,

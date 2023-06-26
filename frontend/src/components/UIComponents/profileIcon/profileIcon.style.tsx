@@ -92,6 +92,7 @@ export const ToursIcon = styled(MapSVG)`
     stroke: #fbf3e5;
   }
 `;
+
 export const UsersIcon = styled(UsersSVG)`
   width: 2rem;
   height: 2rem;
@@ -146,6 +147,15 @@ export const LogoutOrangeIcon = styled(LogoutSVG)`
 `;
 
 export const DashboardOrangeIcon = styled(HomeSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;
+
+export const ToursOrangeIcon = styled(MapSVG)`
   width: 2.4rem;
   height: 2.4rem;
 

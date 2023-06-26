@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import TourGuidesNavbar from "../../../components/adminsProfilePagesCompoents/adminNavbars/tourGuidesNavbar.component";
-import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
+import TourGuidesNavbar from "../../../components/adminsProfilePagesComponents/adminNavbars/tourGuidesNavbar.component";
+import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/adminSectionTitle/adminSectionTitle.component";
 import {
   AdminContentErrorMessage,
   AdminContentSpinner,
@@ -17,7 +17,7 @@ import { getAllGuidesWithDetails } from "../../../api/user-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
-import GuidesTable from "../../../components/adminsProfilePagesCompoents/usersTable/guidesTable.component";
+import GuidesTable from "../../../components/adminsProfilePagesComponents/usersTable/guidesTable.component";
 import { useSearchParams } from "react-router-dom";
 
 const AdminGuides = () => {

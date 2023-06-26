@@ -200,7 +200,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                     <TourGuide
                       pictureUrl={tourGuide.photo}
                       position={
-                        tourGuide.role === "guide" ? "Guide" : "Lead Guide"
+                        tourGuide.role === "guide" ? "Guide" : "Lead-Guide"
                       }
                       name={`${tourGuide.firstname} ${tourGuide.lastname}`}
                     />
@@ -215,7 +215,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             <ErrorMessage>
               {tourGuidesError
                 ? // ? "A tour must have at least one LEAD guide"
-                  "A tour must have at least one guide"
+                  "A tour must have at least one lead guide"
                 : ""}
             </ErrorMessage>
           </TourGuidesSelectSectionContainer>

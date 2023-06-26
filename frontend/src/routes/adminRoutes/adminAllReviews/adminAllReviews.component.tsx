@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import AllReviewsNavbar from "../../../components/adminsProfilePagesCompoents/adminNavbars/allReviewsNavbar.component";
-import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
+import AllReviewsNavbar from "../../../components/adminsProfilePagesComponents/adminNavbars/allReviewsNavbar.component";
+import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/adminSectionTitle/adminSectionTitle.component";
 import { TReview } from "../../../types/review";
 import {
   AdminContent,

@@ -1,5 +1,3 @@
-const multer = require('multer');
-const sharp = require('sharp');
 const Tour = require('./../models/tourModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
@@ -10,7 +8,7 @@ const Booking = require('../models/bookingModel');
 const formating = require('./../utils/formating');
 const ObjectId = require('mongodb').ObjectID;
 
-exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
+exports.uploadImagesToCloudinaryPrev = catchAsync(async (req, res, next) => {
   // Prevent user to pass directly imageCover or images
   req.body.imageCover = req.body.uploadedImages
     ? req.body.uploadedImages[0]
@@ -38,6 +36,66 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   return next();
 });
 
+exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
+  let imagesBase64 = [];
+  const uploadedImages = req.body.uploadedImages
+    ? [...req.body.uploadedImages]
+    : [];
+
+  if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
+    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
+      req.body.imagesBase64.map((image) => image.img),
+      `parkAdventures/tours`
+    );
+    imagesBase64 = req.body.imagesBase64.map((image, index) => ({
+      img: imgUrls[index],
+      index: image.index,
+    }));
+  }
+
+  const sortedImages = [...imagesBase64, ...uploadedImages];
+  sortedImages.sort((a, b) => a.index - b.index);
+  const images = sortedImages.map((image) => image.img);
+
+  console.log({ images });
+
+  req.body.imageCover = images.length > 0 ? images[0] : undefined;
+  req.body.images = images.length > 1 ? images.slice(1) : undefined;
+
+  return next();
+});
+
+exports.uploadImagesToCloudinary2 = catchAsync(async (req, res, next) => {
+  // Prevent user to pass directly imageCover or images
+  req.body.imageCover = req.body.uploadedImages
+    ? req.body.uploadedImages[0]
+    : undefined;
+  req.body.images = req.body.uploadedImages
+    ? req.body.uploadedImages.slice(1)
+    : undefined;
+
+  // Upload images to cloudinary
+  if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
+    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
+      req.body.imagesBase64,
+      `parkAdventures/tours`
+    );
+
+    if (req.body.uploadedImages && req.body.uploadedImages.length > 0) {
+      req.body.imageCover = req.body.uploadedImages[0];
+      req.body.images = [...req.body.uploadedImages.slice(1), ...imgUrls];
+    } else {
+      req.body.imageCover = imgUrls[0];
+      req.body.images = imgUrls.slice(1);
+    }
+  }
+
+  req.body.uploadedImages = undefined;
+  req.body.imagesBase64 = undefined;
+
+  return next();
+});
+
 exports.aggreagationRequiredFields = (req, res, next) => {
   req.query.fields =
     'name,slug,duration,location,imageCover,difficulty,categories,ratingsAverage,ratingsQuantity,startLocation,firstAvailability,lowerPrice,minGroupSizeCapacity,maxGroupSizeCapacity,hiddenTour,hasCurrentAvailabilities';
@@ -61,13 +119,6 @@ exports.aliasRecommendations = (req, res, next) => {
   req.recommendations = 'true';
   next();
 };
-
-exports.updatePopularityIndex = catchAsync(async (req, res, next) => {
-  await Tour.findByIdAndUpdate(req.params.id, {
-    $inc: { popularityIndex: req.params.increment },
-  });
-  next();
-});
 
 exports.getAllTours = factory.getAll(Tour);
 

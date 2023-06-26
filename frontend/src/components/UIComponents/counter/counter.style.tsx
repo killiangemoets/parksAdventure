@@ -8,8 +8,9 @@ export const CounterContainer = styled.div`
   justify-content: center;
   gap: 0.4rem;
   border-radius: 12px;
-  width: 16rem;
+  /* width: 16rem; */
   height: 14rem;
+  width: 100%;
   background-color: #fefdfa;
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);

@@ -37,6 +37,7 @@ export const ImagesInputElement = styled.input`
 `;
 
 export const ImageElementHover = styled.div`
+  cursor: grab;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -50,10 +51,20 @@ export const ImageElementHover = styled.div`
   transition: 0.3s;
 `;
 
+export const ImageButtons = styled.div`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.4rem;
+  transition: 0.3s;
+  opacity: 0;
+`;
+
 export const ImageElement = styled.div`
   position: relative;
-  width: 16rem;
-  height: 16rem;
+  /* width: 16rem; */
+  /* height: 16rem; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -65,15 +76,25 @@ export const ImageElement = styled.div`
     & ${ImageElementHover} {
       opacity: 1;
     }
+    & ${ImageButtons} {
+      opacity: 1;
+    }
   }
+`;
 
-  img {
-    max-width: 15rem;
-    max-height: 15rem;
-    object-fit: contain;
-    /* height: auto; */
-    width: auto;
-  }
+export const TourImage = styled.img`
+  width: 100%;
+  height: 15rem;
+  /* height: 100%; */
+  overflow: hidden;
+  padding: 0.2rem;
+  object-fit: contain;
+  width: auto;
+`;
+
+export const LargeTourImage = styled(TourImage)`
+  /* width: 30rem; */
+  height: 31.4rem;
 `;
 
 export const ImagesInputText = styled.div`

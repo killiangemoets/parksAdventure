@@ -209,6 +209,11 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
   // 3) Update bookings
   const orderNumber = crypto.randomBytes(6).toString('hex').toUpperCase();
   const pin = uid2(6);
+
+  const bookingsToUpdate = await Booking.find({
+    paymentToken: cryptedPaymentToken,
+  });
+
   const bookings = await Booking.updateMany(
     { paymentToken: cryptedPaymentToken },
     {
@@ -227,12 +232,16 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
     }
   );
 
-  console.log('validateOrder', bookings);
-
   // 4) If no bookings updated -> error
   if (!bookings.nModified) {
     return next(new AppError('No booking found with this token', 500));
   }
+
+  bookingsToUpdate.forEach(async (booking) => {
+    await Tour.findByIdAndUpdate(booking.tour._id, {
+      $inc: { popularityIndex: 5 + booking.group },
+    });
+  });
 
   await new Email(req.user, '').sendOrderConfirmation();
   // 5) Send response

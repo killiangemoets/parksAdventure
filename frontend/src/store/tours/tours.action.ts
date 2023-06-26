@@ -46,6 +46,7 @@ export const fetchToursAsync =
   async (dispatch: Dispatch<ToursDipatchTypes>) => {
     dispatch(fetchToursStart());
     const response = await getTours(requestString);
+    console.log("TOURS", response);
     if (response.status === "success")
       dispatch(fetchToursSuccess(response.data.data, response.totalResults));
     else dispatch(fetchToursFailed(response.message));

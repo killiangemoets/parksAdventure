@@ -8,11 +8,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 
-import pic1 from "../../../assets/canadianRockies.jpg";
-import pic2 from "../../../assets/reviews-section-bg.webp";
-import pic3 from "../../../assets/family.jpg";
-import pic4 from "../../../assets/main-header-bg.jpg";
-
 // import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import {
@@ -26,14 +21,18 @@ import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 export type PicturesCarouselProps = {
   handleOpen: (state: boolean) => void;
   images: string[];
+  initialImageIndex?: number;
 };
 
 const PicturesCarousel: FC<PicturesCarouselProps> = ({
   handleOpen,
   images,
+  initialImageIndex = 0,
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
+
+  console.log("thumbsSwiper", thumbsSwiper);
 
   const handleClickOnOverlay = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (carouselRef.current && !carouselRef.current.contains(e.target as Node))
@@ -44,19 +43,13 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
     <PicturesCarouselOverlay onClick={handleClickOnOverlay}>
       <PicturesCarouselContainer ref={carouselRef}>
         <Swiper
-          style={
-            {
-              //   "--swiper-navigation-color": "#fff",
-              //   "--swiper-pagination-color": "#fff",
-            }
-          }
           loop={true}
           spaceBetween={10}
           navigation={true}
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper2"
-        >
+          initialSlide={initialImageIndex}
+          className="mySwiper2">
           {images.map((image, i) => {
             return (
               <SwiperSlide key={i}>
@@ -73,8 +66,7 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
           freeMode={true}
           watchSlidesProgress={true}
           modules={[FreeMode, Navigation, Thumbs]}
-          className="mySwiper"
-        >
+          className="mySwiper">
           {images.map((image, i) => {
             return (
               <SwiperSlide key={i}>
@@ -87,8 +79,7 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
       <CloseButton>
         <Button
           buttonType={BUTTON_TYPE_CLASSES.empty}
-          onClick={() => handleOpen(false)}
-        >
+          onClick={() => handleOpen(false)}>
           <ClosePicturesCarouselIcon />
         </Button>
       </CloseButton>

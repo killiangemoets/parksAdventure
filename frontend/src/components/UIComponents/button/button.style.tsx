@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+/* #506044 
+#9fc088
+#CC704B
+#b86544
+#e0a993
+#F6E6CB 
+#faf2e5
+##fdfaf5
+*/
+
 export const BaseButton = styled.button`
   /* min-width: 16rem; */
   padding: 1.2rem 3.2rem;

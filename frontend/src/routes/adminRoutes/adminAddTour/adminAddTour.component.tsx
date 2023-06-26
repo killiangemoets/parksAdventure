@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import AddTourCalendar from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourCalendar/addTourCalendar.component";
-import AddTourDetails from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourDetails/addTourDetails.component";
-import AddTourImages from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourImages/addTourImages.component";
-import AddTourItinerary from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourItinerary/addTourItinerary.component";
-import AddTourPracticalInfos from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourPracticalInfos/addTourPracticalInfos.component";
-import AddTourTitle from "../../../components/adminsProfilePagesCompoents/addTourPageComponents/addTourTitle/addTourTitle.component";
+import AddTourCalendar from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourCalendar/addTourCalendar.component";
+import AddTourDetails from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourDetails/addTourDetails.component";
+import AddTourImages from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourImages/addTourImages.component";
+import AddTourItinerary from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourItinerary/addTourItinerary.component";
+import AddTourPracticalInfos from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourPracticalInfos/addTourPracticalInfos.component";
+import AddTourTitle from "../../../components/adminsProfilePagesComponents/addTourPageComponents/addTourTitle/addTourTitle.component";
 import {
   AddTourButtons,
   AddTourButtonsWrapper,
@@ -43,7 +43,6 @@ import {
   selectTourCurrentAvailabilities,
 } from "../../../store/tour/tour.selector";
 import getTourDataInEditFormat from "../../../utils/dataManipulation/getTourDataInEditFormat";
-import { TourGuidesSectionContainer } from "../../../components/tourPageComponents/tourGuidesSection/tourGuidesSection.style";
 
 export type NewTourDataValueTypes =
   | string
@@ -182,6 +181,7 @@ const AdminAddTour = () => {
   }, []);
 
   const handleChange = (value: NewTourDataValueTypes, name: string) => {
+    console.log(value);
     setTourData({ ...tourData, [name]: value });
     setErrors({ ...errors, [name]: "" });
   };
@@ -210,12 +210,12 @@ const AdminAddTour = () => {
     if (!summary?.length) newErrorsState.summary = true;
     // if (!tourGuides?.length) newErrorsState.tourGuides = true;
     if (
-      // !tourGuidesList.find(
-      //   (guide) =>
-      //     guide.role === "lead-guide" &&
-      //     tourGuides.find((tourGuide) => tourGuide.id === guide.id)
-      // )
-      tourGuides.length === 0
+      !tourGuidesList.find(
+        (guide) =>
+          guide.role === "lead-guide" &&
+          tourGuides.find((tourGuide) => tourGuide.id === guide.id)
+      )
+      // tourGuides.length === 0
     )
       newErrorsState.tourGuides = true;
     if (!locations.length) newErrorsState.locations = true;
@@ -230,7 +230,12 @@ const AdminAddTour = () => {
       location?.length &&
       categories.length &&
       summary?.length &&
-      tourGuides.length &&
+      // tourGuides.length &&
+      tourGuidesList.find(
+        (guide) =>
+          guide.role === "lead-guide" &&
+          tourGuides.find((tourGuide) => tourGuide.id === guide.id)
+      ) &&
       locations.length &&
       // availabilities.length &&
       address?.length
@@ -239,6 +244,7 @@ const AdminAddTour = () => {
         slug && tour?._id
           ? await updateTour(tourData, tour?._id)
           : await createTour(tourData);
+      console.log(response);
       if (response.status === "success") {
         navigate(`/tour/${response.data.data.slug}`);
         // setTourData(newTourDataDefaultState);

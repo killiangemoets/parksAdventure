@@ -10,10 +10,11 @@ router
   .route('/')
   .get(authController.restrictTo('admin'), statsController.getAllStats);
 
-router.route('/:slug').get(
-  authController.restrictTo('admin', 'lead-guide'),
-  // Add middleware to check lead-guide authorization
-  statsController.getTourStats
-);
+router
+  .route('/:slug')
+  .get(
+    authController.restrictTo('admin', 'lead-guide'),
+    statsController.getTourStats
+  );
 
 module.exports = router;

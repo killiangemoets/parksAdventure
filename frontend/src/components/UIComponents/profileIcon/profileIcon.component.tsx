@@ -16,6 +16,7 @@ import {
   UsersIcon,
   TourGuidesIcon,
   DashboardOrangeIcon,
+  ToursOrangeIcon,
 } from "./profileIcon.style";
 
 export enum PROFILE_ICON_TYPE_CLASSES {
@@ -35,6 +36,7 @@ export enum PROFILE_ICON_TYPE_CLASSES {
   reviewsOrange = "reviewsOrange",
   logoutOrange = "logoutOrange",
   dashboardOrange = "dashboardOrange",
+  tourOrange = "tourOrange",
 }
 
 const getIcon = (
@@ -57,6 +59,7 @@ const getIcon = (
     [PROFILE_ICON_TYPE_CLASSES.reviewsOrange]: ReviewsOrangeIcon,
     [PROFILE_ICON_TYPE_CLASSES.logoutOrange]: LogoutOrangeIcon,
     [PROFILE_ICON_TYPE_CLASSES.dashboardOrange]: DashboardOrangeIcon,
+    [PROFILE_ICON_TYPE_CLASSES.tourOrange]: ToursOrangeIcon,
   }[iconType]);
 
 export type ProfileIconProps = {

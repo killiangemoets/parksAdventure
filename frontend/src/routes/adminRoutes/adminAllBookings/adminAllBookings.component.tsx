@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BookingCard from "../../../components/UIComponents/bookingCard/bookingCard.component";
-import AllBookingsNavbar from "../../../components/adminsProfilePagesCompoents/adminNavbars/allBookingsNavbar.component";
-import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
+import AllBookingsNavbar from "../../../components/adminsProfilePagesComponents/adminNavbars/allBookingsNavbar.component";
+import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/adminSectionTitle/adminSectionTitle.component";
 import {
   AdminContent,
   AdminContentErrorMessage,

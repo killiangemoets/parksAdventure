@@ -37,6 +37,7 @@ module.exports = class Email {
   async send(template, subject) {
     // 1) Render HTML based on a pug template
     const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
+      // const html = pug.renderFile(`${__dirname}/../views/email/testEmail.html`, {
       firstname: this.firstname,
       url: this.url,
       subject,
@@ -65,6 +66,26 @@ module.exports = class Email {
 
   async sendWelcome() {
     await this.send('welcome', 'Welcome to the Natours Family!');
+  }
+
+  async contactUs() {
+    const html = pug.renderFile(`${__dirname}/../views/email/welcome.pug`, {
+      firstname: this.firstname,
+      url: this.url,
+      subject: 'Someone contacted you',
+    });
+
+    // 2) Define the email options
+    const mailOptions = {
+      from: this.from,
+      to: this.from,
+      subject: 'Someone contacted you',
+      html,
+      text: htmlToText(html), // convert the html to text
+    };
+
+    // 3) Create a transport and send email
+    await this.newTransport().sendMail(mailOptions);
   }
 
   async sendOrderConfirmation() {

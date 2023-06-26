@@ -134,7 +134,9 @@ exports.createUser = (req, res) => {
 };
 
 exports.getAllUserNames = catchAsync(async (req, res, next) => {
-  const users = await User.find().select('firstname lastname email');
+  const users = await User.find({ role: 'user' }).select(
+    'firstname lastname email'
+  );
 
   res.status(200).json({
     status: 'success',

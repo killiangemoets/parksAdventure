@@ -113,8 +113,8 @@ export enum CREATE_TOUR_DATA {
 }
 
 export type TUploadTourImage =
-  | { state: "uploaded"; url: string }
-  | { state: "new"; file: File; preview: string };
+  | { state: "uploaded"; url: string; id: string }
+  | { state: "new"; file: File; preview: string; id: string };
 
 export type CreateTourData = {
   [CREATE_TOUR_DATA.name]: string;

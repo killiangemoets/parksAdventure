@@ -30,6 +30,7 @@ const getTourDataInEditFormat = async (tour: TourData) => {
     images: [tour.imageCover, ...tour.images].map((image) => ({
       state: "uploaded",
       url: image,
+      id: (Math.random() * 1000).toString(),
     })),
     duration: tour.duration,
     difficulty: difficultiesInfoList.find(

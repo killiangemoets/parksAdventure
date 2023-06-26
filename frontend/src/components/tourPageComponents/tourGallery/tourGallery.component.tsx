@@ -41,6 +41,7 @@ const TourGallery = () => {
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
   const [carouselImages, setCarouselImages] = useState<string[]>([]);
+  const [initialImageIndex, setInitialImageIndex] = useState<number>(0);
   const inwishlist = useIsInWishList(tour?._id);
 
   useEffect(() => {
@@ -80,22 +81,38 @@ const TourGallery = () => {
     <>
       <TourGalleryContainer>
         <TourGalleryGrid>
-          <TourMainImage>
+          <TourMainImage
+            onClick={() => {
+              setInitialImageIndex(0);
+              handleOpenCarousel(true);
+            }}>
             {!isLoading && tour?.imageCover && (
               <img src={tour?.imageCover} alt="Tour 1" />
             )}
           </TourMainImage>
-          <TourSecondImage>
+          <TourSecondImage
+            onClick={() => {
+              setInitialImageIndex(1);
+              handleOpenCarousel(true);
+            }}>
             {!isLoading && tour?.images && tour?.images[0] && (
               <img src={tour.images[0]} alt="Tour 2" />
             )}
           </TourSecondImage>
-          <TourThirdImage>
+          <TourThirdImage
+            onClick={() => {
+              setInitialImageIndex(2);
+              handleOpenCarousel(true);
+            }}>
             {!isLoading && tour?.images && tour?.images[1] && (
               <img src={tour.images[1]} alt="Tour 3" />
             )}
           </TourThirdImage>
-          <TourFourthImage>
+          <TourFourthImage
+            onClick={() => {
+              setInitialImageIndex(4);
+              handleOpenCarousel(true);
+            }}>
             {!isLoading && tour?.images && tour?.images[2] && (
               <img src={tour.images[2]} alt="Tour 4" />
             )}
@@ -103,7 +120,10 @@ const TourGallery = () => {
           <TourGalleryButtons>
             <Button
               buttonType={BUTTON_TYPE_CLASSES.gallery}
-              onClick={() => handleOpenCarousel(true)}>
+              onClick={() => {
+                setInitialImageIndex(0);
+                handleOpenCarousel(true);
+              }}>
               View all {carouselImages.length} images
             </Button>
             {!isUserAdminOrGuide(userRole) && (
@@ -121,6 +141,7 @@ const TourGallery = () => {
         <PicturesCarousel
           handleOpen={handleOpenCarousel}
           images={carouselImages}
+          initialImageIndex={initialImageIndex}
         />
       )}
     </>

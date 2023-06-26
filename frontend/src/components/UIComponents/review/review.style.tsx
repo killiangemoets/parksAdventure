@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PriceModalButtons } from "../../adminsProfilePagesCompoents/addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
+import { PriceModalButtons } from "../../adminsProfilePagesComponents/addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
 
 export const ReviewContainer = styled.div`
   width: 100%;

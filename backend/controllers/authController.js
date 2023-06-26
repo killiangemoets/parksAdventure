@@ -242,7 +242,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   // }
 
   // if (req.cookies.jwt)
-  if (!token) {
+  if (!token || token === 'logged out') {
     return next(
       new AppError('You are not logged in! Please log in to get access')
     );
@@ -388,15 +388,10 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 exports.getLoggedInUser = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
   let token = req.cookies.jwt;
-  // if (
-  //   req.headers.authorization &&
-  //   req.headers.authorization.startsWith('Bearer')
-  // ) {
-  //   token = req.headers.authorization.split(' ')[1];
-  // }
 
-  // if (req.cookies.jwt)
-  if (!token) {
+  console.log('TOKEN', token);
+
+  if (!token || token === 'logged out') {
     return next();
   }
 

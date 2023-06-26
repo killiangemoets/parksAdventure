@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import AllUsersNavbar from "../../../components/adminsProfilePagesCompoents/adminNavbars/allUsersNavbar.component";
-import AdminSectionTitle from "../../../components/adminsProfilePagesCompoents/adminSectionTitle/adminSectionTitle.component";
+import AllUsersNavbar from "../../../components/adminsProfilePagesComponents/adminNavbars/allUsersNavbar.component";
+import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/adminSectionTitle/adminSectionTitle.component";
 import {
   AdminContentErrorMessage,
   AdminContentSpinner,
@@ -17,7 +17,7 @@ import { getAllUsersWithDetails } from "../../../api/user-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
-import UsersTable from "../../../components/adminsProfilePagesCompoents/usersTable/usersTable.component";
+import UsersTable from "../../../components/adminsProfilePagesComponents/usersTable/usersTable.component";
 import { useSearchParams } from "react-router-dom";
 
 const AdminAllUsers = () => {
