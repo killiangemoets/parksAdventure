@@ -13,9 +13,11 @@ exports.sendEmail = catchAsync(async (req, res, next) => {
 
   const user = {
     email: req.body.email,
+    phoneNumber: req.body.phoneNumber,
     firstname: req.body.firstname,
+    lastname: req.body.lastname,
   };
-  await new Email(user, '').contactUs();
+  await new Email(user).sendContactEmail(req.body.message);
 
   res.status(200).json({
     status: 'success',

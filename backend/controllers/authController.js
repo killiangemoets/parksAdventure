@@ -86,7 +86,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     console.log({ redirectUri });
     const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
     const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
-    await new Email(newUser, emailVerificationUrl).sendEmailVerification();
+    await new Email(newUser).sendVerificationEmail(emailVerificationUrl);
 
     createSessionToken(emailVerificationSessionToken, 200, res);
   } catch (err) {
@@ -195,7 +195,7 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
   const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
   const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
 
-  await new Email(user, emailVerificationUrl).sendEmailVerification();
+  await new Email(user).sendVerificationEmail(emailVerificationUrl);
 
   res.status(200).json({
     status: 'success',
@@ -310,7 +310,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3) Send it to user's email
   try {
     const resetPasswordUrl = `${process.env.RESET_PASSWORD_URL}/${resetToken}`;
-    await new Email(user, resetPasswordUrl).sendPasswordReset();
+    await new Email(user).sendPasswordResetEmail(resetPasswordUrl);
 
     res.status(200).json({
       status: 'success',
@@ -450,7 +450,7 @@ exports.createTourGuide = catchAsync(async (req, res, next) => {
 
   try {
     const emailVerificationUrl = `${process.env.TOUR_GUIDE_EMAIL_VERIFICATION_URL}/${verificationToken}`;
-    await new Email(newUser, emailVerificationUrl).sendEmailVerification();
+    await new Email(newUser).sendGuideVerificationEmail(emailVerificationUrl);
     res.status(200).json({
       status: 'success',
       data: null,

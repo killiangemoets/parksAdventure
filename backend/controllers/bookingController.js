@@ -237,13 +237,52 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
     return next(new AppError('No booking found with this token', 500));
   }
 
-  bookingsToUpdate.forEach(async (booking) => {
-    await Tour.findByIdAndUpdate(booking.tour._id, {
-      $inc: { popularityIndex: 5 + booking.group },
-    });
+  await Promise.all(
+    bookingsToUpdate.map(async (booking) => {
+      const tour = await Tour.findByIdAndUpdate(booking.tour._id, {
+        $inc: { popularityIndex: 5 + booking.group },
+      });
+      const selectedAvailability = tour.availabilities.find((availability) =>
+        formating.compareDates(availability.date, booking.date)
+      );
+      booking.time = selectedAvailability.time;
+    })
+  );
+
+  const bookingDetails = bookingsToUpdate.map((booking) => {
+    return {
+      reservationDate: formating.niceFullDate(booking.createdAt),
+      title: `${booking.tour.name} (${booking.tour.duration} ${
+        booking.tour.duration > 1 ? 'days' : ' day'
+      } hiking tour)`,
+      referenceNumber: orderNumber,
+      pin,
+      fullname: `${booking.user.firstname} ${booking.user.lastname}`,
+      email: booking.user.email,
+      phoneNumber: booking.user.phoneNumber || '/',
+      hikers: formating.niceGroupDetailsString(booking.adults, booking.kids),
+      dates: `${formating.niceDatesRange(
+        booking.date,
+        booking.tour.duration
+      )} (${booking.tour.duration} ${
+        booking.tour.duration > 1 ? 'Days' : ' Day'
+      })`,
+      startingTime: formating.niceTime(booking.time),
+      meetingPoint: booking.tour.meetingAddress,
+      totalPrice: booking.totalPrice,
+      adults: booking.adults,
+      children: booking.kids,
+      adultPrice: booking.price,
+      childPrice: booking.kidPrice,
+    };
   });
 
-  await new Email(req.user, '').sendOrderConfirmation();
+  console.log({ bookingDetails });
+
+  await new Email(req.user).sendBookingEmail({
+    url: process.env.BOOKINGS_URL,
+    bookings: bookingDetails,
+  });
   // 5) Send response
   res.status(200).json({
     status: 'success',

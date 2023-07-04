@@ -1,14 +1,19 @@
 const nodemailer = require('nodemailer');
 const pug = require('pug');
+const ejs = require('ejs');
+
 const { htmlToText } = require('html-to-text');
 
 // new Email(user, url).sendWelcome();
 
 module.exports = class Email {
-  constructor(user, url) {
-    this.to = user.email;
+  constructor(user) {
+    this.email = user.email;
+    this.phoneNumber = user.phoneNumber;
     this.firstname = user.firstname;
-    this.url = url;
+    this.fullname = `${user.firstname} ${user.lastname}`;
+    this.websiteUrl = process.env.WEBSITE_URL;
+    this.contactUrl = process.env.CONTACT_URL;
     this.from = `Parks Adventure Hiking Tours <${process.env.EMAIL_FROM}>`;
   }
 
@@ -34,19 +39,23 @@ module.exports = class Email {
     });
   }
 
-  async send(template, subject) {
+  async send(template, subject, data) {
     // 1) Render HTML based on a pug template
-    const html = pug.renderFile(`${__dirname}/../views/email/${template}.pug`, {
-      // const html = pug.renderFile(`${__dirname}/../views/email/testEmail.html`, {
+    const filePath = `${__dirname}/../views/email/${template}.ejs`;
+    const html = await ejs.renderFile(filePath, {
+      email: this.email,
+      phoneNumber: this.phoneNumber,
       firstname: this.firstname,
-      url: this.url,
-      subject,
+      fullname: this.fullname,
+      websiteUrl: this.websiteUrl,
+      contactUrl: this.contactUrl,
+      ...data,
     });
 
     // 2) Define the email options
     const mailOptions = {
       from: this.from,
-      to: this.to,
+      to: template === 'contact' ? this.from : this.email,
       subject,
       html,
       text: htmlToText(html), // convert the html to text
@@ -56,46 +65,44 @@ module.exports = class Email {
     await this.newTransport().sendMail(mailOptions);
   }
 
-  async sendEmailVerification() {
+  async sendVerificationEmail(url) {
     // TODO (send token like reset password)
     await this.send(
       'verification',
-      'Welcome to the National Parks Hiking Tours Family!'
+      'Welcome to the National Parks Hiking Tours Family!',
+      { url }
     );
   }
 
-  async sendWelcome() {
-    await this.send('welcome', 'Welcome to the Natours Family!');
+  async sendGuideVerificationEmail(url) {
+    // TODO (send token like reset password)
+    await this.send(
+      'guide-verification',
+      'Welcome to the National Parks Hiking Tours Family!',
+      { url }
+    );
   }
 
-  async contactUs() {
-    const html = pug.renderFile(`${__dirname}/../views/email/welcome.pug`, {
-      firstname: this.firstname,
-      url: this.url,
-      subject: 'Someone contacted you',
+  async sendBookingEmail({ url, bookings }) {
+    await this.send('booking', 'Thank you for your reservation!', {
+      url,
+      bookings,
     });
-
-    // 2) Define the email options
-    const mailOptions = {
-      from: this.from,
-      to: this.from,
-      subject: 'Someone contacted you',
-      html,
-      text: htmlToText(html), // convert the html to text
-    };
-
-    // 3) Create a transport and send email
-    await this.newTransport().sendMail(mailOptions);
   }
 
-  async sendOrderConfirmation() {
-    await this.send('welcome', 'Thank you for your order!');
-  }
-
-  async sendPasswordReset() {
+  async sendPasswordResetEmail(url) {
     await this.send(
       'passwordReset',
-      `Your password reset token (valid for only ${process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN} minutes)`
+      `Your password reset token (valid for only ${process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN} minutes)`,
+      { url }
+    );
+  }
+
+  async sendContactEmail(message) {
+    await this.send(
+      'contact',
+      `Your password reset token (valid for only ${process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN} minutes)`,
+      { message }
     );
   }
 };

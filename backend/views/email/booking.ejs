@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700"
+      rel="stylesheet"
+    />
+    <title>National Parks Hiking Tours</title>
+  </head>
+  <body link="#506044" vlink="#506044" alink="#506044">
+    <table class=" main contenttable" align="center" style="font-weight: normal;border-collapse: collapse;border: 0;margin-left: auto;margin-right: auto;padding: 0;font-family: Arial, sans-serif;color: #333;background-color: white;font-size: 16px;line-height: 26px;width: 600px;">
+            <tr>
+                <td class="border" style="border-collapse: collapse;border: 1px solid #eeeff0;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;">
+                    <table style="font-weight: normal;border-collapse: collapse;border: 0;margin: 0;padding: 0;font-family: Arial, sans-serif;">
+                        <tr>
+                            <td colspan="4" valign="top" class="image-section" style="border-collapse: collapse;border: 0;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;background-color: #fff;border-bottom: 4px solid #506044">
+                                <a href="<%= websiteUrl %>"><img class="top-image" src="https://res.cloudinary.com/djuuji1j9/image/upload/v1687622380/parkAdventures/logo/logoHikeLong_ti9ql8.png" style="line-height: 1;width: 180px;" alt="Tenable Network Security"></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" class="side title" style="border-collapse: collapse;border: 0;margin: 0;padding: 0px;padding-top: 20px;padding-bottom: 20px;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;vertical-align: top;background-color: white;border-top: none;">
+                                <table style="font-weight: normal;border-collapse: collapse;border: 0;margin: 0;padding: 0;font-family: Arial, sans-serif;">
+                                    <tr>
+                                        <td class="head-title" style="border-collapse: collapse;border: 0;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #CC704B;font-family: Arial, sans-serif;font-size: 28px;line-height: 48px;font-weight: bold; text-align: center;">
+                                            <div class="mktEditable" id="main_title">
+                                           Order Confirmation
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="sub-title" style="border-collapse: collapse;border: 0;margin: 0;padding: 0;padding-top:5px;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 18px;line-height: 29px;font-weight: bold;text-align: center;">
+                                        <div class="mktEditable" id="intro_title">
+                                            Thank your for order, <%= firstname %>!
+                                        </div>
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="top-padding" style="border-collapse: collapse;border: 0;margin: 0;padding: 5px;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="grey-block" style="border-collapse: collapse;border: 0;margin: 0;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;background-color: #fff; text-align:center;">
+                                        <div class="mktEditable" id="cta">
+                                        <img class="top-image" src="https://res.cloudinary.com/djuuji1j9/image/upload/v1687623543/parkAdventures/logo/main-header-bg_sgguen.jpg" width="600"/><br><br>
+                                    </tr>
+                                    <tr>
+                                        <td class="text" style="border-collapse: collapse;border: 0;margin: 0;padding: 0;padding-left: 20px;padding-right: 20px;padding-bottom: 32px;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px; ;border-bottom: 4px solid #506044">
+                                        <div class="mktEditable" id="main_text">
+                                            Hello <%= firstname %>,<br><br>
+
+                                            Your reservation was successful! You will find the details below and in <a style="color: #CC704B;" href="<%= url %>">your bookings</a>.<br>
+                                            Please present yourself at the meeting point 30 minutes before starting time, with this email.<br><br>
+
+                                            We look forward to seeing you on the tour!<br><br>
+
+                                            Best,<br><br> 
+
+                                            Tom Sawyer<br>
+                                            National Parks Hiking Tour CEO
+                                        </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border-collapse: collapse;border: 0;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 24px;">
+                                         &nbsp;<br>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                      <%
+                                      for(var i=0; i<bookings.length; i++){
+                                        %>
+                                        <table style="max-width:670px;padding:20px;;border-bottom: 4px solid #506044">
+                                            <thead>
+                                              <tr>
+                                                <th style="text-align:left;"><img style="max-width: 150px;" src="https://res.cloudinary.com/djuuji1j9/image/upload/v1687622380/parkAdventures/logo/logoHikeLong_ti9ql8.png" alt="bachana tours"></th>
+                                                <th style="font-size:14px;text-align:right;font-weight:400;"><%= bookings[i].reservationDate %></th>
+                                              </tr>
+                                              <tr>
+                                              <td colspan="2" style="padding-top:10px;text-align: center;font-weight: bold;font-size: 18px;">
+                                                <%= bookings[i].title %>
+                                              </td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <td style="height:35px;"></td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2" style="border: solid 1px #ddd; padding:10px 20px;">
+                                                  <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:150px">Order status</span><b style="color:#55c57a;font-weight:normal;margin:0">Success</b></p>
+                                                  <p style="font-size:14px;margin:0 0 6px 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Reference Number</span><%= bookings[i].referenceNumber %></p>
+                                                  <p style="font-size:14px;margin:0 0 0 0;"><span style="font-weight:bold;display:inline-block;min-width:146px">Pin</span><%= bookings[i].pin %></p>
+
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td style="height:35px;"></td>
+                                              </tr>
+                                              <tr>
+                                                <td style="width:50%;padding:20px;vertical-align:top">
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Full Name</span><%= bookings[i].fullname %></p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span><%= bookings[i].email %></p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Phone</span><%= bookings[i].phoneNumber %></p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Number of Hikers</span><%= bookings[i].hikers %></p>
+                                                </td>
+                                                <td style="width:50%;padding:20px;vertical-align:top">
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Dates</span><%= bookings[i].dates %></p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Starting Time</span><%= bookings[i].startingTime %> (Note that departure time may be subject to change. Please consult <a style="color: #333;" href="<%= url %>">your bookings</a>)</p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Meeting Point</span><%= bookings[i].meetingPoint %></p>
+                                                  <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Price</span>$<%= bookings[i].totalPrice %></p>
+                                                </td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2" style="font-size:16px;font-weight:bold;padding:20px 15px 0 15px;">Details</td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2" style="padding:15px;">
+                                                  <%
+                                                  if (bookings[i].adults>0){
+                                                    %>
+                                                  <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Adult (16+ years) x <%= bookings[i].adults %></span>$<%= bookings[i].adultPrice %> <b style="font-size:12px;font-weight:300;"> /adult</b></p>
+                                                    <%
+                                                  }
+                                                  %>
+                                                  <%
+                                                  if (bookings[i].children>0){
+                                                    %>
+                                                  <p style="font-size:14px;margin:0;padding:10px;border:solid 1px #ddd;font-weight:bold;"><span style="display:block;font-size:13px;font-weight:normal;">Adult (16+ years) x <%= bookings[i].children %></span>$<%= bookings[i].childPrice %> <b style="font-size:12px;font-weight:300;"> /child</b></p>
+                                                    <%
+                                                  }
+                                                  %>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                          </table>                                       
+                                          <%
+                                        }
+                                        %>
+
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr> 										
+                        <tr bgcolor="#fff" style="border-top: 4px solid #506044;">
+                            <td valign="top" class="footer" style="border-collapse: collapse;border: 0;margin: 0;padding: 0;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 16px;line-height: 26px;background: #fff;text-align: center;">
+                                <table style="font-weight: normal;border-collapse: collapse;border: 0;margin: 0;padding: 0;font-family: Arial, sans-serif;">
+                                    <tr>
+                                        <td class="inside-footer" align="center" valign="middle" style="border-collapse: collapse;border: 0;margin: 0;padding: 20px;-webkit-text-size-adjust: none;color: #333;font-family: Arial, sans-serif;font-size: 12px;line-height: 16px;vertical-align: middle;text-align: center;width: 580px;">
+    <div id="address" class="mktEditable">
+                                            <b>National Parks Hike Tours</b><br>
+                                            123 Nature Trail Road,<br> Evergreen City, UT 12345<br>United States<br>
+                                            +1 (555) 123-4567<br>
+                                <a style="color: #CC704B;" href="<%= contactUrl %>">Contact Us</a>
+    </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+    </table>
+  </body>
+
+</html>
+
+
+

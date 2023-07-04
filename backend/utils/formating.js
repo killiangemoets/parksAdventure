@@ -52,3 +52,7 @@ exports.compareDates = (date1, date2) => {
     new Date(date1).getFullYear() === new Date(date2).getFullYear()
   );
 };
+
+exports.niceTime = (time) => time.replace('-', ':');
+
+exports.niceFullDate = niceFullDate;
