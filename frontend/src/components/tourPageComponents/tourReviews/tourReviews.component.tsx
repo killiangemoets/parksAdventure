@@ -1,9 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  selectTour,
-  selectTourIsLoading,
-} from "../../../store/tour/tour.selector";
+import { selectTour } from "../../../store/tour/tour.selector";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -28,7 +25,6 @@ export type TourReviewsProps = {
 const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const tour = useSelector(selectTour);
-  const isLoading = useSelector(selectTourIsLoading);
   const [reviews, setReviews] = useState<TReview[]>([]);
 
   useEffect(() => {
@@ -36,14 +32,6 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
     const newReviews = tour.reviews.slice(0, 3);
     setReviews(newReviews);
   }, [tour]);
-
-  const handleOpenModal = (state: boolean): void => {
-    setModalOpen(state);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-  };
 
   const handleRenderReviews = () => {
     if (!tour) return;
@@ -54,7 +42,7 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
   return (
     <TourReviewsContainer ref={forwardRef}>
       <Title titleType={TITLE_TYPE_CLASSES.section}>
-        Customer Reviews <Info onClick={() => handleOpenModal(true)} />
+        Customer Reviews <Info onClick={() => setModalOpen(true)} />
       </Title>
       <ReviewsWrapper>
         {reviews.length ? (
@@ -84,7 +72,12 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
           See more reviews
         </Button>
       )}
-      <Modal title={"Reviews"} handleClose={handleCloseModal} open={modalOpen}>
+      <Modal
+        title={"Reviews"}
+        handleClose={() => {
+          setModalOpen(false);
+        }}
+        open={modalOpen}>
         <ReviewsModalText>
           All reviews are from verified customers who have purchased a ticket
           for this activity. Reviews can only be left once the activity is

@@ -270,7 +270,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     status: 'success',
     data: {
       tour: {
-        additionalInfos: tour.additionalInfos,
+        additionalInfo: tour.additionalInfo,
         // availabilities: tour.availabilities,
         categories: tour.categories,
         currentAvailabilities: tour.currentAvailabilities,

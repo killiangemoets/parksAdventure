@@ -34,7 +34,7 @@ export const InfoContainer = styled.div`
 
 export const Info = styled.div`
   display: flex;
-  align-items: center;
+  /* align-items: center; */
   gap: 1.8rem;
 `;
 
@@ -45,11 +45,17 @@ export const InfoTitle = styled.h4`
   font-size: 1.4rem;
   letter-spacing: 1px;
   /* width: 16.2rem; */
-  width: 12rem;
+  width: 16rem;
 `;
 
 export const ReservationInfoTitle = styled(InfoTitle)`
   width: 20rem;
+`;
+
+export const InfoBlockContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 export const InfoContent = styled.p`

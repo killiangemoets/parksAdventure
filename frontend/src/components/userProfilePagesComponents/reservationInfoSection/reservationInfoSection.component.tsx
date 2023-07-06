@@ -14,9 +14,11 @@ import {
   ReservationInfoSectionContainer,
   ReservationInfoTitle,
   ReservationInfoSectionWrapper,
+  InfoBlockContent,
 } from "./reservationInfoSection.style";
 import {
   selectBookingDetails,
+  selectTourAdditionalInfo,
   selectTourAvailabilities,
   selectTourIsLoading,
   selectTourMeetingAddress,
@@ -35,6 +37,7 @@ const ReservationInfoSection = () => {
   const bookingDetails = useSelector(selectBookingDetails);
   const availabilities = useSelector(selectTourAvailabilities);
   const address = useSelector(selectTourMeetingAddress);
+  const additionalInfo = useSelector(selectTourAdditionalInfo);
   const isLoading = useSelector(selectTourIsLoading);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
   const [time, setTime] = useState<string | undefined>(undefined);
@@ -90,6 +93,23 @@ const ReservationInfoSection = () => {
             <InfoLink to="https://www.google.com">
               {!isLoading && address}
             </InfoLink>
+          </Info>
+          <Info>
+            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.list} />
+            <InfoTitle>Additional Info</InfoTitle>
+            <InfoBlockContent>
+              {!isLoading ? (
+                additionalInfo && additionalInfo?.length > 0 ? (
+                  additionalInfo.map((info) => (
+                    <InfoContent>{info}</InfoContent>
+                  ))
+                ) : (
+                  <InfoContent>/</InfoContent>
+                )
+              ) : (
+                ""
+              )}
+            </InfoBlockContent>
           </Info>
         </InfoContainer>
         <InfoContainer>

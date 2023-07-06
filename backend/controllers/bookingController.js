@@ -358,7 +358,7 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
     data: {
       booking,
       tour: {
-        additionalInfos: tour.additionalInfos,
+        additionalInfo: tour.additionalInfo,
         availabilities: tour.availabilities,
         categories: tour.categories,
         // currentAvailabilities: tour.currentAvailabilities,
