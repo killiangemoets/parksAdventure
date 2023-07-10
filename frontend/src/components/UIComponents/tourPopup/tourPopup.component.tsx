@@ -45,11 +45,8 @@ const TourPopup: FC<TourPopupProps> = ({ tour }) => {
 
   const handleClickTour = () => {
     navigate(`/tour/${slug}`);
-    // window.open(`${window.location.origin}/tour/${slug}`, "_blank");
   };
-  // if (!nextStart) {
-  //   return <></>;
-  // } else {
+
   return (
     <TourPopupContainer onClick={handleClickTour}>
       <Button buttonType={BUTTON_TYPE_CLASSES.empty}>
@@ -65,7 +62,9 @@ const TourPopup: FC<TourPopupProps> = ({ tour }) => {
       </TourTitle>
       <TourContent>
         <TourNextDate>
-          Next start: {niceDate(tour.firstAvailability)}
+          {tour.firstAvailability
+            ? `Next start: ${niceDate(tour.firstAvailability)}`
+            : "Not available at the moment"}
         </TourNextDate>
         <TourTags>
           {categories &&
@@ -96,10 +95,11 @@ const TourPopup: FC<TourPopupProps> = ({ tour }) => {
           <Info>
             <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.group} />
             <InfoText>
-              {tour.maxGroupSizeCapacity === tour.minGroupSizeCapacity
-                ? tour.maxGroupSizeCapacity
-                : `${tour.minGroupSizeCapacity}-${tour.maxGroupSizeCapacity}`}{" "}
-              people
+              {!tour.maxGroupSizeCapacity
+                ? "Not available"
+                : tour.maxGroupSizeCapacity === tour.minGroupSizeCapacity
+                ? `${tour.maxGroupSizeCapacity} people`
+                : `${tour.minGroupSizeCapacity}-${tour.maxGroupSizeCapacity} people`}
             </InfoText>
           </Info>
         </TourInfos>
@@ -107,7 +107,8 @@ const TourPopup: FC<TourPopupProps> = ({ tour }) => {
       <TourFooter>
         <StarsRating rating={ratingsAverage} numRatings={ratingsQuantity} />
         <Price>
-          <span>From ${tour.lowerPrice}</span> per person
+          <span>{tour.lowerPrice ? `From ${tour.lowerPrice}` : ""}</span>{" "}
+          {tour.lowerPrice ? "per person" : "No price available"}
         </Price>
       </TourFooter>
     </TourPopupContainer>

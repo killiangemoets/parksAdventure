@@ -38,6 +38,22 @@ export const ThirdSecElement = styled.div`
     opacity: 1;
     transform: translateX(0);
   }
+
+  @media (max-width: 580px) {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    &:nth-child(1),
+    &:nth-child(3) {
+      .box-left {
+        grid-row: 2;
+      }
+
+      .box-right {
+        grid-row: 1;
+      }
+    }
+  }
 `;
 
 export const ThirdSecTextContent = styled.div`
@@ -45,6 +61,10 @@ export const ThirdSecTextContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+
+  @media (max-width: 580px) {
+    width: 100%;
+  }
 `;
 
 export const ElementText = styled.p`
@@ -59,6 +79,15 @@ export const ThirdSecImageContent = styled.div`
   width: 50%;
   img {
     width: 100%;
-    /* border-radius: 8px; */
+  }
+
+  @media (max-width: 580px) {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      width: 80%;
+    }
   }
 `;

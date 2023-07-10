@@ -25,6 +25,11 @@ export const TourBookingInfo = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
+
+  @media (max-width: 560px) {
+    grid-template-columns: 1fr;
+    gap: 3.2rem;
+  }
 `;
 
 export const Info = styled.div`
@@ -75,11 +80,13 @@ export const InfoLink = styled(Link)`
   letter-spacing: 1px;
   color: #333;
   transition: all 0.3s;
-  border-bottom: solid 1px #333;
+  text-decoration: underline;
+  /* border-bottom: solid 1px #333; */
 
   &:hover {
     color: #cc704b;
-    border-bottom: solid 1px #cc704b;
+    text-decoration: underline;
+    /* border-bottom: solid 1px #cc704b; */
   }
 `;
 
@@ -93,6 +100,10 @@ export const TourBookingFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 560px) {
+    padding: 3.2rem 2rem;
+  }
 `;
 
 export const TourBookingTotal = styled.div``;
@@ -102,6 +113,11 @@ export const TotalPriceTitle = styled.p`
   font-weight: 500;
   text-transform: capitalize;
   letter-spacing: 1px;
+
+  @media (max-width: 560px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.6px;
+  }
 `;
 
 export const TotalPrice = styled.p`
@@ -109,10 +125,28 @@ export const TotalPrice = styled.p`
   font-weight: 700;
   text-transform: capitalize;
   letter-spacing: 0.4px;
+
+  @media (max-width: 560px) {
+    font-size: 2.4rem;
+  }
 `;
 
 export const TourBookingButtons = styled.div`
   display: flex;
   align-items: center;
   gap: 2rem;
+
+  @media (max-width: 560px) {
+    gap: 1rem;
+    button {
+      border: solid 1.5px #cc704b;
+      padding: 1.2rem 1.6rem;
+      min-width: 0;
+      font-size: 1.6rem;
+
+      &:hover {
+        border: solid 1.5px #b86544;
+      }
+    }
+  }
 `;

@@ -123,6 +123,8 @@ export const ListIcon = styled(ListSVG)`
 export const BulletIcon = styled(RightChevronSVG)`
   width: 2rem;
   height: 2rem;
+  min-width: 2rem !important;
+  min-height: 2rem !important;
   .path {
     fill: #cc704b;
   }

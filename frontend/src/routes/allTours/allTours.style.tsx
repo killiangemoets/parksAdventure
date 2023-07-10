@@ -1,4 +1,6 @@
 import styled, { css } from "styled-components";
+import { ReactComponent as MapSVG } from "../../assets/map.svg";
+import { ReactComponent as ListSVG } from "../../assets/list.svg";
 
 export const AllToursContainer = styled.div`
   padding-top: 8rem;
@@ -31,9 +33,9 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
   transition: all 0.6s;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: space-between;
   min-height: calc(100vh - 8rem - 14.6rem);
+  width: 100%;
 
   ${({ mapOpen }) =>
     mapOpen &&
@@ -42,7 +44,9 @@ export const AllToursResultsLeft = styled.div<AllToursResultsLeftProps>`
     `};
 `;
 
-export const AllToursResultsCards = styled.div``;
+export const AllToursResultsCards = styled.div`
+  width: 100%;
+`;
 
 export const NoResultsMessage = styled.p`
   width: 100%;
@@ -53,4 +57,28 @@ export const NoResultsMessage = styled.p`
   margin-right: 2.25rem;
   font-size: 2rem;
   letter-spacing: 1px;
+`;
+
+export const FloatButton = styled.div`
+  position: fixed;
+  bottom: 3.2rem;
+  z-index: 4;
+`;
+
+export const MapIcon = styled(MapSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    stroke: #fff;
+  }
+`;
+
+export const ListIcon = styled(ListSVG)`
+  width: 2rem;
+  height: 2rem;
+
+  .path {
+    fill: #fff;
+  }
 `;

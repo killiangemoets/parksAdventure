@@ -1,6 +1,11 @@
 import styled from "styled-components";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import allToursHeaderBackground from "../../../assets/alltours-header-bg.webp";
+import { RangeDatePickerElement } from "../../UIComponents/rangeDateInput/rangeDateInput.style";
+import {
+  Input,
+  SearchInputContainer,
+} from "../../UIComponents/searchInput/searchInput.styled";
 
 export const AllToursHeaderContainer = styled.div`
   width: 100vw;
@@ -14,33 +19,54 @@ export const AllToursHeaderContainer = styled.div`
 `;
 export const AllToursHeaderWrapper = styled(GreenOpacity)`
   display: flex;
-  /* align-items: center; */
   justify-content: center;
 `;
 export const AllToursHeaderContent = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.6rem;
+  padding: 0 4rem;
+
+  @media (max-width: 700px) {
+    display: grid;
+    grid-template-columns: auto;
+    align-items: center;
+    gap: 0rem;
+  }
 `;
 
 export const AllToursHeaderInputs = styled.div`
   padding-top: 4.8rem;
-  /* height: 8rem; */
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 2.4rem;
-  /* background-color: #f6e6cb; */
+
+  @media (max-width: 700px) {
+    flex-direction: column;
+    padding-top: 0rem;
+    padding-bottom: 4.8rem;
+    height: fit-content;
+
+    & ${RangeDatePickerElement}, & ${SearchInputContainer}, & ${Input} {
+      width: 100%;
+    }
+  }
 `;
 
 export const AllToursTitles = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   gap: 1rem;
+
+  @media (max-width: 700px) {
+    /* padding-top: 4.8rem; */
+    grid-row: 1;
+    height: fit-content;
+  }
 `;
 
 export const AllToursSecondTitle = styled.h2`

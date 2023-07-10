@@ -65,6 +65,7 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
   const [alertMessage, setAlertMessage] = useState<string | undefined>(
     undefined
   );
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     if (
@@ -107,7 +108,9 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
         tour && group[0].value + group[1].value > tour?.maxGroupSizeCapacity
           ? `The maximum group size for this tour is ${tour?.maxGroupSizeCapacity} people`
           : spotsLeft
-          ? `There is only ${spotsLeft > 0 ? spotsLeft : 0} ${spotsString} left for this date`
+          ? `There is only ${
+              spotsLeft > 0 ? spotsLeft : 0
+            } ${spotsString} left for this date`
           : "There is no spot left for this date"
       );
       setTimeout(function () {
@@ -142,7 +145,9 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
       const spotsString = spotsLeft > 1 ? "spots" : "spot";
       setAlertMessage(
         spotsLeft
-          ? `There is only ${spotsLeft > 0 ? spotsLeft : 0} ${spotsString} left for this date`
+          ? `There is only ${
+              spotsLeft > 0 ? spotsLeft : 0
+            } ${spotsString} left for this date`
           : `There is no spot left for this date`
       );
       setTimeout(function () {
@@ -152,6 +157,19 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
     }
     setSelectedAvailability(availability);
   };
+
+  const handleResize = () => {
+    if (window.innerWidth <= 525 && !isSmallScreen) {
+      setIsSmallScreen(true);
+    } else if (window.innerWidth > 525 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
 
   return (
     <TourBookingContainer ref={forwardRef}>
@@ -166,7 +184,7 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
                 {tour?.duration && tour.duration > 1
                   ? `${tour?.duration} days.`
                   : `${tour?.duration} day.`}{" "}
-                1 adventure. Infinite Memories. Make it yours today!`
+                1 adventure. Infinite Memories. Make it yours today!
               </SecondTitle>
             </Titles>
             <TourBookingInputs
@@ -178,34 +196,36 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
                 setShowDetails(true);
               }}
             />
-            <TourBookingPictures>
-              <Picture1>
-                <ProfilePicture
-                  pictureUrl={tour?.imageCover || desertImg}
-                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                />
-              </Picture1>
-              <Picture2>
-                <ProfilePicture
-                  pictureUrl={
-                    tour?.images && tour?.images[0]
-                      ? tour?.images[0]
-                      : canadianRockiesImg
-                  }
-                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                />
-              </Picture2>
-              <Picture3>
-                <ProfilePicture
-                  pictureUrl={
-                    tour?.images && tour?.images[1]
-                      ? tour?.images[1]
-                      : familyImg
-                  }
-                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                />
-              </Picture3>
-            </TourBookingPictures>
+            {!isSmallScreen && (
+              <TourBookingPictures>
+                <Picture1>
+                  <ProfilePicture
+                    pictureUrl={tour?.imageCover || desertImg}
+                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                  />
+                </Picture1>
+                <Picture2>
+                  <ProfilePicture
+                    pictureUrl={
+                      tour?.images && tour?.images[0]
+                        ? tour?.images[0]
+                        : canadianRockiesImg
+                    }
+                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                  />
+                </Picture2>
+                <Picture3>
+                  <ProfilePicture
+                    pictureUrl={
+                      tour?.images && tour?.images[1]
+                        ? tour?.images[1]
+                        : familyImg
+                    }
+                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                  />
+                </Picture3>
+              </TourBookingPictures>
+            )}
           </TourBookingBox>
         )}
         {showDetails && selectedAvailability && (

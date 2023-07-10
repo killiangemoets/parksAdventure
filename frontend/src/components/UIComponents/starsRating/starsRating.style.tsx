@@ -1,3 +1,4 @@
+import { Rate } from "antd";
 import styled from "styled-components";
 
 export const StarsRatingContainer = styled.div`
@@ -7,6 +8,19 @@ export const StarsRatingContainer = styled.div`
 
   .ant-rate {
     color: #cc704b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .ant-rate-disabled.ant-rate .ant-rate-star {
+    margin: 0;
+  }
+
+  .ant-rate .ant-rate-star-first .anticon,
+  .ant-rate .ant-rate-star-second .anticon {
+    font-size: 2.2rem;
   }
 `;
 
@@ -36,3 +50,5 @@ export const LinkNumRatings = styled(NumRatings)`
     text-decoration: underline;
   }
 `;
+
+export const StarsRate = styled(Rate)``;

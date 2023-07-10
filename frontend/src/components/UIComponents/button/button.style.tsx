@@ -11,9 +11,7 @@ import styled from "styled-components";
 */
 
 export const BaseButton = styled.button`
-  /* min-width: 16rem; */
   padding: 1.2rem 3.2rem;
-
   font-size: 1.8rem;
   letter-spacing: 1px;
   background-color: #cc704b;
@@ -36,7 +34,6 @@ export const BaseButton = styled.button`
 `;
 
 export const InvertedButton = styled(BaseButton)`
-  border: solid 2px #cc704b;
   background: none;
   color: #cc704b;
   transition: all 0.5s;

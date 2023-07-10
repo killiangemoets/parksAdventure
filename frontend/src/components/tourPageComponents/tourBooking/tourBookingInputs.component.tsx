@@ -14,7 +14,7 @@ import {
   SelectDateFooterText2,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
-import {selectTourCurrentAvailabilities } from "../../../store/tour/tour.selector";
+import { selectTourCurrentAvailabilities } from "../../../store/tour/tour.selector";
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
@@ -37,7 +37,6 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   handleChangeGroup,
   handleSeeDetails,
 }) => {
-
   const availabilities = useSelector(selectTourCurrentAvailabilities);
 
   const [groupError, setGroupError] = useState<boolean>(false);
@@ -84,8 +83,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         buttonType={BUTTON_TYPE_CLASSES.light}
         countInputsState={currentGroup}
         handleCount={handleDropDownEdit}
-        error={groupError}
-      >
+        error={groupError}>
         <>
           <GroupIcon />
           <p>{label}</p>

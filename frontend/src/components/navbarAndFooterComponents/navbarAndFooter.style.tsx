@@ -2,8 +2,10 @@ import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
 import { ReactComponent as DropdownSVG } from "./../../assets/chevron-down.svg";
+import { ReactComponent as MenuSVG } from "./../../assets/bars-icon.svg";
 
 export const NavBarContainer = styled.div`
+  position: relative;
   width: 100vw;
   height: 8rem;
   background-color: #506044;
@@ -27,6 +29,20 @@ export const LinksContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
+`;
+
+export const LinksContainerInColumn = styled.div`
+  left: 0;
+  top: 7.9rem;
+  width: 100%;
+  background-color: #506044;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.8rem;
+  padding: 2rem;
 `;
 
 type NavBarLinkProps = {
@@ -74,6 +90,13 @@ export const NavBarLink = styled(Link)<NavBarLinkProps>`
     css`
       margin-right: 1.6rem;
     `}
+
+  @media (max-width: 620px) {
+    gap: 1.8rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+  }
 `;
 
 export const NavBarButton = styled.button`
@@ -91,6 +114,13 @@ export const NavBarButton = styled.button`
 
   &:hover {
     color: #cc704b;
+  }
+
+  @media (max-width: 620px) {
+    gap: 1.8rem;
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: 1.2px;
   }
 `;
 
@@ -130,19 +160,34 @@ export const FooterContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0 4rem;
-  z-index: 10;
+  z-index: 3;
   background-color: #fdfaf5;
+
+  @media (max-width: 500px) {
+    padding: 0 2rem;
+  }
 `;
 
 export const FooterLogo = styled.div`
   img {
     height: 5rem;
   }
+
+  @media (max-width: 500px) {
+    img {
+      height: 4.2rem;
+    }
+  }
 `;
 
 export const Copyright = styled.p`
   font-size: 1.2rem;
   color: #999;
+  text-align: center;
+
+  @media (max-width: 500px) {
+    max-width: 9rem;
+  }
 `;
 
 export const FooterNavigation = styled.div`
@@ -150,6 +195,16 @@ export const FooterNavigation = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
+
+  @media (max-width: 600px) {
+    gap: 0.6rem;
+  }
+
+  @media (max-width: 500px) {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.8rem;
+  }
 `;
 
 export const FooterLink = styled(Link)`
@@ -161,10 +216,31 @@ export const FooterLink = styled(Link)`
   &:hover {
     color: #666;
   }
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
+
+  @media (max-width: 500px) {
+    &:nth-child(2) {
+      grid-row: 2;
+      grid-column: span 2;
+    }
+  }
 `;
 
 export const DropdownIcon = styled(DropdownSVG)`
   margin-left: -0.4rem;
   width: 2rem;
   height: 2rem;
+`;
+export const MenuIcon = styled(MenuSVG)`
+  width: 4rem;
+  height: 4rem;
+  color: #fdfaf5;
+  transition: all 0.3s;
+
+  &:hover {
+    color: #cc704b;
+  }
 `;

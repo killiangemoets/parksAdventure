@@ -3,8 +3,6 @@ import axiosInstance from "../utils/axios/axios-instance";
 import { TItemWithTourInfo } from "../types/booking";
 
 export const getTourItems = async (tourIds: string[]) => {
-  // if (!tourIds.length)
-  // return { status: "error", message: "The cart is empty!" };
   try {
     let tourIdsQuery = (
       "?" +

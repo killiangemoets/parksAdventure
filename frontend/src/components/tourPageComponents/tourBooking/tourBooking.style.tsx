@@ -6,6 +6,10 @@ export const TourBookingContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 805px) {
+    padding: 6.4rem 3.2rem;
+  }
 `;
 
 export const TourBookingWrapper = styled.div`
@@ -15,6 +19,10 @@ export const TourBookingWrapper = styled.div`
   gap: 2rem;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 805px) {
+    width: 100%;
+  }
 `;
 
 export const TourBookingBox = styled.div`
@@ -35,6 +43,13 @@ export const TourBookingBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4rem;
+
+  @media (max-width: 805px) {
+    padding: 3.2rem 2.4rem 3.2rem 15.2rem;
+  }
+  @media (max-width: 525px) {
+    padding: 3.2rem 2.4rem 3.2rem 2.4rem;
+  }
 `;
 
 export const Titles = styled.div`
@@ -59,6 +74,10 @@ export const TourBookingPictures = styled.div`
   top: 0;
   left: 0;
   overflow: hidden;
+
+  @media (max-width: 805px) {
+    width: 14rem;
+  }
 `;
 
 export const Picture1 = styled.div`
@@ -66,6 +85,10 @@ export const Picture1 = styled.div`
   z-index: 2;
   top: calc(50% - 7rem);
   left: -4.8rem;
+
+  @media (max-width: 805px) {
+    left: -6.4rem;
+  }
 `;
 
 export const Picture2 = styled.div`
@@ -73,10 +96,18 @@ export const Picture2 = styled.div`
   z-index: 1;
   top: calc(50% - 7rem);
   left: -1rem;
+
+  @media (max-width: 805px) {
+    left: -2.6rem;
+  }
 `;
 
 export const Picture3 = styled.div`
   position: absolute;
   top: calc(50% - 7rem);
   left: 2.8rem;
+
+  @media (max-width: 805px) {
+    left: 0.2rem;
+  }
 `;

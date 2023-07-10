@@ -124,14 +124,14 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
               </InfoLink>
             </Info>
           </TourBookingInfo>
-          <TourBookingInfo>
+          {/* <TourBookingInfo>
             {tour?.additionalInfo?.map((info) => (
               <Info>
                 <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.bullet} />
                 <InfoContent>{info}</InfoContent>
               </Info>
             ))}
-          </TourBookingInfo>
+          </TourBookingInfo> */}
           <TourBookingInfo>
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />

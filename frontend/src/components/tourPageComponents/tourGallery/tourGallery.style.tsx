@@ -6,6 +6,10 @@ export const TourGalleryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 805px) {
+    padding: 0 3.2rem 6.4rem 3.2rem;
+  }
 `;
 
 export const TourGalleryGrid = styled.div`
@@ -16,6 +20,13 @@ export const TourGalleryGrid = styled.div`
   gap: 0.4rem;
   height: 80vh;
   max-width: 130rem;
+
+  @media (max-width: 900px) {
+    height: 65vh;
+  }
+  @media (max-width: 805px) {
+    height: 50vh;
+  }
 `;
 
 export const TourMainImage = styled.div`
@@ -25,7 +36,6 @@ export const TourMainImage = styled.div`
   background-color: #aaa;
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
-  /* height: 42rem; */
 
   img {
     border-top-left-radius: 8px;
@@ -33,6 +43,17 @@ export const TourMainImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    height: 65vh;
+  }
+  @media (max-width: 805px) {
+    height: 50vh;
+  }
+  @media (max-width: 805px) {
+    grid-row: 1/2;
+    height: calc(30vh - 0.2rem);
   }
 `;
 export const TourSecondImage = styled.div`
@@ -47,6 +68,16 @@ export const TourSecondImage = styled.div`
     height: 100%;
     object-fit: cover;
   }
+
+  @media (max-width: 900px) {
+    height: calc(37vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    height: calc(30vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    grid-row: 1/2;
+  }
 `;
 export const TourThirdImage = styled.div`
   background-color: #aaa;
@@ -55,6 +86,17 @@ export const TourThirdImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    height: calc(28vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    height: calc(20vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    grid-column: 1/4;
+    grid-row: 2/3;
   }
 `;
 export const TourFourthImage = styled.div`
@@ -68,6 +110,17 @@ export const TourFourthImage = styled.div`
     height: 100%;
     object-fit: cover;
   }
+
+  @media (max-width: 900px) {
+    height: calc(28vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    height: calc(20vh - 0.2rem);
+  }
+  @media (max-width: 805px) {
+    grid-column: 4/7;
+    grid-row: 2/3;
+  }
 `;
 
 export const TourGalleryButtons = styled.div`
@@ -77,6 +130,25 @@ export const TourGalleryButtons = styled.div`
   justify-content: space-between;
   width: 100%;
   padding: 0.8rem 1.6rem;
+
+  @media (max-width: 620px) {
+    button {
+      padding: 0rem 0.8rem;
+      height: 4rem !important;
+      font-size: 1.4rem;
+      border: solid 1.5px #cc704b;
+      letter-spacing: 0.2px;
+      gap: 0.4rem;
+      &:hover {
+        border: solid 1.5px #cc704b;
+      }
+
+      svg {
+        width: 1.8rem;
+        height: 1.8rem;
+      }
+    }
+  }
 `;
 
 type HeartIconProps = {

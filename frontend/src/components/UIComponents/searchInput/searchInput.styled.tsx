@@ -13,7 +13,9 @@ export const SearchInputDeleteButton = styled.div`
   left: 3.5%;
 `;
 
-export const SearchInputForm = styled.form``;
+export const SearchInputForm = styled.form`
+  width: 100%;
+`;
 
 export const Glass = styled(GlassSVG)`
   width: 2rem;

@@ -20,33 +20,76 @@ export const TourItineraryWrapper = styled.div`
   & ${SectionTitle} {
     margin-left: -3.2rem;
   }
+
+  @media (max-width: 660px) {
+    gap: 4.8rem;
+    & ${SectionTitle} {
+      margin-left: 6.4rem;
+    }
+  }
+  @media (max-width: 470px) {
+    gap: 3.2rem;
+    & ${SectionTitle} {
+      margin-left: 0rem;
+    }
+  }
 `;
 
 export const TourItineraryContent = styled.div`
   margin-left: 3.2rem;
   width: 100%;
   display: flex;
-  /* align-items: center; */
   justify-content: space-around;
-  /* gap: 12rem; */
+  gap: 1rem;
+
+  @media (max-width: 920px) {
+    margin-left: 0rem;
+  }
+  @media (max-width: 660px) {
+    margin-left: 0;
+    display: grid;
+    grid-template-columns: repeat(1, auto);
+    align-items: center;
+    justify-content: center;
+    gap: 3.2rem;
+  }
 `;
 
-export const ItineraryLeftContainer = styled.div``;
+export const ItineraryLeftContainer = styled.div`
+  @media (max-width: 660px) {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+`;
 
 export const ItineraryRightContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4.8rem;
+  grid-row: 1;
 `;
 
 export const ItineraryMapContainer = styled.div`
   width: 64rem;
   height: 48rem;
+
+  @media (max-width: 770px) {
+    width: 50rem;
+    height: 37.5rem;
+  }
+  @media (max-width: 420px) {
+    width: 45rem;
+    height: 33.75rem;
+  }
+  @media (max-width: 374px) {
+    width: 40rem;
+    height: 30rem;
+  }
 `;
 
 export const ItineraryCaptionContainer = styled.div`
   display: flex;
-  /* margin-left: 0.4rem; */
   gap: 3.2rem;
   margin-top: -4rem;
   background-color: #fdfaf5;

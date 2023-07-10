@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -31,6 +31,7 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
 }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
   const carouselRef = useRef<HTMLDivElement | null>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   console.log("thumbsSwiper", thumbsSwiper);
 
@@ -39,13 +40,26 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
       handleOpen(false);
   };
 
+  const handleResize = () => {
+    if (window.innerWidth <= 725 && !isSmallScreen) {
+      setIsSmallScreen(true);
+    } else if (window.innerWidth > 725 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
+
   return (
     <PicturesCarouselOverlay onClick={handleClickOnOverlay}>
       <PicturesCarouselContainer ref={carouselRef}>
         <Swiper
           loop={true}
           spaceBetween={10}
-          navigation={true}
+          navigation={isSmallScreen ? false : true}
           thumbs={{ swiper: thumbsSwiper }}
           modules={[FreeMode, Navigation, Thumbs]}
           initialSlide={initialImageIndex}

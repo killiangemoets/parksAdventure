@@ -19,17 +19,26 @@ import {
   ToursMapWrapper,
 } from "./toursMap.style";
 
-export type ToursMapProps = {
-  handleOpenMap: () => void;
-  mapOpen: boolean;
-  highlightMarker: string | undefined;
-};
+export type ToursMapProps = { highlightMarker: string | undefined } & (
+  | {
+      handleOpenMap: () => void;
+      mapOpen: boolean;
+      fullMap?: never;
+    }
+  | {
+      handleOpenMap?: never;
+      mapOpen?: never;
+      fullMap: boolean;
+    }
+);
 
 const ToursMap: FC<ToursMapProps> = ({
   handleOpenMap,
-  mapOpen,
+  mapOpen = false,
   highlightMarker,
+  fullMap = false,
 }) => {
+  if (fullMap) mapOpen = true;
   const [searchParams, setSearchParams] = useSearchParams();
   const tours = useSelector(selectTours);
   const [markers, setMarkers] = useState<TLocation[]>([]);
@@ -77,13 +86,12 @@ const ToursMap: FC<ToursMapProps> = ({
       longitude: +initialViewStateArr[1],
       zoom: +initialViewStateArr[2].replace("zoom", ""),
     };
-    console.log({ newInitialViewState });
     if (!compareObjects(newInitialViewState, initialViewState))
       setinitialViewState(newInitialViewState);
   }, [searchParams]);
 
   const handleClickMap = () => {
-    handleOpenMap();
+    handleOpenMap && handleOpenMap();
   };
 
   const handleCoordinatesBox = (
@@ -109,15 +117,17 @@ const ToursMap: FC<ToursMapProps> = ({
   };
 
   return (
-    <ToursMapContainer mapOpen={mapOpen}>
+    <ToursMapContainer mapOpen={mapOpen} fullMap={fullMap}>
       <ToursMapWrapper>
-        <ToursMapButtonWrapper>
-          <Button
-            buttonType={BUTTON_TYPE_CLASSES.gallery}
-            onClick={handleClickMap}>
-            {mapOpen ? <RightArrowIcon /> : <LeftArrowIcon />}
-          </Button>
-        </ToursMapButtonWrapper>
+        {!fullMap && (
+          <ToursMapButtonWrapper>
+            <Button
+              buttonType={BUTTON_TYPE_CLASSES.gallery}
+              onClick={handleClickMap}>
+              {mapOpen ? <RightArrowIcon /> : <LeftArrowIcon />}
+            </Button>
+          </ToursMapButtonWrapper>
+        )}
         <CustomMap
           locations={markers}
           handleCoordinatesBox={handleCoordinatesBox}

@@ -6,6 +6,7 @@ import {
   StarsRatingContainer,
   RatingValue,
   LinkNumRatings,
+  StarsRate,
 } from "./starsRating.style";
 
 export type StarsRatingCommonProps = {
@@ -16,14 +17,15 @@ export type StarsRatingCommonProps = {
   numRatings?: number;
 };
 
-export type StarRatingCondiionalProps = {
-  readonly?: true,
-  handleChangeRating?: never;
-} | {
-  readonly: false,
-  handleChangeRating: (value: number) => void;
-
-}
+export type StarRatingCondiionalProps =
+  | {
+      readonly?: true;
+      handleChangeRating?: never;
+    }
+  | {
+      readonly: false;
+      handleChangeRating: (value: number) => void;
+    };
 
 const StarsRating: FC<StarsRatingCommonProps & StarRatingCondiionalProps> = ({
   hiddenValue = false,
@@ -32,20 +34,26 @@ const StarsRating: FC<StarsRatingCommonProps & StarRatingCondiionalProps> = ({
   readonly = true,
   rating,
   numRatings,
-  handleChangeRating
+  handleChangeRating,
 }) => {
   return (
     <StarsRatingContainer>
       <ConfigProvider
         theme={{
+          hashed: false,
           components: {
             Rate: {
               colorFillContent: "#ddd",
             },
           },
-        }}
-      >
-        <Rate allowHalf disabled={readonly} defaultValue={rating} value={rating} onChange={handleChangeRating}/>
+        }}>
+        <StarsRate
+          allowHalf
+          disabled={readonly}
+          defaultValue={rating}
+          value={rating}
+          onChange={handleChangeRating}
+        />
       </ConfigProvider>
 
       {!hiddenValue && (

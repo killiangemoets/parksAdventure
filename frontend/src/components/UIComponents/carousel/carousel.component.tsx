@@ -10,22 +10,33 @@ import { CarouselSwiper, CarouselSwiperSlide } from "./carousel.style";
 
 type CarouselProps = {
   elements: React.ReactNode[];
+  spaceBetween?: number;
+  slidesPerView?: number;
+  navigation?: boolean;
+  pagination?: boolean;
+  loop?: boolean;
 };
 
-const Carousel: FC<CarouselProps> = ({ elements }) => {
+const Carousel: FC<CarouselProps> = ({
+  elements,
+  spaceBetween = 100,
+  slidesPerView = 1,
+  navigation = true,
+  pagination = true,
+  loop = true,
+}) => {
   return (
     <>
       <CarouselSwiper
         modules={[Navigation, Pagination, Keyboard]}
-        spaceBetween={100}
-        slidesPerView={1}
-        navigation
+        spaceBetween={spaceBetween}
+        slidesPerView={slidesPerView}
+        navigation={navigation}
         keyboard={{
           enabled: true,
         }}
-        loop={true}
-        pagination={{ clickable: true }}
-      >
+        loop={loop}
+        pagination={pagination && { clickable: true }}>
         {elements.map((el, i) => (
           <CarouselSwiperSlide key={i}>{el}</CarouselSwiperSlide>
         ))}

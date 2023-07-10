@@ -4,11 +4,8 @@ export const TopReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   gap: 1.6rem;
   cursor: pointer;
-
-  /* cursor: grab; */
 `;
 
 export const ReviewTitle = styled.h4`
@@ -17,6 +14,18 @@ export const ReviewTitle = styled.h4`
   letter-spacing: 1px;
   text-align: center;
   text-transform: capitalize;
+  max-width: 40rem;
+
+  @media (max-width: 900px) {
+    max-width: 30rem;
+  }
+  @media (max-width: 680px) {
+    max-width: 24rem;
+  }
+
+  @media (max-width: 580px) {
+    max-width: 100%;
+  }
 `;
 
 export const ReviewDescription = styled.p`
@@ -30,6 +39,17 @@ export const ReviewDescription = styled.p`
   text-align: center;
   padding: 1rem 0 1.8rem 0;
   color: #666;
+
+  @media (max-width: 900px) {
+    min-width: 0rem;
+  }
+
+  @media (max-width: 680px) {
+    max-width: 12rem;
+  }
+  @media (max-width: 580px) {
+    max-width: none;
+  }
 `;
 
 export const ReviewUser = styled.div`

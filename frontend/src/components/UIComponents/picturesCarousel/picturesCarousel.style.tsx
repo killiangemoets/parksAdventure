@@ -15,8 +15,8 @@ export const PicturesCarouselOverlay = styled.div`
 `;
 
 export const PicturesCarouselContainer = styled.div`
-  width: 56vw;
-  height: calc((56vw / 3) * 2);
+  width: 66vw;
+  height: calc((66vw / 3) * 2);
   transform: scale(1);
 
   .swiper {
@@ -105,6 +105,19 @@ export const PicturesCarouselContainer = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  @media (max-width: 1000px) {
+    width: 76vw;
+    height: calc((76vw / 3) * 2);
+  }
+  @media (max-width: 725px) {
+    width: 86vw;
+    height: calc((86vw / 3) * 2);
+  }
+  @media (max-width: 500px) {
+    width: 92vw;
+    height: calc((92vw / 3) * 2);
   }
 `;
 

@@ -14,21 +14,29 @@ const reduceHeigthStyle = css`
 
 type ToursMapContainerProps = {
   mapOpen: boolean;
+  fullMap: boolean;
 };
 
 export const ToursMapContainer = styled.div<ToursMapContainerProps>`
   position: absolute;
 
   right: 0%;
-
   width: 40%;
   transition: transform 0.6s;
 
   height: calc(100vh - 8rem);
   z-index: 2;
 
-  ${({ mapOpen }) =>
+  ${({ fullMap }) =>
+    fullMap &&
+    css`
+      left: 0%;
+      width: 100%;
+    `}
+
+  ${({ mapOpen, fullMap }) =>
     !mapOpen &&
+    !fullMap &&
     css`
       transform: translateX(90%);
     `}

@@ -1,5 +1,3 @@
-// import "./App.css";
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import NavbarAndFooter from "./components/navbarAndFooterComponents/navbarAndFooter.component";
 import AllTours from "./routes/allTours/allTours.component";

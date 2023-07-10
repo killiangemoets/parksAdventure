@@ -39,7 +39,6 @@ export const ItineraryCaption = () => {
 
 const TourItinerary = () => {
   const tour = useSelector(selectTour);
-  const isLoading = useSelector(selectTourIsLoading);
   const [points, setPoints] = useState<string[]>([]);
   const [stops, setStops] = useState<TStop[]>([]);
   useEffect(() => {
@@ -69,7 +68,6 @@ const TourItinerary = () => {
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
-              {/* {!isLoading && stops.length > 0 && ( */}
               <CustomMap
                 locations={stops.map((stop) => {
                   return {
@@ -83,7 +81,6 @@ const TourItinerary = () => {
                 fullscreenControl={true}
                 navigationControl={true}
               />
-              {/* )} */}
             </ItineraryMapContainer>
             <ItineraryCaption />
           </ItineraryRightContainer>

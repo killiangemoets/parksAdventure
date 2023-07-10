@@ -101,4 +101,35 @@ export const PaginationElement = styled(Pagination)`
       background-color: transparent !important;
     }
   }
+
+  @media (max-width: 1200px) {
+    gap: 0rem;
+
+    .ant-pagination-item {
+      height: 4rem;
+      width: 4rem;
+      border: 1.5px solid #cc704b;
+
+      a {
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+    }
+
+    .ant-pagination-item-active {
+      a {
+        font-size: 1.6rem;
+        font-weight: 600;
+      }
+    }
+
+    .ant-pagination-item-link {
+      .anticon {
+        svg {
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+    }
+  }
 `;

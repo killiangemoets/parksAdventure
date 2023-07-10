@@ -14,10 +14,9 @@ const SliderSteps: FC<SliderStepsProps> = ({
   currentValues,
 }) => {
   const [inputValues, setInputValues] = useState<[number, number]>([0, 100]);
-
   const [marks, setMarks] = useState({});
-
   const marksRef = useRef<(HTMLSpanElement | null)[]>([]);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   useEffect(() => {
     let createMarks: {
@@ -32,18 +31,18 @@ const SliderSteps: FC<SliderStepsProps> = ({
           fontSize: "1.6rem",
           marginTop: "0.4rem",
           fontWeight: 500,
-          letterSpacing: "1px",
+          letterSpacing: isSmallScreen ? "0.2px" : "1px",
         },
         label: (
           <span
             ref={(el) => (marksRef.current[i] = el)}
-            data-step-value={stepValue}
-          >
+            data-step-value={stepValue}>
             {step.value}
           </span>
         ),
       };
     });
+
     setMarks({ ...createMarks });
   }, [steps]);
 
@@ -55,13 +54,13 @@ const SliderSteps: FC<SliderStepsProps> = ({
         +markEl.dataset.stepValue <= inputValues[1]
       ) {
         markEl.style.color = "#506044";
-        markEl.style.fontSize = "1.6rem";
+        markEl.style.fontSize = isSmallScreen ? "1.4rem" : "1.6rem";
       } else {
         markEl.style.color = "#333";
-        markEl.style.fontSize = "1.2rem";
+        markEl.style.fontSize = isSmallScreen ? "1rem" : "1.2rem";
       }
     });
-  }, [inputValues]);
+  }, [inputValues, isSmallScreen]);
 
   useEffect(() => {
     const min = steps.findIndex((step) => step.id === currentValues[0].id);
@@ -88,6 +87,19 @@ const SliderSteps: FC<SliderStepsProps> = ({
     handler(newValues);
   };
 
+  const handleResize = () => {
+    if (window.innerWidth <= 480 && !isSmallScreen) {
+      setIsSmallScreen(true);
+    } else if (window.innerWidth > 480 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
+
   return (
     <SliderStepsContainer>
       <ConfigProvider
@@ -106,8 +118,7 @@ const SliderSteps: FC<SliderStepsProps> = ({
               colorPrimaryHover: "#506044 ",
             },
           },
-        }}
-      >
+        }}>
         <Slider
           range
           marks={marks}

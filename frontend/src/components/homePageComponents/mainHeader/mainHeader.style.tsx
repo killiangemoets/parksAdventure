@@ -5,7 +5,7 @@ import mainLogo from "../../../assets/logo_hike_long_white.png";
 export const MainHeaderContainer = styled.div`
   width: 100vw;
   height: calc(100vh - 8rem);
-  background: no-repeat left center;
+  background: no-repeat center;
 
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -17,6 +17,11 @@ export const MainHeaderContainer = styled.div`
     width: 100%;
     height: 100%;
   }
+
+  /* @media (max-width: 920px) {
+    width: 100vw;
+    height: calc(50vh - 8rem);
+  } */
 `;
 
 export const MainHeaderContentContainer = styled.div`
@@ -25,21 +30,38 @@ export const MainHeaderContentContainer = styled.div`
   left: 12rem;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   gap: 2rem;
+
+  @media (max-width: 920px) {
+    bottom: 6rem;
+    left: 8rem;
+    gap: 1.6rem;
+  }
+  @media (max-width: 690px) {
+    left: 4.2rem;
+    gap: 1rem;
+  }
 `;
 
 export const MainHeaderLogoContainer = styled.div`
   height: 10rem;
   width: 30rem;
-  /* height: calc(100vh - 8rem); */
   background: url(${mainLogo});
-  /* left center fixed; */
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+
+  @media (max-width: 920px) {
+    height: 8rem;
+    width: 24rem;
+  }
+
+  @media (max-width: 690px) {
+    height: 6rem;
+    width: 18rem;
+  }
 `;
 
 export const MainHeaderText = styled.h3`
@@ -49,15 +71,12 @@ export const MainHeaderText = styled.h3`
   font-weight: 500;
   text-transform: uppercase;
 
-  @keyframes my-animation {
-    0% {
-      background: red;
-    }
-    50% {
-      background: blue;
-    }
-    100% {
-      background: green;
-    }
+  @media (max-width: 920px) {
+    font-size: 3.2rem;
+    letter-spacing: 4px;
+  }
+  @media (max-width: 690px) {
+    font-size: 2.4rem;
+    letter-spacing: 2.8px;
   }
 `;

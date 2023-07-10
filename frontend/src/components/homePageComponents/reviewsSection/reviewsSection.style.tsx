@@ -18,17 +18,26 @@ export const ReviewsSecWrapper = styled.div`
   h2 {
     font-size: 3.2rem;
   }
+
+  @media (max-width: 580px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const ReviewsSecPicture = styled.div`
   width: 50%;
-  /* height: 58.2rem; */
   background: url(${reviewsSectionBackground}) no-repeat left center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
   position: relative;
+
+  @media (max-width: 580px) {
+    width: 100%;
+    height: 30rem;
+  }
 `;
 
 export const ReviewsSecContent = styled.div`
@@ -39,6 +48,8 @@ export const ReviewsSecContent = styled.div`
   align-items: center;
   justify-content: space-between;
   min-height: 40rem;
-  /* gap: 4.8rem; */
-  /* padding-right: 3.2rem; */
+
+  @media (max-width: 580px) {
+    width: 100%;
+  }
 `;

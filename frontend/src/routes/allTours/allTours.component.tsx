@@ -8,6 +8,9 @@ import {
   AllToursResults,
   AllToursResultsCards,
   AllToursResultsLeft,
+  FloatButton,
+  ListIcon,
+  MapIcon,
   NoResultsMessage,
 } from "./allTours.style";
 import { useEffect, useState } from "react";
@@ -26,7 +29,7 @@ import {
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../components/UIComponents/spinner/spinner.component";
-// import { selectUserRole } from "../../store/user/user.selector";
+import Button from "../../components/UIComponents/button/button.component";
 
 const AllTours = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -34,7 +37,6 @@ const AllTours = () => {
   const totalResults = useSelector(selectToursTotal);
   const isLoading = useSelector(selectToursIsLoading);
   const tours = useSelector(selectTours);
-  // const role = useSelector(selectUserRole);
 
   const filtersRef = useRef<HTMLDivElement | null>(null);
   const allToursRef = useRef<HTMLDivElement | null>(null);
@@ -46,6 +48,9 @@ const AllTours = () => {
   const [highlightMarker, setHighlightMarker] = useState<string | undefined>(
     undefined
   );
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isFullMapMode, setIsFullMapMode] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const pageParam = searchParams.get("page");
@@ -58,7 +63,6 @@ const AllTours = () => {
     const updatedRequestStringFromUrl =
       requestStringFromUrl &&
       requestStringFromUrl.replace(/(&viewstate|viewstate).*zoom/, "");
-    // const onlyAvailables = role === "user" ? "&onlyAvailables=true" : "";
     const requestString =
       `?limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
       (updatedRequestStringFromUrl ? `&${updatedRequestStringFromUrl}` : "");
@@ -88,7 +92,7 @@ const AllTours = () => {
 
     const onScroll = () => {
       if (!filtersRef.current || !allToursRef.current) return;
-      if (480 < window.scrollY + 80) {
+      if (400 < window.scrollY + 80) {
         filtersRef.current.style.position = "fixed";
         filtersRef.current.style.top = "8rem";
         filtersRef.current.style.left = "0";
@@ -103,46 +107,98 @@ const AllTours = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleResize = () => {
+    if (window.innerWidth <= 940 && !isSmallScreen) {
+      setIsSmallScreen(true);
+      setMapOpen(false);
+    } else if (window.innerWidth > 940 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
+
   return (
     <AllToursContainer>
       <AllToursHeader />
       <AllTourFixElements ref={filtersRef}>
-        <SearchFilters />
-        <ToursMap
-          handleOpenMap={handleOpenMap}
-          mapOpen={mapOpen}
-          highlightMarker={highlightMarker}
+        <SearchFilters
+          filtersOpen={filtersOpen}
+          setFiltersOpen={setFiltersOpen}
         />
+        {!isSmallScreen && (
+          <ToursMap
+            handleOpenMap={handleOpenMap}
+            mapOpen={mapOpen}
+            highlightMarker={highlightMarker}
+          />
+        )}
       </AllTourFixElements>
       <AllToursResults ref={allToursRef}>
         <AllToursResultsLeft mapOpen={mapOpen}>
-          <AllToursResultsCards>
-            {isLoading ? (
-              <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
-            ) : !tours.length ? (
-              <NoResultsMessage>No Results</NoResultsMessage>
-            ) : (
-              <ToursCards
-                mapOpen={mapOpen}
-                handleOverTourCard={handleOverTourCard}
-              />
-            )}
-          </AllToursResultsCards>
-          {tours.length && numberOfPages > 1 ? (
-            <Pagination
-              current={currentPage}
-              total={numberOfPages}
-              defaultPageSize={1}
-              handleChange={(value) => {
-                if (value > 1) searchParams.set("page", value.toString());
-                else searchParams.delete("page");
-                setSearchParams(searchParams);
-              }}
-            />
-          ) : (
-            ""
+          {!isFullMapMode && (
+            <>
+              <AllToursResultsCards>
+                {isLoading ? (
+                  <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+                ) : !tours.length ? (
+                  <NoResultsMessage>No Results</NoResultsMessage>
+                ) : (
+                  <ToursCards
+                    mapOpen={mapOpen}
+                    handleOverTourCard={handleOverTourCard}
+                  />
+                )}
+              </AllToursResultsCards>
+              {tours.length && numberOfPages > 1 ? (
+                <Pagination
+                  current={currentPage}
+                  total={numberOfPages}
+                  defaultPageSize={1}
+                  handleChange={(value) => {
+                    if (value > 1) searchParams.set("page", value.toString());
+                    else searchParams.delete("page");
+                    setSearchParams(searchParams);
+                  }}
+                />
+              ) : (
+                ""
+              )}
+            </>
           )}
         </AllToursResultsLeft>
+        {isSmallScreen && !filtersOpen && (
+          <>
+            <FloatButton>
+              <Button
+                onClick={() => {
+                  console.log("click");
+                  setIsFullMapMode(!isFullMapMode);
+                  searchParams.delete("box");
+                  searchParams.delete("viewstate");
+                  setSearchParams(searchParams);
+                }}>
+                {isFullMapMode ? (
+                  <>
+                    See in list
+                    <ListIcon />
+                  </>
+                ) : (
+                  <>
+                    See on map
+                    <MapIcon />
+                  </>
+                )}
+              </Button>
+            </FloatButton>
+            {isFullMapMode && (
+              <ToursMap highlightMarker={highlightMarker} fullMap={true} />
+            )}
+          </>
+        )}
       </AllToursResults>
     </AllToursContainer>
   );

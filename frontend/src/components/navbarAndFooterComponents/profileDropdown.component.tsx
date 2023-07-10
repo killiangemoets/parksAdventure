@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import ProfileIcon from "../UIComponents/profileIcon/profileIcon.component";
 import {
   ProfileDropdownContainer,
@@ -16,7 +16,11 @@ import {
   userDropdownSections,
 } from "../../utils/profileSections/profileSectionLists";
 
-const ProfileDropdown = () => {
+type ProfileDropdownProps = {
+  handleClose?: () => void;
+};
+
+const ProfileDropdown: FC<ProfileDropdownProps> = ({ handleClose }) => {
   const userRole = useSelector(selectUserRole);
   const [profileSections, setProfileSection] = useState<
     ProfileSectionElement[]
@@ -39,7 +43,11 @@ const ProfileDropdown = () => {
       {profileSections.map((section, i) => {
         if (i === 0)
           return (
-            <ProfileDropdownElement to={section.link}>
+            <ProfileDropdownElement
+              to={section.link}
+              onClick={() => {
+                handleClose && handleClose();
+              }}>
               <ProfileIcon iconType={section.iconType} />
               <ProfileDropdownText>{section.label}</ProfileDropdownText>
             </ProfileDropdownElement>
@@ -48,7 +56,11 @@ const ProfileDropdown = () => {
           return (
             <>
               <ProfileDropdownLine />
-              <ProfileDropdownElement to={section.link}>
+              <ProfileDropdownElement
+                to={section.link}
+                onClick={() => {
+                  handleClose && handleClose();
+                }}>
                 <ProfileIcon iconType={section.iconType} />
                 <ProfileDropdownText>{section.label}</ProfileDropdownText>
               </ProfileDropdownElement>

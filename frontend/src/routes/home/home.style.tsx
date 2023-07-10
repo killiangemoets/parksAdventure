@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const HomeComponentContainer = styled.div`
   padding-top: 8rem;
+  overflow-y: hidden;
 `;
 
 export const GreenOpacity = styled.div`

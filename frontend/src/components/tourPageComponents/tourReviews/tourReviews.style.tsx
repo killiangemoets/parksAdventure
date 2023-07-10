@@ -21,8 +21,8 @@ export const Info = styled(InfoSVG)`
   position: absolute;
   top: -0.4rem;
   right: -2.4rem;
-  width: 2rem;
-  height: 2rem;
+  width: 2.2rem;
+  height: 2.2rem;
   cursor: pointer;
   transition: all 0.3s;
   .path {

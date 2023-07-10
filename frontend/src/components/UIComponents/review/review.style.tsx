@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { PriceModalButtons } from "../../adminsProfilePagesComponents/addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
+import { ReviewProfileName } from "../reviewProfile/reviewProfile.style";
+import { NumRatings, RatingValue } from "../starsRating/starsRating.style";
 
 export const ReviewContainer = styled.div`
   width: 100%;
@@ -8,6 +10,38 @@ export const ReviewContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+
+  @media (max-width: 480px) {
+    & ${ReviewProfileName} {
+      font-size: 1.4rem;
+      letter-spacing: 0.6px;
+    }
+  }
+
+  @media (max-width: 620px) {
+    h1 {
+      font-size: 3.2rem;
+      letter-spacing: 1px;
+    }
+    .ant-rate {
+      gap: 0.4rem;
+    }
+
+    .ant-rate .ant-rate-star-first .anticon,
+    .ant-rate .ant-rate-star-second .anticon {
+      font-size: 2rem;
+    }
+
+    & ${RatingValue} {
+      font-size: 1.6rem;
+      line-height: 1.6rem;
+    }
+
+    & ${NumRatings} {
+      font-size: 1.4rem;
+      line-height: 1.6rem;
+    }
+  }
 `;
 
 export const ReviewInfos = styled.div`
@@ -17,6 +51,12 @@ export const ReviewInfos = styled.div`
   p {
     margin: 0 !important;
   }
+
+  @media (max-width: 440px) {
+    p {
+      width: min-content;
+    }
+  }
 `;
 
 export const ReviewDate = styled.p`
@@ -25,6 +65,12 @@ export const ReviewDate = styled.p`
   text-transform: capitalize;
   letter-spacing: 1px;
   color: #aaa;
+  justify-self: flex-end;
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.6px;
+  }
 `;
 
 export const ReviewContent = styled.div`
@@ -36,8 +82,13 @@ export const ReviewContent = styled.div`
 export const ReviewText = styled.p`
   font-size: 1.6rem;
   line-height: 2.2rem;
-  text-align: justify;
   letter-spacing: 1px;
+
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    letter-spacing: 0.6px;
+  }
 `;
 
 export const EditButtons = styled.div`

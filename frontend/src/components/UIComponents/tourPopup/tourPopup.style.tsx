@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
+import { NumRatings, RatingValue } from "../starsRating/starsRating.style";
 
 export const TourPictureContainer = styled.div`
   width: 100%;
@@ -10,6 +11,12 @@ export const TourPictureContainer = styled.div`
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
   overflow: hidden;
+
+  @media (max-width: 530px) {
+    height: 12rem;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
 `;
 
 type TourPictureProps = {
@@ -54,6 +61,12 @@ export const TourPopupContainer = styled.div`
       transform: scale(1.1);
     }
   }
+
+  @media (max-width: 530px) {
+    width: 22rem;
+    gap: 1.2rem;
+    border-radius: 8px;
+  }
 `;
 
 export const WishListIcon = styled(HeartSVG)`
@@ -72,6 +85,11 @@ export const WishListIcon = styled(HeartSVG)`
     .fill {
       fill: #cc704b;
     }
+  }
+
+  @media (max-width: 530px) {
+    width: 2rem;
+    height: 2rem;
   }
 `;
 
@@ -111,6 +129,17 @@ export const TourTitle = styled.h3`
       to(#cc704b)
     );
   }
+
+  @media (max-width: 530px) {
+    font-size: 1.6rem;
+    right: 0.8rem;
+    top: 8.8rem;
+    width: 80%;
+
+    span {
+      padding: 0.4rem 0.6rem;
+    }
+  }
 `;
 
 export const TourContent = styled.div`
@@ -120,6 +149,11 @@ export const TourContent = styled.div`
   justify-content: center;
   gap: 0.6rem;
   margin-bottom: -1rem;
+
+  @media (max-width: 530px) {
+    gap: 0.4rem;
+    padding: 1.2rem 1.6rem 0 1.6rem;
+  }
 `;
 
 export const TourNextDate = styled.p`
@@ -129,6 +163,10 @@ export const TourNextDate = styled.p`
   text-transform: uppercase;
   color: #303a29;
   color: #cc704b;
+
+  @media (max-width: 530px) {
+    font-size: 1rem;
+  }
 `;
 
 export const TourTags = styled.div`
@@ -145,28 +183,48 @@ export const TourTag = styled.p`
   font-weight: 500;
   padding: 0.2rem 0.8rem;
   border-radius: 8px;
-  /* font-style: italic; */
+
+  @media (max-width: 530px) {
+    font-size: 1rem;
+    line-height: 1.2srem;
+  }
 `;
 
 export const TourInfos = styled.div`
   margin-top: 1rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
   justify-content: center;
   gap: 1.2rem;
+
+  @media (max-width: 530px) {
+    row-gap: 0.6rem;
+    column-gap: 0.4rem;
+  }
 `;
 
 export const Info = styled.div`
   display: flex;
-  /* align-items: center; */
-  /* justify-content: center; */
   gap: 1.2rem;
+
+  @media (max-width: 530px) {
+    gap: 0.6rem;
+
+    svg {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+    }
+  }
 `;
 
 export const InfoText = styled.p`
   font-size: 1.1rem;
+  line-height: 1.6rem;
   letter-spacing: 0.4px;
+
+  @media (max-width: 530px) {
+    letter-spacing: 0.2px;
+  }
 `;
 
 export const TourFooter = styled.div`
@@ -181,6 +239,40 @@ export const TourFooter = styled.div`
   border-top: 1.8px solid #ebc6b7;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
+
+  .ant-rate {
+    gap: 0.6rem;
+  }
+
+  .ant-rate .ant-rate-star-first .anticon,
+  .ant-rate .ant-rate-star-second .anticon {
+    font-size: 2rem;
+  }
+
+  @media (max-width: 530px) {
+    padding: 1rem 1.6rem;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    gap: 0.6rem;
+    .ant-rate {
+      gap: 0.4rem;
+    }
+
+    .ant-rate .ant-rate-star-first .anticon,
+    .ant-rate .ant-rate-star-second .anticon {
+      font-size: 1.6rem;
+    }
+
+    & ${RatingValue} {
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+    }
+
+    & ${NumRatings} {
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
+  }
 `;
 
 export const Price = styled.p`
@@ -191,5 +283,13 @@ export const Price = styled.p`
   span {
     font-size: 1.5rem;
     font-weight: 600;
+  }
+
+  @media (max-width: 530px) {
+    font-size: 1.1rem;
+
+    span {
+      font-size: 1.3rem;
+    }
   }
 `;

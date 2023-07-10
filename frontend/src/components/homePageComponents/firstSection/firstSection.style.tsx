@@ -19,6 +19,7 @@ export const FirstSecContainer = styled.div`
       to(#48563d)
     );
     background-image: linear-gradient(to right, #738069, #48563d);
+    text-align: center;
   }
 `;
 
@@ -28,6 +29,11 @@ export const FirstSectionContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 690px) {
+    flex-direction: column;
+    gap: 2rem;
+  }
 `;
 
 export const FirstSecElementInner = styled.div`
@@ -39,6 +45,21 @@ export const FirstSecElementInner = styled.div`
   transform-style: preserve-3d;
   height: 24rem;
   width: 36rem;
+
+  @media (max-width: 980px) {
+    height: 20rem;
+    width: 30rem;
+  }
+
+  @media (max-width: 840px) {
+    height: 16rem;
+    width: 24rem;
+  }
+
+  @media (max-width: 690px) {
+    height: 20rem;
+    width: 100%;
+  }
 `;
 
 export const FirstSecElement = styled.div`
@@ -50,6 +71,10 @@ export const FirstSecElement = styled.div`
     & ${FirstSecElementInner} {
       transform: rotateY(180deg);
     }
+  }
+
+  @media (max-width: 690px) {
+    width: 100%;
   }
 `;
 
@@ -101,6 +126,10 @@ export const FirstSecElementBack = styled.div`
   transform: rotateY(180deg);
 
   cursor: default;
+
+  @media (max-width: 840px) {
+    gap: 1rem;
+  }
 `;
 
 export const FrontTitle = styled.h4`
@@ -114,6 +143,10 @@ export const FrontTitle = styled.h4`
   letter-spacing: 1px;
   color: #fff;
   white-space: pre-line;
+
+  @media (max-width: 840px) {
+    font-size: 2rem;
+  }
 `;
 
 export const BackTitle = styled.h4`
@@ -121,6 +154,10 @@ export const BackTitle = styled.h4`
   font-weight: 700;
   letter-spacing: 1px;
   white-space: pre-line;
+
+  @media (max-width: 840px) {
+    font-size: 1.4rem;
+  }
 `;
 
 export const BackText = styled.p`
@@ -137,6 +174,10 @@ export const BackText = styled.p`
 
     &:hover {
       color: #404d36;
+    }
+
+    @media (max-width: 840px) {
+      font-size: 1.2rem;
     }
   }
 `;

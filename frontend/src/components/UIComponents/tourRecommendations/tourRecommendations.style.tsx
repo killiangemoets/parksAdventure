@@ -16,9 +16,21 @@ export const TourRecommendationsWrapper = styled.div`
 `;
 
 export const RecommendationCards = styled.div`
-  min-height: 50.8rem;
-  display: flex;
+  width: 100%;
+  overflow: scroll;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
   align-items: center;
   justify-content: center;
   gap: 3.2rem;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: 930px) {
+    align-items: initial;
+    justify-content: initial;
+  }
 `;

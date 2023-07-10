@@ -35,10 +35,16 @@ export const SecondSecSecondTitle = styled.h3`
   color: #fff;
   font-size: 2.2rem;
   letter-spacing: 1px;
+  text-align: center;
 `;
 
 export const SecondSecElementLink = styled(Link)`
   text-decoration: none;
+  @media (max-width: 580px) {
+    &:nth-child(3) {
+      grid-column: span 2; /* Span the last element across both columns */
+    }
+  }
 `;
 
 export const SecondSectionContentWrapper = styled.div`
@@ -47,6 +53,12 @@ export const SecondSectionContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media (max-width: 580px) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
 `;
 
 export const SecondSecElement = styled.div`
@@ -62,24 +74,13 @@ export const SecondSecElement = styled.div`
   }
 `;
 
-// const overElementTitleStyles = css`
-//   top: -14px;
-//   font-size: 12px;
-//   color: ${mainColor};
-// `;
-
 export const ElementTitle = styled.h4`
   font-size: 2em;
   letter-spacing: 1px;
   font-weight: 700;
-  /* letter-spacing: 2px; */
   text-align: center;
   color: #fff;
   transition: all 0.3s;
-
-  /* &:hover {
-    color: #cc704b; // to update later bc need to be when over the whole element, same for picture
-  } */
 `;
 
 export const ElementIconContainer = styled.div`
