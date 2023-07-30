@@ -23,7 +23,6 @@ export const bookTour = async (tourId, date, numPeople) => {
       );
     }
   } catch (err) {
-    console.log(err);
     showAlert('error', err);
   }
 };

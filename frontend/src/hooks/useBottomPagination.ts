@@ -16,7 +16,6 @@ const useHitBottomPagination = (numberOfPages: number) => {
         document.documentElement.scrollHeight;
 
       if (bottom && currentPage < numberOfPages) {
-        console.log({ currentPage, numberOfPages });
         setCurrentPage((currentPage) => currentPage + 1);
       }
     };

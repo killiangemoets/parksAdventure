@@ -38,7 +38,6 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
     name: string
   ) => {
     const infoNumber = +name.split("additionalInfo")[1] - 1;
-    console.log(infoNumber);
     let newAdditionalInfoArray = [...additionalInfo];
     newAdditionalInfoArray[infoNumber] = value as string;
     newAdditionalInfoArray = newAdditionalInfoArray.filter(

@@ -56,7 +56,6 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
   };
 
   const handleDelete = (index: number) => {
-    console.log("delete");
     const newImageFiles = [
       ...images.slice(0, index),
       ...images.slice(index + 1),
@@ -70,9 +69,6 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
 
   const handleDragEnd = (event: any) => {
     const { active, over } = event;
-
-    console.log(active, over);
-
     if (active !== over) {
       const activeIndex = images.findIndex((img) => img.id === active.id);
       const overIndex = images.findIndex((img) => img.id === over.id);

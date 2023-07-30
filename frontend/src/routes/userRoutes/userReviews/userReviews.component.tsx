@@ -31,7 +31,6 @@ const UserReviews = () => {
     const handleGetReviews = async () => {
       setIsLoading(true);
       const response = await getMyReviews();
-      console.log(response);
       if (response && response.status === "success") {
         const reviewsList = response.data.data;
         setAllReviews(reviewsList);

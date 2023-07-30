@@ -93,7 +93,6 @@ export const getAllUserNames = async () => {
 };
 
 export const deleteUser = async (userId: string) => {
-  console.log({ userId });
   try {
     const response = await axiosInstance.delete(`/users/${userId}`);
     return response.data;

@@ -30,15 +30,14 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
 
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const handleResize = () => {
-    if (window.innerWidth <= 1060 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 1060 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1060 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 1060 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);
@@ -51,7 +50,6 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       key: "name",
       fixed: "left",
       sorter: (a, b) => {
-        console.log({ a, b });
         const nameA = a.name.props.children[1].props.children
           .split(" ")
           .slice(1)
@@ -172,7 +170,6 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
           columns={columns}
           dataSource={data}
           scroll={{ x: 1200 }}
-          // onChange={onChange}
           summary={() => (
             <Table.Summary fixed="top">
               <Table.Summary.Row>

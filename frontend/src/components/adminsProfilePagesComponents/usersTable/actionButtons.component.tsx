@@ -56,7 +56,6 @@ const ActionButtons: FC<ActionButtonsProps> = ({
       active: userInfo.status === "active" ? false : true,
     });
     setIsLoading(false);
-    console.log(response);
 
     if (response && response.status === "success") {
       setSuccess(true);
@@ -85,7 +84,6 @@ const ActionButtons: FC<ActionButtonsProps> = ({
     setIsLoading(true);
     const response = await deleteUser(userInfo.key.toString());
     setIsLoading(false);
-    console.log(response);
     if (response && response.status === "success") {
       setSuccess(true);
       handlePassDeletedUser && handlePassDeletedUser(userInfo.key.toString());

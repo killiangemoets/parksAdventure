@@ -12,13 +12,6 @@ export const renderNumPeopleInput = (date, bookings, maxGroupSize) => {
     ? maxGroupSize - bookingsForSelectedDate.currentGroup
     : maxGroupSize;
 
-  // console.log({
-  //   date,
-  //   bookings,
-  //   maxGroupSize,
-  //   maxAvailable,
-  //   bookingsForSelectedDate,
-  // });
   document.querySelector('#number-of-hikers').innerHTML = '';
   let markup = '';
   for (let i = 1; i <= maxGroupSize; i++) {

@@ -29,8 +29,6 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   sortedImages.sort((a, b) => a.index - b.index);
   const images = sortedImages.map((image) => image.img);
 
-  console.log({ images });
-
   req.body.imageCover = images.length > 0 ? images[0] : undefined;
   req.body.images = images.length > 1 ? images.slice(1) : undefined;
 
@@ -157,7 +155,6 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const findObj = { slug: req.params.slug };
   if (!req.user || req.user.role === 'user') findObj.hiddenTour = false;
 
-  console.log('HEEERE');
   const tour = await Tour.findOne(findObj)
     .populate({
       path: 'reviews',

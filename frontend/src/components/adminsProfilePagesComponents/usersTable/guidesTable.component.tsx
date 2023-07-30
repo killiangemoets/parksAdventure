@@ -54,15 +54,14 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
   const [guideToEdit, setGuideToEdit] = useState<TExtendedGuide>();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  const handleResize = () => {
-    if (window.innerWidth <= 1060 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 1060 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1060 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 1060 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);
@@ -89,7 +88,6 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
       key: "name",
       fixed: "left",
       sorter: (a, b) => {
-        console.log({ a, b });
         const nameA = a.name.props.children[1].props.children
           .split(" ")
           .slice(1)
@@ -194,15 +192,6 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
     setData(newData);
   }, [guides]);
 
-  // const onChange: TableProps<GuideInfo>["onChange"] = (
-  //   pagination,
-  //   filters,
-  //   sorter,
-  //   extra
-  // ) => {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // };
-
   const handleCloseModal = () => {
     setShowEditRoleModal(false);
     setErrorMessage("");
@@ -247,7 +236,6 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
           columns={columns}
           dataSource={data}
           scroll={{ x: 1200 }}
-          // onChange={onChange}
           summary={() => (
             <Table.Summary fixed="top">
               <Table.Summary.Row>

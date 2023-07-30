@@ -44,7 +44,6 @@ const AdminGuides = () => {
     const response = await getAllGuidesWithDetails(
       `?role=guide&role=lead-guide${requestString}`
     );
-    console.log(response);
     if (response.status === "success") {
       const guidesList: TExtendedGuide[] = response.data.data;
       setGuides(guidesList);

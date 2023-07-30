@@ -112,7 +112,6 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
       setEditIsLoading(true);
       const response = await editMyReview(reviewId, editRating, editReview);
       setEditIsLoading(false);
-      console.log(response);
       if (response && response.status === "success") {
         setEditSuccess(true);
         handlePassUpdatedReview && handlePassUpdatedReview(response.data.data);
@@ -137,7 +136,6 @@ const Review: FC<ReviewCommonProps & ReviewConditionalProps> = ({
       setDeleteIsLoading(true);
       const response = await deleteMyReview(reviewId);
       setDeleteIsLoading(false);
-      console.log(response);
       if (response && response.status === "success") {
         setDeleteSuccess(true);
         setTimeout(function () {

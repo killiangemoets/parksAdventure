@@ -134,7 +134,6 @@ exports.getAll = (Model) =>
     let avgRating = undefined;
     if (req.params.getAvgRating) {
       const allDocs = await features.query;
-      console.log({ allDocs });
       const sum = allDocs.reduce((acc, review) => acc + review.rating, 0);
       avgRating = Math.trunc((sum / allDocs.length) * 100) / 100;
     }

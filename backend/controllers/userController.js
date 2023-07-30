@@ -145,7 +145,6 @@ exports.getAllUserNames = catchAsync(async (req, res, next) => {
 });
 
 exports.requireHiddenFields = (req, res, next) => {
-  console.log(req.query);
   req.query.fields = '+active';
   next();
 };

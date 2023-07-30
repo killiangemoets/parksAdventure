@@ -274,8 +274,6 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
     };
   });
 
-  console.log({ bookingDetails });
-
   await new Email(req.user).sendBookingEmail({
     url: process.env.BOOKINGS_URL,
     bookings: bookingDetails,
@@ -313,7 +311,6 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
   if (!bookings.length) return next(new AppError('No booking found', 500));
 
   const booking = bookings[0];
-  console.log(booking.tour._id);
 
   const tour = await Tour.findById(booking.tour._id)
     .populate({

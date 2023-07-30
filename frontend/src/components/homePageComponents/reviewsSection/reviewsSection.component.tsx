@@ -29,7 +29,6 @@ const ReviewsSection = () => {
     const handleGetReviews = async () => {
       setIsLoading(true);
       const response = await getTop10Reviews();
-      console.log("TOP 10", response);
       if (response && response.status === "success") {
         const reviewsList = response.data.data;
         const reviewCards = reviewsList.map((review: TReview) => {

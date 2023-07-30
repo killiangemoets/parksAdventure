@@ -80,7 +80,6 @@ exports.signup = catchAsync(async (req, res, next) => {
 
   try {
     const redirectUri = req.body.redirectUri;
-    console.log({ redirectUri });
     const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
     const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
     await new Email(newUser).sendVerificationEmail(emailVerificationUrl);
@@ -176,7 +175,6 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
       )
     );
   const redirectUri = req.body.redirectUri;
-  console.log({ redirectUri });
   const redirectUriQuery = redirectUri ? `?uri=${redirectUri}` : '';
   const emailVerificationUrl = `${process.env.EMAIL_VERIFICATION_URL}/${verificationToken}${redirectUriQuery}`;
 
@@ -367,8 +365,6 @@ exports.getLoggedInUser = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
   let token = req.cookies.jwt;
 
-  console.log('TOKEN', token);
-
   if (!token || token === 'logged out') {
     return next();
   }
@@ -433,7 +429,6 @@ exports.createTourGuide = catchAsync(async (req, res, next) => {
       data: null,
     });
   } catch (err) {
-    console.log({ err });
     newUser.emailVerificationTokens = undefined;
     await newUser.save({ validateBeforeSave: false });
     return next(
