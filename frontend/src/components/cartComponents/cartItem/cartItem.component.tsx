@@ -110,6 +110,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
       compareDates(availability.date, startingDate)
     );
     setSelectedAvailability(newAvailability);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [startingDate]);
 
   useEffect(() => {
@@ -119,6 +120,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
       { ...currentCountInputs[1], value: children },
     ];
     setCurrentCountInputs(newCountInputs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [adults, children]);
 
   const handleEditItem = () => {
@@ -168,7 +170,6 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
 
   const handleChangeGroup = (newGroup: CountInputState[]): void => {
     groupError && setGroupError(false);
-    console.log("handleChangeGroup", newGroup);
 
     const currentCartItem =
       selectedAvailability &&
@@ -210,7 +211,6 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
 
   const handleChangeDate = (date: Date | null) => {
     dateError && setDateError(false);
-    console.log("handleChangeDate", date);
 
     if (availabilities && date) {
       const newAvailability = availabilities.find((availability) =>
@@ -256,14 +256,14 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
   return (
     <>
       <CartItemContainer>
-        <Link to={`/tour/${tour.slug}`}>
+        <Link to={`/tour/${tour.slug}`} style={{ height: "fit-content" }}>
           <CartItemPicture>
             <img src={tour.imageCover} alt="tour cover" />
           </CartItemPicture>
         </Link>
         <CartItemContent>
           <CartItemHeader>
-            <Link to={`/tour/${tour.slug}`}>
+            <Link to={`/tour/${tour.slug}`} style={{ height: "fit-content" }}>
               <CartItemTitle>{tour.name}</CartItemTitle>
             </Link>
             {editable && (

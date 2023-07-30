@@ -36,10 +36,8 @@ const AdminGuides = () => {
     setIsLoading(true);
 
     const requestStringFromUrl = window.location.href.split("?")[1];
-    // const pageRequest = currentPage > 1 ? `&page=${currentPage}` : "";
     const pageRequest = "";
 
-    // let requestString = `&limit=${process.env.REACT_APP_BOOKINGS_PER_PAGE}${pageRequest}`;
     let requestString = `${pageRequest}`;
     if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 

@@ -1,8 +1,6 @@
-// import Swiper core and required modules
 import { FC } from "react";
 import { Navigation, Pagination, Keyboard } from "swiper";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";

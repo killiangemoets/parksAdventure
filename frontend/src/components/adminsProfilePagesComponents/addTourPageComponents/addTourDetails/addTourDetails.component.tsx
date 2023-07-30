@@ -6,12 +6,7 @@ import {
 import { SummarySectionContainer } from "../../../tourPageComponents/summarySection/summarySection.style";
 import TourGuide from "../../../tourPageComponents/tourGuide/tourGuide.component";
 import { TourGuides } from "../../../tourPageComponents/tourGuidesSection/tourGuidesSection.style";
-import {
-  TourInfosContainer,
-  TourInfosLeft,
-  TourInfosLeftWrapper,
-  TourInfosRight,
-} from "../../../tourPageComponents/tourInfos/tourInfos.style";
+import { TourInfosLeftWrapper } from "../../../tourPageComponents/tourInfos/tourInfos.style";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
@@ -23,6 +18,9 @@ import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
 import {
+  AddTourDetailsContainer,
+  AddTourDetailsLeft,
+  AddTourDetailsRight,
   CloseIcon,
   ErrorMessage,
   SummaryInput,
@@ -117,8 +115,8 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
   };
 
   return (
-    <TourInfosContainer>
-      <TourInfosLeft>
+    <AddTourDetailsContainer>
+      <AddTourDetailsLeft>
         <TourInfosLeftWrapper>
           <QuickFactsSectionContainer>
             <Title titleType={TITLE_TYPE_CLASSES.section}>Quick Facts</Title>
@@ -214,14 +212,13 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             </Dropdown>
             <ErrorMessage>
               {tourGuidesError
-                ? // ? "A tour must have at least one LEAD guide"
-                  "A tour must have at least one lead guide"
+                ? "A tour must have at least one lead guide"
                 : ""}
             </ErrorMessage>
           </TourGuidesSelectSectionContainer>
         </TourInfosLeftWrapper>
-      </TourInfosLeft>
-      <TourInfosRight>
+      </AddTourDetailsLeft>
+      <AddTourDetailsRight>
         <SummarySectionContainer>
           <Title titleType={TITLE_TYPE_CLASSES.section}>About the Tour</Title>
           <SummaryInput
@@ -232,8 +229,8 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
             error={summaryError}
           />
         </SummarySectionContainer>
-      </TourInfosRight>
-    </TourInfosContainer>
+      </AddTourDetailsRight>
+    </AddTourDetailsContainer>
   );
 };
 export default AddTourDetails;

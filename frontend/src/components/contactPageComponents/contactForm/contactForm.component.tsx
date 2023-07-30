@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 import {
   ContactFormContainer,
   ContactFormElement,
@@ -17,10 +17,13 @@ import { sendEmail } from "../../../api/email-request";
 import { useSelector } from "react-redux";
 import { selectUserReducer } from "../../../store/user/user.selector";
 import { useSearchParams } from "react-router-dom";
-import { Button } from "antd";
 
-const ContactForm = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+type ContactFormProps = {
+  showTitle?: boolean;
+};
+
+const ContactForm: FC<ContactFormProps> = ({ showTitle = true }) => {
+  const [, setSearchParams] = useSearchParams();
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const user = useSelector(selectUserReducer);
@@ -70,7 +73,9 @@ const ContactForm = () => {
 
   return (
     <ContactFormContainer>
-      <Title titleType={TITLE_TYPE_CLASSES.section}>Get in touch</Title>
+      {showTitle && (
+        <Title titleType={TITLE_TYPE_CLASSES.section}>Get in touch</Title>
+      )}
       <ContactFormElement onSubmit={handleSubmit}>
         <ContactInputs>
           <ContactSmallInputs>

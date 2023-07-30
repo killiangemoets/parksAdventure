@@ -215,18 +215,3 @@ export const filtersMinMax: TFiltersMinMax = {
 };
 
 export type TourNameData = { _id: string; name: string };
-
-// export type TourRequestFields = {
-//   "price[gte]"?: number;
-//   "price[lte]"?: number;
-//   "duration[gte]"?: number;
-//   "duration[lte]"?: number;
-//   "groupSize[gte]"?: number;
-//   "groupSize[lte]"?: number;
-//   category?: TCategory[];
-//   difficulty?: TDifficulty[];
-//   search?: string;
-//   "date[gte]"?: string;
-//   "date[lte]"?: string;
-//   page?: number;
-// };

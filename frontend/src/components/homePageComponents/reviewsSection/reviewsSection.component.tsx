@@ -6,6 +6,7 @@ import Title, {
 } from "../../UIComponents/title/title.component";
 import TopReview from "../topReview/topReview.component";
 import {
+  ErrorMessage,
   ReviewsSecContainer,
   ReviewsSecContent,
   ReviewsSecPicture,
@@ -69,6 +70,10 @@ const ReviewsSection = () => {
           </Title>
           {isLoading ? (
             <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+          ) : errorMessage ? (
+            <ErrorMessage>
+              An error occured. Try to reload the page!
+            </ErrorMessage>
           ) : (
             <Carousel elements={reviews} />
           )}

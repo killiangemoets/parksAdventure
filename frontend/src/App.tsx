@@ -50,7 +50,6 @@ function App() {
   useEffect(() => {
     const handleIsLoggedIn = async () => {
       const response = await getUser();
-      // console.log("USER", response);
       if (response.user) {
         const {
           email,
@@ -84,7 +83,7 @@ function App() {
 
     if (!window.location.href.includes("/signup/email-confirmation/"))
       handleIsLoggedIn();
-  }, []);
+  }, [dispatch]);
 
   return (
     <Routes>

@@ -8,8 +8,8 @@ import { useEffect, useState } from "react";
 
 const AllUsersNavbar = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [searchUser, setSearchUser] = useState<string>("");
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleSubmitSearchUser = () => {
     if (searchUser.length) searchParams.set("search", searchUser.trim());
@@ -27,6 +27,18 @@ const AllUsersNavbar = () => {
     if (searchParam) setSearchUser(searchParam);
   }, [searchParams]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 480 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
+
   return (
     <AdminNavbarContainer>
       <AdminNavbarCenterContainer>
@@ -39,7 +51,7 @@ const AllUsersNavbar = () => {
             setSearchUser(e.target.value);
           }}
           adminStyle={true}
-          style={{ width: "52rem" }}
+          style={{ width: isSmallScreen ? "42.8rem" : "52rem" }}
         />
       </AdminNavbarCenterContainer>
     </AdminNavbarContainer>

@@ -32,7 +32,6 @@ export const DatePickerElement = styled(DatePicker)<DatePickerElementProps>`
   background-color: #faf2e5;
   border-radius: 999px;
   border: 1px solid #aaa;
-  /* border: none; */
   font-size: 1.6rem;
   transition: all 0.3s;
 

@@ -17,11 +17,6 @@ export const MainHeaderContainer = styled.div`
     width: 100%;
     height: 100%;
   }
-
-  /* @media (max-width: 920px) {
-    width: 100vw;
-    height: calc(50vh - 8rem);
-  } */
 `;
 
 export const MainHeaderContentContainer = styled.div`

@@ -2,16 +2,6 @@ import styled, { css } from "styled-components";
 import { ReactComponent as LeftArrowSVG } from "../../../assets/left-arrow.svg";
 import { ReactComponent as RightArrowSVG } from "../../../assets/right-arrow.svg";
 
-const fixedStyle = css`
-  position: fixed;
-  top: 8rem;
-`;
-
-const reduceHeigthStyle = css`
-  position: absolute !important;
-  bottom: 0% !important;
-`;
-
 type ToursMapContainerProps = {
   mapOpen: boolean;
   fullMap: boolean;

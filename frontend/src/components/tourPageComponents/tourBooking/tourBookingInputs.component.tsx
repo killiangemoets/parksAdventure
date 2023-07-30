@@ -20,7 +20,6 @@ import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
 import useDatesFromAvailabilities from "../../../hooks/datesFromAvailabilities";
 import useLabelFromGroupInfo from "../../../hooks/labelFromGroupInfo";
-import { cp } from "fs";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;

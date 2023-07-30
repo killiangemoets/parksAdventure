@@ -31,10 +31,8 @@ const AddTourImages: FC<AddTourImagesProps> = ({
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
 
-  console.log("IMAGES", images);
-
   const uploadImage = async (options: any) => {
-    const { onSuccess, onError, file, onProgress } = options;
+    const { onSuccess } = options;
     onSuccess("Ok");
   };
 
@@ -42,7 +40,6 @@ const AddTourImages: FC<AddTourImagesProps> = ({
     if (!file.url && !file.preview) {
       file.preview = await convertToBase64(file.originFileObj as RcFile);
     }
-    console.log(file.preview);
 
     setPreviewImage(file.url || (file.preview as string));
     setPreviewOpen(true);
@@ -52,7 +49,6 @@ const AddTourImages: FC<AddTourImagesProps> = ({
     while (newImagesList.length > maxImages) {
       newImagesList.pop();
     }
-    console.log(newImagesList);
     handleChange(newImagesList, CREATE_TOUR_DATA.images);
   };
 

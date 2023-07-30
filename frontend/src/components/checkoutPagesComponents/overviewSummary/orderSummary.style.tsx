@@ -1,14 +1,12 @@
 import styled, { css } from "styled-components";
 
 export const OrderSummaryContainer = styled.div`
-  /* padding: 2rem 2.4rem; */
   border: 3px solid #cc704b;
   border-radius: 12px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* gap: 3.2rem; */
 
   button {
     height: 5rem !important;

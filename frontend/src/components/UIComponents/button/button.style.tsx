@@ -1,15 +1,5 @@
 import styled from "styled-components";
 
-/* #506044 
-#9fc088
-#CC704B
-#b86544
-#e0a993
-#F6E6CB 
-#faf2e5
-##fdfaf5
-*/
-
 export const BaseButton = styled.button`
   padding: 1.2rem 3.2rem;
   font-size: 1.8rem;
@@ -97,13 +87,11 @@ export const GalleryButton = styled(InvertedButton)`
 
 export const LightButton = styled(BaseButton)`
   background-color: #faf2e5;
-  /* border: solid 2px #faf2e5; */
   border: 1px solid #aaa;
   color: #aaa;
 
   &:hover {
     background-color: #faf2e5;
-    /* border: solid 2px #faf2e5; */
     border: 1px solid #aaa;
   }
 `;

@@ -1,4 +1,10 @@
 import styled from "styled-components";
+import {
+  NumRatings,
+  RatingValue,
+} from "../../UIComponents/starsRating/starsRating.style";
+import { DropdownContainer } from "../../UIComponents/dropdown/dropdown.style";
+import { TextInputContainer } from "../../UIComponents/textInput/textInput.style";
 
 export const CartItemContainer = styled.div`
   display: flex;
@@ -6,6 +12,27 @@ export const CartItemContainer = styled.div`
   padding: 3.2rem 0;
   border-bottom: 1px solid #aaa;
   width: 100%;
+
+  @media (max-width: 540px) {
+    .ant-rate {
+      gap: 0.4rem;
+    }
+
+    .ant-rate .ant-rate-star-first .anticon,
+    .ant-rate .ant-rate-star-second .anticon {
+      font-size: 1.6rem;
+    }
+
+    & ${RatingValue} {
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+    }
+
+    & ${NumRatings} {
+      font-size: 1rem;
+      line-height: 1.2rem;
+    }
+  }
 `;
 
 export const CartItemPicture = styled.div`
@@ -59,6 +86,10 @@ export const CartItemInfoList = styled.div`
     font-size: 1.4rem;
     width: fit-content;
   }
+
+  @media (max-width: 950px) {
+    width: 100%;
+  }
 `;
 
 export const CartItemInfo = styled.div`
@@ -97,6 +128,32 @@ export const CartItemInputs = styled.div`
     width: 26rem;
     font-size: 1.6rem;
     letter-spacing: 0px;
+  }
+
+  @media (max-width: 950px) {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    button {
+      width: 100%;
+    }
+
+    & ${DropdownContainer} {
+      width: 100% !important;
+    }
+
+    ul {
+      min-width: 100%;
+    }
+
+    & ${TextInputContainer} {
+      width: 100%;
+    }
+
+    .ant-picker {
+      width: 100%;
+    }
   }
 `;
 

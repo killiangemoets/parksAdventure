@@ -1,6 +1,7 @@
 import {
-  AdminNavbarCenterContainer,
-  AdminNavbarContainer,
+  AddTourGuideForm,
+  AdminGuidesNavbarCenterContainer,
+  AdminGuidesNavbarContainer,
   AdminNavbarRightContainer,
   ErrorMessage,
   ModalSuccessContainer,
@@ -24,7 +25,6 @@ import FormButton from "../../UIComponents/formButton/formButton.component";
 import { PriceModalButtons } from "../addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
 import SelectInput from "../../UIComponents/selectInput/selectInput.component";
 import SearchInput from "../../UIComponents/searchInput/searchInput.component";
-import { AuthenticationForm } from "../../authenticationComponents/authentication.style";
 import { createTourGuide } from "../../../api/authentication-requests";
 import { selectUserRole } from "../../../store/user/user.selector";
 import { useSelector } from "react-redux";
@@ -51,6 +51,9 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [isANewGuideCreated, setIsANewGuideCreated] = useState<boolean>(false);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const [isVerySmallScreen, setIsVerySmallScreen] = useState(false);
 
   const handleSubmitSearchGuide = () => {
     if (searchGuide.length) searchParams.set("search", searchGuide.trim());
@@ -115,9 +118,26 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1060 && !isSmallScreen) {
+        setIsSmallScreen(true);
+        if (window.innerWidth <= 480 && !isVerySmallScreen) {
+          setIsVerySmallScreen(true);
+        } else if (window.innerWidth > 480 && isVerySmallScreen) {
+          setIsVerySmallScreen(false);
+        }
+      } else if (window.innerWidth > 1060 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen, isVerySmallScreen]);
+
   return (
-    <AdminNavbarContainer>
-      <AdminNavbarCenterContainer>
+    <AdminGuidesNavbarContainer>
+      <AdminGuidesNavbarCenterContainer>
         <SearchInput
           handleDelete={handleDeleteSearchGuide}
           handleSubmit={handleSubmitSearchGuide}
@@ -127,10 +147,18 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
             setSearchGuide(e.target.value);
           }}
           adminStyle={true}
-          style={{ width: "52rem" }}
+          style={{ width: isVerySmallScreen ? "42.8rem" : "52rem" }}
         />
-      </AdminNavbarCenterContainer>
-      {userRole === USER_ROLE_TYPES.ADMIN && (
+        {userRole === USER_ROLE_TYPES.ADMIN && isSmallScreen && (
+          <Button
+            onClick={() => {
+              setShowAddGuideModal(true);
+            }}>
+            Add Tour Guide
+          </Button>
+        )}
+      </AdminGuidesNavbarCenterContainer>
+      {userRole === USER_ROLE_TYPES.ADMIN && !isSmallScreen && (
         <AdminNavbarRightContainer>
           <Button
             onClick={() => {
@@ -173,7 +201,7 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
             </PriceModalButtons>
           </ModalSuccessContainer>
         ) : (
-          <AuthenticationForm onSubmit={handleSubmit}>
+          <AddTourGuideForm onSubmit={handleSubmit}>
             <TextInput
               label="Firstname"
               placeholder="your firstname"
@@ -229,10 +257,10 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
               </FormButton>
             </PriceModalButtons>
             <ErrorMessage>{errorMessage}</ErrorMessage>
-          </AuthenticationForm>
+          </AddTourGuideForm>
         )}
       </Modal>
-    </AdminNavbarContainer>
+    </AdminGuidesNavbarContainer>
   );
 };
 

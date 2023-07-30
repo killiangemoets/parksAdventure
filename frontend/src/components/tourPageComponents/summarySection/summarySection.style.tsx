@@ -3,7 +3,6 @@ import styled from "styled-components";
 export const SummarySectionContainer = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   gap: 3.2rem;
   height: 100%;
 
@@ -26,7 +25,6 @@ export const AdditionalInfoModalContent = styled.div`
 `;
 export const AdditionalInfoModalTextElement = styled.div`
   display: flex;
-  /* align-items: center; */
   gap: 2rem;
 `;
 

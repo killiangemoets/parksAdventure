@@ -13,7 +13,7 @@ export const TOURS_INITIAL_STATE: ToursState = {
   tours: [],
   total: 0,
   isLoading: false,
-  error: null, // Since we do asynchronous fetching
+  error: null,
 };
 
 export const toursReducer = (

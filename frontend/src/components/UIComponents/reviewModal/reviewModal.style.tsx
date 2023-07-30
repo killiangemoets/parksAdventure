@@ -14,4 +14,8 @@ export const StarsRatingContainer = styled.div<StarsRatingContainerProps>`
     css`
       border: 2px solid #ff0033;
     `}
+
+  .ant-rate {
+    gap: 0rem;
+  }
 `;

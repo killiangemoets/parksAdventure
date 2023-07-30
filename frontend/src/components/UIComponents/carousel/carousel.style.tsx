@@ -21,8 +21,6 @@ export const CarouselSwiper = styled(Swiper)`
   }
 
   .swiper-pagination-bullet {
-    /* width: 1rem; */
-    /* height: 1rem; */
     background-color: #aaa;
     opacity: 1;
   }

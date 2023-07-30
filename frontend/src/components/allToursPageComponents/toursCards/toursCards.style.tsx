@@ -24,12 +24,12 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
   max-width: 144rem;
 
   @media (max-width: 1200px) {
-    grid-template-columns: repeat(3, auto);
+    grid-template-columns: repeat(3, 32rem);
     justify-content: center;
     gap: 3.2rem;
   }
   @media (max-width: 910px) {
-    grid-template-columns: repeat(2, auto);
+    grid-template-columns: repeat(2, 32rem);
     justify-content: center;
     gap: 3.2rem;
   }
@@ -37,10 +37,14 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
     gap: 1.6rem;
   }
 
+  @media (max-width: 530px) {
+    grid-template-columns: repeat(2, 22rem);
+  }
+
   ${({ mapOpen }) =>
     mapOpen &&
     css`
-      grid-template-columns: repeat(3, auto);
+      grid-template-columns: repeat(3, 32rem);
       max-width: 104rem;
     `}
 
@@ -56,7 +60,14 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
     ${({ mapOpen }) =>
       mapOpen &&
       css`
-        grid-template-columns: repeat(2, auto);
+        grid-template-columns: repeat(2, 32rem);
+      `}
+  }
+  @media (max-width: 530px) {
+    ${({ mapOpen }) =>
+      mapOpen &&
+      css`
+        grid-template-columns: repeat(2, 22rem);
       `}
   }
 `;

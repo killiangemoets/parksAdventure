@@ -77,7 +77,6 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
       adults: group[0].value,
       children: group[1].value,
     };
-    console.log({ newItem });
     dispatch(addItem(newItem));
     setTimeout(function () {
       setSuccess(false);
@@ -94,7 +93,6 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
       adults: group[0].value,
       children: group[1].value,
     };
-    console.log({ newItem });
     dispatch(addItem(newItem));
     if (userId) return navigate("/checkout/step2");
     navigate("/login?uri=/checkout/step2");
@@ -124,14 +122,6 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
               </InfoLink>
             </Info>
           </TourBookingInfo>
-          {/* <TourBookingInfo>
-            {tour?.additionalInfo?.map((info) => (
-              <Info>
-                <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.bullet} />
-                <InfoContent>{info}</InfoContent>
-              </Info>
-            ))}
-          </TourBookingInfo> */}
           <TourBookingInfo>
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />

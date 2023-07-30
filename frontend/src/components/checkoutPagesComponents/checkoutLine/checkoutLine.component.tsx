@@ -45,9 +45,8 @@ const CheckoutLine: FC<CheckoutLineProps> = ({ step = 1 }) => {
 
   useEffect(() => {
     if (!userId) navigate("/login?uri=/checkout/step2");
-  }, [userId])
+  }, [navigate, userId]);
 
-  
   return (
     <CheckoutLineContainer>
       <CheckoutLineElement>

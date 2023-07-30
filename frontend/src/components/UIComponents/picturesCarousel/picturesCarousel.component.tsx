@@ -1,14 +1,9 @@
 import React, { FC, useEffect, useRef, useState } from "react";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
-
-// import required modules
 import { FreeMode, Navigation, Thumbs } from "swiper";
 import {
   CloseButton,
@@ -33,22 +28,19 @@ const PicturesCarousel: FC<PicturesCarouselProps> = ({
   const carouselRef = useRef<HTMLDivElement | null>(null);
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
-  console.log("thumbsSwiper", thumbsSwiper);
-
   const handleClickOnOverlay = (e: React.MouseEvent<HTMLDivElement>): void => {
     if (carouselRef.current && !carouselRef.current.contains(e.target as Node))
       handleOpen(false);
   };
 
-  const handleResize = () => {
-    if (window.innerWidth <= 725 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 725 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 725 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 725 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);

@@ -7,7 +7,7 @@ export const EmailVerificationContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 12rem;
+  padding: 12rem 2rem 0 2rem;
 `;
 
 export const EmailVerificationWrapper = styled.div`
@@ -22,6 +22,11 @@ export const EmailVerificationWrapper = styled.div`
   gap: 4.2rem;
   align-items: center;
   justify-content: center;
+  margin: 6.4rem 0;
+
+  h1 {
+    text-align: center;
+  }
 `;
 
 export const EmailVerificationLogo = styled.div`

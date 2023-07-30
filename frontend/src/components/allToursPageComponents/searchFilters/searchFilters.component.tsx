@@ -41,18 +41,18 @@ type SearchFiltersProps = {
   setFiltersOpen: (value: boolean) => void;
 };
 
+const sortPossibilites: Info[] = [
+  { id: "-popularityIndex", value: "Popularity" },
+  { id: "-hasCurrentAvailabilities,lowerPrice", value: "Pricing" },
+  { id: "-ratingsAverage", value: "Rating" },
+  { id: "-hasCurrentAvailabilities,firstAvailability", value: "Last minute" },
+];
+
 const SearchFilters: FC<SearchFiltersProps> = ({
   filtersOpen,
   setFiltersOpen,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const sortPossibilites: Info[] = [
-    { id: "-popularityIndex", value: "Popularity" },
-    { id: "-hasCurrentAvailabilities,lowerPrice", value: "Pricing" },
-    { id: "-ratingsAverage", value: "Rating" },
-    { id: "-hasCurrentAvailabilities,firstAvailability", value: "Last minute" },
-  ];
 
   const [currentSort, setCurrentSort] = useState<Info>(sortPossibilites[0]);
 
@@ -85,25 +85,24 @@ const SearchFilters: FC<SearchFiltersProps> = ({
       searchParams.delete("sort");
       setSearchParams(searchParams);
     }
-  }, [searchParams]);
-
-  const handleResize = () => {
-    if (window.innerWidth <= 1040 && !isSmallScreen) {
-      setIsSmallScreen(true);
-      if (window.innerWidth <= 880 && !isVerySmallScreen) {
-        setIsVerySmallScreen(true);
-      } else if (window.innerWidth > 880 && isVerySmallScreen) {
-        setIsVerySmallScreen(false);
-      }
-    } else if (window.innerWidth > 1040 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
+  }, [searchParams, setSearchParams]);
 
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1040 && !isSmallScreen) {
+        setIsSmallScreen(true);
+        if (window.innerWidth <= 880 && !isVerySmallScreen) {
+          setIsVerySmallScreen(true);
+        } else if (window.innerWidth > 880 && isVerySmallScreen) {
+          setIsVerySmallScreen(false);
+        }
+      } else if (window.innerWidth > 1040 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
-  }, [isSmallScreen]);
+  }, [isSmallScreen, isVerySmallScreen]);
 
   return (
     <SearchFiltersContainer>

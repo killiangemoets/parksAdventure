@@ -57,6 +57,13 @@ export const ReviewInfos = styled.div`
       width: min-content;
     }
   }
+
+  @media (max-width: 500px) {
+    & ${ReviewProfileName} {
+      font-size: 1.4rem;
+      letter-spacing: 0.6px;
+    }
+  }
 `;
 
 export const ReviewDate = styled.p`
@@ -103,6 +110,12 @@ export const EditButtons = styled.div`
 
     &:hover {
       text-decoration: underline;
+    }
+  }
+
+  @media (max-width: 500px) {
+    button {
+      font-size: 1.6rem;
     }
   }
 `;
@@ -188,9 +201,15 @@ export const ReviewTourName = styled.p`
   letter-spacing: 1px;
   font-size: 1.6rem;
   font-weight: 500;
+  white-space: nowrap;
 
   span {
     font-weight: 600;
     text-transform: uppercase;
+  }
+
+  @media (max-width: 500px) {
+    font-size: 1.4rem;
+    letter-spacing: 0.6px;
   }
 `;

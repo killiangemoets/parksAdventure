@@ -25,6 +25,10 @@ export const ProfileDropdownContainer = styled.div`
     gap: 2.8rem;
     padding-bottom: 1rem;
   }
+
+  @media (max-width: 450px) {
+    gap: 2rem;
+  }
 `;
 export const ProfileDropdownElement = styled(Link)`
   display: flex;
@@ -47,7 +51,7 @@ export const ProfileDropdownText = styled.p`
   transition: all 0.3s;
 
   @media (max-width: 620px) {
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 1.2px;
     color: #fbf3e5;
@@ -55,6 +59,9 @@ export const ProfileDropdownText = styled.p`
     &:hover {
       color: #cc704b;
     }
+  }
+  @media (max-width: 450px) {
+    font-size: 1.6rem;
   }
 `;
 

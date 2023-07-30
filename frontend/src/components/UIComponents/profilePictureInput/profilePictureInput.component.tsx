@@ -1,4 +1,4 @@
-import { Upload, UploadProps } from "antd";
+import { ConfigProvider, Upload, UploadProps } from "antd";
 import ImgCrop from "antd-img-crop";
 import ProfilePicture, {
   PROFILE_PICTURE_SIZE_CLASSES,
@@ -48,19 +48,37 @@ const ProfilePictureInput: FC<ProfilePictureInputProps> = ({
         pictureUrl={image}
         handleDelete={handleDeleteImage}
       />
-      <ImgCrop rotationSlider>
-        <Upload
-          accept="image/*"
-          customRequest={uploadImage}
-          // listType="picture-card"
-          // fileList={[]}
-          onChange={onChangeImage}>
-          <Button type="button" buttonType={BUTTON_TYPE_CLASSES.empty}>
-            <UploadOutlined />
-            Upload profile picture
-          </Button>
-        </Upload>
-      </ImgCrop>
+      <ConfigProvider
+        theme={{
+          hashed: false,
+          components: {
+            DatePicker: {
+              colorPrimary: "#cc704b",
+              colorLink: "#cc704b",
+              colorLinkHover: "#b86544",
+              fontSize: 16,
+              colorText: "#333",
+              colorTextPlaceholder: "#aaa",
+              borderRadiusSM: 999,
+              colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
+              colorBgElevated: "#fdfaf5",
+            },
+          },
+        }}>
+        <ImgCrop rotationSlider>
+          <Upload
+            accept="image/*"
+            customRequest={uploadImage}
+            // listType="picture-card"
+            // fileList={[]}
+            onChange={onChangeImage}>
+            <Button type="button" buttonType={BUTTON_TYPE_CLASSES.empty}>
+              <UploadOutlined />
+              Upload profile picture
+            </Button>
+          </Upload>
+        </ImgCrop>
+      </ConfigProvider>
     </ProfilePictureContainer>
   );
 };

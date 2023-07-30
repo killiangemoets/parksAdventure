@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import { QuickFactInputContainer } from "../../adminsProfilePagesComponents/addTourPageComponents/quickFactInput/quickFactInput.style";
 
 export const Overlay = styled.div`
   position: fixed;
-  top: 0%;
+  top: 5%;
   left: 0%;
   width: 100vw;
   height: 100vh;
@@ -23,6 +24,13 @@ export const ModalContainer = styled.div`
   min-height: 20rem;
   min-width: 20rem;
   z-index: 999 !important;
+  max-height: 84vh;
+  overflow-y: scroll;
+
+  @media (max-width: 500px) {
+    width: 100%;
+    border-radius: 12px;
+  }
 `;
 export const ModalTitleSection = styled.div`
   padding: 2rem 0;
@@ -50,7 +58,7 @@ export const ModalTitle = styled.h3`
 `;
 
 export const ModalContent = styled.div`
-  padding: 4.8rem 6.4rem 4.8rem 6.4rem;
+  padding: 3.2rem 6.4rem 4.8rem 6.4rem;
   display: flex;
   flex-direction: column;
   gap: 4rem;
@@ -62,6 +70,10 @@ export const ModalContent = styled.div`
 
   @media (max-width: 480px) {
     gap: 2rem;
-    padding: 1rem 3.6rem 2.4rem 3.6rem;
+    padding: 2rem 3.6rem 2.4rem 3.6rem;
+
+    & ${QuickFactInputContainer} {
+      gap: 0rem;
+    }
   }
 `;

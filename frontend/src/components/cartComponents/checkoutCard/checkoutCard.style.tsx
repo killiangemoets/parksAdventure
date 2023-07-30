@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
 export const CheckoutCardContainer = styled.div`
-  /* -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1); */
-  /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1); */
   border-radius: 12px;
   border: solid 1px #aaa;
   padding: 2rem 0;
@@ -11,16 +9,31 @@ export const CheckoutCardContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 4.8rem;
+
+  @media (max-width: 780px) {
+    width: 100%;
+    padding: 2rem 3.2rem;
+
+    button {
+      width: 100%;
+    }
+  }
 `;
 export const CheckoutCardBody = styled.div`
   display: flex;
   gap: 4.8rem;
+
+  @media (max-width: 780px) {
+    width: 100%;
+    justify-content: space-between;
+  }
 `;
 export const CheckoutCardTitle = styled.h5`
   font-size: 1.8rem;
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.2px;
+  white-space: nowrap;
 `;
 export const CheckoutCardInfo = styled.div`
   display: flex;
@@ -39,4 +52,5 @@ export const CheckoutCardText = styled.p`
   font-weight: 400;
   letter-spacing: 0.4px;
   color: #888;
+  text-align: end;
 `;

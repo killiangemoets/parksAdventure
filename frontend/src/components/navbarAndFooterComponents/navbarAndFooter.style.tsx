@@ -43,6 +43,10 @@ export const LinksContainerInColumn = styled.div`
   justify-content: center;
   gap: 2.8rem;
   padding: 2rem;
+
+  @media (max-width: 450px) {
+    gap: 2rem;
+  }
 `;
 
 type NavBarLinkProps = {
@@ -93,9 +97,12 @@ export const NavBarLink = styled(Link)<NavBarLinkProps>`
 
   @media (max-width: 620px) {
     gap: 1.8rem;
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 1.2px;
+  }
+  @media (max-width: 450px) {
+    font-size: 1.6rem;
   }
 `;
 
@@ -118,9 +125,12 @@ export const NavBarButton = styled.button`
 
   @media (max-width: 620px) {
     gap: 1.8rem;
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: 400;
     letter-spacing: 1.2px;
+  }
+  @media (max-width: 450px) {
+    font-size: 1.6rem;
   }
 `;
 
@@ -153,7 +163,6 @@ export const SignUpButton = styled(NavBarButton)`
 `;
 
 export const FooterContainer = styled.div`
-  /* width: 100%; */
   position: relative;
   height: 8rem;
   display: flex;
@@ -209,7 +218,6 @@ export const FooterNavigation = styled.div`
 
 export const FooterLink = styled(Link)`
   font-size: 1.4rem;
-  /* text-transform: uppercase; */
   color: #999;
   transition: all 0.3s;
 

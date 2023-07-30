@@ -21,10 +21,7 @@ export const TourHeaderContainer = styled.div`
 
   & ${RatingData} {
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
     gap: 0.6rem;
-    /* margin-top: 0px; */
     margin-bottom: 0rem;
   }
 

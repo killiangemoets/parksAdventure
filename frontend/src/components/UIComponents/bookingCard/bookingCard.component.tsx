@@ -14,7 +14,7 @@ import {
   ConfirmationText,
 } from "./bookingCard.style";
 import { TBooking } from "../../../types/booking";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import niceDate, {
   niceDatesRange,
 } from "../../../utils/formatting/formatDates";
@@ -39,10 +39,23 @@ const BookingCard: FC<BookingCardProps> = ({
   const endDate = getEndDate(booking.date, booking.tour?.duration || 0);
 
   const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleCloseReviewModal = () => {
     setReviewModalOpen(false);
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 600 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 600 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
 
   return (
     <BookingCardContainer>
@@ -57,6 +70,36 @@ const BookingCard: FC<BookingCardProps> = ({
             <ConfirmationIcon />
             <ConfirmationText>Confirmed Reservation</ConfirmationText>
           </BookingConfirmation>
+          {!isSmallScreen && (
+            <>
+              <BookingText>
+                Reservation made on {niceDate(booking.createdAt)}
+              </BookingText>
+              <BookingText>
+                Reference number: <span>{booking.orderNumber}</span> | PIN:{" "}
+                <span>{booking.pin}</span>
+              </BookingText>
+              <BookingText>
+                Hike {niceDatesRange(booking.date, endDate)}
+              </BookingText>
+              <BookingText>
+                For{" "}
+                {niceGroupDetailsString(booking.adults || 0, booking.kids || 0)}
+              </BookingText>
+
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.empty}
+                onClick={() => {
+                  navigate(`/profile/bookings/details/${booking._id}`);
+                }}>
+                See reservation details
+              </Button>
+            </>
+          )}
+        </BookingInfos>
+      </BookingPictureAndInfos>
+      {isSmallScreen && (
+        <BookingInfos>
           <BookingText>
             Reservation made on {niceDate(booking.createdAt)}
           </BookingText>
@@ -79,7 +122,7 @@ const BookingCard: FC<BookingCardProps> = ({
             See reservation details
           </Button>
         </BookingInfos>
-      </BookingPictureAndInfos>
+      )}
       {allowReview && (
         <BookingReviewButton>
           <Button

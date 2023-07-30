@@ -38,7 +38,6 @@ const EmailConfirmation = () => {
 
   useEffect(() => {
     const handleVerifyEmail = async (token: string) => {
-      console.log({ token });
       const response = await verifyEmail(token);
       if (response.status === "success") {
         if (response.data.user) {
@@ -68,7 +67,6 @@ const EmailConfirmation = () => {
           );
           setTimeout(function () {
             const uri = window.location.href.split("uri=").slice(-1)[0];
-            console.log({ uri });
             return navigate(uri || "/");
           }, 2000);
         } else {
@@ -83,7 +81,7 @@ const EmailConfirmation = () => {
       setLoading(false);
     };
     handleVerifyEmail(token);
-  }, [token]);
+  }, [dispatch, navigate, token]);
 
   if (!error)
     return (

@@ -15,8 +15,6 @@ export type TTourItem = {
 export type TItem = {
   tourId: string;
   startingDate: Date;
-  // kidPrice?: number;
-  // price: number;
   adults: number;
   children: number;
 };
@@ -32,7 +30,6 @@ export type TItemWithTourInfo = {
 
 export type TSoldOutItem = TItem & {
   tour: TTourItem;
-  // availableGroupCapacity: number;
 };
 
 export type TUpdateItem = {

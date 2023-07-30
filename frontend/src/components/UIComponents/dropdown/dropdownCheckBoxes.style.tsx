@@ -30,8 +30,6 @@ export const DropdownCheckBoxesContainer = styled.div`
     label {
       font-size: 1.6rem;
     }
-
-    /* grid-template-columns: repeat(4, auto); */
   }
 
   & ${CheckBoxAll} {

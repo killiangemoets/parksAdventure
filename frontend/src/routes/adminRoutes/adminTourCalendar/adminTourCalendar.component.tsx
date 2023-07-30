@@ -40,7 +40,6 @@ const AdminTourCalendar = () => {
       if (!slug) return;
       setIsLoading(true);
       const response = await getTourCalendar(slug);
-      console.log(response);
       if (response && response.status === "success") {
         setTourName(response.data.name);
         setTourCalendar(response.data.availabilities);
@@ -60,7 +59,7 @@ const AdminTourCalendar = () => {
 
   useEffect(() => {
     dispatch(fetchTourAsync(slug));
-  }, [slug]);
+  }, [dispatch, slug]);
 
   return (
     <AdminTourCalendarContainer>

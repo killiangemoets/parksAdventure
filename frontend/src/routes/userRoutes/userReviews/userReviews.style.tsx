@@ -8,6 +8,10 @@ export const UserReviewsContainer = styled.div`
   gap: 6.4rem;
   width: 100%;
   min-height: calc(100vh - 16rem);
+
+  @media (max-width: 480px) {
+    padding: 6.4rem 4rem;
+  }
 `;
 
 export const Reviews = styled.div`
@@ -16,5 +20,5 @@ export const Reviews = styled.div`
 `;
 
 export const UserReviewsSpinner = styled.div`
-padding-top: 12rem;
-`
+  padding-top: 12rem;
+`;

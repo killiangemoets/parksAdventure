@@ -101,7 +101,6 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items }) => {
   const handleValidatePayment = async () => {
     setLoading(!loading);
     const response = await getCheckoutSession(items);
-    console.log(response);
     setLoading(false);
     if (response.status === "success") {
       return (window.location.href = response.data.session);

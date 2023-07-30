@@ -64,6 +64,7 @@ export const WishList = () => {
       (requestStringFromUrl ? `&${requestStringFromUrl}` : "");
 
     dispatch(fetchToursAsync(requestString));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams, wishlist]);
 
   useEffect(() => {

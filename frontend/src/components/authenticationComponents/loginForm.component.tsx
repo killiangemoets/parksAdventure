@@ -38,7 +38,6 @@ export const LoginForm = () => {
 
   useEffect(() => {
     const newUri = searchParams.get("uri");
-    console.log({ newUri });
     setUri(newUri ? newUri.replaceAll("%26", "&") : null);
   }, [searchParams]);
 

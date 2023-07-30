@@ -118,6 +118,16 @@ export const PicturesCarouselContainer = styled.div`
   @media (max-width: 500px) {
     width: 92vw;
     height: calc((92vw / 3) * 2);
+
+    .mySwiper2 {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    .mySwiper {
+      border-bottom-left-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
   }
 `;
 

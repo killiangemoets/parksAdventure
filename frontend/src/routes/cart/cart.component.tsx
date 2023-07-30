@@ -26,6 +26,7 @@ import {
   ItemsList,
   RightColumn,
   SoldOutItems,
+  TitleContainer,
 } from "./cart.style";
 import { TourData } from "../../types/tour";
 import { getTopTourRecommendations } from "../../api/tour-requests";
@@ -125,6 +126,7 @@ const Cart = () => {
       setSoldoutItems([]);
       dispatch(setOrder([]));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   useEffect(() => {
@@ -134,7 +136,9 @@ const Cart = () => {
   return (
     <CartContainer>
       <CartWrapper>
-        <Title titleType={TITLE_TYPE_CLASSES.section}>Shopping Cart</Title>
+        <TitleContainer>
+          <Title titleType={TITLE_TYPE_CLASSES.section}>Shopping Cart</Title>
+        </TitleContainer>
         <CartBody>
           {errorMessage && (
             <CartEmpty>
@@ -150,7 +154,6 @@ const Cart = () => {
             </CartSpinner>
           ) : (
             <RightColumn>
-              {/* {itemsWithTourInfo.length > 0 && ( */}
               <ItemsList>
                 {itemsWithTourInfo.map((item, i) => (
                   <CartItem
@@ -164,7 +167,6 @@ const Cart = () => {
                   />
                 ))}
               </ItemsList>
-              {/* )} */}
               {soldoutItems.length > 0 && (
                 <SoldOutItems>
                   <Title titleType={TITLE_TYPE_CLASSES.section}>
@@ -189,7 +191,6 @@ const Cart = () => {
                   <CheckoutCard
                     numberOfItems={itemsWithTourInfo.length}
                     totalPrice={calculateBasketPrice(itemsWithTourInfo)}
-                    items={itemsWithTourInfo}
                   />
                 </CartCheckout>
               )}

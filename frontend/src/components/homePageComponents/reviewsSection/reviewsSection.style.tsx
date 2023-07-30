@@ -53,3 +53,13 @@ export const ReviewsSecContent = styled.div`
     width: 100%;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  max-width: 38rem;
+  text-align: center;
+  height: 2rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  margin-bottom: 12rem;
+`;

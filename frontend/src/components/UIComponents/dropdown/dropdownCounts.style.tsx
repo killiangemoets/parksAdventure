@@ -6,9 +6,7 @@ import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
 export const DropdownCountsContainer = styled.ul`
   position: absolute;
   top: 108%;
-  /* width: 100%; */
   background-color: #fdfaf5;
-  /* background-color: #faf2e5; */
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 4;
@@ -18,7 +16,6 @@ export const DropdownCountsContainer = styled.ul`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* gap: 3.2rem; */
 
   li:not(:last-child) {
     border-bottom: 1px solid #aaa;
@@ -75,7 +72,6 @@ export const CountValue = styled.input`
   border: none;
   background-color: #ffff;
   background-color: #fdfaf5;
-  /* background-color: #faf2e5; */
 
   border-radius: 12px;
   transition: all 0.3s;
@@ -96,7 +92,6 @@ export const CountValue = styled.input`
   &:focus {
     outline: none;
     border: 1px solid #aaa;
-    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
   }
 `;
 

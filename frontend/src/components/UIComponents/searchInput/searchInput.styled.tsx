@@ -61,7 +61,6 @@ export const Input = styled.input<InputProps>`
   &:focus {
     outline: none;
     border: 1px solid #aaa;
-    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
   }
 
   ${({ adminStyle }) =>

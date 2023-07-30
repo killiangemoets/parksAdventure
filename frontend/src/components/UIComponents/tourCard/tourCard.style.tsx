@@ -175,7 +175,6 @@ export const TourContent = styled.div`
 export const TourNextDate = styled.p`
   font-size: 1.4rem;
   font-weight: 600;
-  /* letter-spacing: 0.4px; */
   text-transform: uppercase;
   color: #303a29;
   color: #cc704b;

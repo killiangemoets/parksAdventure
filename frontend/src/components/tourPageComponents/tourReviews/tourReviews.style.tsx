@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { ReactComponent as InfoSVG } from "../../../assets/information-circle.svg";
 
 export const TourReviewsContainer = styled.div`
-  /* margin-top: 6.4rem; */
   width: 100%;
   background-color: #f9eedb;
   padding: 6.4rem;
@@ -14,6 +13,10 @@ export const TourReviewsContainer = styled.div`
 
   h2 {
     position: relative;
+  }
+
+  @media (max-width: 480px) {
+    padding: 6.4rem 4rem;
   }
 `;
 
@@ -51,9 +54,6 @@ export const ReviewsModalText = styled.div`
   text-align: justify;
   letter-spacing: 1px;
   max-width: 46rem;
-
-  /* font-weight: 400; */
-  /* letter-spacing: 0.4px; */
 `;
 
 export const NoReviewsMessage = styled.p`

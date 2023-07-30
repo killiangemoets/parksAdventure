@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const SwitchInputContainer = styled.div`
-  /* width: auto; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,6 +13,10 @@ export const SwitchInputContainer = styled.div`
     &:hover {
       background-color: #ccc;
     }
+  }
+
+  @media (max-width: 800px) {
+    grid-column: 1/4;
   }
 `;
 

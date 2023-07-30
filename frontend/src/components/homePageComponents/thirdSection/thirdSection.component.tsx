@@ -21,8 +21,6 @@ const ThirdSection = () => {
       const boxTop = box.getBoundingClientRect().top;
       if (boxTop < triggerBottom) {
         box.classList.add("show");
-        // } else if (boxTop > triggerBottom + 200) {
-        // box.classList.remove("show");
       }
     });
   };

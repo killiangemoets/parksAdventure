@@ -28,7 +28,6 @@ const ForgotPasswordForm = () => {
     setErrorMessage("");
     setSuccessMessage("");
     const response = await forgotPassword(email);
-    console.log(response);
     setLoading(false);
 
     if (response.status === "success") {
@@ -43,7 +42,6 @@ const ForgotPasswordForm = () => {
       if (
         response.message.includes("There is no user with this email address.")
       ) {
-        // setErrorMessage(response.message);
         setSuccess(true);
         setSuccessMessage(
           "If an account exists with this email address, we sent you an email with the instructions to reset your password."

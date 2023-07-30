@@ -22,8 +22,6 @@ const getTourDataInSendFormat = async (tourData: CreateTourData) => {
     index: newImage.index,
   }));
 
-  console.log({ imagesBase64, uploadedImages });
-
   const tourBody = {
     name: tourData.name,
     duration: tourData.duration,

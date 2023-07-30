@@ -14,7 +14,7 @@ const useCheckLogin = () => {
     } else {
       setShowLoginForm(true);
     }
-  }, [userId]);
+  }, [navigate, userId]);
 
   return showLoginForm;
 };

@@ -30,7 +30,6 @@ const useDatesFromAvailabilities = ({
         availability.price < minPrice &&
         new Date(availability.date) > new Date(Date.now())
       ) {
-        // if (availability.price < minPrice) {
         cheapestDates = [availability.date];
         minPrice = availability.price;
       } else if (availability.price === minPrice) {

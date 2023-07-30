@@ -17,7 +17,6 @@ export const cartReducer = (
 ): CartState => {
   switch (action.type) {
     case CART_ACTION_TYPES.ADD_ITEM:
-      console.log("ADD TO CART REDUCER", action.payload);
       let newItems = [];
       let updated = false;
       state.items.forEach((item) => {
@@ -37,7 +36,6 @@ export const cartReducer = (
       if (!updated) newItems.push(action.payload);
       return { ...state, items: newItems };
     case CART_ACTION_TYPES.REMOVE_ITEM:
-      console.log("REMOVE FROM CART REDUCER", action.payload);
       return {
         ...state,
         items: state.items.filter(
@@ -63,11 +61,6 @@ export const cartReducer = (
                 action.payload.newData?.startingDate as Date
               )
           )
-      );
-      console.log(
-        "UPDATE FROM CART REDUCER",
-        action.payload,
-        alreadyAReservationForThisNewDate
       );
       let updatedItems: TItem[] = [];
       if (!alreadyAReservationForThisNewDate) {
@@ -108,7 +101,6 @@ export const cartReducer = (
       }
       return { ...state, items: updatedItems };
     case CART_ACTION_TYPES.CLEAR_CART:
-      console.log("CLEAR CART REDUCER");
       return CART_INITIAL_STATE;
     default:
       return state;

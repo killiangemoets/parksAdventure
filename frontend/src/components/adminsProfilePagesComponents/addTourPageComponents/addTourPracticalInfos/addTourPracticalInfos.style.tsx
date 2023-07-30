@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { QuickFactName } from "../../../tourPageComponents/quickFact/quickFact.style";
-import { ListIcon } from "../../../UIComponents/infoIcon/infoIcon.style";
+import { QuickFactInputContainer } from "../quickFactInput/quickFactInput.style";
 
 export const AddTourPracticalInfosContainer = styled.div`
   padding: 6.4rem;
@@ -8,6 +8,10 @@ export const AddTourPracticalInfosContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 450px) {
+    padding: 6.4rem 3.2rem;
+  }
 `;
 
 export const AddTourPracticalInfosWrapper = styled.div`
@@ -40,6 +44,25 @@ export const AddTourPracticalInfosContent = styled.div`
     width: 22rem;
     margin: 0;
   }
+
+  @media (max-width: 650px) {
+    width: 100%;
+    & ${QuickFactName} {
+      width: 14rem;
+    }
+  }
+
+  @media (max-width: 500px) {
+    & ${QuickFactName} {
+      width: 100%;
+    }
+
+    & ${QuickFactInputContainer} {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.8rem;
+    }
+  }
 `;
 
 export const AdditionalInfoInputs = styled.div`
@@ -53,4 +76,8 @@ export const AdditionalInfoExtraInputs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+
+  @media (max-width: 500px) {
+    margin-left: 0;
+  }
 `;

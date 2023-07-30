@@ -1,23 +1,9 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import Modal from "../modal/modal.component";
-import StarsRating from "../starsRating/starsRating.component";
-import {
-  ReviewInput,
-  ReviewModalButtons,
-  ReviewModalWrapper,
-} from "../review/review.style";
-import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
-import FormButton from "../formButton/formButton.component";
-import { ErrorMessage } from "../../authenticationComponents/authentication.style";
-import { PROFILE_PICTURE_SIZE_CLASSES } from "../profilePicture/profilePicture.component";
-import { StarsRatingContainer } from "./createReviewModal.style";
+import { FC, useEffect, useState } from "react";
 import {
   createReview,
   editMyReview,
   getMyReviews,
 } from "../../../api/review-requests";
-import Spinner, { SPINNER_TYPE_CLASSES } from "../spinner/spinner.component";
-import ReviewProfile from "../reviewProfile/reviewProfile.component";
 import ReviewModal from "../reviewModal/reviewModal.component";
 
 export type CreateReviewModalProps = {

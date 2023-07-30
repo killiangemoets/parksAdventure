@@ -11,7 +11,7 @@ export type TourState = {
 export const TOUR_INITIAL_STATE: TourState = {
   tour: null,
   isLoading: false,
-  error: null, // Since we do asynchronous fetching
+  error: null,
 };
 
 export const tourReducer = (

@@ -3,8 +3,14 @@ import Dropdown, {
   DROPDOWN_TYPE_CLASSES,
 } from "../../UIComponents/dropdown/dropdown.component";
 import {
-  AdminNavbarCenterContainer,
-  AdminNavbarContainer,
+  AdminAllReviewsNavbarCenterContainer,
+  AdminAllReviewsNavbarContainer,
+  AdminAllReviewsNavbarElement1,
+  AdminAllReviewsNavbarElement2,
+  AdminAllReviewsNavbarElement3,
+  AdminAllReviewsNavbarElement4,
+  AdminAllReviewsNavbarElement5,
+  AdminAllReviewsNavbarElement6,
   AdminNavbarLeftContainer,
   AdminNavbarRightContainer,
   UserContainer,
@@ -67,6 +73,7 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
     ratingSelection[0]
   );
   const [dates, setDates] = useState<[Dayjs, Dayjs] | null>(null);
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleUsersDropdown = (value: Info): void => {
     if (value.id === "allUsers") searchParams.delete("user");
@@ -215,56 +222,103 @@ const AllReviewsNavbar: FC<AllReviewsNavbarProps> = ({
       searchParams.delete("sort");
       setSearchParams(searchParams);
     }
-  }, [searchParams]);
+  }, [searchParams, setSearchParams]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1400 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 1400 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
 
   return (
-    <AdminNavbarContainer>
-      <AdminNavbarLeftContainer>
-        <CheckBoxes
-          options={[{ value: "Show Hidden Reviews", id: "showHidden" }]}
-          allowSelectAll={false}
-          selection={showHidden}
-          handler={(newValues) => {
-            handleShowHidden(newValues as TInfo<string>[]);
-          }}
-        />
-      </AdminNavbarLeftContainer>
-      <AdminNavbarCenterContainer>
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedUser}
-          list={usersSelection}
-          handleInput={handleUsersDropdown}
-        />
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedTour}
-          list={toursSelection}
-          handleInput={handleToursDropdown}
-        />
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedRating}
-          list={ratingSelection}
-          handleInput={handleRatingDropdown}
-        />
-        <RangeDateInput
-          currentValues={dates}
-          handleChange={handleChangeDates}
-          adminStyle={true}
-          enableAllDates={true}
-        />
-      </AdminNavbarCenterContainer>
-      <AdminNavbarRightContainer>
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedSort}
-          list={sortSelection}
-          handleInput={handleSortDropdown}>
-          <SortIcon />
-        </Dropdown>
-      </AdminNavbarRightContainer>
-    </AdminNavbarContainer>
+    <AdminAllReviewsNavbarContainer>
+      {!isSmallScreen && (
+        <AdminNavbarLeftContainer>
+          <CheckBoxes
+            options={[{ value: "Show Hidden Reviews", id: "showHidden" }]}
+            allowSelectAll={false}
+            selection={showHidden}
+            handler={(newValues) => {
+              handleShowHidden(newValues as TInfo<string>[]);
+            }}
+          />
+        </AdminNavbarLeftContainer>
+      )}
+      <AdminAllReviewsNavbarCenterContainer>
+        {isSmallScreen && (
+          <AdminAllReviewsNavbarElement1>
+            <CheckBoxes
+              options={[{ value: "Show Hidden Reviews", id: "showHidden" }]}
+              allowSelectAll={false}
+              selection={showHidden}
+              handler={(newValues) => {
+                handleShowHidden(newValues as TInfo<string>[]);
+              }}
+            />
+          </AdminAllReviewsNavbarElement1>
+        )}
+        <AdminAllReviewsNavbarElement2>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedUser}
+            list={usersSelection}
+            handleInput={handleUsersDropdown}
+          />
+        </AdminAllReviewsNavbarElement2>
+        <AdminAllReviewsNavbarElement3>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedTour}
+            list={toursSelection}
+            handleInput={handleToursDropdown}
+          />
+        </AdminAllReviewsNavbarElement3>
+        <AdminAllReviewsNavbarElement4>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedRating}
+            list={ratingSelection}
+            handleInput={handleRatingDropdown}
+          />
+        </AdminAllReviewsNavbarElement4>
+        <AdminAllReviewsNavbarElement5>
+          <RangeDateInput
+            currentValues={dates}
+            handleChange={handleChangeDates}
+            adminStyle={true}
+            enableAllDates={true}
+          />
+        </AdminAllReviewsNavbarElement5>
+        {isSmallScreen && (
+          <AdminAllReviewsNavbarElement6>
+            <Dropdown
+              dropdownType={DROPDOWN_TYPE_CLASSES.input}
+              current={selectedSort}
+              list={sortSelection}
+              handleInput={handleSortDropdown}>
+              <SortIcon />
+            </Dropdown>
+          </AdminAllReviewsNavbarElement6>
+        )}
+      </AdminAllReviewsNavbarCenterContainer>
+      {!isSmallScreen && (
+        <AdminNavbarRightContainer>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedSort}
+            list={sortSelection}
+            handleInput={handleSortDropdown}>
+            <SortIcon />
+          </Dropdown>
+        </AdminNavbarRightContainer>
+      )}
+    </AdminAllReviewsNavbarContainer>
   );
 };
 

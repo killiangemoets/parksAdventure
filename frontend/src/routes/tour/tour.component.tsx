@@ -38,7 +38,7 @@ const Tour = () => {
 
   useEffect(() => {
     dispatch(fetchTourAsync(slug));
-  }, [slug]);
+  }, [dispatch, slug]);
 
   const handleScrollToBooking = () => {
     window.scrollTo({

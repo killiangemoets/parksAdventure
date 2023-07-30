@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import { FC, useState } from "react";
 import { ConfigProvider } from "antd";
 import {
   CheckBoxAll,
@@ -53,8 +53,7 @@ const CheckBoxes: FC<CheckBoxesProps> = ({
               fontSize: 14,
             },
           },
-        }}
-      >
+        }}>
         <CheckboxGroupElement
           options={options.map((option) => option.value?.toString() || "")}
           value={selection.map(
@@ -66,8 +65,7 @@ const CheckBoxes: FC<CheckBoxesProps> = ({
           <CheckBoxAll
             indeterminate={indeterminate}
             onChange={onCheckAllChange}
-            checked={checkAll}
-          >
+            checked={checkAll}>
             Select all
           </CheckBoxAll>
         )}

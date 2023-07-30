@@ -11,13 +11,11 @@ export const AdminSectionContainer = styled.div`
 `;
 
 export const AdminFixHeader = styled.div`
-  /* position: fixed; */
-  /* right: 0%; */
-  /* width: calc(100vw - 28rem); */
   width: 100%;
 `;
 
 export const AdminContent = styled.div`
+  padding: 0 3.2rem;
   max-width: 90rem;
   width: 100%;
   display: flex;
@@ -27,12 +25,19 @@ export const AdminContent = styled.div`
   gap: 3.2rem;
 `;
 
-export const LargeAdminContent = styled(AdminContent)`
+export const AdminMediumContent = styled(AdminContent)`
   max-width: 120rem;
 `;
 
 export const AdminLargeContent = styled(AdminContent)`
   max-width: 140rem;
+
+  @media (max-width: 700px) {
+    padding: 0 2rem;
+  }
+  @media (max-width: 450px) {
+    padding: 0 1rem;
+  }
 `;
 
 export const AdminContentSpinner = styled.div`
@@ -55,6 +60,13 @@ export const AdminStatsSection = styled.div`
   align-items: center;
   justify-content: center;
   gap: 6.4rem;
+
+  @media (max-width: 700px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+    width: fit-content;
+  }
 `;
 
 export const AdminStatContainer = styled.div`
@@ -70,6 +82,11 @@ export const AdminStatTitle = styled.p`
   text-transform: capitalize;
   letter-spacing: 1px;
   color: #999;
+
+  @media (max-width: 700px) {
+    font-size: 1.8rem;
+    letter-spacing: 0.8px;
+  }
 `;
 
 export const AdminStatValue = styled.h3`
@@ -78,4 +95,9 @@ export const AdminStatValue = styled.h3`
   font-size: 4rem;
   letter-spacing: 1px;
   color: #cc704b;
+
+  @media (max-width: 500px) {
+    font-size: 3.2rem;
+    letter-spacing: 0.8px;
+  }
 `;

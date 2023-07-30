@@ -59,15 +59,14 @@ export const Navigation = () => {
     navigate(`/signup?uri=${uri}`);
   };
 
-  const handleResize = () => {
-    if (window.innerWidth <= 620 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 620 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 620 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 620 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);

@@ -12,6 +12,10 @@ export const ConfirmationStepContainer = styled.div`
     font-size: 2rem;
     padding: 1.6rem 4.8rem;
   }
+
+  h1 {
+    text-align: center;
+  }
 `;
 
 export const ConfirmationStepTextContent = styled.div`

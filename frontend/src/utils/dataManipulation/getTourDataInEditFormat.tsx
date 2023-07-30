@@ -23,8 +23,6 @@ const getTourDataInEditFormat = async (tour: TourData) => {
     text: tour.startLocation.description,
   };
 
-  console.log("getTourDataInEditFormat", tour);
-
   const tourEditData: CreateTourData = {
     name: tour.name,
     images: [tour.imageCover, ...tour.images].map((image) => ({

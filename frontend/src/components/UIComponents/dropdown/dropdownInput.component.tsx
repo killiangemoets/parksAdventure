@@ -1,4 +1,3 @@
-// import { FC } from "react";
 import { FC } from "react";
 import { DropdownContainer, Option } from "./dropdownInput.style";
 
@@ -30,8 +29,7 @@ const DropdownInput: FC<DropdownPropsTotal> = ({
             onClick={() => {
               handler(info);
               !keeOpenAfterSelection && closeDropdown();
-            }}
-          >
+            }}>
             {info.value}
           </Option>
         );

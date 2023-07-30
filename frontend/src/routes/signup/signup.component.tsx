@@ -2,8 +2,6 @@ import SignupForm from "../../components/authenticationComponents/signupForm.com
 import { SignupContainer, SignupWrapper } from "./signup.style";
 
 export const Signup = () => {
-  // const showSignUpForm = useCheckLogin();
-
   return (
     <SignupContainer>
       <SignupWrapper>

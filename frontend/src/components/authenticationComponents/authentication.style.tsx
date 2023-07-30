@@ -2,6 +2,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { CheckBoxesContainer } from "../UIComponents/checkBoxes/checkBoxes.style";
 import { FormButtonContainer } from "../UIComponents/formButton/formButton.style";
+import {
+  TextInputContainer,
+  TextInputEl,
+} from "../UIComponents/textInput/textInput.style";
+import { SectionTitle } from "../UIComponents/title/title.style";
 
 export const AuthenticationContainer = styled.div`
   display: flex;
@@ -9,6 +14,8 @@ export const AuthenticationContainer = styled.div`
   gap: 2.8rem;
   align-items: center;
   justify-content: center;
+
+  width: 100%;
 `;
 
 export const AuthenticationLink = styled(Link)`
@@ -23,6 +30,10 @@ export const AuthenticationLink = styled(Link)`
   &:hover {
     color: #b86544;
     border-bottom: solid 1px #b86544;
+  }
+
+  @media (max-width: 482px) {
+    font-size: 1.8rem;
   }
 `;
 
@@ -49,6 +60,15 @@ export const AuthenticationCard = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4.2rem;
+  width: 100%;
+  max-width: 60rem;
+
+  @media (max-width: 482px) {
+    padding: 5.2rem 4.8rem;
+    & ${SectionTitle} {
+      font-size: 2rem;
+    }
+  }
 `;
 
 export const AuthenticationForm = styled.form`
@@ -58,10 +78,19 @@ export const AuthenticationForm = styled.form`
   gap: 3.2rem;
 
   & ${FormButtonContainer} {
-    margin-top: 1rem;
-    /* padding: 1.4rem; */
-    /* width: 40%; */
     align-self: flex-end;
+  }
+
+  & ${TextInputContainer} {
+    width: 100%;
+  }
+
+  & ${TextInputEl} {
+    min-width: 0;
+  }
+
+  @media (max-width: 482px) {
+    gap: 2rem;
   }
 `;
 
@@ -83,7 +112,6 @@ export const ErrorMessage = styled.p`
 export const SuccessMessage = styled.p`
   max-width: 40rem;
   text-align: center;
-  /* height: 2rem; */
   font-size: 1.6rem;
   font-weight: 500;
   letter-spacing: 0.4px;
@@ -103,7 +131,6 @@ export const LogoutCheckBox = styled.div`
   & ${CheckBoxesContainer} {
     label span {
       font-size: 1.6rem;
-      /* line-height: 1.8rem; */
       padding-right: 0;
       margin: 0 !important;
       font-weight: 500;

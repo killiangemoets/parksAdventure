@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const UserWishListContainer = styled.div`
   min-height: calc(100vh - 8rem);
-  padding: calc(8rem + 6.4rem) 6.4rem 0 6.4rem;
+  padding: calc(8rem + 6.4rem) 6.4rem 6.4rem 6.4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   h2 {
     padding-bottom: 6.4rem;
   }

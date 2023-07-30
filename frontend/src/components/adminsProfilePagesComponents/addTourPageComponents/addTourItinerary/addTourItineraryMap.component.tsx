@@ -14,8 +14,6 @@ import Map, {
   FullscreenControl,
   ScaleControl,
   GeolocateControl,
-  Source,
-  Layer,
 } from "react-map-gl";
 
 import InfoIcon, {
@@ -27,7 +25,6 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
 import { TCreateStop } from "../../../../types/tour";
-import getDirection from "../../../../utils/map/getDirection";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
   ? process.env.REACT_APP_MAP_BOX_TOKEN
@@ -65,7 +62,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
   const [popupInfo, setPopupInfo] = useState<TCreateStop | null>(null);
   const [showPopupAddInfo, setShowPopupAddInfo] = useState<boolean>(false);
   const [showErrorStopText, setShowErrorStopText] = useState<string>("");
-  // const [itinerary, setItinerary] = useState<[number, number][]>([]);
 
   useEffect(() => {
     const updatedPins = stops.map((stop, index) => (
@@ -76,7 +72,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
         anchor="bottom"
         onClick={(e) => {
           // If we let the click event propagates to the map, it will immediately close the popup
-          // with `closeOnClick: true`
           e.originalEvent.stopPropagation();
           setPopupInfo(stop);
         }}>
@@ -100,13 +95,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
       zoom: 5,
     });
   }, [stops]);
-  // useEffect(() => {
-  //   const updateItinerary = async () => {
-  //     const itinerary = await getDirection(stops);
-  //     setItinerary(itinerary);
-  //   };
-  //   updateItinerary();
-  // }, [stops]);
 
   const handleRenderNewStopInfo = (longitude: number, latitude: number) => {
     setShowErrorStopText("");
@@ -159,31 +147,6 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
         onClick={(e) => {
           handleRenderNewStopInfo(e.lngLat.lng, e.lngLat.lat);
         }}>
-        {/* <Source
-          id="polylineLayer"
-          type="geojson"
-          data={{
-            type: "Feature",
-            properties: {},
-            geometry: {
-              type: "LineString",
-              coordinates: itinerary,
-            },
-          }}>
-          <Layer
-            id="lineLayer"
-            type="line"
-            source="my-data"
-            layout={{
-              "line-join": "round",
-              "line-cap": "round",
-            }}
-            paint={{
-              "line-color": "#cc704b",
-              "line-width": 5,
-            }}
-          />
-        </Source> */}
         <GeolocateControl position="top-left" />
         <FullscreenControl position="top-left" />
         <NavigationControl position="top-left" />

@@ -8,6 +8,12 @@ export const BookingCardContainer = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+
+  @media (max-width: 600px) {
+    gap: 2.4rem;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const BookingPictureAndInfos = styled.div`
@@ -92,4 +98,10 @@ export const BookingReviewButton = styled.div`
   }
 `;
 
-export const BookingReviewUserInfo = styled.div``;
+export const BookingReviewUserInfo = styled.div`
+  @media (max-width: 600px) {
+    grid-row: 1/2;
+    margin-bottom: 1rem;
+    margin-left: 0.4rem;
+  }
+`;

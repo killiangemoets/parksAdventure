@@ -57,8 +57,6 @@ const GuideAccountActivation = () => {
     setErrorMessage("");
     const response = await activateTourGuide(token, password, passwordConfirm);
 
-    console.log("TOUR GUIDE ACTIVATION", response);
-
     setLoading(false);
     if (response.status === "success") {
       setSuccess(true);

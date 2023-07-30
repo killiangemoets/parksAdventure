@@ -16,7 +16,7 @@ import {
   LoadingDashboardContainer,
   LoadingMessage,
 } from "../adminDashboard/adminDashboard.style";
-import { LargeAdminContent } from "../adminRoutes.style";
+import { AdminMediumContent } from "../adminRoutes.style";
 import {
   AdminTourCalendarContainer,
   AdminTourCalendarTitle,
@@ -50,7 +50,6 @@ const AdminTourDashboard = () => {
       if (!slug) return;
       setIsLoading(true);
       const response = await getTourStats(slug);
-      console.log(response);
       if (response && response.status === "success") {
         setErrorMessage("");
         setTourStats(response.data);
@@ -62,7 +61,7 @@ const AdminTourDashboard = () => {
 
   useEffect(() => {
     dispatch(fetchTourAsync(slug));
-  }, [slug]);
+  }, [dispatch, slug]);
 
   const bookedUnbookadBarsOptions = {
     responsive: true,
@@ -191,12 +190,11 @@ const AdminTourDashboard = () => {
         <>
           <AdminTourCalendarTitle>
             <Title titleType={TITLE_TYPE_CLASSES.section}>
-              {/* {tourName} - Calendar */}
               {tourStats?.tourName} - Quick Stats
             </Title>
           </AdminTourCalendarTitle>
 
-          <LargeAdminContent>
+          <AdminMediumContent>
             <AdminDashboardGrid>
               <Counter
                 iconType={STAT_ICON_TYPE_CLASSES.users}
@@ -249,7 +247,7 @@ const AdminTourDashboard = () => {
                 data={incomeEvolutionData}
               />
             </AdminDashboardGrid>
-          </LargeAdminContent>
+          </AdminMediumContent>
         </>
       )}
       {errorMessage.length > 0 && <ErrorMessage>{errorMessage}</ErrorMessage>}

@@ -3,8 +3,12 @@ import styled from "styled-components";
 export const OverviewStepContainer = styled.div`
   width: 100%;
   display: flex;
-  /* min-gap: 6.4rem; */
   justify-content: space-between;
+
+  @media (max-width: 750px) {
+    flex-direction: column;
+    gap: 6.4rem;
+  }
 `;
 
 export const OverviewStepLeft = styled.div`

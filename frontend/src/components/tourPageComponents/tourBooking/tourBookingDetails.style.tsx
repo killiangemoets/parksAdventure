@@ -102,7 +102,7 @@ export const TourBookingFooter = styled.div`
   justify-content: space-between;
 
   @media (max-width: 560px) {
-    padding: 3.2rem 2rem;
+    padding: 3.2rem 1.6rem;
   }
 `;
 
@@ -141,6 +141,7 @@ export const TourBookingButtons = styled.div`
     button {
       border: solid 1.5px #cc704b;
       padding: 1.2rem 1.6rem;
+      width: 12.8rem;
       min-width: 0;
       font-size: 1.6rem;
 

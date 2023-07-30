@@ -17,11 +17,6 @@ export const userSections: ProfileSectionElement[] = [
     label: "my reviews",
     link: "/profile/reviews",
   },
-  // {
-  //   iconType: PROFILE_ICON_TYPE_CLASSES.messages,
-  //   label: "my messages",
-  //   link: "/profile/messages",
-  // },
   {
     iconType: PROFILE_ICON_TYPE_CLASSES.settings,
     label: "settings",
@@ -62,7 +57,7 @@ export const adminSections: ProfileSectionElement[] = [
   },
   {
     iconType: PROFILE_ICON_TYPE_CLASSES.addTour,
-    label: " add a tour",
+    label: " Add a tour",
     link: "/profile/add-tour",
   },
   {
@@ -155,6 +150,21 @@ export const adminDropdownSections: ProfileSectionElement[] = [
     link: "/profile/all-reviews",
   },
   {
+    iconType: PROFILE_ICON_TYPE_CLASSES.usersOrange,
+    label: "Users",
+    link: "/profile/all-users",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.tourGuidesOrange,
+    label: "Tour guides",
+    link: "/profile/guides",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.addTourOrgange,
+    label: " Add a tour",
+    link: "/profile/add-tour",
+  },
+  {
     iconType: PROFILE_ICON_TYPE_CLASSES.settingsOrange,
     label: " Settings",
     link: "/profile/settings",
@@ -181,6 +191,16 @@ export const guideDropdownSections: ProfileSectionElement[] = [
     iconType: PROFILE_ICON_TYPE_CLASSES.reviewsOrange,
     label: "Reviews",
     link: "/profile/all-reviews",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.usersOrange,
+    label: "Users",
+    link: "/profile/all-users",
+  },
+  {
+    iconType: PROFILE_ICON_TYPE_CLASSES.tourGuidesOrange,
+    label: "Tour guides",
+    link: "/profile/guides",
   },
   {
     iconType: PROFILE_ICON_TYPE_CLASSES.settingsOrange,

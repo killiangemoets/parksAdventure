@@ -1,6 +1,5 @@
 import { FormEvent, useState } from "react";
 import { UpdateUserPasswordData } from "../../../types/user";
-import Button from "../../UIComponents/button/button.component";
 import CheckBoxes from "../../UIComponents/checkBoxes/checkBoxes.component";
 import TextInput from "../../UIComponents/textInput/textInput.component";
 import Title, {

@@ -1,4 +1,4 @@
-import React, { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect } from "react";
 
 import Map, {
   Marker,
@@ -78,7 +78,6 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
         style={{ cursor: "pointer" }}
         onClick={(e) => {
           // If we let the click event propagates to the map, it will immediately close the popup
-          // with `closeOnClick: true`
           e.originalEvent.stopPropagation();
           if (stop.popupContent) setPopupInfo(stop);
         }}>
@@ -93,7 +92,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
       </Marker>
     ));
     setPins(updatedPins);
-  }, [locations]);
+  }, [locations, type]);
 
   useEffect(() => {
     if (type === MAP_TYPE_CLASSES.tourItinerary) {
@@ -107,11 +106,10 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
         zoom: 5,
       });
     }
-  }, [locations]);
+  }, [locations, type]);
 
   useEffect(() => {
     if (!initialViewState) return;
-    // console.log("NEW VIEW STATE", initialViewState);
     setViewState(initialViewState);
   }, [initialViewState]);
 

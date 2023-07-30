@@ -6,6 +6,10 @@ export const AddTourCalendarContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 450px) {
+    padding: 6.4rem 3.2rem;
+  }
 `;
 
 export const AddTourCalendarWrapper = styled.div`
@@ -28,7 +32,8 @@ export const AddTourCalendarContent = styled.div`
 
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: center; */
-  /* height: 10rem; */
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;

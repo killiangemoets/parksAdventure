@@ -9,6 +9,10 @@ export const AdminDashboardGrid = styled.div`
   padding-bottom: 6.4rem;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 770px) {
+    gap: 2rem;
+  }
 `;
 
 export const LoadingDashboardContainer = styled.div`

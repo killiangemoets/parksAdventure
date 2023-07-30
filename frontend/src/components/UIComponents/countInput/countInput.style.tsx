@@ -20,9 +20,7 @@ export const CountValue = styled.input`
   font-family: inherit;
   color: inherit;
   border: none;
-  background-color: #ffff;
   background-color: #fdfaf5;
-  /* background-color: #faf2e5; */
 
   border-radius: 12px;
   transition: all 0.3s;
@@ -43,7 +41,6 @@ export const CountValue = styled.input`
   &:focus {
     outline: none;
     border: 1px solid #aaa;
-    /* box-shadow: 0 0 0 0.32rem rgba(250, 242, 229, 0.5); */
   }
 `;
 

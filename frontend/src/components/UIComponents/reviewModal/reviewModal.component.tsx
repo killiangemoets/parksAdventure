@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
+import { ChangeEvent, FC } from "react";
 import Modal from "../modal/modal.component";
 import StarsRating from "../starsRating/starsRating.component";
 import {

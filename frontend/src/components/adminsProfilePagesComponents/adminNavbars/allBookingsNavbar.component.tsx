@@ -3,10 +3,13 @@ import Dropdown, {
   DROPDOWN_TYPE_CLASSES,
 } from "../../UIComponents/dropdown/dropdown.component";
 import {
-  AdminNavbarCenterContainer,
-  AdminNavbarContainer,
-  AdminNavbarLeftContainer,
-  AdminNavbarRightContainer,
+  AdminAllBookingsNavbarCenterContainer,
+  AdminAllBookingsNavbarContainer,
+  AdminAllBookingsNavbarElement1,
+  AdminAllBookingsNavbarElement2,
+  AdminAllBookingsNavbarElement3,
+  AdminAllBookingsNavbarElement4,
+  AdminAllBookingsNavbarElement5,
   UserContainer,
   UserEmail,
   UserName,
@@ -178,50 +181,59 @@ const AllBookingsNavbar: FC<AllBookingsNavbarProps> = ({
       searchParams.delete("sort");
       setSearchParams(searchParams);
     }
-  }, [searchParams]);
+  }, [searchParams, setSearchParams]);
 
   return (
-    <AdminNavbarContainer>
-      <AdminNavbarLeftContainer></AdminNavbarLeftContainer>
-      <AdminNavbarCenterContainer>
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedUser}
-          list={usersSelection}
-          handleInput={handleUsersDropdown}
-        />
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedTour}
-          list={toursSelection}
-          handleInput={handleToursDropdown}
-        />
-        <SearchInput
-          handleDelete={handleDeleteSearchRefNumber}
-          handleSubmit={handleSubmitSearchRefNumber}
-          placeholder={"Reference number"}
-          value={referenceNumber}
-          onChange={(e) => {
-            setReferenceNumber(e.target.value);
-          }}
-          adminStyle={true}
-        />
-        <RangeDateInput
-          currentValues={dates}
-          handleChange={handleChangeDates}
-          adminStyle={true}
-          enableAllDates={true}
-        />
-        <Dropdown
-          dropdownType={DROPDOWN_TYPE_CLASSES.input}
-          current={selectedSort}
-          list={sortSelection}
-          handleInput={handleSortDropdown}>
-          <SortIcon />
-        </Dropdown>
-      </AdminNavbarCenterContainer>
-      <AdminNavbarRightContainer></AdminNavbarRightContainer>
-    </AdminNavbarContainer>
+    <AdminAllBookingsNavbarContainer>
+      <AdminAllBookingsNavbarCenterContainer>
+        <AdminAllBookingsNavbarElement1>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedUser}
+            list={usersSelection}
+            handleInput={handleUsersDropdown}
+          />
+        </AdminAllBookingsNavbarElement1>
+        <AdminAllBookingsNavbarElement2>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedTour}
+            list={toursSelection}
+            handleInput={handleToursDropdown}
+          />
+        </AdminAllBookingsNavbarElement2>
+
+        <AdminAllBookingsNavbarElement3>
+          <SearchInput
+            handleDelete={handleDeleteSearchRefNumber}
+            handleSubmit={handleSubmitSearchRefNumber}
+            placeholder={"Reference number"}
+            value={referenceNumber}
+            onChange={(e) => {
+              setReferenceNumber(e.target.value);
+            }}
+            adminStyle={true}
+          />
+        </AdminAllBookingsNavbarElement3>
+        <AdminAllBookingsNavbarElement4>
+          <RangeDateInput
+            currentValues={dates}
+            handleChange={handleChangeDates}
+            adminStyle={true}
+            enableAllDates={true}
+          />
+        </AdminAllBookingsNavbarElement4>
+        <AdminAllBookingsNavbarElement5>
+          <Dropdown
+            dropdownType={DROPDOWN_TYPE_CLASSES.input}
+            current={selectedSort}
+            list={sortSelection}
+            handleInput={handleSortDropdown}>
+            <SortIcon />
+          </Dropdown>
+        </AdminAllBookingsNavbarElement5>
+      </AdminAllBookingsNavbarCenterContainer>
+    </AdminAllBookingsNavbarContainer>
   );
 };
 

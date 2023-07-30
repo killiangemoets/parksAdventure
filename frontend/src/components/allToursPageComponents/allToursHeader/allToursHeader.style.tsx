@@ -63,7 +63,6 @@ export const AllToursTitles = styled.div`
   gap: 1rem;
 
   @media (max-width: 700px) {
-    /* padding-top: 4.8rem; */
     grid-row: 1;
     height: fit-content;
   }

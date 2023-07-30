@@ -137,8 +137,7 @@ const Dropdown: FC<DropdownCommonProps & DropdownConditionalProps> = ({
         onClick={() => {
           setOpenDropdown(!openDropdown);
         }}
-        style={{ border: error ? "2px solid #ff0033" : "" }}
-      >
+        style={{ border: error ? "2px solid #ff0033" : "" }}>
         <DropdownButtonLeft>
           {children}
           {current && current.value}

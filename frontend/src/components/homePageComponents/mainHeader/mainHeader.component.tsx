@@ -7,7 +7,6 @@ import {
   MainHeaderText,
 } from "./mainHeader.style";
 
-import $ from "jquery";
 import HeaderCarousel from "../mainCarousel/mainCarousel.component";
 
 const bgImagesUrl = [
@@ -21,29 +20,13 @@ const bgImagesUrl = [
 const MainHeader = () => {
   const [bgImages, setBgImages] = useState<React.ReactNode[]>([]);
 
-  const textAnimation = (): void => {
-    const TextEl = $(".text");
-    const LogoEl = $(".logo");
-    TextEl.animate(
-      { opacity: "0", marginBottom: "-4.8rem", marginTop: "4.8rem" },
-      0
-    );
-    TextEl.animate(
-      { opacity: "1", marginBottom: "0rem", marginTop: "0rem" },
-      800
-    );
-    LogoEl.animate({ opacity: "0", marginBottom: "-2.4rem" }, 0);
-    LogoEl.animate({ opacity: "1", marginBottom: "0rem" }, 300);
-  };
-
   useEffect(() => {
     const bgImagesEl = bgImagesUrl.map((backgroundImage) => (
       <MainHeaderContainer
         className="bg-img"
         style={{
           backgroundImage: `url(${backgroundImage})`,
-        }}
-      >
+        }}>
         <GreenOpacity>
           <MainHeaderContentContainer>
             <MainHeaderLogoContainer className="logo" />

@@ -102,15 +102,6 @@ const AdminReview: FC<ReviewCommonProps> = ({
           By <span>{userName}</span>{" "}
           {hidden === true ? "(DESACTIVATED USER)" : ""}
         </ReviewTourName>
-        {/* <ReviewProfile
-          userImg={userImg}
-          userName={userName}
-          link={link}
-          pictureSize={pictureSize}
-        />
-        <ReviewTourName>
-          About <span>{tourName}</span>
-        </ReviewTourName> */}
       </ReviewInfos>
       <ReviewContent>
         <ReviewInfos>

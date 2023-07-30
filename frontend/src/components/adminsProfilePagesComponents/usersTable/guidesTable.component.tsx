@@ -52,11 +52,25 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
   const [success, setSuccess] = useState<boolean>(false);
   const [roleInput, setRoleInput] = useState<TGuideRole>("guide");
   const [guideToEdit, setGuideToEdit] = useState<TExtendedGuide>();
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 1060 && !isSmallScreen) {
+      setIsSmallScreen(true);
+    } else if (window.innerWidth > 1060 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
 
   const columns: ColumnsType<GuideTableInfo> = [
     {
       title: "Role",
-      width: 80,
+      width: isSmallScreen ? 40 : 70,
       dataIndex: "role",
       key: "role",
       fixed: "left",
@@ -70,7 +84,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
     },
     {
       title: "Name",
-      width: 120,
+      width: isSmallScreen ? 68 : 120,
       dataIndex: "name",
       key: "name",
       fixed: "left",
@@ -147,29 +161,6 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
         );
       },
     });
-
-  const handleDeleteUser = (userId: string) => {
-    const newData = data.filter(
-      (userInfo) => userInfo.key.toString() !== userId
-    );
-    setData(newData);
-  };
-
-  const handleUpdateUserActivation = (userId: string) => {
-    const newData = data.map((userInfo) => {
-      if (userInfo.key.toString() === userId) {
-        return {
-          ...userInfo,
-          status:
-            userInfo.status === "active"
-              ? "desactivated"
-              : ("active" as "active" | "desactivated"),
-          tours: userInfo.status === "active" ? [] : userInfo.tours,
-        };
-      } else return userInfo;
-    });
-    setData(newData);
-  };
 
   useEffect(() => {
     const newData: GuideTableInfo[] = guides.map((guide) => ({
@@ -255,7 +246,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
         <Table
           columns={columns}
           dataSource={data}
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1200 }}
           // onChange={onChange}
           summary={() => (
             <Table.Summary fixed="top">

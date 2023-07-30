@@ -1,10 +1,7 @@
 import styled from "styled-components";
 import { ReactComponent as ResetSVG } from "../../../../assets/rotate-left.svg";
 import { QuickFactName } from "../../../tourPageComponents/quickFact/quickFact.style";
-import {
-  BaseButton,
-  InvertedButton,
-} from "../../../UIComponents/button/button.style";
+import { BaseButton } from "../../../UIComponents/button/button.style";
 
 export const CalendarInputContainer = styled.div`
   .ant-picker-calendar.ant-picker-calendar-full
@@ -83,6 +80,14 @@ export const CalendarInputContainer = styled.div`
   .fc .fc-daygrid-day-number {
     font-size: 1.4rem;
   }
+
+  .fc .fc-daygrid-event-harness {
+    min-width: 12rem;
+  }
+
+  .fc .fc-daygrid-day-frame {
+    overflow-x: scroll;
+  }
 `;
 
 export const CalendarInputTopBarContainer = styled.div`
@@ -96,10 +101,22 @@ export const CalendarInputTopBarContainer = styled.div`
   & ${BaseButton} {
     padding: 1rem 2rem;
     font-size: 1.4rem;
-    width: 18.8rem;
+    width: 20rem;
   }
 
-  & ${InvertedButton} {
+  @media (max-width: 800px) {
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(4, auto);
+    align-items: center;
+    justify-content: center;
+    row-gap: 2rem;
+    column-gap: 3.2rem;
+
+    & ${BaseButton} {
+      grid-row: 2/3;
+      grid-column: 3/5;
+    }
   }
 `;
 
@@ -140,6 +157,26 @@ export const DeleteMessage = styled.p`
 
 export const DeleteButtonWrapper = styled.div`
   width: 18.8rem;
+
+  @media (max-width: 800px) {
+    grid-row: 2/3;
+    grid-column: 1/3;
+  }
+`;
+
+export const ResetButtonWrapper = styled.div`
+  button {
+    width: fit-content;
+  }
+
+  @media (max-width: 800px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    button {
+      margin-right: 2rem;
+    }
+  }
 `;
 
 export const ErrorMessage = styled.p`

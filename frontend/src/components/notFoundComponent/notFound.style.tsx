@@ -4,4 +4,9 @@ import { EmailVerificationWrapper } from "../../routes/emailVerification/emailVe
 export const NotFoundWrapper = styled(EmailVerificationWrapper)`
   min-width: 50%;
   min-height: 50vh;
+  padding: 0 2rem;
+
+  h1 {
+    text-align: center;
+  }
 `;

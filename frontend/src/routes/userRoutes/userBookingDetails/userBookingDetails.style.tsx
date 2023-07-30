@@ -6,20 +6,12 @@ import {
 } from "../../../components/UIComponents/starsRating/starsRating.style";
 
 export const UserBookingDetailsContainer = styled.div`
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* align-items: center; */
-  /* justify-content: center; */
   gap: 6.4rem;
   width: 100%;
-  /* max-width: 130rem; */
 
   & ${RatingData} {
     display: flex;
-    /* align-items: center; */
-    /* justify-content: center; */
     gap: 0.6rem;
-    /* margin-top: 0px; */
     margin-bottom: 0rem;
   }
 
@@ -47,8 +39,6 @@ export const TitleContainer = styled.div`
 export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  /* justify-content: space-between; */
   gap: 1.8rem;
   width: 100%;
   max-width: 130rem;

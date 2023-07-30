@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export const StarsRatingContainer = styled.div`
   display: flex;
-  /* align-items: center; */
   gap: 1rem;
 
   .ant-rate {

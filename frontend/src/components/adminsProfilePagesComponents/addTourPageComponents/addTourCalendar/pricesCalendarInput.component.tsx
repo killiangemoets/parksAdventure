@@ -12,6 +12,7 @@ import {
   DeleteMessage,
   ErrorMessage,
   PriceModalButtons,
+  ResetButtonWrapper,
   ResetIcon,
 } from "./pricesCalendarInput.style";
 import SwitchInput from "../../../UIComponents/switchInput/switchInput.component";
@@ -321,12 +322,13 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
               }}>
               Edit selection
             </Button>
-
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.empty}
-              onClick={resetSelectedDates}>
-              <ResetIcon />
-            </Button>
+            <ResetButtonWrapper>
+              <Button
+                buttonType={BUTTON_TYPE_CLASSES.empty}
+                onClick={resetSelectedDates}>
+                <ResetIcon />
+              </Button>
+            </ResetButtonWrapper>
           </>
         )}
       </CalendarInputTopBarContainer>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { ConfigProvider, Slider } from "antd";
 import { SliderStepsContainer } from "./sliderSteps.style";
 
@@ -44,7 +44,7 @@ const SliderSteps: FC<SliderStepsProps> = ({
     });
 
     setMarks({ ...createMarks });
-  }, [steps]);
+  }, [isSmallScreen, steps]);
 
   useEffect(() => {
     marksRef.current.forEach((markEl) => {
@@ -72,7 +72,7 @@ const SliderSteps: FC<SliderStepsProps> = ({
     const stepMax = (100 / (steps.length - 1)) * max;
 
     setInputValues([stepMin, stepMax]);
-  }, [currentValues]);
+  }, [currentValues, steps]);
 
   const onChange = (values: [number, number]) => {
     setInputValues(values);
@@ -87,15 +87,14 @@ const SliderSteps: FC<SliderStepsProps> = ({
     handler(newValues);
   };
 
-  const handleResize = () => {
-    if (window.innerWidth <= 480 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 480 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 480 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 480 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);

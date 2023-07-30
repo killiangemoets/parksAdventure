@@ -1,4 +1,4 @@
-import { FC, InputHTMLAttributes } from "react";
+import { FC } from "react";
 import Button, { BUTTON_TYPE_CLASSES } from "../button/button.component";
 import {
   CountInputContainer,
@@ -30,8 +30,7 @@ const CountInput: FC<CountInputProps> = ({ updateValue, value, name }) => {
         buttonType={BUTTON_TYPE_CLASSES.empty}
         onClick={() => {
           handleClick("minus");
-        }}
-      >
+        }}>
         <Minus />
       </Button>
       <CountValue
@@ -45,8 +44,7 @@ const CountInput: FC<CountInputProps> = ({ updateValue, value, name }) => {
         buttonType={BUTTON_TYPE_CLASSES.empty}
         onClick={() => {
           handleClick("plus");
-        }}
-      >
+        }}>
         <Plus />
       </Button>
     </CountInputContainer>

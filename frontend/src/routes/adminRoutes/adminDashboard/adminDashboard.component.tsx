@@ -13,7 +13,7 @@ import AdminSectionTitle from "../../../components/adminsProfilePagesComponents/
 import {
   AdminFixHeader,
   AdminSectionContainer,
-  LargeAdminContent,
+  AdminMediumContent,
 } from "../adminRoutes.style";
 import {
   AdminDashboardGrid,
@@ -38,7 +38,6 @@ const AdminDashboard = () => {
     const loadGeneralStats = async () => {
       setIsLoading(true);
       const response = await getGeneralStats();
-      console.log(response);
       if (response && response.status === "success") {
         setErrorMessage("");
         setGeneralStats(response.data);
@@ -208,7 +207,7 @@ const AdminDashboard = () => {
         </LoadingDashboardContainer>
       )}
       {!isLoading && errorMessage.length === 0 && (
-        <LargeAdminContent>
+        <AdminMediumContent>
           <AdminDashboardGrid>
             <Counter
               iconType={STAT_ICON_TYPE_CLASSES.users}
@@ -267,7 +266,7 @@ const AdminDashboard = () => {
             />
             <MapChart title="Income By Location" data={incomeByLocationData} />
           </AdminDashboardGrid>
-        </LargeAdminContent>
+        </AdminMediumContent>
       )}
       {errorMessage.length > 0 && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </AdminSectionContainer>

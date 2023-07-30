@@ -83,7 +83,6 @@ const OverviewStep = () => {
       if (!newItemsWithTourInfo.length) navigate("/cart");
 
       setItemsWithTourInfo(newItemsWithTourInfo);
-      console.log({ newItemsWithTourInfo });
     } else {
       setErrorMessage(
         "An error occured. Please refresh the page or go back to the cart"
@@ -99,6 +98,7 @@ const OverviewStep = () => {
     if (!items.length) {
       navigate("/cart");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [items]);
 
   return (

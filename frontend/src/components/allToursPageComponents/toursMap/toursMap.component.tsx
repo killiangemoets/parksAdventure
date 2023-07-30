@@ -43,7 +43,7 @@ const ToursMap: FC<ToursMapProps> = ({
   const tours = useSelector(selectTours);
   const [markers, setMarkers] = useState<TLocation[]>([]);
   const [timeout, setTimout] = useState<number | undefined>(undefined);
-  const [initialViewState, setinitialViewState] = useState<TViewState>({
+  const [initialViewState, setInitialViewState] = useState<TViewState>({
     longitude: 0,
     latitude: 0,
     zoom: 0,
@@ -54,10 +54,8 @@ const ToursMap: FC<ToursMapProps> = ({
       searchParams.delete("box");
       searchParams.delete("viewstate");
     }
-    // searchParams.delete("page"); // side effect: it deletes the page parameter when
-    // we reload the page!
     setSearchParams(searchParams);
-  }, [mapOpen]);
+  }, [mapOpen, searchParams, setSearchParams]);
 
   useEffect(() => {
     if (!tours || !mapOpen) return setMarkers([]);
@@ -74,7 +72,7 @@ const ToursMap: FC<ToursMapProps> = ({
   useEffect(() => {
     const initialViewStateArr = searchParams.get("viewstate")?.split(",");
     if (!initialViewStateArr) {
-      setinitialViewState({
+      setInitialViewState({
         longitude: 0,
         latitude: 0,
         zoom: 0,
@@ -87,8 +85,8 @@ const ToursMap: FC<ToursMapProps> = ({
       zoom: +initialViewStateArr[2].replace("zoom", ""),
     };
     if (!compareObjects(newInitialViewState, initialViewState))
-      setinitialViewState(newInitialViewState);
-  }, [searchParams]);
+      setInitialViewState(newInitialViewState);
+  }, [initialViewState, searchParams]);
 
   const handleClickMap = () => {
     handleOpenMap && handleOpenMap();

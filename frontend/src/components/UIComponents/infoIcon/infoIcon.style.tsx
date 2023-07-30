@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 import { ReactComponent as PositionSVG } from "../../../assets/location-dot-solid.svg";
 import { ReactComponent as TentSVG } from "../../../assets/campground-solid.svg";
 import { ReactComponent as DifficultySVG } from "../../../assets/arrow-up-right-dots-solid.svg";

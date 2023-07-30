@@ -5,9 +5,12 @@ export const AdminTourCalendarContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding-top: 18rem;
-  padding-bottom: 6.4rem;
+  padding: 18rem 3.2rem 6.4rem 3.2rem;
   min-height: calc(100vh - 8rem);
+
+  h2 {
+    text-align: center;
+  }
 `;
 
 export const AdminTourCalendarSpinner = styled.div`
@@ -23,6 +26,10 @@ export const AdminTourCalendarTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 450px) {
+    padding: 3.2rem 3.2rem 4.8rem 3.2rem;
+  }
 `;
 
 export const AdminBookingsCalendarContainer = styled.div`

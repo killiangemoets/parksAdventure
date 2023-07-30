@@ -83,8 +83,6 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
   }, [slug]);
 
   const handleChangeGroup = (group: CountInputState[]) => {
-    console.log("handleChangeGroup", group);
-
     const currentCartItem = selectedAvailability
       ? cartItems.find((item) =>
           compareDates(item.startingDate, selectedAvailability?.date)
@@ -137,7 +135,6 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
           : 0)
       : 0;
 
-    console.log("handleChangeAvailability", availability, cartItems, spotsLeft);
     if (
       availability &&
       currentCountInputs[0].value + currentCountInputs[1].value > spotsLeft
@@ -158,15 +155,14 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
     setSelectedAvailability(availability);
   };
 
-  const handleResize = () => {
-    if (window.innerWidth <= 525 && !isSmallScreen) {
-      setIsSmallScreen(true);
-    } else if (window.innerWidth > 525 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 525 && !isSmallScreen) {
+        setIsSmallScreen(true);
+      } else if (window.innerWidth > 525 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);

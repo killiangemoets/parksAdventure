@@ -7,7 +7,7 @@ export const ChartContainer = styled.div`
   justify-content: space-between;
   gap: 0.4rem;
   border-radius: 12px;
-  padding: 3.2rem;
+  padding: 2.4rem;
   width: 100%;
   height: 100%;
   background-color: #fefdfa;
@@ -18,22 +18,47 @@ export const ChartContainer = styled.div`
 export const SmallChartContainer = styled(ChartContainer)`
   grid-row: span 2;
   grid-column: span 2;
+
+  @media (max-width: 770px) {
+    grid-row: span 1;
+    grid-column: span 3;
+  }
+
+  @media (max-width: 540px) {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
 `;
 
 export const MediumSmallChartContainer = styled(ChartContainer)`
   grid-row: span 2;
   grid-column: span 3;
+
+  @media (max-width: 770px) {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
 `;
 
 export const MediumChartContainer = styled(ChartContainer)`
   grid-row: span 2;
   grid-column: span 4;
+
+  @media (max-width: 770px) {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
 `;
 
 export const LargeChartContainer = styled(ChartContainer)`
   grid-row: span 1;
   grid-column: span 6;
   position: relative;
+
+  @media (max-width: 770px) {
+    grid-row: span 1;
+    grid-column: span 6;
+  }
 `;
 
 export const ChartTitle = styled.h4`
@@ -43,6 +68,10 @@ export const ChartTitle = styled.h4`
   font-size: 2rem;
   font-weight: 700;
   text-align: center;
+
+  @media (max-width: 800px) {
+    font-size: 1.6rem;
+  }
 `;
 
 export const Popup = styled.div`

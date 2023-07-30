@@ -163,3 +163,31 @@ export const ToursOrangeIcon = styled(MapSVG)`
     stroke: #cc704b;
   }
 `;
+
+export const UsersIconOrange = styled(UsersSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;
+export const TourGuidesIconOrange = styled(HikerSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    fill: none;
+    stroke-width: 28;
+    stroke: #cc704b;
+  }
+`;
+
+export const PlusIconOrange = styled(PlusSVG)`
+  width: 2.4rem;
+  height: 2.4rem;
+
+  .path {
+    stroke: #cc704b;
+  }
+`;

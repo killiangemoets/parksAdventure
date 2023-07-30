@@ -1,5 +1,15 @@
 import { createGlobalStyle } from "styled-components";
 
+/* #506044 
+#9fc088
+#CC704B
+#b86544
+#e0a993
+#F6E6CB 
+#faf2e5
+##fdfaf5
+*/
+
 export const GlobalStyle = createGlobalStyle`
 body {
   margin: 0;
@@ -33,6 +43,20 @@ body {
     &:hover{
       color: #cc704b
 
+    }
+  }
+
+  @media (max-width: 700px) {
+    .ant-picker-clear {
+      color: red !important;
+    }
+
+    .ant-picker-dropdown .ant-picker-panel-container .ant-picker-presets {
+      display: none !important;
+    }
+
+    .ant-picker-dropdown .ant-picker-panel-container .ant-picker-panels {
+      flex-direction: column;
     }
   }
 }

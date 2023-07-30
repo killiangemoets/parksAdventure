@@ -5,6 +5,18 @@ import {
 } from "../../../tourPageComponents/tourItinerary/tourItinerary.style";
 import { SectionTitle } from "../../../UIComponents/title/title.style";
 
+export const AddTourItineraryContainer = styled.div`
+  padding: 6.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  @media (max-width: 450px) {
+    padding: 6.4rem 3.2rem;
+  }
+`;
+
 export const AddTourItineraryWrapper = styled(TourItineraryWrapper)`
   width: 100%;
 

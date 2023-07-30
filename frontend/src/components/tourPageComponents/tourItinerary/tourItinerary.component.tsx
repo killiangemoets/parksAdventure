@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import {
-  selectTour,
-  selectTourIsLoading,
-  // selectTourIsLoading,
-} from "../../../store/tour/tour.selector";
+import { selectTour } from "../../../store/tour/tour.selector";
 import { TStop } from "../../../types/tour";
 import CustomMap from "../../UIComponents/customMap/customMap.component";
 import Title, {

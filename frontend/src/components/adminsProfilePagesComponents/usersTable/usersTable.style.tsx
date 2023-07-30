@@ -164,6 +164,19 @@ export const UserTableContainer = styled.div`
       background-color: transparent !important;
     }
   }
+
+  .ant-table-wrapper .ant-table-thead > tr > th,
+  .fpgNTV .ant-table-wrapper .ant-table-thead > tr > td,
+  .ant-table-wrapper .ant-table-column-title {
+    font-size: 1.6rem;
+  }
+
+  @media (max-width: 620px) {
+    .ant-table-cell {
+      font-size: 1.2rem;
+      letter-spacing: 0px;
+    }
+  }
 `;
 
 export const UserPictureContainer = styled.div`
@@ -179,6 +192,11 @@ export const UserName = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.4px;
+
+  @media (max-width: 620px) {
+    font-size: 1.2rem;
+    letter-spacing: 0px;
+  }
 `;
 
 export const Tours = styled.div`

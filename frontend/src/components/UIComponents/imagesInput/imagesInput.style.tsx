@@ -63,8 +63,6 @@ export const ImageButtons = styled.div`
 
 export const ImageElement = styled.div`
   position: relative;
-  /* width: 16rem; */
-  /* height: 16rem; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +83,6 @@ export const ImageElement = styled.div`
 export const TourImage = styled.img`
   width: 100%;
   height: 15rem;
-  /* height: 100%; */
   overflow: hidden;
   padding: 0.2rem;
   object-fit: contain;
@@ -93,7 +90,6 @@ export const TourImage = styled.img`
 `;
 
 export const LargeTourImage = styled(TourImage)`
-  /* width: 30rem; */
   height: 31.4rem;
 `;
 

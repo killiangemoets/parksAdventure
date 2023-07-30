@@ -27,10 +27,26 @@ export type UsersTableProps = {
 const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
   const userRole = useSelector(selectUserRole);
   const [data, setData] = useState<UserTableInfo[]>([]);
+
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  const handleResize = () => {
+    if (window.innerWidth <= 1060 && !isSmallScreen) {
+      setIsSmallScreen(true);
+    } else if (window.innerWidth > 1060 && isSmallScreen) {
+      setIsSmallScreen(false);
+    }
+  };
+
+  useEffect(() => {
+    handleResize();
+    window.addEventListener("resize", handleResize);
+  }, [isSmallScreen]);
+
   const columns: ColumnsType<UserTableInfo> = [
     {
       title: "Name",
-      width: 120,
+      width: isSmallScreen ? 68 : 100,
       dataIndex: "name",
       key: "name",
       fixed: "left",
@@ -54,7 +70,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
     },
     {
       title: "Email",
-      width: 180,
+      width: 118,
       dataIndex: "email",
       key: "email",
     },
@@ -62,40 +78,40 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       title: "Phone Number",
       dataIndex: "phoneNumber",
       key: "phoneNumber",
-      width: 128,
+      width: 72,
     },
     {
       title: "Birth Date",
       dataIndex: "birthDate",
       key: "birthDate",
-      width: 90,
+      width: 60,
     },
     {
       title: "N° of Bookings",
       dataIndex: "bookingsNumber",
       key: "bookingsNumber",
-      width: 62,
+      width: 54,
       sorter: (a, b) => a.bookingsNumber - b.bookingsNumber,
     },
     {
       title: "N° of Reviews",
       dataIndex: "reviewsNumber",
       key: "reviewsNumber",
-      width: 62,
+      width: 54,
       sorter: (a, b) => a.reviewsNumber - b.reviewsNumber,
     },
     {
       title: "Rating Average",
       dataIndex: "ratingAverage",
       key: "ratingAverage",
-      width: 62,
+      width: 54,
       sorter: (a, b) => a.ratingAverage - b.ratingAverage,
     },
     {
       title: "Status",
       dataIndex: "status",
       key: "stauts",
-      width: 72,
+      width: 60,
       sorter: (a, b) => {
         if (a.status === "desactivated" && b.status === "active") return 1;
         if (a.status === "active" && b.status === "desactivated") return -1;
@@ -109,7 +125,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       title: "",
       dataIndex: "actions",
       key: "actions",
-      width: 100,
+      width: 80,
       render: (_, record) => {
         return (
           <ActionButtons
@@ -122,32 +138,6 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
         );
       },
     });
-
-  const handleDeleteUser = (userId: string) => {
-    const newData = data.filter(
-      (userInfo) => userInfo.key.toString() !== userId
-    );
-    setData(newData);
-  };
-
-  const handleUpdateUserActivation = (userId: string) => {
-    const newData = data.map((userInfo) => {
-      if (userInfo.key.toString() === userId) {
-        return {
-          ...userInfo,
-          status:
-            userInfo.status === "active"
-              ? "desactivated"
-              : ("active" as "active" | "desactivated"),
-          reviewsNumber:
-            userInfo.status === "active" ? 0 : userInfo.reviewsNumber,
-          ratingAverage:
-            userInfo.status === "active" ? 4.5 : userInfo.ratingAverage,
-        };
-      } else return userInfo;
-    });
-    setData(newData);
-  };
 
   useEffect(() => {
     const newData: UserTableInfo[] = users.map((user) => ({
@@ -172,15 +162,6 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
     setData(newData);
   }, [users]);
 
-  // const onChange: TableProps<UserInfo>["onChange"] = (
-  //   pagination,
-  //   filters,
-  //   sorter,
-  //   extra
-  // ) => {
-  //   console.log("params", pagination, filters, sorter, extra);
-  // };
-
   return (
     <UserTableContainer>
       <ConfigProvider
@@ -190,7 +171,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
         <Table
           columns={columns}
           dataSource={data}
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1200 }}
           // onChange={onChange}
           summary={() => (
             <Table.Summary fixed="top">

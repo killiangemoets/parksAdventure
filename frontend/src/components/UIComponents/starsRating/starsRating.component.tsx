@@ -1,4 +1,4 @@
-import { ConfigProvider, Rate } from "antd";
+import { ConfigProvider } from "antd";
 import { FC } from "react";
 import {
   NumRatings,

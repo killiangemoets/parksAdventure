@@ -21,10 +21,20 @@ export const ContactInputs = styled.div`
   input {
     min-width: 28rem;
   }
+
+  @media (max-width: 530px) {
+    width: 100%;
+    gap: 2rem;
+  }
 `;
 
 export const ContactSmallInputs = styled.div`
   display: grid;
   grid-template-columns: auto auto;
   gap: 4.8rem;
+
+  @media (max-width: 530px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 `;

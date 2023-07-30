@@ -17,6 +17,10 @@ export const ProfileColumnContainer = styled.div`
   gap: 2.8rem;
   position: fixed;
   height: 100vh;
+
+  @media (max-width: 1000px) {
+    display: none;
+  }
 `;
 
 export const ProfileSectionContainer = styled(Link)`

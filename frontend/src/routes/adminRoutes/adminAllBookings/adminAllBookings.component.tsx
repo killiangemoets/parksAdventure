@@ -52,7 +52,6 @@ const AdminAllBookings = () => {
       if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 
       if (!requestString.includes("sort")) requestString += "&sort=-createdAt";
-      console.log({ requestString });
 
       const response = await getAllBookings(requestString);
 

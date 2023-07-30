@@ -29,7 +29,6 @@ const EmailVerification = () => {
     setError("");
     const redirectUri = searchParams.get("uri");
     const response = await resendEmail(email, redirectUri);
-    console.log(response);
     setLoading(false);
     if (response && response.status === "success") {
       setSent(true);

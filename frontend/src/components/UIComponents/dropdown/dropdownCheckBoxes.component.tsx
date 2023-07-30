@@ -1,4 +1,3 @@
-// import { FC } from "react";
 import { FC, useState } from "react";
 import Button from "../button/button.component";
 import CheckBoxes, {
@@ -35,8 +34,7 @@ const DropdownCheckBoxes: FC<DropdownCheckBoxesProps> = ({
         onClick={() => {
           closeDropdown();
           handler(newSelection);
-        }}
-      >
+        }}>
         Apply
       </Button>
     </DropdownCheckBoxesContainer>

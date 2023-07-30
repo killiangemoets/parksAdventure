@@ -87,7 +87,6 @@ type ErrorsProps = {
   summary: boolean;
   tourGuides: boolean;
   locations: boolean;
-  // availabilities: boolean;
   address: boolean;
   generalMessage: string;
 };
@@ -102,7 +101,6 @@ const defaultErrorsState: ErrorsProps = {
   summary: false,
   tourGuides: false,
   locations: false,
-  // availabilities: false,
   address: false,
   generalMessage: "",
 };
@@ -149,6 +147,7 @@ const AdminAddTour = () => {
   useEffect(() => {
     if (!slug || tour) return;
     dispatch(fetchTourAsync(slug));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   useEffect(() => {
@@ -168,6 +167,7 @@ const AdminAddTour = () => {
     };
 
     geTourToUploadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tour]);
 
   useEffect(() => {
@@ -181,7 +181,6 @@ const AdminAddTour = () => {
   }, []);
 
   const handleChange = (value: NewTourDataValueTypes, name: string) => {
-    console.log(value);
     setTourData({ ...tourData, [name]: value });
     setErrors({ ...errors, [name]: "" });
   };
@@ -208,18 +207,15 @@ const AdminAddTour = () => {
     if (!location?.length) newErrorsState.location = true;
     if (!categories.length) newErrorsState.categories = true;
     if (!summary?.length) newErrorsState.summary = true;
-    // if (!tourGuides?.length) newErrorsState.tourGuides = true;
     if (
       !tourGuidesList.find(
         (guide) =>
           guide.role === "lead-guide" &&
           tourGuides.find((tourGuide) => tourGuide.id === guide.id)
       )
-      // tourGuides.length === 0
     )
       newErrorsState.tourGuides = true;
     if (!locations.length) newErrorsState.locations = true;
-    // if (!availabilities.length) newErrorsState.availabilities = true;
     if (!address?.length) newErrorsState.address = true;
 
     if (
@@ -230,24 +226,20 @@ const AdminAddTour = () => {
       location?.length &&
       categories.length &&
       summary?.length &&
-      // tourGuides.length &&
       tourGuidesList.find(
         (guide) =>
           guide.role === "lead-guide" &&
           tourGuides.find((tourGuide) => tourGuide.id === guide.id)
       ) &&
       locations.length &&
-      // availabilities.length &&
       address?.length
     ) {
       const response =
         slug && tour?._id
           ? await updateTour(tourData, tour?._id)
           : await createTour(tourData);
-      console.log(response);
       if (response.status === "success") {
         navigate(`/tour/${response.data.data.slug}`);
-        // setTourData(newTourDataDefaultState);
       } else {
         if (response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";

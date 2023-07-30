@@ -18,13 +18,11 @@ export const ThirdSecWrapper = styled.div`
 
 export const ThirdSecElement = styled.div`
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   gap: 6.4rem;
 
   .box-left {
     transition: all 0.8s ease;
-    /* opacity: 0; */
     transform: translateX(-200%);
   }
 

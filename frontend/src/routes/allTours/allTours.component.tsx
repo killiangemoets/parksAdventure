@@ -67,7 +67,7 @@ const AllTours = () => {
       `?limit=${process.env.REACT_APP_RESULTS_PER_PAGE}` +
       (updatedRequestStringFromUrl ? `&${updatedRequestStringFromUrl}` : "");
     dispatch(fetchToursAsync(requestString));
-  }, [searchParams]);
+  }, [dispatch, searchParams]);
 
   useEffect(() => {
     const newNumberOfPages = Math.ceil(
@@ -107,16 +107,15 @@ const AllTours = () => {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const handleResize = () => {
-    if (window.innerWidth <= 940 && !isSmallScreen) {
-      setIsSmallScreen(true);
-      setMapOpen(false);
-    } else if (window.innerWidth > 940 && isSmallScreen) {
-      setIsSmallScreen(false);
-    }
-  };
-
   useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 940 && !isSmallScreen) {
+        setIsSmallScreen(true);
+        setMapOpen(false);
+      } else if (window.innerWidth > 940 && isSmallScreen) {
+        setIsSmallScreen(false);
+      }
+    };
     handleResize();
     window.addEventListener("resize", handleResize);
   }, [isSmallScreen]);
@@ -175,7 +174,6 @@ const AllTours = () => {
             <FloatButton>
               <Button
                 onClick={() => {
-                  console.log("click");
                   setIsFullMapMode(!isFullMapMode);
                   searchParams.delete("box");
                   searchParams.delete("viewstate");

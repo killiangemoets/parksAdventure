@@ -67,7 +67,6 @@ const AccountSettings = () => {
     e.preventDefault();
     setLoading(true);
     const response = await updateMe(userInputsData);
-    console.log(response);
     setLoading(false);
     if (response && response.status === "success") {
       setSuccess(true);

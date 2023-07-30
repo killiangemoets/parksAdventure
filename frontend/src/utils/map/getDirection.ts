@@ -18,7 +18,6 @@ const getDirection = async (
     );
     return directions.data.routes[0].geometry.coordinates;
   } catch (error) {
-    console.log(error);
     return [];
   }
 };

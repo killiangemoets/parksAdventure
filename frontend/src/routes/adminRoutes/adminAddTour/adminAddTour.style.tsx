@@ -9,7 +9,6 @@ type AddTourContainerProps = {
 export const AddTourContainer = styled.div<AddTourContainerProps>`
   display: flex;
   flex-direction: column;
-  /* gap: 6.4rem; */
   width: 100%;
 
   ${({ paddingTop }) =>
@@ -25,6 +24,10 @@ export const AddTourButtons = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 450px) {
+    padding: 6.4rem 2rem;
+  }
 `;
 
 export const AddTourButtonsWrapper = styled.div`
@@ -45,6 +48,11 @@ export const CancelButton = styled.div`
   height: 16rem;
   display: flex;
   align-items: center;
+
+  @media (max-width: 600px) {
+    align-items: flex-end;
+    margin-bottom: 2.6rem;
+  }
 `;
 
 export const MainButton = styled.div`
@@ -57,7 +65,6 @@ export const MainButton = styled.div`
   & ${CheckBoxesContainer} {
     label span {
       font-size: 1.6rem;
-      /* line-height: 1.8rem; */
       padding-right: 0;
       margin: 0 !important;
       font-weight: 500;
@@ -89,6 +96,20 @@ export const MainButton = styled.div`
 
   & ${BaseButton} {
     width: 40rem;
+  }
+
+  @media (max-width: 600px) {
+    text-align: center;
+    width: 20rem;
+    gap: 2rem;
+    & ${CheckBoxesContainer} {
+      .ant-checkbox-group {
+        height: 7.6rem;
+      }
+    }
+    & ${BaseButton} {
+      width: 20rem;
+    }
   }
 `;
 

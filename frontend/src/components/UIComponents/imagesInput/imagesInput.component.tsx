@@ -96,13 +96,11 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
                 <TourImage
                   alt="preview content"
                   src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
-                  // style={{ width: "20rem" }}
                 />
               ) : (
                 <LargeTourImage
                   alt="preview content"
                   src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
-                  // style={{ width: "20rem" }}
                 />
               ),
             contentHover: (

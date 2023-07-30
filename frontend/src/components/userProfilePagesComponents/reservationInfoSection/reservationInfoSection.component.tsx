@@ -15,6 +15,7 @@ import {
   ReservationInfoTitle,
   ReservationInfoSectionWrapper,
   InfoBlockContent,
+  InfoHeader,
 } from "./reservationInfoSection.style";
 import {
   selectBookingDetails,
@@ -58,6 +59,7 @@ const ReservationInfoSection = () => {
     );
     if (selectedAvailability) setTime(selectedAvailability.time);
   }, [bookingDetails, availabilities]);
+
   return (
     <ReservationInfoSectionContainer>
       <ReservationInfoSectionWrapper>
@@ -67,8 +69,10 @@ const ReservationInfoSection = () => {
           </Title>
 
           <Info>
-            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />
-            <InfoTitle>Date</InfoTitle>
+            <InfoHeader>
+              <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.date} />
+              <InfoTitle>Date</InfoTitle>
+            </InfoHeader>
             <InfoContent>
               {!isLoading && endDate && bookingDetails
                 ? niceDatesRange(bookingDetails.date, endDate)
@@ -76,8 +80,10 @@ const ReservationInfoSection = () => {
             </InfoContent>
           </Info>
           <Info>
-            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.time} />
-            <InfoTitle>Starting Time</InfoTitle>
+            <InfoHeader>
+              <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.time} />
+              <InfoTitle>Starting Time</InfoTitle>
+            </InfoHeader>
             <InfoContent>
               {!isLoading &&
                 bookingDetails &&
@@ -88,15 +94,19 @@ const ReservationInfoSection = () => {
             </InfoContent>
           </Info>
           <Info>
-            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
-            <InfoTitle>Address</InfoTitle>
+            <InfoHeader>
+              <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
+              <InfoTitle>Address</InfoTitle>
+            </InfoHeader>
             <InfoLink to="https://www.google.com">
               {!isLoading && address}
             </InfoLink>
           </Info>
           <Info>
-            <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.list} />
-            <InfoTitle>Additional Info</InfoTitle>
+            <InfoHeader>
+              <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.list} />
+              <InfoTitle>Additional Info</InfoTitle>
+            </InfoHeader>
             <InfoBlockContent>
               {!isLoading ? (
                 additionalInfo && additionalInfo?.length > 0 ? (

@@ -35,12 +35,11 @@ const fetchTourFailed = (error: string): FetchTourFailed => {
   return { type: TOUR_ACTION_TYPES.FETCH_TOUR_FAILED, payload: error };
 };
 
-// THUNK ACTION:
+// THUNK ACTIONS:
 export const fetchTourAsync =
   (slug: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getTour(slug);
-    console.log("TOUR", response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({
@@ -51,12 +50,10 @@ export const fetchTourAsync =
     else dispatch(fetchTourFailed(response.message));
   };
 
-// THUNK ACTION:
 export const fetchTourBookingAsync =
   (id: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getMyBookingDetails(id);
-    console.log("TOUR FROM BOOKINGS", response);
     if (response.status === "success")
       dispatch(
         fetchTourSuccess({

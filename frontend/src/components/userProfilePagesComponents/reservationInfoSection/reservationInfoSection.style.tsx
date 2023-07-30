@@ -2,21 +2,29 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const ReservationInfoSectionContainer = styled.div`
-  padding: 9.6rem;
+  padding: 6.4rem;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 500px) {
+    padding: 6.4rem 4.8rem;
+  }
 `;
 export const ReservationInfoSectionWrapper = styled.div`
   width: 100%;
   max-width: 120rem;
   display: flex;
-  /* align-items: center; */
   justify-content: space-between;
-  /* justify-content: center; */
-  /* flex-direction: column; */
-  /* gap: 9.6rem; */
   gap: 3.2rem;
+
+  @media (max-width: 1250px) {
+    flex-direction: column;
+  }
+
+  @media (max-width: 805px) {
+    gap: 4.8rem;
+  }
 `;
 
 export const InfoContainer = styled.div`
@@ -24,17 +32,31 @@ export const InfoContainer = styled.div`
   flex-direction: column;
   gap: 2rem;
   min-width: 40rem;
-  /* margin-left: 4.8rem; */
 
   h2 {
     margin-bottom: 1.2rem;
-    /* margin-left: -4.8rem; */
+  }
+
+  @media (max-width: 805px) {
+    gap: 3.2rem;
+    h2 {
+      margin-bottom: 0;
+    }
   }
 `;
 
 export const Info = styled.div`
   display: flex;
-  /* align-items: center; */
+  gap: 1.8rem;
+
+  @media (max-width: 805px) {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+`;
+
+export const InfoHeader = styled.div`
+  display: flex;
   gap: 1.8rem;
 `;
 
@@ -44,8 +66,8 @@ export const InfoTitle = styled.h4`
   text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 1px;
-  /* width: 16.2rem; */
   width: 16rem;
+  white-space: nowrap;
 `;
 
 export const ReservationInfoTitle = styled(InfoTitle)`
@@ -77,6 +99,7 @@ export const InfoLink = styled(Link)`
   color: #333;
   transition: all 0.3s;
   border-bottom: solid 1px #333;
+  width: fit-content;
 
   &:hover {
     color: #cc704b;

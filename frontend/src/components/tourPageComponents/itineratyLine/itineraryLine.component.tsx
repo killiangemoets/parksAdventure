@@ -17,7 +17,6 @@ const ItineraryLine: FC<ItineraryLineProps> = ({ points, handleDelete }) => {
           <ItineraryPoint
             key={i}
             type={
-              // i === 0 || i === points.length - 1
               i === 0
                 ? ITINERARY_POINT_TYPE_CLASSES.startingPoint
                 : ITINERARY_POINT_TYPE_CLASSES.stopOverPoint

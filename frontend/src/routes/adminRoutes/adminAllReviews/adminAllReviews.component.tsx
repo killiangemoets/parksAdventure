@@ -54,8 +54,6 @@ const AdminAllReviews = () => {
 
       const response = await getAllReviews(requestString);
 
-      console.log("REVIEWS", response);
-
       if (response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
         else setErrorMessage(undefined);

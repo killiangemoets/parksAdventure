@@ -7,7 +7,6 @@ export const DropdownContainer = styled.div`
 
   button {
     justify-content: space-between;
-    /* min-width: 22.6rem; */
   }
 `;
 

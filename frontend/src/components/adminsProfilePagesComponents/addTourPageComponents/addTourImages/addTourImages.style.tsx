@@ -6,6 +6,10 @@ export const AddTourImagesContainer = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+
+  @media (max-width: 450px) {
+    padding: 6.4rem 3.2rem;
+  }
 `;
 
 export const AddTourImagesWrapper = styled.div`

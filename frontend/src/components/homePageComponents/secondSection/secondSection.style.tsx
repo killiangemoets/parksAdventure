@@ -42,7 +42,7 @@ export const SecondSecElementLink = styled(Link)`
   text-decoration: none;
   @media (max-width: 580px) {
     &:nth-child(3) {
-      grid-column: span 2; /* Span the last element across both columns */
+      grid-column: span 2;
     }
   }
 `;

@@ -90,9 +90,6 @@ export const HomeSubSectionTitle = styled.h3`
   letter-spacing: 1px;
 
   font-weight: 700;
-  /* letter-spacing: 2px; */
-  /* text-align: center; */
-  /* color: #cc704b; */
   background-image: -webkit-gradient(
     linear,
     left top,

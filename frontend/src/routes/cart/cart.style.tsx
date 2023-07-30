@@ -10,16 +10,21 @@ export const CartContainer = styled.div`
 `;
 
 export const CartWrapper = styled.div`
-  padding: 6.4rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding-top: 6.4rem;
   gap: 6.4rem;
   width: 100%;
   max-width: 130rem;
 `;
 
+export const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 1rem;
+`;
+
 export const CartBody = styled.div`
+  padding: 0 3.2rem;
   position: relative;
   width: 100%;
   min-height: 24rem;
@@ -28,12 +33,21 @@ export const CartBody = styled.div`
 export const RightColumn = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8rem;
+  gap: 3.2rem;
+
+  @media (max-width: 780px) {
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 export const ItemsList = styled.div`
   width: 100%;
   max-width: calc(100% - 46rem);
+
+  @media (max-width: 780px) {
+    max-width: none;
+  }
 `;
 
 export const SoldOutItems = styled.div`
@@ -46,6 +60,14 @@ export const CartCheckout = styled.div`
   position: absolute;
   top: 3.2rem;
   right: 0rem;
+  padding-right: 3.2rem;
+
+  @media (max-width: 780px) {
+    padding-right: 0;
+    position: relative;
+    top: 0rem;
+    width: 100%;
+  }
 `;
 
 export const CartEmpty = styled.div`

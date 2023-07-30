@@ -49,8 +49,6 @@ const PersonalDetails = () => {
     setLoading(true);
     const response = await updateMe(userInputsData);
 
-    console.log(userInputsData);
-    console.log(response);
     setLoading(false);
     if (response.status === "success") {
       setSuccess(true);
@@ -67,11 +65,6 @@ const PersonalDetails = () => {
   };
 
   const handleCloseModal = () => {
-    console.log({
-      firstname,
-      lastname,
-      phoneNumber,
-    });
     setUserInputsData({
       firstname,
       lastname,
@@ -143,7 +136,7 @@ const PersonalDetails = () => {
           </FormButton>
         </AuthenticationForm>
         <ModalFooterNote>
-          Your personal account information will be modified
+          Your personal account information will be updated
         </ModalFooterNote>
       </Modal>
     </PersonalDetailsContainer>

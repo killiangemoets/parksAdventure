@@ -6,12 +6,12 @@ import {
   ItineraryLeftContainer,
   ItineraryMapContainer,
   ItineraryRightContainer,
-  TourItineraryContainer,
 } from "../../../tourPageComponents/tourItinerary/tourItinerary.style";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../UIComponents/title/title.component";
 import {
+  AddTourItineraryContainer,
   AddTourItineraryContent,
   AddTourItineraryWrapper,
   ErrorMessage,
@@ -39,7 +39,7 @@ const AddTourItinerary: FC<AddTourItineraryProps> = ({
   };
 
   return (
-    <TourItineraryContainer>
+    <AddTourItineraryContainer>
       <AddTourItineraryWrapper>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
         <AddTourItineraryContent>
@@ -60,7 +60,7 @@ const AddTourItinerary: FC<AddTourItineraryProps> = ({
           {error ? "Please add stops to the itinerary" : ""}
         </ErrorMessage>
       </AddTourItineraryWrapper>
-    </TourItineraryContainer>
+    </AddTourItineraryContainer>
   );
 };
 

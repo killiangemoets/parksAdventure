@@ -1,7 +1,7 @@
 import {
-  AdminNavbarContainer,
-  AdminNavbarLeftContainer,
-  AdminNavbarRightContainer,
+  AdminTourNavbarContainer,
+  AdminTourNavbarLeftContainer,
+  AdminTourNavbarRightContainer,
   DeleteQuestion,
   ErrorMessage,
   FixAdminTourNavbar,
@@ -22,7 +22,7 @@ import {
   selectTourName,
 } from "../../../store/tour/tour.selector";
 import { deleteTour } from "../../../api/tour-requests";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Modal from "../../UIComponents/modal/modal.component";
 import TextInput from "../../UIComponents/textInput/textInput.component";
 import { ButtonSection } from "../../allToursPageComponents/filtersModal/filtersModalstyle";
@@ -78,12 +78,12 @@ const AdminTourNavbar = () => {
     <>
       {userRole === USER_ROLE_TYPES.ADMIN && (
         <FixAdminTourNavbar>
-          <AdminNavbarContainer>
-            <AdminNavbarLeftContainer>
+          <AdminTourNavbarContainer>
+            <AdminTourNavbarLeftContainer>
               <Button onClick={handleGoToCalendar}>Calendar</Button>
               <Button onClick={handleGoToQuickStats}>Quick stats</Button>
-            </AdminNavbarLeftContainer>
-            <AdminNavbarRightContainer>
+            </AdminTourNavbarLeftContainer>
+            <AdminTourNavbarRightContainer>
               <Button onClick={handleGoToEdit}>Edit</Button>
               <Button
                 buttonType={BUTTON_TYPE_CLASSES.delete}
@@ -92,8 +92,8 @@ const AdminTourNavbar = () => {
                 }}>
                 Delete
               </Button>
-            </AdminNavbarRightContainer>
-          </AdminNavbarContainer>
+            </AdminTourNavbarRightContainer>
+          </AdminTourNavbarContainer>
           <Modal
             title="Delete Tour"
             handleClose={() => {
@@ -117,6 +117,7 @@ const AdminTourNavbar = () => {
                 setConfirmTourName(e.target.value);
               }}
               required
+              style={{ minWidth: 0 }}
             />
             <ErrorMessage>{deleteErrorMessage}</ErrorMessage>
             <ButtonSection>
@@ -139,27 +140,27 @@ const AdminTourNavbar = () => {
       )}
       {userRole === USER_ROLE_TYPES.LEAD_GUIDE && isGuideForThisTour && (
         <FixAdminTourNavbar>
-          <AdminNavbarContainer>
-            <AdminNavbarLeftContainer>
+          <AdminTourNavbarContainer>
+            <AdminTourNavbarLeftContainer>
               <Button onClick={handleGoToCalendar}>Calendar</Button>
               <Button onClick={handleGoToQuickStats}>Quick stats</Button>
-            </AdminNavbarLeftContainer>
-            <AdminNavbarRightContainer>
+            </AdminTourNavbarLeftContainer>
+            <AdminTourNavbarRightContainer>
               <Button onClick={handleGoToEdit}>Edit</Button>
-            </AdminNavbarRightContainer>
-          </AdminNavbarContainer>
+            </AdminTourNavbarRightContainer>
+          </AdminTourNavbarContainer>
         </FixAdminTourNavbar>
       )}
       {userRole === USER_ROLE_TYPES.GUIDE && isGuideForThisTour && (
         <FixAdminTourNavbar>
-          <AdminNavbarContainer>
-            <AdminNavbarLeftContainer>
+          <AdminTourNavbarContainer>
+            <AdminTourNavbarLeftContainer>
               <Button onClick={handleGoToCalendar}>Calendar</Button>
-            </AdminNavbarLeftContainer>
-            <AdminNavbarRightContainer>
-              <Button>Quick stats</Button>
-            </AdminNavbarRightContainer>
-          </AdminNavbarContainer>
+            </AdminTourNavbarLeftContainer>
+            <AdminTourNavbarRightContainer>
+              <Button onClick={handleGoToQuickStats}>Quick stats</Button>
+            </AdminTourNavbarRightContainer>
+          </AdminTourNavbarContainer>
         </FixAdminTourNavbar>
       )}
 
