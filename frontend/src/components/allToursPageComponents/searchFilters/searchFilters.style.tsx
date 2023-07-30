@@ -49,7 +49,6 @@ export const Categories = styled.div`
     padding: 0 4.8rem;
   }
 
-  height: calc((56vw / 3) * 2);
   transform: scale(1);
 
   .swiper {
@@ -68,10 +67,10 @@ export const Categories = styled.div`
     }
 
     .swiper-button-prev {
-      transform: translateX(-160%);
+      transform: translate(-160%, -19.2px);
     }
     .swiper-button-next {
-      transform: translateX(160%);
+      transform: translate(160%, -19.2px);
     }
   }
 

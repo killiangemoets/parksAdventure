@@ -1,7 +1,7 @@
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
-const Review = require('../models/reviewModel');
+const uploadToCloudinary = require('./../utils/uploadToCloudinary');
 const ObjectId = require('mongodb').ObjectID;
 
 exports.deleteOne = (Model) =>
@@ -9,6 +9,10 @@ exports.deleteOne = (Model) =>
     const queryObj = { _id: ObjectId(req.params.id) };
     if (req.user.role === 'user') queryObj.user = ObjectId(req.user._id);
     const doc = await Model.findOneAndDelete(queryObj);
+
+    if (doc.photo) {
+      await uploadToCloudinary.deleteOneImage(doc.photo);
+    }
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));

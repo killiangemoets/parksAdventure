@@ -11,20 +11,17 @@ const ObjectId = require('mongodb').ObjectID;
 
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
   if (req.body.photo && req.body.photo.length > 0) {
-    // Use the uploaded file's name as the asset's public ID and
-    // allow overwriting the asset with new versions;
-    const options = {
-      use_filename: true,
-      unique_filename: false,
-      overwrite: true,
-    };
-
-    // Upload the image
-    const imgurl = await uploadToCloudinary.uploadOneImage(
+    const response = await uploadToCloudinary.uploadOneImage(
       req.body.photo,
       `parkAdventures/users`
     );
-    req.body.photo = imgurl;
+    if (response.status === 'fail') {
+      return next(new AppError(response.message, 400));
+    }
+    req.body.photo = response.url;
+
+    const user = await User.findById(req.user.id);
+    if (user && user.photo) await uploadToCloudinary.deleteOneImage(user.photo);
   }
 
   next();
@@ -63,7 +60,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'phoneNumber',
     'birthDate'
   );
-  if (req.file) filteredBody.photo = req.file.filename;
+  // if (req.file) filteredBody.photo = req.file.filename;
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {

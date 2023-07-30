@@ -8,7 +8,7 @@ cloudinary.config({
 });
 
 // image in base64
-const uploadImage = (image, folderPath = '') => {
+const uploadImage = async (image, folderPath = '') => {
   const options = {
     use_filename: true,
     unique_filename: false,
@@ -20,17 +20,33 @@ const uploadImage = (image, folderPath = '') => {
     format: 'webp',
     quality: 90,
   };
-  return new Promise((resolve, reject) => {
-    cloudinary.uploader.upload(image, options, (error, result) => {
-      if (result && result.secure_url) {
-        return resolve(result.secure_url);
+
+  try {
+    const response = await cloudinary.uploader.upload(
+      image,
+      options,
+      (error, result) => {
+        if (result && result.secure_url) {
+          return { status: 'success', url: result.secure_url };
+        }
+        return;
       }
-      return reject({
-        message:
-          'A problem occuring while uploading the pictures. Please try again.',
-      });
-    });
-  });
+    );
+
+    return response;
+  } catch (error) {
+    if (error.message.includes('File size too large.'))
+      return {
+        status: 'fail',
+        message: 'File size too large. Maximum size is 10 MB.',
+      };
+
+    return {
+      status: 'fail',
+      message:
+        'An unexpected problem occurred while uploading the pictures. Please try again.',
+    };
+  }
 };
 
 exports.uploadOneImage = uploadImage;
@@ -40,6 +56,39 @@ exports.uploadMultipleImages = (images, folderPath) => {
   return new Promise((resolve, reject) => {
     const uploads = images.map((base) => uploadImage(base, folderPath));
     Promise.all(uploads)
+      .then((values) => resolve(values))
+      .catch((err) => reject(err));
+  });
+};
+
+const getPublicIdFromSecureUrl = (secureUrl) => {
+  let publicUrl = secureUrl
+    .split(process.env.CLOUDINARY_FOLDER)[1]
+    .split('.webp')[0];
+  return process.env.CLOUDINARY_FOLDER + publicUrl;
+};
+
+const deleteImage = (secureUrl) => {
+  const publicId = getPublicIdFromSecureUrl(secureUrl);
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.destroy(publicId, (error, result) => {
+      if (result && result.result === 'ok') {
+        return resolve('Image deleted successfully.');
+      }
+      return reject({
+        message:
+          'A problem occurred while deleting the image. Please try again.',
+      });
+    });
+  });
+};
+
+exports.deleteOneImage = deleteImage;
+
+exports.deleteMultipleImages = (secureUrls) => {
+  return new Promise((resolve, reject) => {
+    const deletions = secureUrls.map((publicId) => deleteImage(publicId));
+    Promise.all(deletions)
       .then((values) => resolve(values))
       .catch((err) => reject(err));
   });

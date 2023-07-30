@@ -15,12 +15,27 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
     : [];
 
   if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
-    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
+    const cloudinaryReponse = await uploadToCloudinary.uploadMultipleImages(
       req.body.imagesBase64.map((image) => image.img),
       `parkAdventures/tours`
     );
+
+    const error = cloudinaryReponse.find(
+      (response) => response.status === 'fail'
+    );
+    if (error) {
+      if (error.message.includes('File size too large')) {
+        return next(
+          new AppError(
+            'An image size is too large. The maximum size is 10 MB.',
+            400
+          )
+        );
+      }
+      return next(new AppError(error.message, 400));
+    }
     imagesBase64 = req.body.imagesBase64.map((image, index) => ({
-      img: imgUrls[index],
+      img: cloudinaryReponse[index].url,
       index: image.index,
     }));
   }
@@ -32,7 +47,30 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   req.body.imageCover = images.length > 0 ? images[0] : undefined;
   req.body.images = images.length > 1 ? images.slice(1) : undefined;
 
-  return next();
+  next();
+});
+
+exports.deleteImagesFromCloudinary = catchAsync(async (req, res, next) => {
+  const tour = await Tour.findById(req.params.id);
+  if (tour) {
+    const imagesToDelete = tour.images
+      ? tour.images.filter(
+          (image) =>
+            !req.body.uploadedImages.find(
+              (uploadedImage) => uploadedImage.img === image
+            )
+        )
+      : [];
+    if (
+      !req.body.uploadedImages.find(
+        (uploadedImage) => uploadedImage.img === tour.imageCover
+      )
+    )
+      imagesToDelete.push(tour.imageCover);
+    await uploadToCloudinary.deleteMultipleImages(imagesToDelete);
+  }
+
+  next();
 });
 
 exports.aggreagationRequiredFields = (req, res, next) => {

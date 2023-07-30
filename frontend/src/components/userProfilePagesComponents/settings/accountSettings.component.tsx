@@ -77,6 +77,10 @@ const AccountSettings = () => {
     } else {
       if (response && response.message.includes("phoneNumber"))
         setErrorMessage("Please provide a valid phone number");
+      if (response && response.message.includes("File size too large"))
+        setErrorMessage(
+          "The image size is too large. The maximum size is 10 MB."
+        );
       else setErrorMessage("An error occured. Please try again!");
     }
   };

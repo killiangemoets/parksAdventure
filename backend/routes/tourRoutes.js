@@ -65,6 +65,7 @@ router
     authController.restrictTo('admin', 'lead-guide'),
     tourController.checkGroupCapacityAndIsLeadGuideAuthorized,
     tourController.uploadImagesToCloudinary,
+    tourController.deleteImagesFromCloudinary,
     tourController.updateTour
   )
   .delete(
