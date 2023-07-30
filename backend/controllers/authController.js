@@ -52,7 +52,6 @@ const createSessionToken = (sessionToken, statusCode, res) => {
 
   res.status(statusCode).json({
     status: 'success',
-    // message: 'Token sent to email!',
     data: {
       sessionToken,
     },
@@ -63,7 +62,6 @@ exports.signup = catchAsync(async (req, res, next) => {
   const verificationToken = crypto.randomBytes(32).toString('hex');
   const emailVerificationSessionToken = crypto.randomBytes(32).toString('hex');
 
-  // Encrypt the token using the sha256 algorithms
   const emailVerificationToken = crypto
     .createHash('sha256')
     .update(verificationToken)
@@ -75,7 +73,6 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
-    // role: req.body.role, // TODO: remove it!!
     role: 'user',
     emailVerificationTokens: [emailVerificationToken],
     emailVerificationSessionToken,
@@ -121,17 +118,6 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     httpOnly: true,
   });
 
-  // const updatedUser = await User.findOneAndUpdate(
-  //   {
-  //     emailVerificationTokens: { $in: [hashedToken] },
-  //   },
-  //   { active: true, emailVerificationTokens: undefined },
-  //   {
-  //     new: true,
-  //     runValidators: true,
-  //   }
-  // );
-
   const user = await User.findOne({
     emailVerificationTokens: { $in: [hashedToken] },
   });
@@ -162,7 +148,6 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
 exports.resendEmail = catchAsync(async (req, res, next) => {
   const verificationToken = crypto.randomBytes(32).toString('hex');
 
-  // Encrypt the token using the sha256 algorithms
   const emailVerificationToken = crypto
     .createHash('sha256')
     .update(verificationToken)
@@ -234,14 +219,7 @@ exports.logout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
   let token = req.cookies.jwt;
-  // if (
-  //   req.headers.authorization &&
-  //   req.headers.authorization.startsWith('Bearer')
-  // ) {
-  //   token = req.headers.authorization.split(' ')[1];
-  // }
 
-  // if (req.cookies.jwt)
   if (!token || token === 'logged out') {
     return next(
       new AppError('You are not logged in! Please log in to get access')
@@ -432,7 +410,6 @@ exports.createTourGuide = catchAsync(async (req, res, next) => {
 
   const verificationToken = crypto.randomBytes(32).toString('hex');
 
-  // Encrypt the token using the sha256 algorithms
   const emailVerificationToken = crypto
     .createHash('sha256')
     .update(verificationToken)

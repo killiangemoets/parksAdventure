@@ -27,16 +27,16 @@ router
     tourController.getToursByAggregation
   );
 
-router.route('/cart-items').get(
-  tourController.tourItemsRequiredFields,
-  tourController.aliasRecommendations,
-  tourController.getToursByAggregation
-  // tourController.getAllTours
-);
+router
+  .route('/cart-items')
+  .get(
+    tourController.tourItemsRequiredFields,
+    tourController.aliasRecommendations,
+    tourController.getToursByAggregation
+  );
 
 router
   .route('/')
-  // .get(tourController.requiredFields, tourController.getAllTours)
   .get(tourController.getAllTours)
   .post(
     authController.protect,
@@ -81,17 +81,6 @@ router
     authController.restrictTo('admin', 'lead-guide', 'guide'),
     tourController.getTourCalendar
   );
-/*
-// MIGHT BE USEFUL FOR ADMIN
-router.route('/tour-stats').get(tourController.getTourStats);
-router
-.route('/monthly-plan/:year')
-.get(
-  authController.protect,
-  authController.restrictTo('admin', 'lead-guide', 'guide'),
-  tourController.getMonthlyPlan
-  );
-*/
 
 router.use('/:tourId/reviews', reviewRouter);
 

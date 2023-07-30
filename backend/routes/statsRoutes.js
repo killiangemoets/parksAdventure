@@ -13,7 +13,7 @@ router
 router
   .route('/:slug')
   .get(
-    authController.restrictTo('admin', 'lead-guide'),
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
     statsController.getTourStats
   );
 

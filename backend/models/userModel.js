@@ -77,7 +77,6 @@ const userSchema = new mongoose.Schema({
   },
   emailVerificationSessionToken: {
     type: String,
-    // select: false,
   },
   emailVerificationTokenResend: {
     type: Number,
@@ -87,7 +86,6 @@ const userSchema = new mongoose.Schema({
   active: {
     type: Boolean,
     default: false,
-    // select: false,
   },
 });
 
@@ -111,29 +109,7 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// userSchema.pre('save', function (next) {
-//   if (!this.isModified('password') || this.isNew) return next();
-
-//   this.passwordChangedAt = Date.now() - 1000;
-//   // We substract one second to be sure than in the resetPassword function, if the token is created before this.passwordChangedAt has been update, this.passwordChangedAt is still lower than JWTTimestamp
-
-//   next();
-// });
-
-// QUERY MIDDLEWARES //
-// userSchema.pre(/^find/, function (next) {
-//   this.find({ active: { $ne: false } });
-//   // this.find({
-//   //   $or: [
-//   //     { emailVerificationToken: { $ne: undefined } },
-//   //     { emailVerificationToken: { $eq: undefined }, active: { $ne: false } },
-//   //   ],
-//   // });
-//   next();
-// });
-
 // METHODS //
-
 userSchema.methods.correctPassword = async function (
   candidatePassword,
   userPassword

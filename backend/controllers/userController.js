@@ -280,10 +280,8 @@ exports.getAllGuidesWithDetails = catchAsync(async (req, res, next) => {
 
 exports.deleteUserReviews = catchAsync(async (req, res, next) => {
   const reviews = await Review.find({ user: ObjectId(req.params.id) });
-  // console.log({ reviews });
   reviews.forEach(async (review) => {
     const deletedReview = await Review.findByIdAndDelete(review._id);
-    // console.log(deletedReview);
   });
 
   next();

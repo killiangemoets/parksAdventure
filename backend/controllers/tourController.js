@@ -8,34 +8,6 @@ const Booking = require('../models/bookingModel');
 const formating = require('./../utils/formating');
 const ObjectId = require('mongodb').ObjectID;
 
-exports.uploadImagesToCloudinaryPrev = catchAsync(async (req, res, next) => {
-  // Prevent user to pass directly imageCover or images
-  req.body.imageCover = req.body.uploadedImages
-    ? req.body.uploadedImages[0]
-    : undefined;
-  req.body.images = req.body.uploadedImages
-    ? req.body.uploadedImages.slice(1)
-    : undefined;
-
-  // Upload images to cloudinary
-  if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
-    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
-      req.body.imagesBase64,
-      `parkAdventures/tours`
-    );
-
-    if (req.body.uploadedImages && req.body.uploadedImages.length > 0) {
-      req.body.imageCover = req.body.uploadedImages[0];
-      req.body.images = [...req.body.uploadedImages.slice(1), ...imgUrls];
-    } else {
-      req.body.imageCover = imgUrls[0];
-      req.body.images = imgUrls.slice(1);
-    }
-  }
-
-  return next();
-});
-
 exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
   let imagesBase64 = [];
   const uploadedImages = req.body.uploadedImages
@@ -61,37 +33,6 @@ exports.uploadImagesToCloudinary = catchAsync(async (req, res, next) => {
 
   req.body.imageCover = images.length > 0 ? images[0] : undefined;
   req.body.images = images.length > 1 ? images.slice(1) : undefined;
-
-  return next();
-});
-
-exports.uploadImagesToCloudinary2 = catchAsync(async (req, res, next) => {
-  // Prevent user to pass directly imageCover or images
-  req.body.imageCover = req.body.uploadedImages
-    ? req.body.uploadedImages[0]
-    : undefined;
-  req.body.images = req.body.uploadedImages
-    ? req.body.uploadedImages.slice(1)
-    : undefined;
-
-  // Upload images to cloudinary
-  if (req.body.imagesBase64 && req.body.imagesBase64.length > 0) {
-    const imgUrls = await uploadToCloudinary.uploadMultipleImages(
-      req.body.imagesBase64,
-      `parkAdventures/tours`
-    );
-
-    if (req.body.uploadedImages && req.body.uploadedImages.length > 0) {
-      req.body.imageCover = req.body.uploadedImages[0];
-      req.body.images = [...req.body.uploadedImages.slice(1), ...imgUrls];
-    } else {
-      req.body.imageCover = imgUrls[0];
-      req.body.images = imgUrls.slice(1);
-    }
-  }
-
-  req.body.uploadedImages = undefined;
-  req.body.imagesBase64 = undefined;
 
   return next();
 });
@@ -125,7 +66,6 @@ exports.getAllTours = factory.getAll(Tour);
 exports.showHiddenToursIfAllowed = async (req, res, next) => {
   if (!req.user || req.user.role !== 'admin') {
     req.query.hiddenTour = false;
-    // req.query.onlyAvailables = undefined;
   }
 
   next();
@@ -163,18 +103,9 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
         );
         const currentGroupSize = bookingData ? bookingData.sum : 0;
         availability.currentGroupSize = currentGroupSize;
-        // if(availability.currentGroupSize === availability.maxGroupSize) availability = undefined;
       }
     }
   }
-
-  // if(req.recommendations === )
-  // const featuresWithPagination = new APIFeaturesCopy(Tour, req.query, next)
-  //   .filter()
-  //   .sort()
-  //   .limitFields()
-  //   .paginate();
-  // const doc = await featuresWithPagination.query;
 
   let recommendations = undefined;
   if (req.recommendations === 'true') {
@@ -205,11 +136,9 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     status: 'success',
     results: doc[0].data.length,
     totalResults: doc[0].totalCount[0]?.total || 0,
-    // totalResults: 8,
     recommendations,
     data: {
       data: doc[0].data,
-      // data: doc,
     },
   });
 });
@@ -232,10 +161,6 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const tour = await Tour.findOne(findObj)
     .populate({
       path: 'reviews',
-      // populate: {
-      // path: 'user',
-      // select: 'firstname lastname photo active',
-      // },
     })
     .populate({
       path: 'bookings',
@@ -254,7 +179,6 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     hiddenTour: false,
-    // categories: tour.categories[0],
   })
     .populate({
       path: 'bookings',
@@ -271,7 +195,6 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
     data: {
       tour: {
         additionalInfo: tour.additionalInfo,
-        // availabilities: tour.availabilities,
         categories: tour.categories,
         currentAvailabilities: tour.currentAvailabilities,
         description: tour.description,
@@ -362,7 +285,6 @@ exports.checkGroupCapacityAndIsLeadGuideAuthorized = catchAsync(
 
 exports.getTourCalendar = catchAsync(async (req, res, next) => {
   const findObj = { slug: req.params.slug };
-  // if (!req.user || req.user.role === 'user') findObj.hiddenTour = false;
   const tour = await Tour.findOne(findObj).select('availabilities name');
 
   if (!tour) {
@@ -433,102 +355,3 @@ exports.createTour = factory.createOne(Tour);
 exports.updateTour = factory.updateOne(Tour);
 
 exports.deleteTour = factory.deleteOne(Tour);
-
-/*
-// MIGHT BE USEFUL FOR ADMIN
-exports.getTourStats = catchAsync(async (req, res, next) => {
-  // try {
-  // The aggragation pipeline is a bit like a regular query but the difference is that in aggregations, we can manipulate the data in a couple of different steps.
-  // For that, we pass in an array of so-called stages.
-  // The document pass through theses stages, one by one, in the define sequence.
-  const stats = await Tour.aggregate([
-    {
-      $match: { ratingsAverage: { $gte: 4.5 } },
-    },
-    {
-      $group: {
-        // _id: null,
-        // _id: '$difficulty',
-        _id: { $toUpper: '$difficulty' },
-        numRatings: { $sum: '$ratingsQuantity' },
-        numTours: { $sum: 1 },
-        avgRating: { $avg: '$ratingsAverage' },
-        avgPrice: { $avg: '$price' },
-        minPrice: { $min: '$price' },
-        maxPrice: { $max: '$price' },
-      },
-    },
-    {
-      $sort: { avgPrice: 1 }, // (1 for ascending)
-    },
-    // {
-    //   $match: { _id: { $ne: 'EASY' } }, //ne means not equals
-    // },
-  ]);
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      stats,
-    },
-  });
-  // } catch (err) {
-  //   res.status(404).json({
-  //     status: 'fail',
-  //     message: err,
-  //   });
-  // }
-});
-
-exports.getMonthlyPlan = catchAsync(async (req, res, next) => {
-  // try {
-  const year = +req.params.year;
-  const plan = await Tour.aggregate([
-    {
-      $unwind: '$startDates',
-      // By doing that we will have one document for each of the start dates
-    },
-    {
-      $match: {
-        startDates: {
-          $gte: new Date(`${year}-01-01`),
-          $lte: new Date(`${year}-12-31`),
-        },
-      },
-    },
-    {
-      $group: {
-        _id: { $month: '$startDates' },
-        numToursStarts: { $sum: 1 },
-        // We will create an array by using push
-        tours: { $push: '$name' },
-      },
-    },
-    {
-      $addFields: { month: '$_id' },
-    },
-    {
-      $project: { _id: 0 }, //By doing that we hide the _id field
-    },
-    {
-      $sort: { numToursStarts: -1 },
-    },
-    {
-      // $limit: 6, //If wee want only 6 results
-      $limit: 20,
-    },
-  ]);
-  res.status(200).json({
-    status: 'success',
-    data: {
-      plan,
-    },
-  });
-  // } catch (err) {
-  //   res.status(404).json({
-  //     status: 'fail',
-  //     message: err,
-  //   });
-  // }
-});
-*/

@@ -171,12 +171,6 @@ class TourAPIFeatures {
       queryObj.duration = { ...durationQuery };
     }
 
-    // if (!queryObj.showHiddenTours) {
-    //   queryObj.hiddenTour = { $ne: true };
-    // } else {
-    //   delete queryObj.showHiddenTours;
-    // }
-
     this.aggregateQuery = queryObj;
 
     return this;
@@ -232,14 +226,8 @@ class TourAPIFeatures {
   }
 
   createAggregation() {
-    // console.log('QUERY', this.aggregateQuery);
-    // console.log('SEARCH', this.aggregateSearch);
-    // console.log('SORT', this.aggregateSort);
-    // console.log('FIELDS', this.aggregateFields);
-    // console.log('PAGINATION', this.aggregatePagination);
     this.aggregation = this.model.aggregate([
       { $match: this.aggregateSearch || {} },
-      // { $match: { hiddenTour: { $ne: true } } },
       {
         $addFields: {
           currentAvailabilities: {

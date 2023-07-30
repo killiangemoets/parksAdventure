@@ -12,7 +12,6 @@ const tourSchema = new mongoose.Schema(
       unique: true,
       trim: true,
       maxlength: [40, 'A tour name cannot have more than 40 characters'],
-      // minlength: [10, 'A tour name must have more or equal than 10 characters'],
     },
     slug: String,
     duration: {
@@ -176,10 +175,6 @@ const tourSchema = new mongoose.Schema(
             message: `Group capacity ({VALUE}) must be hight than 0`,
           },
         },
-        // currentGroupSize: {
-        //   type: Number,
-        //   default: 0,
-        // },
       },
     ],
     additionalInfo: {
@@ -234,18 +229,9 @@ tourSchema.virtual('bookings', {
 tourSchema.virtual('currentAvailabilities').get(function () {
   const currentAvailabilitiesWithCurrentGroup = [];
 
-  // const bookings = await Booking.find({ tour: ObjectId(this._id) });
-  // console.log('BOOKINGS', bookings);
-
   if (this.availabilities && this.bookings) {
     this.availabilities.forEach((availability) => {
       if (!(new Date(availability.date) >= new Date(Date.now()))) return;
-
-      // const currentGroupSize = this.bookings.reduce((acc, booking) => {
-      //   if (!formating.compareDates(booking.date, availability.date))
-      //     return acc;
-      //   return acc + (booking.adults || 0) + (booking.kids || 0);
-      // }, 0);
 
       const currentGroupSize = this.bookings.reduce((acc, booking) => {
         if (!formating.compareDates(booking.date, availability.date))
@@ -266,12 +252,6 @@ tourSchema.virtual('currentAvailabilities').get(function () {
   }
 
   return currentAvailabilitiesWithCurrentGroup;
-
-  // return this.availabilities
-  //   ? this.availabilities.filter(
-  //       (availability) => new Date(availability.date) >= new Date(Date.now())
-  //     )
-  //   : [];
 });
 
 tourSchema.virtual('firstAvailability').get(function () {
@@ -311,11 +291,6 @@ tourSchema.pre('save', function (next) {
 
 // QUERY MIDDLEWARES //
 // Pre-find hook: run before any find query is executed
-// tourSchema.pre(/^find/, function (next) {
-//   // this.find({ hiddenTour: { $ne: true } });
-//   next();
-// });
-
 tourSchema.pre(/^findOne/, function (next) {
   this.populate({
     path: 'guides',
@@ -323,15 +298,6 @@ tourSchema.pre(/^findOne/, function (next) {
   });
   next();
 });
-
-// REMOVED BECAUSE NOT OK: $text needs to be in top of pipeline !!
-// AGGREGATION MIDDLEWARES //
-// We also want to exclude the secret tour of all our agregations
-// tourSchema.pre('aggregate', function (next) {
-// this.pipeline().unshift({ $match: { hiddenTour: { $ne: true } } });
-// this.match({ secretTour: { $ne: true } });
-// next();
-// });
 
 const Tour = mongoose.model('Tour', tourSchema);
 

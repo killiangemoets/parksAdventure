@@ -26,17 +26,6 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
-// Implement CORS
-// app.use(cors()); // To allow everyone
-// Access-Control-Allow-Origin *
-
-// If we want to give access to only one domain:
-// app.use(
-//   cors({
-//     origin: 'http://localhost:3001',
-//   })
-// );
-
 const whitelist = ['http://localhost:3001'];
 const corsOptions = {
   origin: function (origin, callback) {
@@ -63,15 +52,13 @@ if (process.env.NODE_ENV == 'development') {
 // Limit requests from same API
 const limiter = rateLimit({
   max: 100000,
-  windowMs: 60 * 60 * 10000,
+  windowMs: 60 * 60 * 100,
   message: 'Too many requests from this IP, please try again in an hour!',
 }); // allow 100 requests from the same IP in one hour
 app.use('/api', limiter);
 
 // Limit the amount of data that comes in the body
-// app.use(express.json({ limit: '100kb' }));
 app.use(express.json({ limit: '25mb' }));
-// app.use(express.json());
 
 // Parse the data from cookies
 app.use(cookieParser());

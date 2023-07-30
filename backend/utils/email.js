@@ -4,8 +4,6 @@ const ejs = require('ejs');
 
 const { htmlToText } = require('html-to-text');
 
-// new Email(user, url).sendWelcome();
-
 module.exports = class Email {
   constructor(user) {
     this.email = user.email;
@@ -66,7 +64,6 @@ module.exports = class Email {
   }
 
   async sendVerificationEmail(url) {
-    // TODO (send token like reset password)
     await this.send(
       'verification',
       'Welcome to the National Parks Hiking Tours Family!',
@@ -75,7 +72,6 @@ module.exports = class Email {
   }
 
   async sendGuideVerificationEmail(url) {
-    // TODO (send token like reset password)
     await this.send(
       'guide-verification',
       'Welcome to the National Parks Hiking Tours Family!',

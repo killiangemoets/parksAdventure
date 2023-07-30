@@ -38,30 +38,15 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
 
   const currentDate = new Date();
   const totalAvailabilities = await Tour.aggregate([
-    // Match tours with availabilities having dates smaller than the current date
-    // {
-    //   $match: {
-    //     'availabilities.date': { $lt: currentDate },
-    //   },
-    // },
-    // Unwind the availabilities array
     {
       $unwind: '$availabilities',
     },
-    // Match availabilities with dates smaller than the current date
-    // {
-    //   $match: {
-    //     'availabilities.date': { $lt: currentDate },
-    //   },
-    // },
-    // Group and calculate the combined sum of maxGroupSize
     {
       $group: {
         _id: null,
         totalMaxGroupSize: { $sum: '$availabilities.maxGroupSize' },
       },
     },
-    // Optionally, you can shape the output
     {
       $project: {
         _id: 0,
@@ -422,30 +407,15 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
         _id: { $eq: tourId },
       },
     },
-    // Match tours with availabilities having dates smaller than the current date
-    // {
-    //   $match: {
-    //     'availabilities.date': { $lt: currentDate },
-    //   },
-    // },
-    // Unwind the availabilities array
     {
       $unwind: '$availabilities',
     },
-    // Match availabilities with dates smaller than the current date
-    // {
-    //   $match: {
-    //     'availabilities.date': { $lt: currentDate },
-    //   },
-    // },
-    // Group and calculate the combined sum of maxGroupSize
     {
       $group: {
         _id: null,
         totalMaxGroupSize: { $sum: '$availabilities.maxGroupSize' },
       },
     },
-    // Optionally, you can shape the output
     {
       $project: {
         _id: 0,

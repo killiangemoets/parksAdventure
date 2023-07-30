@@ -50,11 +50,4 @@ router
     bookingController.deleteBooking
   );
 
-/*
-// MIGHT BE USEFUL FOR ADMIN
-router
-  .route('/availabilities/:tourId')
-  .get(bookingController.getAvailabilities);
-  */
-
 module.exports = router;

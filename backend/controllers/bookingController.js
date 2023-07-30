@@ -40,7 +40,6 @@ exports.checkAvailabilities = catchAsync(async (req, res, next) => {
     // 3) Check if it's not sold out
     const selectedAvailability = tour.currentAvailabilities.find(
       (availability) => {
-        // return formating.compareDates(availability.date, item.startingDate)
         return (
           new Date(availability.date).getDate() ===
             new Date(item.date).getDate() &&
@@ -83,7 +82,6 @@ exports.getPaymentSession = catchAsync(async (req, res, next) => {
     expires_at: Math.trunc(
       Date.now() / 1000 + process.env.CHECKOUT_SESSION_EXPIRATION_TIME * 60
     ),
-    // client_reference_id: req.params.tourId,
     line_items: req.body.items.map((item) => {
       return {
         quantity: 1,
@@ -121,7 +119,6 @@ exports.saveCheckoutItems = catchAsync(async (req, res, next) => {
     .update(req.paymentToken)
     .digest('hex');
 
-  //  for(const item of req.body.items){
   req.body.items.forEach(async (item) => {
     await Booking.create({
       tour: item.tourId,
@@ -341,7 +338,6 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
     hiddenTour: false,
-    // categories: tour.categories[0],
   })
     .populate({
       path: 'bookings',
@@ -361,7 +357,6 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
         additionalInfo: tour.additionalInfo,
         availabilities: tour.availabilities,
         categories: tour.categories,
-        // currentAvailabilities: tour.currentAvailabilities,
         description: tour.description,
         difficulty: tour.difficulty,
         duration: tour.duration,
@@ -412,33 +407,3 @@ exports.getBooking = factory.getOne(Booking);
 exports.getAllBookings = factory.getAll(Booking);
 exports.updateBooking = factory.updateOne(Booking);
 exports.deleteBooking = factory.deleteOne(Booking);
-
-/*
-exports.getAvailabilities = catchAsync(async (req, res, next) => {
-  const tourId = req.params.tourId;
-
-  const bookings = await Booking.aggregate([
-    {
-      $match: {
-        tour: mongoose.Types.ObjectId(tourId),
-      },
-    },
-    {
-      $group: {
-        _id: '$date',
-        nBookings: { $sum: 1 },
-        nPeople: { $sum: '$people' },
-      },
-    },
-  ]);
-
-  const { maxGroupSize, startDates } = await Tour.findById(tourId);
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      data: { bookings, maxGroupSize, startDates },
-    },
-  });
-});
-*/

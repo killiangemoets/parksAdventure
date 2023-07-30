@@ -102,7 +102,6 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // console.log('GET ALL', req.query);
     // To allow for nested GET reviews on tour (hack)
     let filter = {};
 

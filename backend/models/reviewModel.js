@@ -56,10 +56,6 @@ reviewSchema.pre(/^find/, function (next) {
     select: 'firstname lastname photo active',
   });
 
-  // this.populate({
-  //   path: 'user',
-  //   select: 'firstname lastname photo',
-  // });
   next();
 });
 

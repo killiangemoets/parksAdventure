@@ -2,7 +2,6 @@ const AppError = require('./appError');
 
 class APIFeaturesCopy {
   constructor(query, queryString, next) {
-    // this.aggragation = query;
     this.query = query;
     this.queryString = queryString;
     this.next = next;
@@ -91,8 +90,6 @@ class APIFeaturesCopy {
   sort() {
     if (this.queryString.sort) {
       let sortBy = this.queryString.sort.split(',').join(' ');
-      // sortBy = sortBy.replace('pricing', 'availabilities.price');
-      // sortBy = sortBy.replace('lastminute', 'first');
       this.query = this.query.sort(sortBy);
     } else {
       this.query = this.query.sort('-popularityIndex -ratingsAvarage');
