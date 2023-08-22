@@ -60,7 +60,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     'phoneNumber',
     'birthDate'
   );
-  // if (req.file) filteredBody.photo = req.file.filename;
 
   // 3) Update user document
   const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
@@ -77,9 +76,29 @@ exports.updateMe = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {
+  const comingBookings = await Booking.aggregate([
+    {
+      $match: {
+        user: ObjectId(req.user.id),
+        date: { $gt: new Date() },
+      },
+    },
+    {
+      $count: 'comingBookingsCount',
+    },
+  ]);
+
+  if (comingBookings.length > 0 && comingBookings[0].comingBookingsCount > 0)
+    return next(
+      new AppError(
+        'You cannot delete your account if you have upcoming bookings.',
+        403
+      )
+    );
+
   await User.findByIdAndUpdate(req.user.id, { active: false });
 
-  res.status(204).json({
+  res.status(200).json({
     status: 'success',
     data: null,
   });
@@ -186,7 +205,6 @@ exports.getAllUsersWithDetails = catchAsync(async (req, res, next) => {
           },
         },
       ]);
-
       return {
         _id: doc._id,
         role: doc.role,
@@ -207,7 +225,6 @@ exports.getAllUsersWithDetails = catchAsync(async (req, res, next) => {
       };
     })
   );
-
   res.status(200).json({
     status: 'success',
     results: docs.length,
@@ -248,7 +265,6 @@ exports.getAllGuidesWithDetails = catchAsync(async (req, res, next) => {
         },
         { $project: { name: 1, slug: 1 } },
       ]);
-
       return {
         _id: doc._id,
         role: doc.role,
@@ -263,7 +279,6 @@ exports.getAllGuidesWithDetails = catchAsync(async (req, res, next) => {
       };
     })
   );
-
   res.status(200).json({
     status: 'success',
     results: docs.length,
@@ -279,27 +294,23 @@ exports.deleteUserReviews = catchAsync(async (req, res, next) => {
   reviews.forEach(async (review) => {
     const deletedReview = await Review.findByIdAndDelete(review._id);
   });
-
   next();
 });
 
 exports.hideUserReviews = catchAsync(async (req, res, next) => {
   if (req.body.active === false) {
     const reviews = await Review.find({ user: ObjectId(req.params.id) });
-
     for (const review of reviews) {
       review.hidden = true;
       await review.save();
     }
   } else if (req.body.active === true) {
     const reviews = await Review.find({ user: ObjectId(req.params.id) });
-
     for (const review of reviews) {
       review.hidden = false;
       await review.save();
     }
   }
-
   next();
 });
 
@@ -315,13 +326,11 @@ exports.deleteGuideTours = catchAsync(async (req, res, next) => {
         },
       },
     });
-
     for (const tour of tours) {
       tour.guides.pull(ObjectId(req.params.id));
       await tour.save();
     }
   }
-
   next();
 });
 

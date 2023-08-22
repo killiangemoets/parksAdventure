@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
-router.get('/logout', authController.logout);
 
 router.patch('/email-verification/:token', authController.verifyEmail);
 router.post('/resend-email-verification', authController.resendEmail);
@@ -18,6 +17,8 @@ router.patch('/guides/activation/:token', authController.activateTourGuide);
 
 // /!\ This will protect all the routes that come after this middleware, because middlewares run in sequence
 router.use(authController.protect);
+
+router.get('/logout', authController.logout);
 
 router.patch('/addToWishlist', userController.addToWishList);
 router.patch('/removeFromWishlist', userController.removeFromWishList);
