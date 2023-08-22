@@ -6,6 +6,7 @@ import {
   Input,
   SearchInputContainer,
 } from "../../UIComponents/searchInput/searchInput.styled";
+import colors from "../../../colors";
 
 export const AllToursHeaderContainer = styled.div`
   width: 100vw;
@@ -69,7 +70,7 @@ export const AllToursTitles = styled.div`
 `;
 
 export const AllToursSecondTitle = styled.h2`
-  color: #faf2e5;
+  color: ${colors.backgroundDark};
   font-size: 2.2rem;
   letter-spacing: 1.2px;
   text-shadow: 1px 8px 8px rgba(0, 0, 0, 0.32);
@@ -80,6 +81,6 @@ export const AllToursMainTitle = styled.h1`
   text-transform: uppercase;
   font-size: 3.6rem;
   letter-spacing: 1.2px;
-  color: #faf2e5;
+  color: ${colors.backgroundDark};
   text-shadow: 1px 8px 8px rgba(0, 0, 0, 0.32);
 `;

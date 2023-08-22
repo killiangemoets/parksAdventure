@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const SwitchInputContainer = styled.div`
   display: flex;
@@ -8,10 +9,10 @@ export const SwitchInputContainer = styled.div`
 
   .ant-switch,
   .ant-switch.ant-switch-checked:hover:not(.ant-switch-disabled) {
-    background-color: #ddd;
+    background-color: ${colors.veryLightGrey};
 
     &:hover {
-      background-color: #ccc;
+      background-color: ${colors.lightGrey};
     }
   }
 
@@ -28,5 +29,5 @@ export const SwitchInputValue = styled.p<SwitchInputValueProps>`
   font-weight: 500;
   font-size: 1.4rem;
   letter-spacing: 0.8px;
-  ${({ selected }) => selected && { color: "#cc704b" }}
+  ${({ selected }) => selected && { color: colors.primary }}
 `;

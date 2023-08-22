@@ -4,6 +4,7 @@ import {
   TourItineraryWrapper,
 } from "../../../tourPageComponents/tourItinerary/tourItinerary.style";
 import { SectionTitle } from "../../../UIComponents/title/title.style";
+import colors from "../../../../colors";
 
 export const AddTourItineraryContainer = styled.div`
   padding: 6.4rem;
@@ -33,7 +34,7 @@ export const ErrorMessage = styled.p`
   width: 100%;
   text-align: center;
   height: 2rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.6px;

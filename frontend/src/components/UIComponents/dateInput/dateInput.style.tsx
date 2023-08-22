@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
+import colors from "../../../colors";
 
 type DatePickerElementProps = {
   rectangular: boolean;
@@ -9,13 +10,13 @@ const rectangularStyle = css`
   width: 100%;
   height: 5.2rem;
   padding: 0 3.2rem;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
   border-radius: 4px;
   border: none;
   font-size: 1.6rem;
   transition: all 0.3s;
   &:focus {
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   .ant-picker-input > input {
@@ -29,23 +30,23 @@ export const DatePickerElement = styled(DatePicker)<DatePickerElementProps>`
   width: 26rem;
   height: 5.2rem;
   padding: 0 3.2rem;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
   border-radius: 999px;
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.grey};
   font-size: 1.6rem;
   transition: all 0.3s;
 
   &:hover {
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   .ant-picker-input > input {
     font-size: 1.6rem;
     font-family: inherit;
-    color: #333;
+    color: ${colors.darkGrey};
 
     &::placeholder {
-      color: #aaa;
+      color: ${colors.grey};
     }
 
     &:focus {
@@ -61,13 +62,13 @@ export const DatePickerElement = styled(DatePicker)<DatePickerElementProps>`
 
   .ant-picker-clear {
     background: none !important;
-    color: #cc704b !important;
+    color: ${colors.primary} !important;
     transition: all 0.3s !important;
     opacity: 1 !important;
     transform: translateX(1.2rem) translateY(-0.82rem);
 
     &:hover {
-      color: #b86544 !important;
+      color: ${colors.primaryDark} !important;
     }
   }
 
@@ -90,7 +91,7 @@ const highlightStyle = css`
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
-  background: #20640c;
+  background: ${colors.green};
   display: inline-block;
 `;
 
@@ -102,7 +103,7 @@ const highlightStyle2 = css`
   width: 0.4rem;
   height: 0.4rem;
   border-radius: 50%;
-  background: #b83b3b;
+  background: ${colors.red};
   display: inline-block;
 `;
 

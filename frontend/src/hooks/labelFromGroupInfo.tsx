@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { CountInputState } from "../components/UIComponents/dropdown/dropdownCounts.component";
+import colors from "../colors";
 
 type LabelFromGroupInfo = {
   label: React.ReactNode | string;
@@ -23,7 +24,7 @@ const useLabelFromGroupInfo = ({
     }, "");
     setLabel(
       newLabel.length ? (
-        <p style={{ color: "#333" }}>{newLabel}</p>
+        <p style={{ color: colors.darkGrey }}>{newLabel}</p>
       ) : (
         <p>Add people</p>
       )

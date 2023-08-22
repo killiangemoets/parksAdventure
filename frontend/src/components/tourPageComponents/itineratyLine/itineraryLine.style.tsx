@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const ItineraryLineContainer = styled.div`
   display: flex;
@@ -11,6 +12,6 @@ export const Line = styled.div`
   margin-left: 0.99rem;
   width: 0.4rem;
   height: 3.2rem;
-  background-color: #cc704b;
+  background-color: ${colors.primary};
   border-radius: 999px;
 `;

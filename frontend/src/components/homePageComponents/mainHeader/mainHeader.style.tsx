@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import mainLogo from "../../../assets/logo_hike_long_white.png";
+import colors from "../../../colors";
 
 export const MainHeaderContainer = styled.div`
   width: 100vw;
@@ -60,7 +61,7 @@ export const MainHeaderLogoContainer = styled.div`
 `;
 
 export const MainHeaderText = styled.h3`
-  color: #fff;
+  color: ${colors.white};
   font-size: 4rem;
   letter-spacing: 4.8px;
   font-weight: 500;

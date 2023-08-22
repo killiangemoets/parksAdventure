@@ -13,7 +13,7 @@ import {
   SettingsContainer,
   SettingsForm,
   SettingsInputs,
-  SettingsWrapper2,
+  SettingsWrapper1,
   UpdateButtonContainer,
 } from "./settings.style";
 import FormButton from "../../UIComponents/formButton/formButton.component";
@@ -67,7 +67,7 @@ const PasswordChange = () => {
 
   return (
     <SettingsContainer>
-      <SettingsWrapper2>
+      <SettingsWrapper1>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Password Change</Title>
         <SettingsForm onSubmit={handleSubmit}>
           <SettingsInputs>
@@ -138,7 +138,7 @@ const PasswordChange = () => {
             </FormButton>
           </UpdateButtonContainer>
         </SettingsForm>
-      </SettingsWrapper2>
+      </SettingsWrapper1>
     </SettingsContainer>
   );
 };

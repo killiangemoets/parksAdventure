@@ -113,7 +113,7 @@ export type UserTableInfo = {
   bookingsNumber: number;
   reviewsNumber: number;
   ratingAverage: number;
-  status: "active" | "desactivated";
+  status: "active" | "deactivated";
 };
 
 export type GuideTableInfo = {
@@ -124,7 +124,7 @@ export type GuideTableInfo = {
   phoneNumber: string;
   birthDate: string;
   tours: ReactNode;
-  status: "active" | "desactivated";
+  status: "active" | "deactivated";
 };
 
 export type GeneralUserTableInfo = {
@@ -137,7 +137,7 @@ export type GeneralUserTableInfo = {
   reviewsNumber?: number;
   ratingAverage?: number;
   tours?: ReactNode;
-  status: "active" | "desactivated";
+  status: "active" | "deactivated";
 };
 
 export const guideRolesList = [

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { RectangularButton } from "../../../UIComponents/button/button.style";
 import { Option } from "../../../UIComponents/dropdown/dropdownInput.style";
+import colors from "../../../../colors";
 
 type QuickInputContainerProps = {
   error?: boolean;
@@ -28,15 +29,16 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
 
   .ant-input-number-group-addon {
     border: none;
-    background-color: #f9eedb;
+    background-color: ${colors.backgroundMediumDark};
     border-radius: 4px;
     box-shadow: none;
     transition: all 0.3s;
-    border: 1px solid #cc704b;
+    border: 1px solid ${colors.primary};
 
     ${({ error }) =>
       error && {
-        border: "2px solid #ff0033",
+        border: "2px solid",
+        borderColor: colors.error,
       }}
   }
 
@@ -46,15 +48,16 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
     padding: 0.4rem 1.8rem;
     height: 4rem;
 
-    background-color: #f9eedb;
-    border: 1px solid #cc704b;
+    background-color: ${colors.backgroundMediumDark};
+    border: 1px solid ${colors.primary};
     border-radius: 4px;
     box-shadow: none;
     transition: all 0.3s;
 
     ${({ error }) =>
       error && {
-        border: "2px solid #ff0033",
+        border: "2px solid",
+        borderColor: colors.error,
       }}
   }
 
@@ -68,7 +71,7 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
     color: inherit;
 
     &::placeholder {
-      color: #aaa;
+      color: ${colors.grey};
       font-size: 1.4rem;
       font-weight: 400;
     }
@@ -84,20 +87,21 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
 
   .ant-input-number-handler-wrap {
     padding: 0;
-    background-color: #fdfaf5;
+    background-color: ${colors.background};
   }
 
   & ${RectangularButton} {
     ${({ error }) =>
       error && {
-        border: "2px solid #ff0033",
+        border: "2px solid",
+        borderColor: colors.error,
       }}
   }
 `;
 
 export const QuickFactDescription = styled.p`
   width: 100%;
-  color: #aaa;
+  color: ${colors.grey};
   font-weight: 600;
   font-size: 1.4rem;
   letter-spacing: 1px;

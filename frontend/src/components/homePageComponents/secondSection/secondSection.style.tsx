@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GreenOpacity } from "../../../routes/home/home.style";
 
-import secondSectionBackground from "../../../assets/second-section-bg.jpg";
+import secondSectionBackground from "../../../assets/images/second-section-bg.webp";
+import colors from "../../../colors";
 
 export const SecondSecContainer = styled.div`
   width: 100vw;
@@ -32,7 +33,7 @@ export const SecondSecTitlesContainer = styled.div`
 `;
 
 export const SecondSecSecondTitle = styled.h3`
-  color: #fff;
+  color: ${colors.white};
   font-size: 2.2rem;
   letter-spacing: 1px;
   text-align: center;
@@ -69,7 +70,7 @@ export const SecondSecElement = styled.div`
   gap: 1.2rem;
   &:hover {
     h4 {
-      color: #cc704b !important;
+      color: ${colors.primary} !important;
     }
   }
 `;
@@ -79,7 +80,7 @@ export const ElementTitle = styled.h4`
   letter-spacing: 1px;
   font-weight: 700;
   text-align: center;
-  color: #fff;
+  color: ${colors.white};
   transition: all 0.3s;
 `;
 

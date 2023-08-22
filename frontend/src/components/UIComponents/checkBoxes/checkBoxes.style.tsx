@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Checkbox } from "antd";
+import colors from "../../../colors";
 
 const CheckboxGroup = Checkbox.Group;
 
@@ -13,7 +14,7 @@ export const CheckBoxesContainer = styled.div`
   label span {
     margin: 0 !important;
     font-weight: 400;
-    color: #333;
+    color: ${colors.darkGrey};
     letter-spacing: 0.6px;
   }
 `;
@@ -28,7 +29,7 @@ export const CheckboxGroupElement = styled(CheckboxGroup)`
   label {
     margin: 0 !important;
     font-weight: 400;
-    color: #333;
+    color: ${colors.darkGrey};
     letter-spacing: 0.6px;
   }
 `;

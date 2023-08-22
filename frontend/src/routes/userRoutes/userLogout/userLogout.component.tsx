@@ -24,7 +24,7 @@ const UserLogout = () => {
       }
     };
     handleLogout();
-  }, []);
+  }, [dispatch, navigate]);
 
   return (
     <UserLogoutContainer>

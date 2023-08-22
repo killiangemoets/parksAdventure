@@ -31,6 +31,7 @@ import Spinner, {
 import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { fetchTourAsync } from "../../../store/tour/tour.action";
+import colors from "../../../colors";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -108,7 +109,7 @@ const AdminTourDashboard = () => {
           "rgba(214, 140, 111, 0.8)",
           "rgba(115, 128, 105, 0.8)",
         ],
-        borderColor: ["#d68d6f", "#738069"],
+        borderColor: [colors.primaryMediumLight, colors.secondaryMediumLight],
         borderWidth: 1,
       },
     ],

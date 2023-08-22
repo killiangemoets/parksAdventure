@@ -1,16 +1,21 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const MainTitle = styled.h1`
   width: fit-content;
-  color: #506044;
+  color: ${colors.secondary};
   background-image: -webkit-gradient(
     linear,
     left top,
     right top,
-    from(#738069),
-    to(#48563d)
+    from(${colors.secondaryMediumLight}),
+    to(${colors.secondaryMedium})
   );
-  background-image: linear-gradient(to right, #738069, #48563d);
+  background-image: linear-gradient(
+    to right,
+    ${colors.secondaryMediumLight},
+    ${colors.secondaryMedium}
+  );
   -webkit-background-clip: text;
   color: transparent;
   font-size: 3.6rem;
@@ -32,10 +37,14 @@ export const HomeSectionTitle = styled.h2`
     linear,
     left top,
     right top,
-    from(#d17e5d),
-    to(#a35a3c)
+    from(${colors.primaryVariantLight}),
+    to(${colors.primaryVariantDark})
   );
-  background-image: linear-gradient(to right, #d17e5d, #a35a3c);
+  background-image: linear-gradient(
+    to right,
+    ${colors.primaryVariantLight},
+    ${colors.primaryVariantDark}
+  );
   -webkit-background-clip: text;
   color: transparent;
   font-size: 3.6rem;
@@ -52,10 +61,14 @@ export const SectionTitle = styled.h2`
     linear,
     left top,
     right top,
-    from(#e0a993),
-    to(#cc704b)
+    from(${colors.primaryLight2}),
+    to(${colors.primary})
   );
-  background-image: linear-gradient(to right, #e0a993, #cc704b);
+  background-image: linear-gradient(
+    to right,
+    ${colors.primaryLight2},
+    ${colors.primary}
+  );
   -webkit-background-clip: text;
   color: transparent;
   letter-spacing: 0.1rem;
@@ -77,10 +90,14 @@ export const ThirdTitle = styled.h3`
     linear,
     left top,
     right top,
-    from(#d68d6f),
-    to(#cc704b)
+    from(${colors.primaryMediumLight}),
+    to(${colors.primary})
   );
-  background-image: linear-gradient(to right, #d68d6f, #cc704b);
+  background-image: linear-gradient(
+    to right,
+    ${colors.primaryMediumLight},
+    ${colors.primary}
+  );
   font-weight: 600;
 `;
 
@@ -94,10 +111,14 @@ export const HomeSubSectionTitle = styled.h3`
     linear,
     left top,
     right top,
-    from(#d17e5d),
-    to(#a35a3c)
+    from(${colors.primaryVariantLight}),
+    to(${colors.primaryVariantDark})
   );
-  background-image: linear-gradient(to right, #d17e5d, #a35a3c);
+  background-image: linear-gradient(
+    to right,
+    ${colors.primaryVariantLight},
+    ${colors.primaryVariantDark}
+  );
   -webkit-background-clip: text;
   color: transparent;
   -webkit-background-clip: text;

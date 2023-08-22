@@ -1,12 +1,13 @@
 import { Rate } from "antd";
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const StarsRatingContainer = styled.div`
   display: flex;
   gap: 1rem;
 
   .ant-rate {
-    color: #cc704b;
+    color: ${colors.primary};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -43,7 +44,7 @@ export const NumRatings = styled.p`
 `;
 
 export const LinkNumRatings = styled(NumRatings)`
-  color: #cc704b;
+  color: ${colors.primary};
   cursor: pointer;
   &:hover {
     text-decoration: underline;

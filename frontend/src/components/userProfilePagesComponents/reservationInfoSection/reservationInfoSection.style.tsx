@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const ReservationInfoSectionContainer = styled.div`
   padding: 6.4rem;
@@ -96,13 +97,13 @@ export const InfoLink = styled(Link)`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #333;
+  color: ${colors.darkGrey};
   transition: all 0.3s;
-  border-bottom: solid 1px #333;
+  border-bottom: solid 1px ${colors.darkGrey};
   width: fit-content;
 
   &:hover {
-    color: #cc704b;
-    border-bottom: solid 1px #cc704b;
+    color: ${colors.primary};
+    border-bottom: solid 1px ${colors.primary};
   }
 `;

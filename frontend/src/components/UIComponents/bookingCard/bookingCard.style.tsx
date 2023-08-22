@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as CheckSVG } from "../../../assets/check-circle.svg";
+import { ReactComponent as CheckSVG } from "../../../assets/icons/check-circle.svg";
+import colors from "../../../colors";
 
 export const BookingCardContainer = styled.div`
   padding: 2rem;
-  border: 3px solid #cc704b;
+  border: 3px solid ${colors.primary};
   border-radius: 20px;
   display: flex;
   justify-content: space-between;
@@ -62,16 +63,16 @@ export const ConfirmationIcon = styled(CheckSVG)`
   height: 1.6rem;
   width: 1.6rem;
   .path {
-    stroke: #506044;
-    stroke: #738069;
+    stroke: ${colors.secondary};
+    stroke: ${colors.secondaryMediumLight};
   }
 `;
 
 export const ConfirmationText = styled.p`
   font-size: 1.4rem;
   line-height: 1.4rem;
-  color: #506044;
-  color: #738069;
+  color: ${colors.secondary};
+  color: ${colors.secondaryMediumLight};
   font-weight: 500;
   text-transform: capitalize;
   letter-spacing: 1px;
@@ -82,7 +83,7 @@ export const BookingText = styled.p`
   font-size: 1.2rem;
   font-weight: 400;
   letter-spacing: 0.4px;
-  color: #888;
+  color: ${colors.medium2Grey};
   span {
     font-weight: 700;
   }

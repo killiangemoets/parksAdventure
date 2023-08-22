@@ -134,8 +134,8 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
       key: "stauts",
       width: 72,
       sorter: (a, b) => {
-        if (a.status === "desactivated" && b.status === "active") return 1;
-        if (a.status === "active" && b.status === "desactivated") return -1;
+        if (a.status === "deactivated" && b.status === "active") return 1;
+        if (a.status === "active" && b.status === "deactivated") return -1;
         return 0;
       },
     },
@@ -154,7 +154,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
             handlePassDeletedUser={handleChange}
             handlePassUpdateUserActivation={handleChange}
             deleteMessage="This will also remove this guide from all their tours."
-            desactivateMessage="This will also remove this guide from all their tours."
+            deactivateMessage="This will also remove this guide from all their tours."
           />
         );
       },
@@ -187,7 +187,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
           ))}
         </Tours>
       ),
-      status: guide.active ? "active" : "desactivated",
+      status: guide.active ? "active" : "deactivated",
     }));
     setData(newData);
   }, [guides]);

@@ -25,6 +25,7 @@ import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../../UIComponents/button/button.component";
 import { TCreateStop } from "../../../../types/tour";
+import colors from "../../../../colors";
 
 const MAPBOX_TOKEN = process.env.REACT_APP_MAP_BOX_TOKEN
   ? process.env.REACT_APP_MAP_BOX_TOKEN
@@ -179,14 +180,14 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
                   hashed: false,
                   components: {
                     InputNumber: {
-                      colorPrimary: "#cc704b",
-                      colorLink: "#cc704b",
+                      colorPrimary: colors.primary,
+                      colorLink: colors.primary,
                       fontSize: 16,
-                      colorText: "#333",
-                      colorTextPlaceholder: "#aaa",
+                      colorText: colors.darkGrey,
+                      colorTextPlaceholder: colors.grey,
                       borderRadiusSM: 999,
                       colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-                      colorBgElevated: "#fdfaf5",
+                      colorBgElevated: colors.background,
                     },
                     DatePicker: {},
                   },

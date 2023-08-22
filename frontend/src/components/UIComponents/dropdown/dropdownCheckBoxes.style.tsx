@@ -3,12 +3,13 @@ import {
   CheckBoxAll,
   CheckboxGroupElement,
 } from "../checkBoxes/checkBoxes.style";
+import colors from "../../../colors";
 
 export const DropdownCheckBoxesContainer = styled.div`
   position: absolute;
   top: 112%;
   width: 100%;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 999;

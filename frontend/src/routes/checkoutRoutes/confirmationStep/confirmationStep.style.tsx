@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const ConfirmationStepContainer = styled.div`
   width: 100%;
@@ -44,11 +45,11 @@ export const ConfirmationStepHelpSection = styled.p`
 `;
 
 export const ConfirmationStepContactLink = styled(Link)`
-  color: #cc704b;
+  color: ${colors.primary};
   text-decoration: underline;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    color: #b86544;
+    color: ${colors.primaryDark};
   }
 `;

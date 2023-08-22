@@ -5,6 +5,7 @@ import {
   CheckboxGroupElement,
 } from "../../UIComponents/checkBoxes/checkBoxes.style";
 import { SliderStepsContainer } from "../../UIComponents/sliderSteps/sliderSteps.style";
+import colors from "../../../colors";
 
 export const Filters = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ export const FilterTitle = styled.h2`
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;
-  color: #506044;
+  color: ${colors.secondary};
   text-transform: uppercase;
 
   @media (max-width: 560px) {
@@ -50,7 +51,7 @@ export const FilterCheckBoxes = styled(Filter)`
 
   label {
     font-weight: 400;
-    color: #333;
+    color: ${colors.darkGrey};
     letter-spacing: 0.6px;
     font-size: 1.4rem;
   }
@@ -64,7 +65,7 @@ export const FilterCheckBoxes = styled(Filter)`
 
     label {
       font-weight: 400;
-      color: #333;
+      color: ${colors.darkGrey};
       letter-spacing: 0.6px;
       font-size: 1.4rem;
     }

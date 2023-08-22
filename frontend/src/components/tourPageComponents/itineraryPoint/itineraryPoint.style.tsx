@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const PointContainer = styled.div`
   display: flex;
@@ -11,9 +12,9 @@ export const PointName = styled.div`
   font-weight: 600;
   text-transform: capitalize;
   letter-spacing: 0.4px;
-  color: #cc704b;
+  color: ${colors.primary};
 `;
 
 export const StartPointName = styled(PointName)`
-  color: #506044;
+  color: ${colors.secondary};
 `;

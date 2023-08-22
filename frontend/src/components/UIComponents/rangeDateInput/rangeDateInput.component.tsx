@@ -4,6 +4,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { RangeDatePickerElement } from "./rangeDateInput.style";
 import { ConfigProvider } from "antd";
 import { FC } from "react";
+import colors from "../../../colors";
 
 dayjs.extend(customParseFormat);
 
@@ -50,13 +51,13 @@ const RangeDateInput: FC<RangeDateInputProps> = ({
         hashed: false,
         components: {
           DatePicker: {
-            colorPrimary: "#cc704b",
+            colorPrimary: colors.primary,
             fontSize: 16,
-            colorText: "#333",
-            colorTextPlaceholder: "#aaa",
+            colorText: colors.darkGrey,
+            colorTextPlaceholder: colors.grey,
             borderRadiusSM: 999,
             colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-            colorBgElevated: "#fdfaf5",
+            colorBgElevated: colors.background,
           },
         },
       }}>

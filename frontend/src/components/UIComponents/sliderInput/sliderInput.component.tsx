@@ -1,6 +1,7 @@
 import { InputNumbers, SliderInputContainer } from "./sliderInput.style";
 import { ConfigProvider, InputNumber, Slider } from "antd";
 import { FC } from "react";
+import colors from "../../../colors";
 
 export type SliderInputProps = {
   min: number;
@@ -26,20 +27,19 @@ const SliderInput: FC<SliderInputProps> = ({
         theme={{
           components: {
             Slider: {
-              colorPrimary: "#506044",
-              colorPrimaryBorder: "#96a08f",
-              colorPrimaryBorderHover: "#96a08f",
-              colorFillSecondary: "#ccc",
-              colorFillTertiary: "#ddd",
+              colorPrimary: colors.secondary,
+              colorPrimaryBorder: colors.secondaryVeryLight,
+              colorPrimaryBorderHover: colors.secondaryVeryLight,
+              colorFillSecondary: colors.lightGrey,
+              colorFillTertiary: colors.veryLightGrey,
             },
             InputNumber: {
-              colorText: "#333",
-              colorBorder: "#ddd",
-              colorPrimaryHover: "#506044 ",
+              colorText: colors.darkGrey,
+              colorBorder: colors.veryLightGrey,
+              colorPrimaryHover: colors.secondary,
             },
           },
-        }}
-      >
+        }}>
         <Slider
           range
           step={1}

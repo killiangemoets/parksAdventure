@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../../colors";
 
 export const AddTourImagesContainer = styled.div`
   padding: 6.4rem;
@@ -31,28 +32,28 @@ export const AddTourImagesWrapper = styled.div`
 
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload.ant-upload-select {
-    background-color: #faf2e5;
-    color: #cc704b;
-    border-color: #cc704b;
+    background-color: ${colors.backgroundDark};
+    color: ${colors.primary};
+    border-color: ${colors.primary};
 
     &:hover {
-      border-color: #b86544;
-      color: #b86544;
+      border-color: ${colors.primaryDark};
+      color: ${colors.primaryDark};
     }
   }
 
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
     .ant-upload-list.ant-upload-list-picture-card
     .ant-upload-list-item {
-    border: solid 1px #cc704b;
+    border: solid 1px ${colors.primary};
   }
 
   .ant-upload-list-item.ant-upload-list-item-done:hover {
-    background-color: #b86544;
+    background-color: ${colors.primaryDark};
   }
 
   .ant-upload-list-item-thumbnail:hover {
-    background: #eee;
+    background: ${colors.darkWhite};
   }
 
   .ant-upload-wrapper.ant-upload-picture-card-wrapper
@@ -65,10 +66,10 @@ export const AddTourImagesWrapper = styled.div`
     .anticon-delete {
     width: 2.2rem;
     svg {
-      color: #faf2e5;
+      color: ${colors.backgroundDark};
       transition: all 0.3s;
       &:hover {
-        color: #cc704b;
+        color: ${colors.primary};
       }
     }
   }
@@ -80,7 +81,7 @@ export const ErrorMessage = styled.p`
   width: 100%;
   text-align: center;
   height: 2rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 0.6px;

@@ -8,13 +8,28 @@ import {
 } from "./mainHeader.style";
 
 import HeaderCarousel from "../mainCarousel/mainCarousel.component";
+import headerImg1 from "../../../assets/images/mainHeader/header1.webp";
+import headerImg2 from "../../../assets/images/mainHeader/header2.webp";
+import headerImg3 from "../../../assets/images/mainHeader/header3.webp";
+import headerImg4 from "../../../assets/images/mainHeader/header4.webp";
+import headerImg5 from "../../../assets/images/mainHeader/header5.webp";
+import headerImg6 from "../../../assets/images/mainHeader/header6.webp";
+import headerImg7 from "../../../assets/images/mainHeader/header7.webp";
+import headerImg8 from "../../../assets/images/mainHeader/header8.webp";
+import headerImg9 from "../../../assets/images/mainHeader/header9.webp";
+import headerImg10 from "../../../assets/images/mainHeader/header10.webp";
 
 const bgImagesUrl = [
-  "images/hikingImg/clemence-bergougnoux-zLIrNgNzPYs-unsplash.jpg",
-  "images/hikingImg/nika-tchokhonelidze-Ms_p0I5DQSM-unsplash.jpg",
-  "images/hikingImg/carlos-0yuIA1K7LyA-unsplash.jpg",
-  "images/hikingImg/zach-betten-KYTT8L5JLDs-unsplash.jpg",
-  "images/hikingImg/nathan-dumlao-pLoMDKtl-JY-unsplash.jpg",
+  headerImg1,
+  headerImg2,
+  headerImg3,
+  headerImg4,
+  headerImg5,
+  headerImg6,
+  headerImg7,
+  headerImg8,
+  headerImg9,
+  headerImg10,
 ];
 
 const MainHeader = () => {

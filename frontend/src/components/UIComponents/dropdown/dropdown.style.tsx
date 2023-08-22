@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as DropdownSVG } from "../../../assets/chevron-down.svg";
+import { ReactComponent as DropdownSVG } from "../../../assets/icons/chevron-down.svg";
 
 export const DropdownContainer = styled.div`
   position: relative;

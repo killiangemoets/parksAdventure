@@ -2,11 +2,12 @@ import styled from "styled-components";
 import { PriceModalButtons } from "../../adminsProfilePagesComponents/addTourPageComponents/addTourCalendar/pricesCalendarInput.style";
 import { ReviewProfileName } from "../reviewProfile/reviewProfile.style";
 import { NumRatings, RatingValue } from "../starsRating/starsRating.style";
+import colors from "../../../colors";
 
 export const ReviewContainer = styled.div`
   width: 100%;
   padding: 3.2rem 0;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid ${colors.grey};
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
@@ -71,7 +72,7 @@ export const ReviewDate = styled.p`
   font-weight: 500;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #aaa;
+  color: ${colors.grey};
   justify-self: flex-end;
 
   @media (max-width: 480px) {
@@ -140,13 +141,13 @@ export const ReviewInput = styled.textarea<ReviewInputProps>`
   font-family: inherit;
   color: inherit;
 
-  border: 1px solid #cc704b;
+  border: 1px solid ${colors.primary};
   border-radius: 4px;
   box-shadow: none;
   transition: all 0.3s;
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
     font-size: 1.4rem;
     font-weight: 400;
   }
@@ -157,7 +158,8 @@ export const ReviewInput = styled.textarea<ReviewInputProps>`
 
   ${({ error }) =>
     error && {
-      border: "2px solid #ff0033",
+      border: "2px solid",
+      borderColor: colors.error,
     }}
 `;
 
@@ -174,7 +176,7 @@ export const DeleteReviewMessage = styled.div`
   min-width: 30vw;
   font-weight: 400;
   letter-spacing: 1px;
-  color: #333;
+  color: ${colors.darkGrey};
   text-align: center;
 
   span {
@@ -197,7 +199,7 @@ export const ReviewModalWrapper = styled.div`
 `;
 
 export const ReviewTourName = styled.p`
-  color: #333;
+  color: ${colors.darkGrey};
   letter-spacing: 1px;
   font-size: 1.6rem;
   font-weight: 500;

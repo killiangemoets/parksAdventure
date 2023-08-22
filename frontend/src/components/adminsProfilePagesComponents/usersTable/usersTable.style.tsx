@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const UserTableContainer = styled.div`
   width: 100%;
@@ -7,10 +8,8 @@ export const UserTableContainer = styled.div`
   .ant-table-wrapper .ant-table-thead > tr > th,
   .ant-table-wrapper .ant-table-thead > tr > td {
     text-align: center;
-    /* background-color: #cc704b; */
-    /* color: #fff; */
-    background-color: #faf2e5;
-    border: 1px solid #ccc;
+    background-color: ${colors.backgroundDark};
+    border: 1px solid ${colors.lightGrey};
     font-weight: 700;
     margin-right: 2.25rem;
     font-size: 1.4rem;
@@ -19,15 +18,15 @@ export const UserTableContainer = styled.div`
   }
 
   .ant-table-cell {
-    border: 1px solid #ccc;
+    border: 1px solid ${colors.lightGrey};
     font-size: 1.4rem;
     font-weight: 400;
     letter-spacing: 0.4px;
-    background-color: #fefcfa;
+    background-color: ${colors.backgroundMedium};
   }
 
   tr.ant-table-row {
-    background-color: #cc704b !important;
+    background-color: ${colors.primary} !important;
   }
 
   .ant-pagination-item {
@@ -36,7 +35,7 @@ export const UserTableContainer = styled.div`
     justify-content: center;
     height: 3.8rem;
     width: 3.8rem;
-    border: 2px solid #cc704b;
+    border: 2px solid ${colors.primary};
     border-radius: 999px;
     transition: all 0.3s !important;
 
@@ -44,32 +43,32 @@ export const UserTableContainer = styled.div`
       transition: all 0.3s !important;
       font-size: 1.4rem;
       font-weight: 600;
-      color: #cc704b;
+      color: ${colors.primary};
     }
 
     &:hover {
-      background-color: #cc704b !important;
+      background-color: ${colors.primary} !important;
       a {
-        color: #faf2e5;
+        color: ${colors.backgroundDark};
       }
     }
   }
 
   .ant-pagination-item-active {
-    background-color: #cc704b;
+    background-color: ${colors.primary};
     border-radius: 999px;
-    border-color: #cc704b;
+    border-color: ${colors.primary};
 
     a {
       font-size: 1.4rem;
       font-weight: 600;
-      color: #faf2e5;
+      color: ${colors.backgroundDark};
     }
 
     &:hover {
-      border-color: #cc704b;
+      border-color: ${colors.primary};
       a {
-        color: #faf2e5;
+        color: ${colors.backgroundDark};
       }
     }
   }
@@ -80,7 +79,7 @@ export const UserTableContainer = styled.div`
         width: 1.6rem;
         height: 1.6rem;
         transition: all 0.3s;
-        fill: #cc704b;
+        fill: ${colors.primary};
       }
     }
 
@@ -88,7 +87,7 @@ export const UserTableContainer = styled.div`
       .anticon svg {
         width: 1.8rem;
         height: 1.8rem;
-        fill: #b86544;
+        fill: ${colors.primaryDark};
       }
     }
   }
@@ -107,8 +106,8 @@ export const UserTableContainer = styled.div`
       font-size: 1.8rem !important;
       letter-spacing: 1px !important;
       background: none !important;
-      border: solid 2px #cc704b !important;
-      color: #cc704b !important;
+      border: solid 2px ${colors.primary} !important;
+      color: ${colors.primary} !important;
       border-radius: 999px !important;
       cursor: pointer !important;
 
@@ -121,26 +120,26 @@ export const UserTableContainer = styled.div`
     }
 
     .anticon {
-      color: #cc704b !important;
+      color: ${colors.primary} !important;
     }
 
     &:hover {
       .anticon {
-        color: #fff !important;
+        color: ${colors.white} !important;
       }
 
       .ant-select-single:not(.ant-select-customize-input) .ant-select-selector {
-        background-color: #cc704b !important;
-        border: solid 2px #cc704b !important;
-        color: #fff !important;
+        background-color: ${colors.primary} !important;
+        border: solid 2px ${colors.primary} !important;
+        color: ${colors.white} !important;
       }
     }
   }
 
   .ant-select-item.ant-select-item-option.ant-select-item-option-selected,
   .ant-select-item.ant-select-item-option.ant-select-item-option-active {
-    background-color: #d68d6f;
-    color: #fff;
+    background-color: ${colors.primaryMediumLight};
+    color: ${colors.white};
   }
 
   :where(.css-dev-only-do-not-override-ixblex).ant-pagination
@@ -151,7 +150,7 @@ export const UserTableContainer = styled.div`
     .ant-pagination-jump-next
     .ant-pagination-item-container
     .ant-pagination-item-ellipsis {
-    color: #cc704b !important;
+    color: ${colors.primary} !important;
   }
 
   :where(.css-dev-only-do-not-override-ixblex).ant-pagination
@@ -214,7 +213,7 @@ export const Tour = styled(Link)`
   cursor: pointer;
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 `;
 
@@ -227,6 +226,6 @@ export const Role = styled.p`
   cursor: pointer;
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 `;

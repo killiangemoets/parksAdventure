@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const TourBookingContainer = styled.div`
   padding: 6.4rem;
@@ -34,10 +35,14 @@ export const TourBookingBox = styled.div`
     linear,
     left top,
     right bottom,
-    from(#506044),
-    to(#627057)
+    from(${colors.secondary}),
+    to(${colors.secondaryVariant})
   );
-  background: linear-gradient(to right bottom, #506044, #627057);
+  background: linear-gradient(
+    to right bottom,
+    ${colors.secondary},
+    ${colors.secondaryVariant}
+  );
   -webkit-box-shadow: 0 1.8rem 4.4rem rgba(0, 0, 0, 0.26);
   box-shadow: 0 1.8rem 4.4rem rgba(0, 0, 0, 0.26);
   display: flex;
@@ -64,7 +69,7 @@ export const SecondTitle = styled.h3`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #fff;
+  color: ${colors.white};
 `;
 
 export const TourBookingPictures = styled.div`

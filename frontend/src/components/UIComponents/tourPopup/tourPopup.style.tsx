@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
-import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
+import { ReactComponent as HeartSVG } from "../../../assets/icons/heart.svg";
 import { NumRatings, RatingValue } from "../starsRating/starsRating.style";
+import colors from "../../../colors";
 
 export const TourPictureContainer = styled.div`
   width: 100%;
@@ -41,7 +42,7 @@ export const TourPopupContainer = styled.div`
   cursor: pointer;
   width: 30rem;
   border-radius: 12px;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   transition: 0.3s all;
@@ -74,7 +75,7 @@ export const WishListIcon = styled(HeartSVG)`
   height: 2.4rem;
   cursor: pointer;
   .stroke {
-    fill: #cc704b;
+    fill: ${colors.primary};
   }
   .fill {
     fill: rgba(204, 112, 75, 0.4);
@@ -83,7 +84,7 @@ export const WishListIcon = styled(HeartSVG)`
 
   &:hover {
     .fill {
-      fill: #cc704b;
+      fill: ${colors.primary};
     }
   }
 
@@ -98,7 +99,7 @@ export const TourTitle = styled.h3`
   right: 1.6rem;
   top: 10.8rem;
   width: 70%;
-  color: #fefdfa;
+  color: ${colors.backgroundLight};
 
   text-transform: uppercase;
   font-weight: 300;
@@ -117,16 +118,8 @@ export const TourTitle = styled.h3`
       linear,
       left top,
       right bottom,
-      from(#e0a993),
-      to(#cc704b)
-    );
-
-    background-image: -webkit-gradient(
-      linear,
-      left top,
-      right bottom,
-      from(#db9b81),
-      to(#cc704b)
+      from(${colors.primaryLight}),
+      to(${colors.primary})
     );
   }
 
@@ -160,8 +153,7 @@ export const TourNextDate = styled.p`
   font-size: 1.4rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #303a29;
-  color: #cc704b;
+  color: ${colors.primary};
 
   @media (max-width: 530px) {
     font-size: 1rem;
@@ -174,8 +166,8 @@ export const TourTags = styled.div`
   gap: 0.4rem;
 `;
 export const TourTag = styled.p`
-  background-color: #e0a993;
-  color: #fff;
+  background-color: ${colors.primaryLight2};
+  color: ${colors.white};
   font-size: 1.2rem;
   line-height: 1.6rem;
   letter-spacing: 0.2px;
@@ -234,8 +226,8 @@ export const TourFooter = styled.div`
   justify-content: center;
 
   gap: 1rem;
-  background-color: #fdfaf5;
-  border-top: 1.8px solid #ebc6b7;
+  background-color: ${colors.background};
+  border-top: 1.8px solid ${colors.primaryVeryLight};
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 

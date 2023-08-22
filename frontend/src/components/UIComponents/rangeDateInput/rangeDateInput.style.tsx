@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { DatePicker } from "antd";
+import colors from "../../../colors";
 const { RangePicker } = DatePicker;
 
 type RangeDatePickerElementProps = {
@@ -12,24 +13,24 @@ export const RangeDatePickerElement = styled(
   width: 30.8rem;
   padding: 1.4rem 3.2rem;
   height: 5.2rem;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
   border-radius: 999px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.32);
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.grey};
   font-size: 1.6rem;
   transition: all 0.3s;
 
   &:hover {
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   input {
     font-size: 1.6rem !important;
     font-family: inherit !important;
-    color: #333 !important;
+    color: ${colors.darkGrey} !important;
 
     &::placeholder {
-      color: #aaa !important;
+      color: ${colors.grey} !important;
     }
 
     &:focus {
@@ -45,12 +46,12 @@ export const RangeDatePickerElement = styled(
 
   .ant-picker-clear {
     background: none !important;
-    color: #cc704b !important;
+    color: ${colors.primary} !important;
     transition: all 0.3s !important;
     opacity: 1 !important;
 
     &:hover {
-      color: #b86544 !important;
+      color: ${colors.primaryDark} !important;
     }
   }
 
@@ -65,10 +66,10 @@ export const RangeDatePickerElement = styled(
       width: 26.8rem;
       font-size: 1rem;
       box-shadow: none;
-      border: 1px solid #cc704b;
+      border: 1px solid ${colors.primary};
 
       &:focus {
-        border: 1px solid #cc704b;
+        border: 1px solid ${colors.primary};
       }
     `}
 `;

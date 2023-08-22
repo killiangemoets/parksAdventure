@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import colors from "../../../colors";
 
 export const TourBookingDetailsContainer = styled.div`
   width: 100%;
-  border: 2px solid #506044;
+  border: 2px solid ${colors.secondary};
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -78,21 +79,18 @@ export const InfoLink = styled(Link)`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #333;
+  color: ${colors.darkGrey};
   transition: all 0.3s;
   text-decoration: underline;
-  /* border-bottom: solid 1px #333; */
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
     text-decoration: underline;
-    /* border-bottom: solid 1px #cc704b; */
   }
 `;
 
 export const TourBookingFooter = styled.div`
-  background-color: #dcdfda;
-  /* background-color: #eeefec; */
+  background-color: ${colors.backgroundGrey};
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   padding: 3.2rem;
@@ -139,14 +137,14 @@ export const TourBookingButtons = styled.div`
   @media (max-width: 560px) {
     gap: 1rem;
     button {
-      border: solid 1.5px #cc704b;
+      border: solid 1.5px ${colors.primary};
       padding: 1.2rem 1.6rem;
       width: 12.8rem;
       min-width: 0;
       font-size: 1.6rem;
 
       &:hover {
-        border: solid 1.5px #b86544;
+        border: solid 1.5px ${colors.primaryDark};
       }
     }
   }

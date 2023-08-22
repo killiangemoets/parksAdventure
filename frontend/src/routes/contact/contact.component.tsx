@@ -16,6 +16,8 @@ import Title, {
 } from "../../components/UIComponents/title/title.component";
 import { useEffect, useState } from "react";
 
+import teamImg from "../../assets/images/team-pic.webp";
+
 const Contact = () => {
   const [searchParams] = useSearchParams();
   const success = searchParams.get("success");
@@ -48,7 +50,7 @@ const Contact = () => {
           <Title titleType={TITLE_TYPE_CLASSES.section}>Get in touch</Title>
         )}
         <ContactImage>
-          <img src="images/team-pic.jpeg" alt="Tour Guides Team" />
+          <img src={teamImg} alt="Tour Guides Team" />
         </ContactImage>
         <ContactText>
           Looking for more information, having a question, or a booking issue?

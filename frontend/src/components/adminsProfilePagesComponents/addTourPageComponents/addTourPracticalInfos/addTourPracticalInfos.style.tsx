@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { QuickFactName } from "../../../tourPageComponents/quickFact/quickFact.style";
 import { QuickFactInputContainer } from "../quickFactInput/quickFactInput.style";
+import colors from "../../../../colors";
 
 export const AddTourPracticalInfosContainer = styled.div`
   padding: 6.4rem;
@@ -36,7 +37,7 @@ export const AddTourPracticalInfosContent = styled.div`
   gap: 3.2rem;
 
   .ant-input {
-    background-color: #fdfaf5 !important;
+    background-color: ${colors.background} !important;
     width: 100%;
   }
 

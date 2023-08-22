@@ -3,6 +3,7 @@ import { CheckboxGroupElement } from "../../UIComponents/checkBoxes/checkBoxes.s
 import { DropdownContainer } from "../../UIComponents/dropdown/dropdown.style";
 import { TextInputContainer } from "../../UIComponents/textInput/textInput.style";
 import { AuthenticationForm } from "../../authenticationComponents/authentication.style";
+import colors from "../../../colors";
 
 export const AdminNavbarContainer = styled.div`
   position: relative;
@@ -11,8 +12,8 @@ export const AdminNavbarContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #cc704b;
-  background-color: #fdfaf5;
+  border-bottom: 1px solid ${colors.primary};
+  background-color: ${colors.background};
   padding: 0 2rem;
 
   ${CheckboxGroupElement} {
@@ -79,7 +80,7 @@ export const ErrorMessage = styled.p`
   width: 100%;
   text-align: center;
   height: 1.8rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;
@@ -98,7 +99,7 @@ export const UserName = styled.p`
 export const UserEmail = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
-  color: #aaa;
+  color: ${colors.grey};
 `;
 
 export const ModalSuccessContainer = styled.div`

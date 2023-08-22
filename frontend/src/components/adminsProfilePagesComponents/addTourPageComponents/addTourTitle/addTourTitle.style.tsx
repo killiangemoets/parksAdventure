@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../../colors";
 
 export const AddTourTitleContainer = styled.div`
   padding: 6.4rem 6.4rem 3.2rem 6.4rem;
@@ -29,20 +30,20 @@ export const TitleInput = styled.input<TitleInputProps>`
   font-family: inherit;
   color: inherit;
   border: none;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   border-radius: 4px;
   box-shadow: none;
   transition: all 0.3s;
-  border: 1px solid #fdfaf5;
+  border: 1px solid ${colors.background};
 
   font-weight: 700;
-  color: #506044;
+  color: ${colors.secondary};
   font-size: 3.6rem;
   letter-spacing: 2px;
   text-transform: uppercase;
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
     font-size: 3.2rem;
     letter-spacing: 1px;
     font-weight: 500;
@@ -51,12 +52,13 @@ export const TitleInput = styled.input<TitleInputProps>`
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   ${({ error }) =>
     error && {
-      border: "2px solid #ff0033",
+      border: "2px solid",
+      borderColor: colors.error,
     }}
 
   @media (max-width: 550px) {

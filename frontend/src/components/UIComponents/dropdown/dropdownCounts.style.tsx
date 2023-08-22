@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-import { ReactComponent as MinusSVG } from "../../../assets/minus.svg";
-import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
+import { ReactComponent as MinusSVG } from "../../../assets/icons/minus.svg";
+import { ReactComponent as PlusSVG } from "../../../assets/icons/plus.svg";
+import colors from "../../../colors";
 
 export const DropdownCountsContainer = styled.ul`
   position: absolute;
   top: 108%;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 4;
@@ -18,7 +19,7 @@ export const DropdownCountsContainer = styled.ul`
   justify-content: center;
 
   li:not(:last-child) {
-    border-bottom: 1px solid #aaa;
+    border-bottom: 1px solid ${colors.grey};
   }
 `;
 
@@ -70,12 +71,12 @@ export const CountValue = styled.input`
   font-family: inherit;
   color: inherit;
   border: none;
-  background-color: #ffff;
-  background-color: #fdfaf5;
+  background-color: ${colors.white};
+  background-color: ${colors.background};
 
   border-radius: 12px;
   transition: all 0.3s;
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.grey};
   text-align: center;
 
   -moz-appearance: textfield;
@@ -86,12 +87,12 @@ export const CountValue = styled.input`
   }
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 `;
 
@@ -101,12 +102,12 @@ export const Minus = styled(MinusSVG)`
   transition: all 0.3s;
 
   .path {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   &:hover {
     .path {
-      color: #b86544;
+      color: ${colors.primaryDark};
     }
   }
 `;
@@ -117,12 +118,12 @@ export const Plus = styled(PlusSVG)`
   transition: all 0.3s;
 
   .path {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   &:hover {
     .path {
-      color: #b86544;
+      color: ${colors.primaryDark};
     }
   }
 `;

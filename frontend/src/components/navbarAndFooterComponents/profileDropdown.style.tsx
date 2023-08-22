@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../../colors";
 
 export const ProfileDropdownContainer = styled.div`
   position: absolute;
   top: 120%;
   right: 0%;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 3;
@@ -16,7 +17,7 @@ export const ProfileDropdownContainer = styled.div`
     position: relative;
     border-radius: 0px;
     width: 100%;
-    background-color: #506044;
+    background-color: ${colors.secondary};
     box-shadow: none;
     display: flex;
     flex-direction: column;
@@ -36,7 +37,7 @@ export const ProfileDropdownElement = styled(Link)`
   gap: 0.8rem;
   padding: 2rem 3.2rem;
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   @media (max-width: 620px) {
@@ -54,10 +55,10 @@ export const ProfileDropdownText = styled.p`
     font-size: 2rem;
     font-weight: 400;
     letter-spacing: 1.2px;
-    color: #fbf3e5;
+    color: ${colors.iconsLight};
     text-transform: uppercase;
     &:hover {
-      color: #cc704b;
+      color: ${colors.primary};
     }
   }
   @media (max-width: 450px) {
@@ -68,7 +69,7 @@ export const ProfileDropdownText = styled.p`
 export const ProfileDropdownLine = styled.div`
   width: 100%;
   height: 1px;
-  background-color: #aaa;
+  background-color: ${colors.grey};
 
   @media (max-width: 620px) {
     display: none;

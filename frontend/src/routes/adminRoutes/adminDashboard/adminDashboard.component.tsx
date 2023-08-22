@@ -28,6 +28,7 @@ import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
 import { capitalizeString } from "../../../utils/formatting/formatString";
+import colors from "../../../colors";
 
 const AdminDashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -93,7 +94,7 @@ const AdminDashboard = () => {
           "rgba(214, 140, 111, 0.8)",
           "rgba(115, 128, 105, 0.8)",
         ],
-        borderColor: ["#d68d6f", "#738069"],
+        borderColor: [colors.primaryMediumLight, colors.secondaryMediumLight],
         borderWidth: 1,
       },
     ],

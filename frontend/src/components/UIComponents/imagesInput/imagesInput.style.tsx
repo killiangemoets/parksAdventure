@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { ReactComponent as PlusSVG } from "../../../assets/plusSmall.svg";
-import { ReactComponent as TrashSVG } from "./../../../assets/trash.svg";
-import { ReactComponent as EyeSVG } from "./../../../assets/eye.svg";
+import { ReactComponent as PlusSVG } from "../../../assets/icons/plusSmall.svg";
+import { ReactComponent as TrashSVG } from "./../../../assets/icons/trash.svg";
+import { ReactComponent as EyeSVG } from "./../../../assets/icons/eye.svg";
+import colors from "../../../colors";
 
 export const ImagesInputContainer = styled.div`
   display: grid;
@@ -13,16 +14,16 @@ export const InputWrapper = styled.div`
   position: relative;
   width: 16rem;
   height: 16rem;
-  background-color: #faf2e5;
-  border: 1px dashed #cc704b;
+  background-color: ${colors.backgroundDark};
+  border: 1px dashed ${colors.primary};
   border-radius: 8px;
   transition: 0.3s;
   cursor: pointer;
 
   &:hover {
-    background-color: #f9eedb;
-    border-color: #b86544;
-    color: #b86544;
+    background-color: ${colors.backgroundMediumDark};
+    border-color: ${colors.primaryDark};
+    color: ${colors.primaryDark};
   }
 `;
 
@@ -66,7 +67,7 @@ export const ImageElement = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px dashed #cc704b;
+  border: 1px dashed ${colors.primary};
   border-radius: 8px;
   transition: 0.3s;
 
@@ -108,7 +109,7 @@ export const PlusIcon = styled(PlusSVG)`
   width: 2.6rem;
   height: 2.6rem;
   .path {
-    stroke: #cc704b;
+    stroke: ${colors.primary};
   }
 `;
 
@@ -117,7 +118,7 @@ export const UploadText = styled.p`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #cc704b;
+  color: ${colors.primary};
 `;
 
 export const TrashIcon = styled(TrashSVG)`
@@ -125,12 +126,12 @@ export const TrashIcon = styled(TrashSVG)`
   height: 2.6rem;
   transition: all 0.3s;
   .path {
-    stroke: #fff;
+    stroke: ${colors.white};
   }
 
   &:hover {
     .path {
-      stroke: #cc704b;
+      stroke: ${colors.primary};
     }
   }
 `;
@@ -139,12 +140,12 @@ export const EyeIcon = styled(EyeSVG)`
   height: 2.6rem;
   transition: all 0.3s;
   .path {
-    stroke: #fff;
+    stroke: ${colors.white};
   }
 
   &:hover {
     .path {
-      stroke: #cc704b;
+      stroke: ${colors.primary};
     }
   }
 `;

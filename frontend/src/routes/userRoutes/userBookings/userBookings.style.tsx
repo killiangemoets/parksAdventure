@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const UserBookingsContainer = styled.div`
   padding: 6.4rem;
@@ -36,7 +37,7 @@ export const UserBookingsErrorMessage = styled.div`
   margin-top: 12rem;
   text-align: center;
   height: 2rem;
-  color: #333;
+  color: ${colors.darkGrey};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;

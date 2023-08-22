@@ -1,14 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-
-/* #506044 
-#9fc088
-#CC704B
-#b86544
-#e0a993
-#F6E6CB 
-#faf2e5
-##fdfaf5
-*/
+import colors from "./colors";
 
 export const GlobalStyle = createGlobalStyle`
 body {
@@ -17,31 +8,31 @@ body {
   font-family: "Open Sans", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #333;
+  color: ${colors.darkGrey};
   font-weight: 300;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   overflow-x: hidden;
 
   .ant-picker-dropdown
     .ant-picker-time-panel-column
     > li.ant-picker-time-panel-cell-selected
     .ant-picker-time-panel-cell-inner {
-    background: #ebc6b7;
+    background: ${colors.primaryVeryLight};
   }
 
   .ant-btn-primary{
-    background-color: #cc704b;
+    background-color: ${colors.primary};
 
     &:hover{
-      background-color: #b86544 !important;
+      background-color: ${colors.primaryDark} !important;
     }
   }
 
   a{
-    color: #333;
+    color: ${colors.darkGrey};
 
     &:hover{
-      color: #cc704b
+      color: ${colors.primary};
 
     }
   }

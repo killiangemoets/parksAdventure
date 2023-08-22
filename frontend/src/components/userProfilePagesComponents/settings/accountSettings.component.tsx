@@ -88,9 +88,7 @@ const AccountSettings = () => {
   return (
     <SettingsContainer>
       <SettingsWrapper1>
-        <Title titleType={TITLE_TYPE_CLASSES.section}>
-          Your Account Settings
-        </Title>
+        <Title titleType={TITLE_TYPE_CLASSES.section}>Account Settings</Title>
         <SettingsForm onSubmit={handleSubmit}>
           <SettingsInputs>
             <TextInput

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
-import { ReactComponent as MapSVG } from "../../assets/map.svg";
-import { ReactComponent as ListSVG } from "../../assets/list.svg";
+import { ReactComponent as MapSVG } from "../../assets/icons/map.svg";
+import { ReactComponent as ListSVG } from "../../assets/icons/list.svg";
+import colors from "../../colors";
 
 export const AllToursContainer = styled.div`
   padding-top: 8rem;
@@ -70,7 +71,7 @@ export const MapIcon = styled(MapSVG)`
   height: 2rem;
 
   .path {
-    stroke: #fff;
+    stroke: ${colors.white};
   }
 `;
 
@@ -79,6 +80,6 @@ export const ListIcon = styled(ListSVG)`
   height: 2rem;
 
   .path {
-    fill: #fff;
+    fill: ${colors.white};
   }
 `;

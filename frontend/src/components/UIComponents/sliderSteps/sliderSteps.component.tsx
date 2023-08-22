@@ -1,6 +1,7 @@
 import { FC, useEffect, useRef, useState } from "react";
 import { ConfigProvider, Slider } from "antd";
 import { SliderStepsContainer } from "./sliderSteps.style";
+import colors from "../../../colors";
 
 export type SliderStepsProps = {
   steps: TInfo<string>[];
@@ -27,7 +28,7 @@ const SliderSteps: FC<SliderStepsProps> = ({
 
       createMarks[stepValue] = {
         style: {
-          color: "#506044",
+          color: colors.secondary,
           fontSize: "1.6rem",
           marginTop: "0.4rem",
           fontWeight: 500,
@@ -53,10 +54,10 @@ const SliderSteps: FC<SliderStepsProps> = ({
         +markEl.dataset.stepValue >= inputValues[0] &&
         +markEl.dataset.stepValue <= inputValues[1]
       ) {
-        markEl.style.color = "#506044";
+        markEl.style.color = colors.secondary;
         markEl.style.fontSize = isSmallScreen ? "1.4rem" : "1.6rem";
       } else {
-        markEl.style.color = "#333";
+        markEl.style.color = colors.darkGrey;
         markEl.style.fontSize = isSmallScreen ? "1rem" : "1.2rem";
       }
     });
@@ -105,16 +106,16 @@ const SliderSteps: FC<SliderStepsProps> = ({
         theme={{
           components: {
             Slider: {
-              colorPrimary: "#506044",
-              colorPrimaryBorder: "#96a08f",
-              colorPrimaryBorderHover: "#96a08f",
-              colorFillSecondary: "#ccc",
-              colorFillTertiary: "#ddd",
+              colorPrimary: colors.secondary,
+              colorPrimaryBorder: colors.secondaryVeryLight,
+              colorPrimaryBorderHover: colors.secondaryVeryLight,
+              colorFillSecondary: colors.lightGrey,
+              colorFillTertiary: colors.veryLightGrey,
             },
             InputNumber: {
-              colorText: "#333",
-              colorBorder: "#ddd",
-              colorPrimaryHover: "#506044 ",
+              colorText: colors.darkGrey,
+              colorBorder: colors.veryLightGrey,
+              colorPrimaryHover: colors.secondary,
             },
           },
         }}>

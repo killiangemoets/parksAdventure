@@ -111,8 +111,8 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       key: "stauts",
       width: 60,
       sorter: (a, b) => {
-        if (a.status === "desactivated" && b.status === "active") return 1;
-        if (a.status === "active" && b.status === "desactivated") return -1;
+        if (a.status === "deactivated" && b.status === "active") return 1;
+        if (a.status === "active" && b.status === "deactivated") return -1;
         return 0;
       },
     },
@@ -131,7 +131,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
             handlePassDeletedUser={handleChange}
             handlePassUpdateUserActivation={handleChange}
             deleteMessage="This will also DELETE all reviews of this user!"
-            desactivateMessage="This will also hide all the reviews of this user!"
+            deactivateMessage="This will also hide all the reviews of this user!"
           />
         );
       },
@@ -155,7 +155,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
       bookingsNumber: user.numOfBookings,
       reviewsNumber: user.numOfRatings,
       ratingAverage: user.avgRating,
-      status: user.active ? "active" : "desactivated",
+      status: user.active ? "active" : "deactivated",
     }));
     setData(newData);
   }, [users]);

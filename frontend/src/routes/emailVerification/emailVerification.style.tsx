@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import colors from "../../colors";
 
 export const EmailVerificationContainer = styled.div`
   width: 100vw;
@@ -13,7 +14,7 @@ export const EmailVerificationContainer = styled.div`
 export const EmailVerificationWrapper = styled.div`
   position: relative;
   padding: 5.2rem 6.8rem;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   border-radius: 12px;
@@ -58,18 +59,18 @@ export const EmailVerificationSection = styled.div`
 
 export const EmailVerificationErrorMessage = styled.p`
   height: 2rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;
 `;
 
 export const EmailVerificationLink = styled(Link)`
-  color: #cc704b;
+  color: ${colors.primary};
   text-decoration: underline;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    color: #b86544;
+    color: ${colors.primaryDark};
   }
 `;

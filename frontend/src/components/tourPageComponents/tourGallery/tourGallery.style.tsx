@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
-import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
+import { ReactComponent as HeartSVG } from "../../../assets/icons/heart.svg";
+import colors from "../../../colors";
 
 export const TourGalleryContainer = styled.div`
   padding: 0 6.4rem 6.4rem 6.4rem;
@@ -33,7 +34,7 @@ export const TourMainImage = styled.div`
   height: 80vh;
   grid-column: 1/5;
   grid-row: 1/3;
-  background-color: #aaa;
+  background-color: ${colors.grey};
   border-top-left-radius: 8px;
   border-bottom-left-radius: 8px;
 
@@ -58,7 +59,7 @@ export const TourMainImage = styled.div`
 `;
 export const TourSecondImage = styled.div`
   grid-column: 5/7;
-  background-color: #aaa;
+  background-color: ${colors.grey};
   border-top-right-radius: 8px;
   height: calc(50vh - 0.2rem);
 
@@ -80,7 +81,7 @@ export const TourSecondImage = styled.div`
   }
 `;
 export const TourThirdImage = styled.div`
-  background-color: #aaa;
+  background-color: ${colors.grey};
   height: calc(30vh - 0.2rem);
   img {
     width: 100%;
@@ -100,7 +101,7 @@ export const TourThirdImage = styled.div`
   }
 `;
 export const TourFourthImage = styled.div`
-  background-color: #aaa;
+  background-color: ${colors.grey};
   height: calc(30vh - 0.2rem);
 
   border-bottom-right-radius: 8px;
@@ -136,11 +137,11 @@ export const TourGalleryButtons = styled.div`
       padding: 0rem 0.8rem;
       height: 4rem !important;
       font-size: 1.4rem;
-      border: solid 1.5px #cc704b;
+      border: solid 1.5px ${colors.primary};
       letter-spacing: 0.2px;
       gap: 0.4rem;
       &:hover {
-        border: solid 1.5px #cc704b;
+        border: solid 1.5px ${colors.primary};
       }
 
       svg {
@@ -163,7 +164,7 @@ export const HeartIcon = styled(HeartSVG)<HeartIconProps>`
     inwishlist &&
     css`
       .fill {
-        fill: #cc704b;
+        fill: ${colors.primary};
       }
     `}
 `;

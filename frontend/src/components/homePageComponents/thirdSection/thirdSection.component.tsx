@@ -11,6 +11,10 @@ import {
   ThirdSecWrapper,
 } from "./thirdSection.style";
 
+import canadianRockiesImg from "../../../assets/images/mainFilters/canadianRockies.webp";
+import desertImg from "../../../assets/images/mainFilters/desert.webp";
+import familyImg from "../../../assets/images/mainFilters/family.webp";
+
 const ThirdSection = () => {
   const checkBoxes = (): void => {
     const triggerBottom = (window.innerHeight / 5) * 4;
@@ -56,12 +60,12 @@ const ThirdSection = () => {
             </ElementText>
           </ThirdSecTextContent>
           <ThirdSecImageContent className="box box-right">
-            <img src="images/canadianRockies.jpg" alt="canadian rockies" />
+            <img src={canadianRockiesImg} alt="canadian rockies" />
           </ThirdSecImageContent>
         </ThirdSecElement>
         <ThirdSecElement>
           <ThirdSecImageContent className="box box-left">
-            <img src="images/desert.jpg" alt="desert" />
+            <img src={desertImg} alt="desert" />
           </ThirdSecImageContent>
           <ThirdSecTextContent className="box box-right">
             <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
@@ -111,7 +115,7 @@ const ThirdSection = () => {
             </ElementText>
           </ThirdSecTextContent>
           <ThirdSecImageContent className="box box-right">
-            <img src="images/family.jpg" alt="Family hiking" />
+            <img src={familyImg} alt="Family hiking" />
           </ThirdSecImageContent>
         </ThirdSecElement>
       </ThirdSecWrapper>

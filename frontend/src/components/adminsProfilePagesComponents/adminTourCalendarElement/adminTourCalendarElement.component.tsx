@@ -14,6 +14,7 @@ import { AdminTourCalendarElementContainer } from "./adminTourCalendarElement.st
 import { TAvailability } from "../../../types/tour";
 import { getCreateAvailabilityDateFormat } from "../../../utils/formatting/formatDates";
 import { useNavigate } from "react-router-dom";
+import colors from "../../../colors";
 
 export type AdminTourCalendarElementProps = {
   availabilities: TAvailability[];
@@ -58,26 +59,26 @@ const AdminTourCalendarElement: FC<AdminTourCalendarElementProps> = ({
       newPricesEvents.push({
         title: `Adults: $${availability.price}`,
         start: formattedDate,
-        color: "#85907c",
+        color: colors.secondaryLight,
       });
       if (availability.kidPrice) {
         newPricesEvents.push({
           title: `Children: $${availability.kidPrice}`,
           start: formattedDate,
-          color: "#85907c",
+          color: colors.secondaryLight,
         });
       }
       newPricesEvents.push({
         title: `GC.: ${availability.maxGroupSize}ppl`,
         start: formattedDate,
-        color: "#db9b81",
+        color: colors.primaryLight,
       });
 
       if (availability.currentGroupSize > 0) {
         newPricesEvents.push({
           title: `Current G.: ${availability.currentGroupSize}ppl`,
           start: formattedDate,
-          color: "#f9625b",
+          color: colors.veryLightRed,
         });
       }
     });

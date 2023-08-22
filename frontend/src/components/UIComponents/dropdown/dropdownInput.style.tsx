@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const DropdownContainer = styled.div`
   position: absolute;
   top: 112%;
   min-width: 100%;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   border-radius: 8px;
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
   z-index: 3;
@@ -33,13 +34,14 @@ export const Option = styled.li<OptionProps>`
 
   transition: all 0.3s;
 
-  background-color: ${({ current }) => (current ? "#d68d6f" : "none")};
+  background-color: ${({ current }) =>
+    current ? colors.primaryMediumLight : "none"};
 
-  color: ${({ current }) => (current ? "#fff" : "#333")};
+  color: ${({ current }) => (current ? colors.white : colors.darkGrey)};
 
   &:hover,
   &:visited {
-    background-color: #d68d6f;
-    color: #fff;
+    background-color: ${colors.primaryMediumLight};
+    color: ${colors.white};
   }
 `;

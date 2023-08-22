@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const SpinnerOverlay = styled.div`
   width: 100%;
@@ -14,7 +15,7 @@ export const WhiteSpinner = styled.div`
   height: 3.6rem;
   border: 3px solid rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  border-top-color: #fff;
+  border-top-color: ${colors.white};
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   @keyframes spin {
@@ -35,7 +36,7 @@ export const LargeSpinner = styled.div`
   height: 8rem;
   border: 8px solid rgba(204, 112, 75, 0.6);
   border-radius: 50%;
-  border-top-color: #cc704b;
+  border-top-color: ${colors.primary};
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   @keyframes spin {
@@ -56,7 +57,7 @@ export const SmallSpinner = styled.div`
   height: 2.1rem;
   border: 2px solid rgba(255, 255, 255, 0.6);
   border-radius: 50%;
-  border-top-color: #fff;
+  border-top-color: ${colors.white};
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
   @keyframes spin {

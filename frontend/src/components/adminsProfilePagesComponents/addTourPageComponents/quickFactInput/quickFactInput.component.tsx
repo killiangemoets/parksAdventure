@@ -18,6 +18,7 @@ import {
   QuickFactInfo,
   QuickFactInputContainer,
 } from "./quickFactInput.style";
+import colors from "../../../../colors";
 
 export enum QUICK_FACT_INPUT_TYPE {
   number = "number",
@@ -210,8 +211,7 @@ const QuickFactInput: FC<
             current={current as Info}
             list={dropdownList ? dropdownList : []}
             handleInput={onChange}
-            buttonType={BUTTON_TYPE_CLASSES.rectangular}
-          >
+            buttonType={BUTTON_TYPE_CLASSES.rectangular}>
             {children}
           </Dropdown>
         ) : dropdownType === DROPDOWN_TYPE_CLASSES.checkBoxes ? (
@@ -221,8 +221,7 @@ const QuickFactInput: FC<
             options={options || []}
             selection={selection || []}
             handleCheckBoxes={onChange}
-            allowSelectAll={allowSelectAll}
-          >
+            allowSelectAll={allowSelectAll}>
             {children}
           </Dropdown>
         ) : (
@@ -248,19 +247,18 @@ const QuickFactInput: FC<
           hashed: false,
           components: {
             InputNumber: {
-              colorPrimary: "#cc704b",
-              colorLink: "#cc704b",
+              colorPrimary: colors.primary,
+              colorLink: colors.primary,
               fontSize: 16,
-              colorText: "#333",
-              colorTextPlaceholder: "#aaa",
+              colorText: colors.darkGrey,
+              colorTextPlaceholder: colors.grey,
               borderRadiusSM: 999,
               colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-              colorBgElevated: "#fdfaf5",
+              colorBgElevated: colors.background,
             },
             DatePicker: {},
           },
-        }}
-      >
+        }}>
         {QuickFactInputElement}
       </ConfigProvider>
     </QuickFactInputContainer>

@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { ReactComponent as GroupSVG } from "../../../assets/users-solid.svg";
+import { ReactComponent as GroupSVG } from "../../../assets/icons/users-solid.svg";
 import { DatePickerElement } from "../../UIComponents/dateInput/dateInput.style";
 import { BaseButton } from "../../UIComponents/button/button.style";
+import colors from "../../../colors";
 
 export const TourBookingInputsContainer = styled.div`
   display: flex;
@@ -53,7 +54,7 @@ export const GroupIcon = styled(GroupSVG)`
   width: 2rem;
   height: 2rem;
   .path {
-    fill: #aaa;
+    fill: ${colors.grey};
   }
 `;
 
@@ -78,7 +79,7 @@ export const SelectDateFooterText = styled.p`
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: #20640c;
+    background: ${colors.green};
     display: inline-block;
   }
 `;
@@ -97,7 +98,7 @@ export const SelectDateFooterText2 = styled.p`
     width: 0.5rem;
     height: 0.5rem;
     border-radius: 50%;
-    background: #b83b3b;
+    background: ${colors.red};
     display: inline-block;
   }
 `;

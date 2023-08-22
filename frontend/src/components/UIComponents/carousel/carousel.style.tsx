@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Swiper, SwiperSlide } from "swiper/react";
+import colors from "../../../colors";
 
 export const CarouselSwiper = styled(Swiper)`
   width: 100%;
@@ -12,21 +13,21 @@ export const CarouselSwiper = styled(Swiper)`
 
   .swiper-button-prev,
   .swiper-button-next {
-    color: #aaa;
+    color: ${colors.grey};
     transition: all 0.3s;
 
     &:hover {
-      color: #cc704b;
+      color: ${colors.primary};
     }
   }
 
   .swiper-pagination-bullet {
-    background-color: #aaa;
+    background-color: ${colors.grey};
     opacity: 1;
   }
 
   .swiper-pagination-bullet-active {
-    background-color: #cc704b;
+    background-color: ${colors.primary};
   }
 `;
 

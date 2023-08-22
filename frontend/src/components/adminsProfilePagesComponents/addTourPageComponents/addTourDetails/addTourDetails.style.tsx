@@ -4,10 +4,11 @@ import {
   DropdownContainer,
   Option,
 } from "../../../UIComponents/dropdown/dropdownInput.style";
-import { ReactComponent as CloseSVG } from "../../../../assets/x-solid.svg";
+import { ReactComponent as CloseSVG } from "../../../../assets/icons/x-solid.svg";
+import colors from "../../../../colors";
 
 export const AddTourDetailsContainer = styled.div`
-  background-color: #fbf5ea;
+  background-color: ${colors.backgroundVeryDark};
 
   display: -webkit-box;
   display: -ms-flexbox;
@@ -45,7 +46,7 @@ export const AddTourDetailsContainer = styled.div`
 
 export const AddTourDetailsLeft = styled.div`
   justify-content: flex-end;
-  background-color: #f9eedb;
+  background-color: ${colors.backgroundMediumDark};
 
   display: -webkit-box;
   display: -ms-flexbox;
@@ -104,13 +105,13 @@ export const CloseIcon = styled(CloseSVG)`
   height: 1.4rem;
   cursor: pointer;
   .path {
-    fill: #bbb;
+    fill: ${colors.smallLightGrey};
     transition: all 0.3s;
   }
 
   &:hover {
     .path {
-      fill: #cc704b;
+      fill: ${colors.primary};
     }
   }
 `;
@@ -134,14 +135,14 @@ export const SummaryInput = styled.textarea<SummaryInputProps>`
   font-family: inherit;
   color: inherit;
 
-  border: 1px solid #cc704b;
-  background-color: #fbf5ea;
+  border: 1px solid ${colors.primary};
+  background-color: ${colors.backgroundVeryDark};
   border-radius: 4px;
   box-shadow: none;
   transition: all 0.3s;
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
     font-size: 1.4rem;
     font-weight: 400;
   }
@@ -152,7 +153,8 @@ export const SummaryInput = styled.textarea<SummaryInputProps>`
 
   ${({ error }) =>
     error && {
-      border: "2px solid #ff0033",
+      border: "2px solid",
+      borderColor: colors.error,
     }}
 
   @media (max-width: 860px) {
@@ -162,7 +164,7 @@ export const SummaryInput = styled.textarea<SummaryInputProps>`
 
 export const ErrorMessage = styled.p`
   height: 2rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const ChartContainer = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const ChartContainer = styled.div`
   padding: 2.4rem;
   width: 100%;
   height: 100%;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
 `;
@@ -63,7 +64,7 @@ export const LargeChartContainer = styled(ChartContainer)`
 
 export const ChartTitle = styled.h4`
   width: fit-content;
-  color: #cc704b;
+  color: ${colors.primary};
   letter-spacing: 0.1rem;
   font-size: 2rem;
   font-weight: 700;
@@ -84,7 +85,7 @@ export const Popup = styled.div`
   gap: 0.2rem;
   border-radius: 12px;
   padding: 2rem 3.2rem;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
 `;
@@ -93,7 +94,7 @@ export const PopupTitle = styled.p`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #aaa;
+  color: ${colors.grey};
 `;
 export const PopupContent = styled.p`
   font-weight: 600;

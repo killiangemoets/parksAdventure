@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Link } from "react-router-dom";
+import colors from "../../../colors";
 
 export const ContactConfirmationContainer = styled.div`
   width: 100%;
@@ -35,11 +36,11 @@ export const ContactConfirmationTextElement = styled.p`
 `;
 
 export const ContactConfirmationContactLink = styled(Link)`
-  color: #cc704b;
+  color: ${colors.primary};
   text-decoration: underline;
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    color: #b86544;
+    color: ${colors.primaryDark};
   }
 `;

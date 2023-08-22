@@ -13,9 +13,9 @@ import {
   FrontTitle,
 } from "./firstSection.style";
 
-import rangerImg from "../../../assets/aboutCards/ranger.jpg";
-import viewImg from "../../../assets/aboutCards/views.jpg";
-import mapImg from "../../../assets/aboutCards/fullyPlan.jpg";
+import rangerImg from "../../../assets/images/aboutCards/ranger.webp";
+import viewImg from "../../../assets/images/aboutCards/views.webp";
+import mapImg from "../../../assets/images/aboutCards/fullyPlan.webp";
 import { GreenOpacity } from "../../../routes/home/home.style";
 import { FC } from "react";
 
@@ -47,8 +47,7 @@ export const FlipCard: FC<FlipCardProps> = ({
         <FirstSecElementFront
           style={{
             backgroundImage: `url(${imageUrl})`,
-          }}
-        >
+          }}>
           <GreenOpacity>
             <FrontTitle>{title}</FrontTitle>
           </GreenOpacity>

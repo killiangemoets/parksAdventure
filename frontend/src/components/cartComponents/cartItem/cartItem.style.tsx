@@ -5,12 +5,13 @@ import {
 } from "../../UIComponents/starsRating/starsRating.style";
 import { DropdownContainer } from "../../UIComponents/dropdown/dropdown.style";
 import { TextInputContainer } from "../../UIComponents/textInput/textInput.style";
+import colors from "../../../colors";
 
 export const CartItemContainer = styled.div`
   display: flex;
   gap: 2rem;
   padding: 3.2rem 0;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid ${colors.grey};
   width: 100%;
 
   @media (max-width: 540px) {
@@ -73,7 +74,7 @@ export const CartItemTitle = styled.h4`
   text-transform: uppercase;
   font-size: 1.8rem;
   letter-spacing: 0.6px;
-  color: #404d36;
+  color: ${colors.secondaryDark};
 `;
 
 export const CartItemInfoList = styled.div`

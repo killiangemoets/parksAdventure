@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const CheckoutCardContainer = styled.div`
   border-radius: 12px;
-  border: solid 1px #aaa;
+  border: solid 1px ${colors.grey};
   padding: 2rem 0;
   width: 40rem;
   display: flex;
@@ -51,6 +52,6 @@ export const CheckoutCardText = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.4px;
-  color: #888;
+  color: ${colors.medium2Grey};
   text-align: end;
 `;

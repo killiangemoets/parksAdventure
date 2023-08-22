@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import reviewsSectionBackground from "../../../assets/reviews-section-bg.webp";
+import reviewsSectionBackground from "../../../assets/images/reviews-section-bg.webp";
 
 export const ReviewsSecContainer = styled.div`
   padding: 0rem 0rem;

@@ -38,6 +38,7 @@ import {
 } from "../../../../types/tour";
 import { niceTime } from "../../../../utils/formatting/formatDates";
 import compareDates from "../../../../utils/comparison/compareDates";
+import colors from "../../../../colors";
 
 type ModalInfosProps = {
   price: number | undefined;
@@ -112,13 +113,13 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       newPricesEvents.push({
         title: `Adults: $${availability.price}`,
         start: availability.date,
-        color: "#85907c",
+        color: colors.secondaryLight,
       });
       if (availability.kidPrice) {
         newPricesEvents.push({
           title: `Children: $${availability.kidPrice}`,
           start: availability.date,
-          color: "#85907c",
+          color: colors.secondaryLight,
         });
       }
       newPricesEvents.push({
@@ -135,7 +136,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         newPricesEvents.push({
           title: `Current G.: ${currentAvailability.currentGroupSize}ppl`,
           start: availability.date,
-          color: "#f9625b",
+          color: colors.veryLightRed,
         });
       }
     });

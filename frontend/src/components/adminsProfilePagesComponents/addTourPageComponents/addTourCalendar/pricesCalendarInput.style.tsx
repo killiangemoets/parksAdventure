@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { ReactComponent as ResetSVG } from "../../../../assets/rotate-left.svg";
+import { ReactComponent as ResetSVG } from "../../../../assets/icons/rotate-left.svg";
 import { QuickFactName } from "../../../tourPageComponents/quickFact/quickFact.style";
 import { BaseButton } from "../../../UIComponents/button/button.style";
+import colors from "../../../../colors";
 
 export const CalendarInputContainer = styled.div`
   .ant-picker-calendar.ant-picker-calendar-full
@@ -26,46 +27,46 @@ export const CalendarInputContainer = styled.div`
   .ant-input-number-group-addon,
   .ant-input-number,
   .ant-picker {
-    background-color: #fff !important;
+    background-color: ${colors.white} !important;
   }
 
   .fc .fc-button-primary:disabled {
-    background-color: #cc704b;
-    border-color: #cc704b;
-    background-color: #627057;
-    border-color: #627057;
+    background-color: ${colors.primary};
+    border-color: ${colors.primary};
+    background-color: ${colors.secondaryVariant};
+    border-color: ${colors.secondaryVariant};
 
     &:hover {
-      background-color: #b86544;
+      background-color: ${colors.primaryDark};
 
-      background-color: #506044;
-      border-color: #506044;
+      background-color: ${colors.secondary};
+      border-color: ${colors.secondary};
     }
   }
 
   .fc .fc-button-primary {
-    background-color: #cc704b;
-    border-color: #cc704b;
+    background-color: ${colors.primary};
+    border-color: ${colors.primary};
     transition: all 0.3s;
-    background-color: #627057;
-    border-color: #627057;
+    background-color: ${colors.secondaryVariant};
+    border-color: ${colors.secondaryVariant};
     font-size: 1.4rem;
 
     &:hover {
-      background-color: #b86544;
+      background-color: ${colors.primaryDark};
 
-      background-color: #506044;
-      border-color: #506044;
+      background-color: ${colors.secondary};
+      border-color: ${colors.secondary};
     }
   }
 
   .fc .fc-toolbar-title {
-    color: #cc704b !important;
+    color: ${colors.primary} !important;
   }
 
   .fc .fc-col-header-cell-cushion,
   .fc .fc-daygrid-day-number {
-    color: #506044;
+    color: ${colors.secondary};
   }
 
   .fc-h-event .fc-event-title {
@@ -127,13 +128,13 @@ export const ResetIcon = styled(ResetSVG)`
   height: 2rem;
   cursor: pointer;
   .path {
-    fill: #aaa;
+    fill: ${colors.grey};
     transition: all 0.3s;
   }
 
   &:hover {
     .path {
-      fill: #cc704b;
+      fill: ${colors.primary};
     }
   }
 `;
@@ -151,7 +152,7 @@ export const DeleteMessage = styled.p`
   line-height: 2.8rem;
   font-weight: 400;
   letter-spacing: 1px;
-  color: #333;
+  color: ${colors.darkGrey};
   text-align: center;
 `;
 
@@ -183,7 +184,7 @@ export const ErrorMessage = styled.p`
   max-width: 38rem;
   text-align: center;
   height: 2rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;

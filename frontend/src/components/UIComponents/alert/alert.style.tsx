@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const AlertContainer = styled.div`
   position: fixed;
@@ -14,7 +15,7 @@ export const AlertContainer = styled.div`
 export const AlertWrapper = styled.div`
   padding: 2rem 6.4rem;
   min-width: 40rem;
-  background-color: #cc704b;
+  background-color: ${colors.primary};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   display: flex;
@@ -34,5 +35,5 @@ export const AlertMessage = styled.p`
   font-weight: 500;
   font-size: 1.8rem;
   letter-spacing: 1px;
-  color: #fff;
+  color: ${colors.white};
 `;

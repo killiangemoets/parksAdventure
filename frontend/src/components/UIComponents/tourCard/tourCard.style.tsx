@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
 
-import { ReactComponent as HeartSVG } from "../../../assets/heart.svg";
+import { ReactComponent as HeartSVG } from "../../../assets/icons/heart.svg";
 import { Link } from "react-router-dom";
 import { NumRatings, RatingValue } from "../starsRating/starsRating.style";
+import colors from "../../../colors";
 
 export const TourPictureContainer = styled.div`
   width: 100%;
@@ -43,7 +44,7 @@ export const TourCardContainer = styled(Link)`
   width: 32rem;
   height: 100%;
   border-radius: 12px;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   transition: 0.3s all;
@@ -63,7 +64,7 @@ export const TourCardContainer = styled(Link)`
     & ${TourPicture} {
       transform: scale(1.1);
     }
-    color: #333;
+    color: ${colors.darkGrey};
   }
 
   @media (max-width: 530px) {
@@ -82,7 +83,7 @@ export const WishListIcon = styled(HeartSVG)<WishListIconProps>`
   height: 2.4rem;
   cursor: pointer;
   .stroke {
-    fill: #cc704b;
+    fill: ${colors.primary};
   }
   .fill {
     fill: rgba(204, 112, 75, 0.32);
@@ -91,7 +92,7 @@ export const WishListIcon = styled(HeartSVG)<WishListIconProps>`
 
   &:hover {
     .fill {
-      fill: #cc704b;
+      fill: ${colors.primary};
     }
   }
 
@@ -99,7 +100,7 @@ export const WishListIcon = styled(HeartSVG)<WishListIconProps>`
     inWishList &&
     css`
       .fill {
-        fill: #cc704b;
+        fill: ${colors.primary};
       }
     `}
 
@@ -114,7 +115,7 @@ export const TourTitle = styled.h3`
   right: 1.8rem;
   top: 15.2rem;
   width: 70%;
-  color: #fefdfa;
+  color: ${colors.backgroundLight};
 
   text-transform: uppercase;
   font-weight: 300;
@@ -133,16 +134,16 @@ export const TourTitle = styled.h3`
       linear,
       left top,
       right bottom,
-      from(#e0a993),
-      to(#cc704b)
+      from(${colors.primaryLight2}),
+      to(${colors.primary})
     );
 
     background-image: -webkit-gradient(
       linear,
       left top,
       right bottom,
-      from(#db9b81),
-      to(#cc704b)
+      from(${colors.primaryLight}),
+      to(${colors.primary})
     );
   }
 
@@ -176,8 +177,7 @@ export const TourNextDate = styled.p`
   font-size: 1.4rem;
   font-weight: 600;
   text-transform: uppercase;
-  color: #303a29;
-  color: #cc704b;
+  color: ${colors.primary};
 
   @media (max-width: 530px) {
     font-size: 1.2rem;
@@ -191,8 +191,8 @@ export const TourTags = styled.div`
 `;
 
 export const TourTag = styled.p`
-  background-color: #e0a993;
-  color: #fff;
+  background-color: ${colors.primaryLight2};
+  color: ${colors.white};
   font-size: 1.2rem;
   line-height: 1.6rem;
   letter-spacing: 0.2px;
@@ -251,8 +251,8 @@ export const TourFooter = styled.div`
   justify-content: center;
 
   gap: 1.4rem;
-  background-color: #fdfaf5;
-  border-top: 1.8px solid #ebc6b7;
+  background-color: ${colors.background};
+  border-top: 1.8px solid ${colors.primaryVeryLight};
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 
@@ -320,12 +320,12 @@ export const TourCardHidden = styled.div`
   overflow: hidden;
 
   font-size: 2rem;
-  color: #fff;
+  color: ${colors.white};
 `;
 
 export const CornerBannner = styled.div`
-  color: #fff;
-  background-color: #bbb;
+  color: ${colors.white};
+  background-color: ${colors.smallLightGrey};
   -moz-transform: rotate(-45deg);
   -moz-transform-origin: 50% 50%;
   -webkit-transform: rotate(-45deg);

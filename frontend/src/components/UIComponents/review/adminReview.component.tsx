@@ -100,7 +100,7 @@ const AdminReview: FC<ReviewCommonProps> = ({
         />
         <ReviewTourName>
           By <span>{userName}</span>{" "}
-          {hidden === true ? "(DESACTIVATED USER)" : ""}
+          {hidden === true ? "(DEACTIVATED USER)" : ""}
         </ReviewTourName>
       </ReviewInfos>
       <ReviewContent>

@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
 
-import { ReactComponent as GlassSVG } from "../../../assets/glass.svg";
-import { ReactComponent as DeleteSVG } from "../../../assets/x-solid.svg";
+import { ReactComponent as GlassSVG } from "../../../assets/icons/glass.svg";
+import { ReactComponent as DeleteSVG } from "../../../assets/icons/x-solid.svg";
+import colors from "../../../colors";
 
 export const SearchInputContainer = styled.div`
   position: relative;
@@ -23,7 +24,7 @@ export const Glass = styled(GlassSVG)`
   cursor: pointer;
 
   .path {
-    fill: #aaa;
+    fill: ${colors.grey};
   }
 `;
 
@@ -33,7 +34,7 @@ export const Delete = styled(DeleteSVG)`
   cursor: pointer;
 
   .path {
-    fill: #cc704b;
+    fill: ${colors.primary};
   }
 `;
 
@@ -48,19 +49,19 @@ export const Input = styled.input<InputProps>`
   font-family: inherit;
   color: inherit;
   border: none;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
   border-radius: 999px;
   box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.32);
   transition: all 0.3s;
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.grey};
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   ${({ adminStyle }) =>
@@ -68,10 +69,10 @@ export const Input = styled.input<InputProps>`
     css`
       width: 40rem;
       box-shadow: none;
-      border: 1px solid #cc704b;
+      border: 1px solid ${colors.primary};
 
       &:focus {
-        border: 1px solid #cc704b;
+        border: 1px solid ${colors.primary};
       }
     `}
 `;

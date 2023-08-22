@@ -4,6 +4,7 @@ import { DatePickerProps } from "antd";
 import { ConfigProvider } from "antd";
 import { DateInputValue, DatePickerElement } from "./dateInput.style";
 import { Label, TextInputContainer } from "../textInput/textInput.style";
+import colors from "../../../colors";
 
 export enum DATE_INPUT_TYPES {
   ROUNDED_INPUT = "rounded input",
@@ -60,20 +61,20 @@ const DateInput: FC<DateInputProps> = ({
           hashed: false,
           components: {
             DatePicker: {
-              colorPrimary: "#cc704b",
-              colorLink: "#cc704b",
-              colorLinkHover: "#b86544",
+              colorPrimary: colors.primary,
+              colorLink: colors.primary,
+              colorLinkHover: colors.primaryDark,
               fontSize: 16,
-              colorText: "#333",
-              colorTextPlaceholder: "#aaa",
+              colorText: colors.darkGrey,
+              colorTextPlaceholder: colors.grey,
               borderRadiusSM: 999,
               colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-              colorBgElevated: "#fdfaf5",
+              colorBgElevated: colors.background,
             },
           },
         }}>
         <DatePickerElement
-          style={{ border: error ? "2px solid #ff0033" : "" }}
+          style={{ border: error ? `2px solid ${colors.error}` : "" }}
           rectangular={type === DATE_INPUT_TYPES.RECTANGULAR_INPUT}
           onChange={onChange}
           disabledDate={disabledDate}

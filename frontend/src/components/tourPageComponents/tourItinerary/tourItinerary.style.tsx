@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { SectionTitle } from "../../UIComponents/title/title.style";
+import colors from "../../../colors";
 
 export const TourItineraryContainer = styled.div`
   padding: 6.4rem;
@@ -92,7 +93,7 @@ export const ItineraryCaptionContainer = styled.div`
   display: flex;
   gap: 3.2rem;
   margin-top: -4rem;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
   padding: 2rem 0.4rem;
 `;
 

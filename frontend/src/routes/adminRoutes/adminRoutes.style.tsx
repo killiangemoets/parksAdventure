@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../colors";
 
 export const AdminSectionContainer = styled.div`
   min-height: calc(100vh - 16rem);
@@ -48,7 +49,7 @@ export const AdminContentErrorMessage = styled.div`
   margin-top: 8rem;
   text-align: center;
   height: 2rem;
-  color: #333;
+  color: ${colors.darkGrey};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;
@@ -81,7 +82,7 @@ export const AdminStatTitle = styled.p`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #999;
+  color: ${colors.mediumDrakGrey};
 
   @media (max-width: 700px) {
     font-size: 1.8rem;
@@ -94,7 +95,7 @@ export const AdminStatValue = styled.h3`
   text-transform: uppercase;
   font-size: 4rem;
   letter-spacing: 1px;
-  color: #cc704b;
+  color: ${colors.primary};
 
   @media (max-width: 500px) {
     font-size: 3.2rem;

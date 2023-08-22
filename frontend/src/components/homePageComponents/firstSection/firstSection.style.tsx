@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { GreenOpacity } from "../../../routes/home/home.style";
+import colors from "../../../colors";
 
 export const FirstSecContainer = styled.div`
   padding: 7.2rem 6.4rem;
@@ -15,10 +16,14 @@ export const FirstSecContainer = styled.div`
       linear,
       left top,
       right top,
-      from(#738069),
-      to(#48563d)
+      from(${colors.secondaryMediumLight}),
+      to(${colors.secondaryMedium})
     );
-    background-image: linear-gradient(to right, #738069, #48563d);
+    background-image: linear-gradient(
+      to right,
+      ${colors.secondaryMediumLight},
+      ${colors.secondaryMedium}
+    );
     text-align: center;
   }
 `;
@@ -80,8 +85,8 @@ export const FirstSecElement = styled.div`
 
 export const FirstSecElementFront = styled.div`
   border-radius: 12px;
-  background-color: #fefdfa;
-  background-color: #fdfaf5;
+  background-color: ${colors.backgroundLight};
+  background-color: ${colors.background};
   background: no-repeat left center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -117,7 +122,7 @@ export const FirstSecElementBack = styled.div`
   padding: 3.2rem;
 
   border-radius: 12px;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -141,7 +146,7 @@ export const FrontTitle = styled.h4`
   font-size: 2.4rem;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #fff;
+  color: ${colors.white};
   white-space: pre-line;
 
   @media (max-width: 840px) {
@@ -168,12 +173,12 @@ export const BackText = styled.p`
 
   span {
     font-weight: 700;
-    color: #506044;
+    color: ${colors.secondary};
     cursor: pointer;
     transition: all 0.3s;
 
     &:hover {
-      color: #404d36;
+      color: ${colors.secondaryDark};
     }
 
     @media (max-width: 840px) {

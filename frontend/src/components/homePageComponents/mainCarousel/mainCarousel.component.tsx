@@ -23,8 +23,7 @@ const HeaderCarousel: FC<HeaderCarouselProps> = ({ elements }) => {
           delay: 5000,
           disableOnInteraction: true,
         }}
-        className="mySwiper"
-      >
+        className="mySwiper">
         {elements.map((el, i) => (
           <HeaderCarouselSwiperSlide key={i}>{el}</HeaderCarouselSwiperSlide>
         ))}

@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
-import { ReactComponent as LeftArrowSVG } from "../../../assets/left-arrow.svg";
-import { ReactComponent as RightArrowSVG } from "../../../assets/right-arrow.svg";
+import { ReactComponent as LeftArrowSVG } from "../../../assets/icons/left-arrow.svg";
+import { ReactComponent as RightArrowSVG } from "../../../assets/icons/right-arrow.svg";
 
 type ToursMapContainerProps = {
   mapOpen: boolean;

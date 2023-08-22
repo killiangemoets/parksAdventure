@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ReactComponent as CheckSVG } from "./../../../assets/check-circle.svg";
+import { ReactComponent as CheckSVG } from "./../../../assets/icons/check-circle.svg";
+import colors from "../../../colors";
 
 export const FormButtonContainer = styled.div`
   button {
@@ -14,6 +15,6 @@ export const CheckIcon = styled(CheckSVG)`
   height: 3.2rem;
 
   .path {
-    stroke: #fff;
+    stroke: ${colors.white};
   }
 `;

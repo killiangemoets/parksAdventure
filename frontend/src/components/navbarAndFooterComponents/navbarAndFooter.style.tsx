@@ -1,14 +1,15 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as DropdownSVG } from "./../../assets/chevron-down.svg";
-import { ReactComponent as MenuSVG } from "./../../assets/bars-icon.svg";
+import { ReactComponent as DropdownSVG } from "./../../assets/icons/chevron-down.svg";
+import { ReactComponent as MenuSVG } from "./../../assets/icons/bars-icon.svg";
+import colors from "../../colors";
 
 export const NavBarContainer = styled.div`
   position: relative;
   width: 100vw;
   height: 8rem;
-  background-color: #506044;
+  background-color: ${colors.secondary};
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,7 +36,7 @@ export const LinksContainerInColumn = styled.div`
   left: 0;
   top: 7.9rem;
   width: 100%;
-  background-color: #506044;
+  background-color: ${colors.secondary};
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -60,7 +61,7 @@ export const NavBarLink = styled(Link)<NavBarLinkProps>`
   gap: 0.8rem;
   font-size: 1.6rem;
   text-transform: uppercase;
-  color: #fbf3e5;
+  color: ${colors.iconsLight};
   transition: all 0.3s;
   font-weight: 400;
   letter-spacing: 0.2px;
@@ -73,8 +74,8 @@ export const NavBarLink = styled(Link)<NavBarLinkProps>`
     text-align: center;
     top: -0.2rem;
     right: -2rem;
-    background-color: #cc704b;
-    color: #fbf3e5;
+    background-color: ${colors.primary};
+    color: ${colors.iconsLight};
     border-radius: 999px;
     width: 1.6rem;
     height: 1.6rem;
@@ -83,9 +84,9 @@ export const NavBarLink = styled(Link)<NavBarLinkProps>`
   }
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
     span {
-      color: #fbf3e5;
+      color: ${colors.iconsLight};
     }
   }
 
@@ -114,13 +115,13 @@ export const NavBarButton = styled.button`
   text-transform: uppercase;
   background: none;
   border: none;
-  color: #fbf3e5;
+  color: ${colors.iconsLight};
   transition: all 0.3s;
   font-weight: 400;
   letter-spacing: 0.2px;
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   @media (max-width: 620px) {
@@ -136,13 +137,13 @@ export const NavBarButton = styled.button`
 
 export const SignUpLink = styled(NavBarLink)`
   padding: 1.2rem 2.8rem;
-  border: solid 1px #faf2e5;
+  border: solid 1px ${colors.backgroundDark};
   border-radius: 10rem;
 
   &:hover {
-    background-color: #cc704b;
-    border: solid 1px #cc704b;
-    color: #fbf3e5;
+    background-color: ${colors.primary};
+    border: solid 1px ${colors.primary};
+    color: ${colors.iconsLight};
 
     text-shadow: none;
   }
@@ -150,13 +151,13 @@ export const SignUpLink = styled(NavBarLink)`
 
 export const SignUpButton = styled(NavBarButton)`
   padding: 1.4rem 2.8rem;
-  border: solid 1px #faf2e5;
+  border: solid 1px ${colors.backgroundDark};
   border-radius: 10rem;
 
   &:hover {
-    background-color: #cc704b;
-    border: solid 1px #cc704b;
-    color: #fbf3e5;
+    background-color: ${colors.primary};
+    border: solid 1px ${colors.primary};
+    color: ${colors.iconsLight};
 
     text-shadow: none;
   }
@@ -170,7 +171,7 @@ export const FooterContainer = styled.div`
   justify-content: space-between;
   padding: 0 4rem;
   z-index: 3;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
 
   @media (max-width: 500px) {
     padding: 0 2rem;
@@ -191,7 +192,7 @@ export const FooterLogo = styled.div`
 
 export const Copyright = styled.p`
   font-size: 1.2rem;
-  color: #999;
+  color: ${colors.mediumDrakGrey};
   text-align: center;
 
   @media (max-width: 500px) {
@@ -218,11 +219,11 @@ export const FooterNavigation = styled.div`
 
 export const FooterLink = styled(Link)`
   font-size: 1.4rem;
-  color: #999;
+  color: ${colors.mediumDrakGrey};
   transition: all 0.3s;
 
   &:hover {
-    color: #666;
+    color: ${colors.mediumGrey};
   }
 
   @media (max-width: 600px) {
@@ -245,10 +246,10 @@ export const DropdownIcon = styled(DropdownSVG)`
 export const MenuIcon = styled(MenuSVG)`
   width: 4rem;
   height: 4rem;
-  color: #fdfaf5;
+  color: ${colors.background};
   transition: all 0.3s;
 
   &:hover {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 `;

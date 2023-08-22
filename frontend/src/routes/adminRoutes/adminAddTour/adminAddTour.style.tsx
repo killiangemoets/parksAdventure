@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 import { BaseButton } from "../../../components/UIComponents/button/button.style";
 import { CheckBoxesContainer } from "../../../components/UIComponents/checkBoxes/checkBoxes.style";
+import colors from "../../../colors";
 
 type AddTourContainerProps = {
   paddingTop?: boolean;
@@ -68,7 +69,7 @@ export const MainButton = styled.div`
       padding-right: 0;
       margin: 0 !important;
       font-weight: 500;
-      color: #333;
+      color: ${colors.darkGrey};
       letter-spacing: 0.6px;
     }
 
@@ -117,7 +118,7 @@ export const ErrorMessage = styled.p`
   text-align: center;
   height: 2.6rem;
   padding-left: 0.8rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 1px;

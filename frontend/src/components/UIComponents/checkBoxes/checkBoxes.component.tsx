@@ -7,6 +7,7 @@ import {
 } from "./checkBoxes.style";
 import type { CheckboxChangeEvent } from "antd/es/checkbox";
 import type { CheckboxValueType } from "antd/es/checkbox/Group";
+import colors from "../../../colors";
 
 export type CheckBoxesProps = {
   options: Info[];
@@ -47,9 +48,9 @@ const CheckBoxes: FC<CheckBoxesProps> = ({
           hashed: false,
           components: {
             Checkbox: {
-              colorPrimary: "#506044",
-              colorBorder: "#ccc",
-              colorPrimaryHover: "#404d36",
+              colorPrimary: colors.secondary,
+              colorBorder: colors.lightGrey,
+              colorPrimaryHover: colors.secondaryDark,
               fontSize: 14,
             },
           },

@@ -1,17 +1,18 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const SelectContainer = styled.select`
   font-size: 1.6rem;
   font-family: inherit;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
   box-shadow: none;
   display: block;
@@ -30,11 +31,11 @@ export const SelectContainer = styled.select`
 
   &:focus {
     outline: none;
-    border-bottom: 3px solid #55c57a;
+    border-bottom: 3px solid ${colors.flashGreen};
   }
 
   &:focus:invalid {
-    border-bottom: 3px solid #f43535;
+    border-bottom: 3px solid ${colors.flashRed};
   }
 
   @media (max-width: 540px) {
@@ -46,5 +47,5 @@ export const SelectContainer = styled.select`
 `;
 
 export const Option = styled.option`
-  background-color: #faf2e5 !important;
+  background-color: ${colors.backgroundDark} !important;
 `;

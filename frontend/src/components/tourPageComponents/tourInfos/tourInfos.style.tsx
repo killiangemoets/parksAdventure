@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const TourInfosContainer = styled.div`
-  background-color: #fbf5ea;
+  background-color: ${colors.backgroundVeryDark};
 
   display: -webkit-box;
   display: -ms-flexbox;
@@ -47,7 +48,7 @@ export const TourInfosContainer = styled.div`
 
 export const TourInfosLeft = styled.div`
   justify-content: flex-end;
-  background-color: #f9eedb;
+  background-color: ${colors.backgroundMediumDark};
 
   display: -webkit-box;
   display: -ms-flexbox;

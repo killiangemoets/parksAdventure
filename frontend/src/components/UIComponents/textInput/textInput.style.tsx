@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Input } from "../searchInput/searchInput.styled";
+import colors from "../../../colors";
 
 export const TextInputContainer = styled.div`
   display: flex;
@@ -13,7 +14,6 @@ export const Label = styled.label`
   letter-spacing: 0.4px;
   margin-left: 0.2rem;
 `;
-
 
 export const TextInputEl = styled(Input)`
   box-shadow: none;
@@ -33,15 +33,15 @@ export const TextInputEl = styled(Input)`
 
   &:focus {
     outline: none;
-    border-bottom: 3px solid #55c57a;
+    border-bottom: 3px solid ${colors.flashGreen};
   }
 
   &:focus:invalid {
-    border-bottom: 3px solid #f43535;
+    border-bottom: 3px solid ${colors.flashRed};
   }
 `;
 
 export const TextNoEditableInputEl = styled(TextInputEl)`
-cursor: not-allowed;
-background-color: #e2e1e1;
-  `
+  cursor: not-allowed;
+  background-color: #e2e1e1;
+`;

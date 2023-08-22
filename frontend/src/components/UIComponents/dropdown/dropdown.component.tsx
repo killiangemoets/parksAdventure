@@ -8,6 +8,7 @@ import {
   DropdownContainer,
   DropdownIcon,
 } from "./dropdown.style";
+import colors from "../../../colors";
 
 export type DropdownCommonProps = {
   children?: ReactNode;
@@ -137,7 +138,7 @@ const Dropdown: FC<DropdownCommonProps & DropdownConditionalProps> = ({
         onClick={() => {
           setOpenDropdown(!openDropdown);
         }}
-        style={{ border: error ? "2px solid #ff0033" : "" }}>
+        style={{ border: error ? `2px solid ${colors.error}` : "" }}>
         <DropdownButtonLeft>
           {children}
           {current && current.value}

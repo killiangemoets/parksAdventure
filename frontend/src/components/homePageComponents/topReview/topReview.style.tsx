@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const TopReviewContainer = styled.div`
   display: flex;
@@ -38,7 +39,7 @@ export const ReviewDescription = styled.p`
   font-weight: 500;
   text-align: center;
   padding: 1rem 0 1.8rem 0;
-  color: #666;
+  color: ${colors.mediumGrey};
 
   @media (max-width: 900px) {
     min-width: 0rem;

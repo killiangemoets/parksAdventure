@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const GuideAccountActivationContainer = styled.div`
   width: 100vw;
@@ -12,7 +13,7 @@ export const GuideAccountActivationContainer = styled.div`
 export const GuideAccountActivationWrapper = styled.div`
   position: relative;
   padding: 5.2rem 6.8rem;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   border-radius: 12px;

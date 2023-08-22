@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../../colors";
 
 export const TextInputContainer = styled.div`
   display: flex;
@@ -23,19 +24,19 @@ export const TextAreaEl = styled.textarea`
 
   font-family: inherit;
   color: inherit;
-  background-color: #faf2e5;
+  background-color: ${colors.backgroundDark};
 
   border: none;
   border-top: 3px solid transparent;
   border-bottom: 3px solid transparent;
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 
   -webkit-transition: all 0.3s;
@@ -46,10 +47,10 @@ export const TextAreaEl = styled.textarea`
 
   &:focus {
     outline: none;
-    border-bottom: 3px solid #55c57a;
+    border-bottom: 3px solid ${colors.flashGreen};
   }
 
   &:focus:invalid {
-    border-bottom: 3px solid #f43535;
+    border-bottom: 3px solid ${colors.flashRed};
   }
 `;

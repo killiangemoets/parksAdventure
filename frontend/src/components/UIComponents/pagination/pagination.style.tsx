@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import { Pagination } from "antd";
+import colors from "../../../colors";
 
 export const PaginationContainer = styled.div`
   padding-top: 8rem;
@@ -18,7 +19,7 @@ export const PaginationElement = styled(Pagination)`
     justify-content: center;
     height: 4.8rem;
     width: 4.8rem;
-    border: 2px solid #cc704b;
+    border: 2px solid ${colors.primary};
     border-radius: 999px;
     transition: all 0.3s !important;
 
@@ -26,13 +27,13 @@ export const PaginationElement = styled(Pagination)`
       transition: all 0.3s !important;
       font-size: 1.8rem;
       font-weight: 600;
-      color: #cc704b;
+      color: ${colors.primary};
     }
 
     &:hover {
-      background-color: #cc704b !important;
+      background-color: ${colors.primary} !important;
       a {
-        color: #faf2e5;
+        color: ${colors.backgroundDark};
       }
     }
   }
@@ -43,20 +44,20 @@ export const PaginationElement = styled(Pagination)`
   }
 
   .ant-pagination-item-active {
-    background-color: #cc704b;
+    background-color: ${colors.primary};
     border-radius: 999px;
-    border-color: #cc704b;
+    border-color: ${colors.primary};
 
     a {
       font-size: 1.8rem;
       font-weight: 600;
-      color: #faf2e5;
+      color: ${colors.backgroundDark};
     }
 
     &:hover {
-      border-color: #cc704b;
+      border-color: ${colors.primary};
       a {
-        color: #faf2e5;
+        color: ${colors.backgroundDark};
       }
     }
   }
@@ -67,7 +68,7 @@ export const PaginationElement = styled(Pagination)`
         width: 2.2rem;
         height: 2.2rem;
         transition: all 0.3s;
-        fill: #cc704b;
+        fill: ${colors.primary};
       }
     }
 
@@ -75,7 +76,7 @@ export const PaginationElement = styled(Pagination)`
       .anticon svg {
         width: 2.4rem;
         height: 2.4rem;
-        fill: #b86544;
+        fill: ${colors.primaryDark};
       }
     }
   }
@@ -88,7 +89,7 @@ export const PaginationElement = styled(Pagination)`
     .ant-pagination-jump-next
     .ant-pagination-item-container
     .ant-pagination-item-ellipsis {
-    color: #cc704b !important;
+    color: ${colors.primary} !important;
   }
 
   :where(.css-dev-only-do-not-override-ixblex).ant-pagination
@@ -108,7 +109,7 @@ export const PaginationElement = styled(Pagination)`
     .ant-pagination-item {
       height: 4rem;
       width: 4rem;
-      border: 1.5px solid #cc704b;
+      border: 1.5px solid ${colors.primary};
 
       a {
         font-size: 1.6rem;

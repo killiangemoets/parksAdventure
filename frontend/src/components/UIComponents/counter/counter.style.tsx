@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Statistic } from "antd";
+import colors from "../../../colors";
 
 export const CounterContainer = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const CounterContainer = styled.div`
   border-radius: 12px;
   height: 14rem;
   width: 100%;
-  background-color: #fefdfa;
+  background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
 
@@ -58,7 +59,7 @@ export const CounterTitle = styled.p`
   font-weight: 400;
   text-transform: capitalize;
   letter-spacing: 1px;
-  color: #aaa;
+  color: ${colors.grey};
 
   @media (max-width: 800px) {
     font-size: 1.4rem;

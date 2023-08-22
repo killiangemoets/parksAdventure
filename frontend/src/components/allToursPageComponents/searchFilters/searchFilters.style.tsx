@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-import { ReactComponent as FilterSVG } from "../../../assets/filter.svg";
-import { ReactComponent as SortSVG } from "../../../assets/sort-solid.svg";
+import { ReactComponent as FilterSVG } from "../../../assets/icons/filter.svg";
+import { ReactComponent as SortSVG } from "../../../assets/icons/sort-solid.svg";
 import { CarouselSwiper } from "../../UIComponents/carousel/carousel.style";
+import colors from "../../../colors";
 
 export const SearchFiltersContainer = styled.div`
   width: 100%;
@@ -10,8 +11,8 @@ export const SearchFiltersContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #cc704b;
-  background-color: #fdfaf5;
+  border-bottom: 1px solid ${colors.primary};
+  background-color: ${colors.background};
 `;
 
 export const SearchFiltersWrapper = styled.div`
@@ -56,13 +57,13 @@ export const Categories = styled.div`
     .swiper-button-prev {
       position: fixed;
       top: 44.6%;
-      color: #cc704b;
+      color: ${colors.primary};
       transition: all 0.3s;
-      background-color: #fdfaf5;
+      background-color: ${colors.background};
       padding: 4rem 2rem;
 
       &:hover {
-        color: #b86544;
+        color: ${colors.primaryDark};
       }
     }
 

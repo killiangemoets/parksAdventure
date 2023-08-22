@@ -8,6 +8,7 @@ import {
   LinkNumRatings,
   StarsRate,
 } from "./starsRating.style";
+import colors from "../../../colors";
 
 export type StarsRatingCommonProps = {
   hiddenValue?: boolean;
@@ -43,7 +44,7 @@ const StarsRating: FC<StarsRatingCommonProps & StarRatingCondiionalProps> = ({
           hashed: false,
           components: {
             Rate: {
-              colorFillContent: "#ddd",
+              colorFillContent: colors.veryLightGrey,
             },
           },
         }}>

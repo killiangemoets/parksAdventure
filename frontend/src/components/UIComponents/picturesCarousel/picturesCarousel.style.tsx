@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ReactComponent as CloseSVG } from "../../../assets/x-solid.svg";
+import { ReactComponent as CloseSVG } from "../../../assets/icons/x-solid.svg";
+import colors from "../../../colors";
 
 export const PicturesCarouselOverlay = styled.div`
   position: fixed;
@@ -50,12 +51,12 @@ export const PicturesCarouselContainer = styled.div`
     .swiper-button-prev {
       position: fixed;
       top: 40%;
-      color: #fdfaf5;
+      color: ${colors.background};
 
       transition: all 0.3s;
 
       &:hover {
-        color: #b86544;
+        color: ${colors.primaryDark};
       }
     }
 
@@ -142,14 +143,14 @@ export const ClosePicturesCarouselIcon = styled(CloseSVG)`
   height: 2.2rem;
   cursor: pointer;
   .path {
-    fill: #fdfaf5;
+    fill: ${colors.background};
 
     transition: all 0.3s;
   }
 
   &:hover {
     .path {
-      fill: #b86544;
+      fill: ${colors.primaryDark};
     }
   }
 `;

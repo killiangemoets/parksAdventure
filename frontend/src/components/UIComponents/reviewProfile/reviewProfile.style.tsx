@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import colors from "../../../colors";
 
 type RevieweProfileContainerProps = {
   link: boolean;
@@ -22,6 +23,6 @@ export const ReviewProfileName = styled.p`
   text-transform: uppercase;
   font-size: 1.6rem;
   letter-spacing: 1px;
-  color: #333;
+  color: ${colors.darkGrey};
   min-width: 12rem;
 `;

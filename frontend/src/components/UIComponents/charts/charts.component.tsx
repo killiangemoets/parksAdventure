@@ -20,6 +20,7 @@ import {
 } from "react-simple-maps";
 import { scaleLinear } from "d3-scale";
 import { formatPrice } from "../../../utils/formatting/formatPrice";
+import colors from "../../../colors";
 
 ChartJS.register(ArcElement);
 
@@ -132,7 +133,11 @@ export const MapChart: FC<MapChartProps> = ({ title, data }) => {
         <Geographies geography={geoUrl}>
           {({ geographies }) =>
             geographies.map((geo) => (
-              <Geography key={geo.rsmKey} geography={geo} fill="#ddd" />
+              <Geography
+                key={geo.rsmKey}
+                geography={geo}
+                fill={colors.veryLightGrey}
+              />
             ))
           }
         </Geographies>
@@ -140,8 +145,8 @@ export const MapChart: FC<MapChartProps> = ({ title, data }) => {
           return (
             <Marker key={tour} coordinates={[lng, lat]}>
               <circle
-                fill="#cc704b"
-                stroke="#d68d6f"
+                fill={colors.primary}
+                stroke={colors.primaryMediumLight}
                 r={popScale(revenue)}
                 onMouseOver={() => {
                   setPopupInfo({ tour, revenue });

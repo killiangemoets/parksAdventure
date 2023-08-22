@@ -4,6 +4,7 @@ import Button, {
 } from "../../UIComponents/button/button.component";
 import {
   ActionButtonsContainer,
+  ActionButtonsWrapper,
   DeleteMessage,
   WarningIcon,
 } from "./actionButtons.style";
@@ -28,7 +29,7 @@ export type ActionButtonsProps = {
   handlePassDeletedUser?: (userId: string) => void;
   handlePassUpdateUserActivation?: (userId: string) => void;
   deleteMessage?: string;
-  desactivateMessage?: string;
+  deactivateMessage?: string;
 };
 
 const ActionButtons: FC<ActionButtonsProps> = ({
@@ -36,7 +37,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
   handlePassDeletedUser,
   handlePassUpdateUserActivation,
   deleteMessage,
-  desactivateMessage,
+  deactivateMessage,
 }) => {
   const [showActivationModal, setShowActivationModal] =
     useState<boolean>(false);
@@ -96,14 +97,14 @@ const ActionButtons: FC<ActionButtonsProps> = ({
   };
 
   return (
-    <>
-      <ActionButtonsContainer>
+    <ActionButtonsContainer>
+      <ActionButtonsWrapper>
         <Button
           buttonType={BUTTON_TYPE_CLASSES.empty}
           onClick={() => {
             setShowActivationModal(true);
           }}>
-          {userInfo.status === "active" ? "Desactivate" : "Activate"}
+          {userInfo.status === "active" ? "Deactivate" : "Activate"}
         </Button>
 
         <Button
@@ -113,7 +114,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
           }}>
           Delete
         </Button>
-      </ActionButtonsContainer>
+      </ActionButtonsWrapper>
       <Modal
         title="Delete User"
         handleClose={() => setShowDeleteModal(false)}
@@ -162,7 +163,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
       </Modal>
       <Modal
         title={`${
-          userInfo.status === "active" ? "Desactivate" : "Activate"
+          userInfo.status === "active" ? "Deactivate" : "Activate"
         } User`}
         handleClose={() => {
           setShowActivationModal(false);
@@ -171,14 +172,14 @@ const ActionButtons: FC<ActionButtonsProps> = ({
         <DeleteReviewMessage>
           Are you sure you want to{" "}
           <span>
-            {userInfo.status === "active" ? "desactivate" : "activate"}
+            {userInfo.status === "active" ? "deactivate" : "activate"}
           </span>{" "}
           <br />
           this user?
         </DeleteReviewMessage>
-        {desactivateMessage && userInfo.status === "active" ? (
+        {deactivateMessage && userInfo.status === "active" ? (
           <DeleteMessage>
-            <WarningIcon /> {desactivateMessage}
+            <WarningIcon /> {deactivateMessage}
           </DeleteMessage>
         ) : (
           ""
@@ -200,7 +201,7 @@ const ActionButtons: FC<ActionButtonsProps> = ({
         </ReviewModalButtons>
         <ErrorMessage>{deleteErrorMessage}</ErrorMessage>
       </Modal>
-    </>
+    </ActionButtonsContainer>
   );
 };
 export default ActionButtons;

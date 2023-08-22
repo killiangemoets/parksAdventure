@@ -1,7 +1,8 @@
 import styled, { css } from "styled-components";
+import colors from "../../../colors";
 
 export const OrderSummaryContainer = styled.div`
-  border: 3px solid #cc704b;
+  border: 3px solid ${colors.primary};
   border-radius: 12px;
   width: 100%;
   display: flex;
@@ -52,8 +53,8 @@ type OrderSummaryItemTotalProps = {
 export const OrderSummaryItemTotal = styled.div<OrderSummaryItemTotalProps>`
   display: flex;
   justify-content: space-between;
-  border-bottom: solid 2px #cc704b;
-  border-top: solid 2px #cc704b;
+  border-bottom: solid 2px ${colors.primary};
+  border-top: solid 2px ${colors.primary};
   padding: 1rem 2.4rem;
 
   ${({ showTotalPrice }) =>
@@ -99,7 +100,7 @@ export const OrderSummaryItemPrice = styled(OrderSummaryItemContent)`
 `;
 
 export const OrderSummaryFooter = styled.div`
-  background-color: #f6e5df;
+  background-color: ${colors.background2};
   width: 100%;
   padding: 2.4rem 2.4rem;
   border-bottom-left-radius: 12px;
@@ -140,7 +141,7 @@ export const OrderSummaryPriceNote = styled.p`
   font-size: 1.4rem;
   font-weight: 400;
   letter-spacing: 0.4px;
-  color: #555;
+  color: ${colors.medium1Grey};
   text-align: right;
 `;
 
@@ -148,7 +149,7 @@ export const ValidatePaymentError = styled.p`
   text-align: center;
   height: 2rem;
   width: 38rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.4px;

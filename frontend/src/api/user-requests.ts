@@ -104,6 +104,19 @@ export const deleteUser = async (userId: string) => {
   }
 };
 
+export const deleteMe = async () => {
+  try {
+    const response = await axiosInstance.delete(`/users/deleteMe`);
+    console.log("deleteMe", response);
+    return response.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return err.response?.data;
+    }
+    return { status: "error", message: "An error occured. Please try again!" };
+  }
+};
+
 export const updateUserRequest = async (
   userId: string,
   userData: UpdateUserData

@@ -9,6 +9,7 @@ import { FC } from "react";
 import convertToBase64 from "../../../utils/images-treatment/convert-base-64";
 import { RcFile } from "antd/es/upload";
 import { ProfilePictureContainer } from "./profilePictureInput.style";
+import colors from "../../../colors";
 
 type ProfilePictureInputProps = {
   handleDeleteImage: () => void;
@@ -53,15 +54,15 @@ const ProfilePictureInput: FC<ProfilePictureInputProps> = ({
           hashed: false,
           components: {
             DatePicker: {
-              colorPrimary: "#cc704b",
-              colorLink: "#cc704b",
-              colorLinkHover: "#b86544",
+              colorPrimary: colors.primary,
+              colorLink: colors.primary,
+              colorLinkHover: colors.primaryDark,
               fontSize: 16,
-              colorText: "#333",
-              colorTextPlaceholder: "#aaa",
+              colorText: colors.darkGrey,
+              colorTextPlaceholder: colors.grey,
               borderRadiusSM: 999,
               colorBgContainerDisabled: "rgba(80, 96, 68, 0.1)",
-              colorBgElevated: "#fdfaf5",
+              colorBgElevated: colors.background,
             },
           },
         }}>

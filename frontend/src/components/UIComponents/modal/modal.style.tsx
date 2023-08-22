@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { QuickFactInputContainer } from "../../adminsProfilePagesComponents/addTourPageComponents/quickFactInput/quickFactInput.style";
+import colors from "../../../colors";
 
 export const Overlay = styled.div`
   position: fixed;
@@ -16,7 +17,7 @@ export const Overlay = styled.div`
 `;
 
 export const ModalContainer = styled.div`
-  background-color: #fffefc;
+  background-color: ${colors.backgroundModal};
   border-radius: 18px;
   box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
   display: flex;
@@ -38,7 +39,7 @@ export const ModalTitleSection = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 1px solid ${colors.grey};
 
   button {
     position: absolute;
@@ -54,7 +55,7 @@ export const ModalTitle = styled.h3`
   font-size: 1.6rem;
   font-weight: 600;
   letter-spacing: 0.6px;
-  color: #cc704b;
+  color: ${colors.primary};
 `;
 
 export const ModalContent = styled.div`

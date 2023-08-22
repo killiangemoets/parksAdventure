@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { ReactComponent as InfoSVG } from "../../../assets/information-circle.svg";
+import { ReactComponent as InfoSVG } from "../../../assets/icons/information-circle.svg";
+import colors from "../../../colors";
 
 export const TourReviewsContainer = styled.div`
   width: 100%;
-  background-color: #f9eedb;
+  background-color: ${colors.backgroundMediumDark};
   padding: 6.4rem;
   display: flex;
   flex-direction: column;
@@ -29,12 +30,12 @@ export const Info = styled(InfoSVG)`
   cursor: pointer;
   transition: all 0.3s;
   .path {
-    stroke: #cc704b;
+    stroke: ${colors.primary};
   }
 
   &:hover {
     .path {
-      stroke: #b86544;
+      stroke: ${colors.primaryDark};
     }
   }
 `;

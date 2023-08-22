@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Popup } from "react-map-gl";
 import { BaseButton } from "../../../UIComponents/button/button.style";
+import colors from "../../../../colors";
 
 export const MapContainer = styled.div`
   width: 100%;
@@ -34,8 +35,8 @@ export const PopupInputContainer = styled.div<InputItineraryProps>`
     padding: 0.4rem 1.8rem;
     height: 4rem;
 
-    background-color: #fff;
-    border: 1px solid #cc704b;
+    background-color: ${colors.white};
+    border: 1px solid ${colors.primary};
     border-radius: 4px;
     box-shadow: none;
     transition: all 0.3s;
@@ -48,11 +49,12 @@ export const PopupInputContainer = styled.div<InputItineraryProps>`
 
     ${({ error }) =>
       error && {
-        border: "1px solid #ff0033",
+        border: "2px solid",
+        borderColor: colors.error,
       }}
 
     &::placeholder {
-      color: #aaa;
+      color: ${colors.grey};
       font-size: 1.4rem;
       font-weight: 400;
     }
@@ -85,7 +87,7 @@ export const InputWrapper = styled.div`
 
 export const ErrorMessage = styled.p`
   padding-left: 0.8rem;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: 1px;

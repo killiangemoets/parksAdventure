@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import colors from "../../colors";
 
 export const ContactContainer = styled.div`
   min-height: calc(100vh - 8rem);
@@ -105,7 +106,7 @@ export const ContactBoldText = styled(ContactText)`
 `;
 
 export const ContactMainText = styled.p`
-  color: #cc704b;
+  color: ${colors.primary};
   font-size: 2.4rem;
   letter-spacing: 1px;
   font-weight: 600;

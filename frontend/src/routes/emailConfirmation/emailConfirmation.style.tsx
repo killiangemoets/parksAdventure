@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { EmailVerificationWrapper } from "../emailVerification/emailVerification.style";
-import { ReactComponent as CheckSVG } from "./../../assets/check-circle.svg";
+import { ReactComponent as CheckSVG } from "./../../assets/icons/check-circle.svg";
+import colors from "../../colors";
 
 export const EmailConfirmationBody = styled.div``;
 
@@ -13,6 +14,6 @@ export const EmailConfirmationCheckIcon = styled(CheckSVG)`
   height: 8rem;
 
   .path {
-    stroke: #cc704b;
+    stroke: ${colors.primary};
   }
 `;

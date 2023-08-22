@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { ReactComponent as WarningSVG } from "../../../assets/warning.svg";
+import { ReactComponent as WarningSVG } from "../../../assets/icons/warning.svg";
+import colors from "../../../colors";
 
 export const WarningMessageContainer = styled.div`
   padding: 1rem 3rem;
@@ -7,14 +8,14 @@ export const WarningMessageContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  border: 3px solid #ff0033;
-  border-left: 10px solid #ff0033;
+  border: 3px solid ${colors.error};
+  border-left: 10px solid ${colors.error};
   border-radius: 4px;
 `;
 
 export const WarningMessageText = styled.h2`
   text-align: center;
-  color: #ff0033;
+  color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 700;
   letter-spacing: 0.6px;
@@ -25,6 +26,6 @@ export const WarningIcon = styled(WarningSVG)`
   height: 4rem;
 
   .path {
-    stroke: #ff0033;
+    stroke: ${colors.error};
   }
 `;

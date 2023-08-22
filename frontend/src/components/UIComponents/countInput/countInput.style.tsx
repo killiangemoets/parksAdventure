@@ -1,6 +1,7 @@
 import styled from "styled-components";
-import { ReactComponent as MinusSVG } from "../../../assets/minus.svg";
-import { ReactComponent as PlusSVG } from "../../../assets/plus.svg";
+import { ReactComponent as MinusSVG } from "../../../assets/icons/minus.svg";
+import { ReactComponent as PlusSVG } from "../../../assets/icons/plus.svg";
+import colors from "../../../colors";
 
 export const CountInputContainer = styled.div`
   display: flex;
@@ -20,11 +21,11 @@ export const CountValue = styled.input`
   font-family: inherit;
   color: inherit;
   border: none;
-  background-color: #fdfaf5;
+  background-color: ${colors.background};
 
   border-radius: 12px;
   transition: all 0.3s;
-  border: 1px solid #aaa;
+  border: 1px solid ${colors.grey};
   text-align: center;
 
   -moz-appearance: textfield;
@@ -35,12 +36,12 @@ export const CountValue = styled.input`
   }
 
   &::placeholder {
-    color: #aaa;
+    color: ${colors.grey};
   }
 
   &:focus {
     outline: none;
-    border: 1px solid #aaa;
+    border: 1px solid ${colors.grey};
   }
 `;
 
@@ -50,12 +51,12 @@ export const Minus = styled(MinusSVG)`
   transition: all 0.3s;
 
   .path {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   &:hover {
     .path {
-      color: #b86544;
+      color: ${colors.primaryDark};
     }
   }
 `;
@@ -66,12 +67,12 @@ export const Plus = styled(PlusSVG)`
   transition: all 0.3s;
 
   .path {
-    color: #cc704b;
+    color: ${colors.primary};
   }
 
   &:hover {
     .path {
-      color: #b86544;
+      color: ${colors.primaryDark};
     }
   }
 `;
