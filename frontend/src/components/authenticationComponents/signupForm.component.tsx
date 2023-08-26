@@ -15,6 +15,8 @@ import {
   AuthenticationContainer,
   AuthenticationForm,
   AuthenticationLink,
+  AuthenticationLinkSmall,
+  AuthenticationLinksWrapper,
   ErrorMessage,
 } from "./authentication.style";
 
@@ -55,7 +57,7 @@ export const SignupForm = () => {
     setErrorMessage("");
     const response = await signUp(signUpData, uri || undefined);
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       dispatch(setEmail(email));
       setTimeout(function () {
@@ -64,9 +66,12 @@ export const SignupForm = () => {
         return navigate(`/signup/email-verification${uriString}`);
       }, 2000);
     } else {
-      if (response.message.includes("E11000"))
+      if (response && response.message.includes("E11000"))
         setErrorMessage("This email address is already used");
-      else setErrorMessage("Something went wrong. Please try again!");
+      else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
     }
   };
 
@@ -129,6 +134,14 @@ export const SignupForm = () => {
           </FormButton>
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
+        <AuthenticationLinksWrapper>
+          <AuthenticationLinkSmall to="/privacy-policy">
+            Privacy Policy
+          </AuthenticationLinkSmall>
+          <AuthenticationLinkSmall to="/general-terms-and-conditions">
+            General Terms and Conditions
+          </AuthenticationLinkSmall>
+        </AuthenticationLinksWrapper>
       </AuthenticationCard>
       <AuthenticationLink to={uri ? `/login?uri=${uri}` : "/login"}>
         Already have an account?

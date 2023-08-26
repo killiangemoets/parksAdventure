@@ -18,9 +18,6 @@ import {
   TourBookingWrapper,
 } from "./tourBooking.style";
 import TourBookingInputs from "./tourBookingInputs.component";
-import desertImg from "../../../assets/bookingImg/desert.jpg";
-import canadianRockiesImg from "../../../assets/bookingImg/canadianRockies.jpg";
-import familyImg from "../../../assets/bookingImg/family.jpg";
 import { useSelector } from "react-redux";
 import {
   selectTour,
@@ -196,27 +193,19 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
               <TourBookingPictures>
                 <Picture1>
                   <ProfilePicture
-                    pictureUrl={tour?.imageCover || desertImg}
+                    pictureUrl={tour?.imageCover}
                     pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
                   />
                 </Picture1>
                 <Picture2>
                   <ProfilePicture
-                    pictureUrl={
-                      tour?.images && tour?.images[0]
-                        ? tour?.images[0]
-                        : canadianRockiesImg
-                    }
+                    pictureUrl={tour?.images[0]}
                     pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
                   />
                 </Picture2>
                 <Picture3>
                   <ProfilePicture
-                    pictureUrl={
-                      tour?.images && tour?.images[1]
-                        ? tour?.images[1]
-                        : familyImg
-                    }
+                    pictureUrl={tour?.images[1]}
                     pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
                   />
                 </Picture3>

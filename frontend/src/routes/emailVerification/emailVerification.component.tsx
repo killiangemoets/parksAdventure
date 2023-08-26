@@ -42,7 +42,12 @@ const EmailVerification = () => {
           "You have reached the limit of the number of emails you can send"
       )
         setError(response.message);
-      else setError("An error has occured. Please try again.");
+      else if (
+        response &&
+        response.message === "The email of this user has already been verified"
+      )
+        setError(response.message);
+      else setError("An error occured. Please refresh the page and try again!");
     }
   };
   if (!email) {

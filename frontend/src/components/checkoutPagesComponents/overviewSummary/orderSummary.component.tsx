@@ -102,11 +102,12 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items }) => {
     setLoading(!loading);
     const response = await getCheckoutSession(items);
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       return (window.location.href = response.data.session);
     } else if (
-      response.message.includes("tour is not available anymore") ||
-      response.message.includes("tour id is not correct")
+      response &&
+      (response.message.includes("tour is not available anymore") ||
+        response.message.includes("tour id is not correct"))
     ) {
       setErrorMessage(
         "A tour is no longer available. Please refresh the page or go back to the cart."

@@ -40,23 +40,28 @@ const ThirdSection = () => {
         <ThirdSecElement>
           <ThirdSecTextContent className="box box-left">
             <Title titleType={TITLE_TYPE_CLASSES.homeSubSection}>
-              Why Canadian Rockies?
+              Why Exploring the Canadian Rockies?
             </Title>
             <ElementText>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa
-              mollitia tempore nesciunt pariatur, consequuntur ut nulla
-              voluptatem exercitationem eligendi iure? Nulla commodi suscipit et
-              exercitationem est porro aliquam molestiae facilis. Lorem ipsum
-              dolor sit amet consectetur, adipisicing elit. Ea ipsa odit nihil
-              in magni explicabo libero quisquam, exercitationem beatae!
-              Repellendus neque rerum commodi nobis accusantium quod corporis,
+              The Canadian Rockies are home to several renowned national parks,
+              including Banff, Jasper, Soho, Kootenay, and Waterton Lakes. These
+              parks are all known for their stunning and diverse landscapes,
+              including majestic mountains, crystal-clear lakes, dense forests,
+              and meadows filled with wildflowers. The beauty of the scenery is
+              truly awe-inspiring and provides a sense of tranquility and
+              connection to nature.
               <br />
               <br />
-              soluta provident repudiandae!Exercitationem est porro aliquam
-              molestiae facilis. Lorem ipsum dolor sit amet consectetur,
-              adipisicing elit. Ea ipsa odit nihil in magni explicabo libero
-              quisquam, exercitationem beatae! Repellendus neque rerum commodi
-              nobis accusantium quod corporis, soluta provident repudiandae!
+              Next, the Rockies are home to some of the most famous and iconic
+              peaks in North America, , including Mount Robson, Mount Columbia,
+              and the Three Sisters. They provide challenging and rewarding
+              hiking opportunities for both experienced and novice hikers. The
+              region offers trails of varying difficulty levels, from easy walks
+              suitable for families to challenging alpine routes for experienced
+              hikers and mountaineers. So whether you're looking for a short day
+              hike or a multi-day backpacking adventure, the Canadian Rockies
+              cater to a wide range of preferences. The extensive trail network
+              ensures that everyone can find a suitable route.
             </ElementText>
           </ThirdSecTextContent>
           <ThirdSecImageContent className="box box-right">
@@ -72,21 +77,24 @@ const ThirdSection = () => {
               Why Hiking in the Desert?
             </Title>
             <ElementText>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Ipsaaliquam molestiae facilis. Lorem ipsum dolor sit amet
-              Ipsaaliquam molestiae facilis. Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Ea ipsa odit nihil in magni
-              explicabo libero quisquam, exercitationem beatae!
+              First, deserts have a stark and mesmerizing beauty that's unlike
+              any other landscape. Vast expanses of sand dunes, rugged rock
+              formations, and unique geological features create a visually
+              captivating environment. Deserts are also home to a variety of
+              exciting animals adapted to extreme conditions, such as lizards,
+              snakes, birds, and desert mammals.
               <br />
               <br />
-              Repellendus neque rerum commodi nobis accusantium quod corporis,
-              soluta provident repudiandae! Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Beatae, reprehenderit quaerat culpa
-              necessitatibus exercitationem hic modi animi iure repellat iste
+              The lack of dense vegetation in many desert areas means that
+              hikers can often enjoy panoramic, unobstructed views of the
+              surrounding landscape. This can lead to breathtaking vistas,
+              especially during sunrise and sunset.
               <br />
               <br />
-              illum, praesentium, debitis cupiditate nulla architecto quisquam
-              tempore dolor voluptate.
+              Finally, many desert areas offer clear, unpolluted night skies,
+              making them ideal for stargazing. The absence of city lights
+              allows for breathtaking views of celestial bodies, including
+              stars, planets, and meteor showers.
             </ElementText>
           </ThirdSecTextContent>
         </ThirdSecElement>
@@ -96,22 +104,26 @@ const ThirdSection = () => {
               Why Taking Your Family on a Hiking Tour With Us?
             </Title>
             <ElementText>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa?
+              Planning a multiple-day hiking trip can be complex and
+              time-consuming. Our professional tour guides take care of the
+              logistical details, including route planning, accommodations,
+              meals, and transportation, allowing your family to focus on
+              enjoying the experience. We offer a range of difficulty levels,
+              allowing family members of different fitness levels and ages to
+              participate. This inclusivity ensures that everyone can enjoy the
+              experience!
               <br />
               <br />
-              mollitia tempore nesciunt pariatur, consequuntur ut nulla
-              voluptatem exercitationem eligendi iure? Nulla commodi suscipit et
-              exercitationem est porro aliquam molestiae facilis. Lorem ipsum
-              dolor sit amet consectetur, adipisicing elit. Ea ipsa odit nihil
-              in magni explicabo libero quisquam, exercitationem beatae!
+              Also, our tour guides offer insights into the natural and cultural
+              aspects of the hiking route. They will share information about
+              local flora, fauna, geology, and history, making the hike not only
+              fun but also educational.
               <br />
               <br />
-              Repellendus neque rerum commodi nobis accusantium quod corporis,
-              soluta provident repudiandae! Lorem ipsum dolor sit amet
-              consectetur adipisicing elit. Provident voluptate facilis
-              voluptatum consequuntur, est illum. Consectetur cupiditate quod
-              sunt voluptatum! Dolores minima autem consequuntur blanditiis
-              optio vero laboriosam quam officiis.
+              Last but not least, having a knowledgeable tour guide ensures that
+              your family will be in safe hands throughout the journey. Our
+              guides are trained in first aid, navigation, and handling various
+              outdoor situations, providing you with peace of mind.
             </ElementText>
           </ThirdSecTextContent>
           <ThirdSecImageContent className="box box-right">

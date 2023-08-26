@@ -54,7 +54,7 @@ const Cart = () => {
       setIsLoading(true);
       const tourIds = items.map((item) => item.tourId);
       const response = await getTourItems(tourIds);
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         const toursList: TTourItem[] = response.data.data;
         const newItemsWithTourInfo: TItemWithTourInfo[] = [];
         const newSoldOutItems: TSoldOutItem[] = [];
@@ -101,7 +101,9 @@ const Cart = () => {
         setRecommendations(response.recommendations);
         dispatch(setOrder(newItemsWithTourInfo));
       } else {
-        setErrorMessage("An error occured. Please try again!");
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       }
       setIsLoading(false);
     };
@@ -109,7 +111,7 @@ const Cart = () => {
     const handleGetTopRecommendations = async () => {
       setIsLoading(true);
       const response = await getTopTourRecommendations();
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         setRecommendations(response.data.data);
       }
       setIsLoading(false);

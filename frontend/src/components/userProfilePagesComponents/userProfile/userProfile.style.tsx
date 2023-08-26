@@ -8,8 +8,10 @@ export const UserProfileContainer = styled.div`
 export const Content = styled.div`
   width: 100%;
   padding-left: 28rem;
+  min-height: calc(100vh - 24rem);
 
   @media (max-width: 1000px) {
-    padding-left: 0;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
   }
 `;

@@ -3,7 +3,6 @@ import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../UIComponents/title/title.component";
 import {
-  ElementIconContainer,
   ElementTitle,
   SecondSecContainer,
   SecondSecContainerInside,
@@ -13,24 +12,23 @@ import {
   SecondSectionContentWrapper,
   SecondSecTitlesContainer,
 } from "./secondSection.style";
+import CategoryIcon, { CATEGORY_ICON_TYPES } from "./categoryIcon.component";
 
 export type SecondSectionElementProps = {
   name: string;
-  iconUrl: string;
+  category: CATEGORY_ICON_TYPES;
   link: string;
 };
 
 const SecondSectionElement: FC<SecondSectionElementProps> = ({
   name,
-  iconUrl,
+  category,
   link,
 }) => {
   return (
     <SecondSecElementLink to={link}>
       <SecondSecElement>
-        <ElementIconContainer>
-          <img src={iconUrl} alt={name} />
-        </ElementIconContainer>
+        <CategoryIcon category={category} />
         <ElementTitle>{name}</ElementTitle>
       </SecondSecElement>
     </SecondSecElementLink>
@@ -50,27 +48,27 @@ const SecondSection = () => {
         <SecondSectionContentWrapper>
           <SecondSectionElement
             name="Family Tours"
-            iconUrl="images/familyTours.png"
+            category={CATEGORY_ICON_TYPES.family}
             link="/alltours?difficulty=family"
           />
           <SecondSectionElement
             name="Expert Tours"
-            iconUrl="images/advancedTours.png"
+            category={CATEGORY_ICON_TYPES.expert}
             link="/alltours?difficulty=expert"
           />
           <SecondSectionElement
             name="Mountain Tours"
-            iconUrl="images/mountainTours.png"
+            category={CATEGORY_ICON_TYPES.mountain}
             link="/alltours?category=mountain"
           />
           <SecondSectionElement
             name="Desert Tours"
-            iconUrl="images/desertTours.png"
+            category={CATEGORY_ICON_TYPES.desert}
             link="/alltours?category=desert"
           />
           <SecondSectionElement
             name="10Days+ Tours"
-            iconUrl="images/longTours.png"
+            category={CATEGORY_ICON_TYPES.longTour}
             link="/alltours?duration[gte]=10"
           />
         </SecondSectionContentWrapper>

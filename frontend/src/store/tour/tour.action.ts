@@ -40,21 +40,29 @@ export const fetchTourAsync =
   (slug: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getTour(slug);
-    if (response.status === "success")
+    if (response && response.status === "success")
       dispatch(
         fetchTourSuccess({
           ...response.data.tour,
           recommendations: response.data.recommendations,
         })
       );
-    else dispatch(fetchTourFailed(response.message));
+    else if (response & response?.message)
+      dispatch(fetchTourFailed(response.message));
+    else
+      dispatch(
+        fetchTourFailed(
+          "An error occured. Please refresh the page and try again!"
+        )
+      );
   };
 
 export const fetchTourBookingAsync =
   (id: string) => async (dispatch: Dispatch<TourDipatchTypes>) => {
     dispatch(fetchTourStart());
     const response = await getMyBookingDetails(id);
-    if (response.status === "success")
+    console.log("RESPONSE", response);
+    if (response && response.status === "success")
       dispatch(
         fetchTourSuccess({
           ...response.data.tour,
@@ -62,5 +70,12 @@ export const fetchTourBookingAsync =
           booking: response.data.booking,
         })
       );
-    else dispatch(fetchTourFailed(response.message));
+    else if (response && response?.message)
+      dispatch(fetchTourFailed(response.message));
+    else
+      dispatch(
+        fetchTourFailed(
+          "An error occured. Please refresh the page and try again!"
+        )
+      );
   };

@@ -50,7 +50,7 @@ const PersonalDetails = () => {
     const response = await updateMe(userInputsData);
 
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       dispatch(updateUser(userInputsData));
       setTimeout(function () {
@@ -58,7 +58,7 @@ const PersonalDetails = () => {
         return setEditModalOpen(false);
       }, 1000);
     } else {
-      if (response.message.includes("phoneNumber"))
+      if (response && response.message.includes("phoneNumber"))
         setErrorMessage("Please provide a valid phone number");
       else setErrorMessage("An error occured. Please try again!");
     }

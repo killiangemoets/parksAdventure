@@ -10,12 +10,12 @@ exports.deleteOne = (Model) =>
     if (req.user.role === 'user') queryObj.user = ObjectId(req.user._id);
     const doc = await Model.findOneAndDelete(queryObj);
 
-    if (doc.photo) {
-      await uploadToCloudinary.deleteOneImage(doc.photo);
-    }
-
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
+    }
+
+    if (doc.photo) {
+      await uploadToCloudinary.deleteOneImage(doc.photo);
     }
 
     res.status(200).json({

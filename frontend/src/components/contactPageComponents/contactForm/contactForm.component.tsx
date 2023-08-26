@@ -58,9 +58,13 @@ const ContactForm: FC<ContactFormProps> = ({ showTitle = true }) => {
     setLoading(true);
     const response = await sendEmail(contactData);
     setLoading(false);
-    if (response?.status === "success") {
+    if (response && response?.status === "success") {
       setSearchParams({ success: "true" });
-    } else setErrorMessage(response?.message);
+    } else if (response && response.message) setErrorMessage(response?.message);
+    else
+      setErrorMessage(
+        "An error occured. Please refresh the page and try again!"
+      );
   };
 
   const handleChange = (

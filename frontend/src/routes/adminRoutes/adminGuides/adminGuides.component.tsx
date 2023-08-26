@@ -44,7 +44,7 @@ const AdminGuides = () => {
     const response = await getAllGuidesWithDetails(
       `?role=guide&role=lead-guide${requestString}`
     );
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       const guidesList: TExtendedGuide[] = response.data.data;
       setGuides(guidesList);
       setErrorMessage(undefined);
@@ -63,7 +63,9 @@ const AdminGuides = () => {
 
       setStats(newStats);
     } else {
-      setErrorMessage("An error occured. Try to reload the page!");
+      setErrorMessage(
+        "An error occured. Please refresh the page and try again!"
+      );
     }
     setIsLoading(false);
   };

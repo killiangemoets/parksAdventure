@@ -27,8 +27,8 @@ const bgImagesUrl = [
   headerImg5,
   headerImg6,
   headerImg7,
-  headerImg8,
   headerImg9,
+  headerImg8,
   headerImg10,
 ];
 

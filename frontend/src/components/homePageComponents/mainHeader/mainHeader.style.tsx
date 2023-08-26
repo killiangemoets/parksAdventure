@@ -5,6 +5,7 @@ import colors from "../../../colors";
 
 export const MainHeaderContainer = styled.div`
   width: 100vw;
+  overflow-y: hidden;
   height: calc(100vh - 8rem);
   background: no-repeat center;
 

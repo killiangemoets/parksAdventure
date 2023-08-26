@@ -42,7 +42,10 @@ const AdminDashboard = () => {
       if (response && response.status === "success") {
         setErrorMessage("");
         setGeneralStats(response.data);
-      } else setErrorMessage("Something went wrong. Please try again!");
+      } else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       setIsLoading(false);
     };
     loadGeneralStats();

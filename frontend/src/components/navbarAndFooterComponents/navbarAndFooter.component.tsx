@@ -230,8 +230,10 @@ export const Footer = () => {
       </FooterLogo>
       <Copyright>&copy; Made by Killian Gemoets</Copyright>
       <FooterNavigation>
-        <FooterLink to="/about">About Us</FooterLink>
-        <FooterLink to="/career">Become a Tour Guide</FooterLink>
+        <FooterLink to="/privacy-policy">Privacy Policy</FooterLink>
+        <FooterLink to="/general-terms-and-conditions">
+          General Terms and Conditions
+        </FooterLink>
         <FooterLink to="/contact">Contact</FooterLink>
       </FooterNavigation>
     </FooterContainer>

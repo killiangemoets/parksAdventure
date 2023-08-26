@@ -55,7 +55,7 @@ const AdminAllBookings = () => {
 
       const response = await getAllBookings(requestString);
 
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
         else setErrorMessage(undefined);
 
@@ -76,7 +76,9 @@ const AdminAllBookings = () => {
         );
         setNumberOfPages(newNumberOfPages);
       } else {
-        setErrorMessage("An error occured. Try to reload the page!");
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       }
       setIsLoading(false);
     };
@@ -86,7 +88,7 @@ const AdminAllBookings = () => {
   useEffect(() => {
     const handleGetTourAndUserNames = async () => {
       const tourNamesResponse = await getAllTourNames();
-      if (tourNamesResponse.status === "success") {
+      if (tourNamesResponse && tourNamesResponse.status === "success") {
         const newTourNames: TourNameData[] = tourNamesResponse.data.tours;
         setTourNames(
           newTourNames.sort((tourA, tourB) => {
@@ -102,7 +104,7 @@ const AdminAllBookings = () => {
         );
       }
       const userNamesResponse = await getAllUserNames();
-      if (userNamesResponse.status === "success") {
+      if (userNamesResponse && userNamesResponse.status === "success") {
         const newUserNames: UserNameData[] = userNamesResponse.data.users;
         setUserNames(
           newUserNames.sort((userA, userB) => {

@@ -27,6 +27,7 @@ export const toursReducer = (
       return {
         ...state,
         ...action.payload,
+        error: null,
         isLoading: false,
       };
     case TOURS_ACTION_TYPES.FETCH_TOURS_FAILED:

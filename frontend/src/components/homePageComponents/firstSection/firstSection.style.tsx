@@ -5,6 +5,7 @@ import colors from "../../../colors";
 export const FirstSecContainer = styled.div`
   padding: 7.2rem 6.4rem;
   width: 100vw;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,12 +175,7 @@ export const BackText = styled.p`
   span {
     font-weight: 700;
     color: ${colors.secondary};
-    cursor: pointer;
     transition: all 0.3s;
-
-    &:hover {
-      color: ${colors.secondaryDark};
-    }
 
     @media (max-width: 840px) {
       font-size: 1.2rem;

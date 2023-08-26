@@ -10,7 +10,7 @@ import {
   ContactMainText,
   ContactText,
 } from "./contact.style";
-import ContactConfirmation from "../../components/contactPageComponents/contactConfirmation/contactConfirmation.style";
+import ContactConfirmation from "../../components/contactPageComponents/contactConfirmation/contactConfirmation.component";
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../components/UIComponents/title/title.component";

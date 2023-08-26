@@ -1,5 +1,3 @@
-const AppError = require('./appError');
-
 class APIFeatures {
   constructor(query, queryString, next) {
     this.query = query;

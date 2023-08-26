@@ -49,7 +49,7 @@ const AdminAllUsers = () => {
     if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 
     const response = await getAllUsersWithDetails(`?role=user${requestString}`);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       const usersList: TExtendedUser[] = response.data.data;
       setUsers(usersList);
       setErrorMessage(undefined);
@@ -75,7 +75,9 @@ const AdminAllUsers = () => {
 
       setStats(newStats);
     } else {
-      setErrorMessage("An error occured. Try to reload the page!");
+      setErrorMessage(
+        "An error occured. Please refresh the page and try again!"
+      );
     }
     setIsLoading(false);
   };

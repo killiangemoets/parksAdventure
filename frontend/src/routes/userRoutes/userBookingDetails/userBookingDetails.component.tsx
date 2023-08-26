@@ -17,12 +17,14 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectRecommendations,
   selectTour,
+  selectTourError,
   selectTourIsLoading,
 } from "../../../store/tour/tour.selector";
 import { useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { fetchTourBookingAsync } from "../../../store/tour/tour.action";
 import { AppDispatch } from "../../../store/store";
+import { AdminContentErrorMessage } from "../../adminRoutes/adminRoutes.style";
 
 type UserBookingDetailsParams = {
   id: string;
@@ -31,6 +33,7 @@ type UserBookingDetailsParams = {
 const UserBookingDetails = () => {
   const tour = useSelector(selectTour);
   const isLoading = useSelector(selectTourIsLoading);
+  const error = useSelector(selectTourError);
   const dispatch: AppDispatch = useDispatch();
   const { id } = useParams<
     keyof UserBookingDetailsParams
@@ -40,7 +43,7 @@ const UserBookingDetails = () => {
 
   useEffect(() => {
     dispatch(fetchTourBookingAsync(id));
-  }, []);
+  }, [dispatch, id]);
 
   const handleScrollToReviews = () => {
     window.scrollTo({
@@ -51,27 +54,33 @@ const UserBookingDetails = () => {
 
   return (
     <UserBookingDetailsContainer>
-      <TitleContainer>
-        <TitleWrapper>
-          <Title titleType={TITLE_TYPE_CLASSES.main}>
-            {!isLoading && tour?.name}
-          </Title>
-          {!isLoading && (
-            <StarsRating
-              linkOnReviews={true}
-              handleLinkTo={handleScrollToReviews}
-              rating={tour?.ratingsAverage || 0}
-              numRatings={tour?.ratingsQuantity || 0}
-            />
-          )}
-        </TitleWrapper>
-      </TitleContainer>
-      <ReservationInfoSection />
-      <TourGallery />
-      <TourInfos />
-      <TourItinerary />
-      <TourReviews forwardRef={reviewsRef} />
-      <TourRecommendations tours={recommendations || []} />
+      {error ? (
+        <AdminContentErrorMessage>{error}</AdminContentErrorMessage>
+      ) : (
+        <>
+          <TitleContainer>
+            <TitleWrapper>
+              <Title titleType={TITLE_TYPE_CLASSES.main}>
+                {!isLoading && tour?.name}
+              </Title>
+              {!isLoading && (
+                <StarsRating
+                  linkOnReviews={true}
+                  handleLinkTo={handleScrollToReviews}
+                  rating={tour?.ratingsAverage || 0}
+                  numRatings={tour?.ratingsQuantity || 0}
+                />
+              )}
+            </TitleWrapper>
+          </TitleContainer>
+          <ReservationInfoSection />
+          <TourGallery />
+          <TourInfos />
+          <TourItinerary />
+          <TourReviews forwardRef={reviewsRef} />
+          <TourRecommendations tours={recommendations || []} />
+        </>
+      )}
     </UserBookingDetailsContainer>
   );
 };

@@ -50,7 +50,9 @@ const ReviewsSection = () => {
 
         setErrorMessage(undefined);
       } else {
-        setErrorMessage("An error occured. Try to reload the page!");
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       }
       setIsLoading(false);
     };
@@ -70,9 +72,7 @@ const ReviewsSection = () => {
           {isLoading ? (
             <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
           ) : errorMessage ? (
-            <ErrorMessage>
-              An error occured. Try to reload the page!
-            </ErrorMessage>
+            <ErrorMessage>{errorMessage}</ErrorMessage>
           ) : (
             <Carousel elements={reviews} />
           )}

@@ -213,7 +213,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
         role: roleInput as USER_ROLE_TYPES,
       });
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       setTimeout(() => {
         setSuccess(false);
@@ -221,7 +221,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
         handleChange();
       }, 1000);
     } else {
-      if (response.message.includes("E11000"))
+      if (response && response.message.includes("E11000"))
         setErrorMessage("This email address is already used");
       else setErrorMessage("Something went wrong. Please try again!");
     }

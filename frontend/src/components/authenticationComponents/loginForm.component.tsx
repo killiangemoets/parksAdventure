@@ -53,7 +53,7 @@ export const LoginForm = () => {
     setErrorMessage("");
     const response = await login(loginData);
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       const {
         email,
@@ -83,7 +83,11 @@ export const LoginForm = () => {
         setSuccess(false);
         return navigate(uri || "/");
       }, 2000);
-    } else setErrorMessage(response.message);
+    } else if (response && response.message) setErrorMessage(response.message);
+    else
+      setErrorMessage(
+        "An error occured. Please refresh the page and try again!"
+      );
   };
 
   return (
@@ -106,7 +110,6 @@ export const LoginForm = () => {
             label="Password"
             placeholder="••••••••"
             required
-            minLength={8}
             onChange={handleChange}
             value={password}
             name="password"

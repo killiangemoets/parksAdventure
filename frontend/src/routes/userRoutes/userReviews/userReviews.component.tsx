@@ -37,7 +37,9 @@ const UserReviews = () => {
         setReviews(reviewsList.slice(0, 3));
         setErrorMessage(undefined);
       } else {
-        setErrorMessage("An error occured. Try to reload the page!");
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       }
       setIsLoading(false);
     };
@@ -76,6 +78,10 @@ const UserReviews = () => {
       )}
       {errorMessage && (
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
+      )}
+
+      {reviews.length === 0 && (
+        <UserBookingsErrorMessage>No Reviews</UserBookingsErrorMessage>
       )}
 
       <Reviews>

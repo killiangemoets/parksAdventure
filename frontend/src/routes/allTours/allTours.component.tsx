@@ -25,6 +25,7 @@ import {
   selectToursTotal,
   selectToursIsLoading,
   selectTours,
+  selectToursError,
 } from "../../store/tours/tours.selector";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
@@ -36,6 +37,7 @@ const AllTours = () => {
   const dispatch: AppDispatch = useDispatch();
   const totalResults = useSelector(selectToursTotal);
   const isLoading = useSelector(selectToursIsLoading);
+  const error = useSelector(selectToursError);
   const tours = useSelector(selectTours);
 
   const filtersRef = useRef<HTMLDivElement | null>(null);
@@ -141,9 +143,13 @@ const AllTours = () => {
           {!isFullMapMode && (
             <>
               <AllToursResultsCards>
-                {isLoading ? (
+                {isLoading && (
                   <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
-                ) : !tours.length ? (
+                )}
+                {!isLoading && error && (
+                  <NoResultsMessage>{error}</NoResultsMessage>
+                )}
+                {!isLoading && !error && !tours.length ? (
                   <NoResultsMessage>No Results</NoResultsMessage>
                 ) : (
                   <ToursCards

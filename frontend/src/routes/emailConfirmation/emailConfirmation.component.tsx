@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { verifyEmail } from "../../api/authentication-requests";
 import NotFound from "../../components/notFoundComponent/notFound.component";
 import Spinner, {
@@ -28,18 +28,20 @@ type EmailConfirmationRouteParams = {
 };
 
 const EmailConfirmation = () => {
+  const [searchParams] = useSearchParams();
   const dispatch: AppDispatch = useDispatch();
   const { token } = useParams<
     keyof EmailConfirmationRouteParams
   >() as EmailConfirmationRouteParams;
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   useEffect(() => {
     const handleVerifyEmail = async (token: string) => {
+      setErrorMessage("");
       const response = await verifyEmail(token);
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         if (response.data.user) {
           const {
             email,
@@ -66,7 +68,8 @@ const EmailConfirmation = () => {
             })
           );
           setTimeout(function () {
-            const uri = window.location.href.split("uri=").slice(-1)[0];
+            let uri = searchParams.get("uri");
+            uri = uri ? uri.replaceAll("%26", "&") : null;
             return navigate(uri || "/");
           }, 2000);
         } else {
@@ -74,16 +77,35 @@ const EmailConfirmation = () => {
             return navigate("/login");
           }, 2000);
         }
-      } else {
-        setError(true);
+      } else if (
+        response &&
+        response.message.includes("Token is invalid or has already been use")
+      ) {
         dispatch(removeUser());
-      }
+        setErrorMessage(
+          "This url is invalid or your email has already been verified."
+        );
+      } else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       setLoading(false);
     };
     handleVerifyEmail(token);
-  }, [dispatch, navigate, token]);
+  }, [dispatch, navigate, searchParams, token]);
 
-  if (!error)
+  if (errorMessage && errorMessage.length > 0)
+    return (
+      <NotFound
+        message={
+          <>
+            {errorMessage}
+            <br />
+          </>
+        }
+      />
+    );
+  else
     return (
       <EmailVerificationContainer>
         <EmailConfirmationWrapper>
@@ -106,17 +128,6 @@ const EmailConfirmation = () => {
           </EmailVerificationParagraph>
         </EmailConfirmationWrapper>
       </EmailVerificationContainer>
-    );
-  else
-    return (
-      <NotFound
-        message={
-          <>
-            This url is invalid or your email has already been verified.
-            <br />
-          </>
-        }
-      />
     );
 };
 

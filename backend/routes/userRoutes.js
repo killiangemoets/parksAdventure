@@ -36,7 +36,13 @@ router.patch(
 
 router.route('/names').get(userController.getAllUserNames);
 
-router.delete('/deleteMe', userController.deleteMe);
+router.delete(
+  '/deleteMe',
+  userController.checkIfComingBookings,
+  userController.deleteUserReviews,
+  userController.deleteGuideTours,
+  userController.deleteMe
+);
 
 router
   .route('/')

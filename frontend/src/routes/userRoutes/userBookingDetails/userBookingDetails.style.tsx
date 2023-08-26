@@ -8,6 +8,7 @@ import {
 export const UserBookingDetailsContainer = styled.div`
   gap: 6.4rem;
   width: 100%;
+  min-height: 100%;
 
   & ${RatingData} {
     display: flex;

@@ -46,9 +46,16 @@ export const fetchToursAsync =
   async (dispatch: Dispatch<ToursDipatchTypes>) => {
     dispatch(fetchToursStart());
     const response = await getTours(requestString);
-    if (response.status === "success")
+    if (response && response.status === "success")
       dispatch(fetchToursSuccess(response.data.data, response.totalResults));
-    else dispatch(fetchToursFailed(response.message));
+    else if (response & response?.message)
+      dispatch(fetchToursFailed(response.message));
+    else
+      dispatch(
+        fetchToursFailed(
+          "An error occured. Please refresh the page and try again!"
+        )
+      );
   };
 
 export const clearTours = (): ClearTours => {

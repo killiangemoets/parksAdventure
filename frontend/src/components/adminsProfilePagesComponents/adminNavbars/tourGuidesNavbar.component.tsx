@@ -108,13 +108,16 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
     setErrorMessage("");
     const response = await createTourGuide(createTourGuideData);
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       setIsANewGuideCreated(true);
     } else {
-      if (response.message.includes("E11000"))
+      if (response && response.message.includes("E11000"))
         setErrorMessage("This email address is already used");
-      else setErrorMessage("Something went wrong. Please try again!");
+      else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
     }
   };
 

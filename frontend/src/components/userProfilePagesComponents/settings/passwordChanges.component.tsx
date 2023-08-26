@@ -61,7 +61,10 @@ const PasswordChange = () => {
     } else {
       if (response && response.message.includes("current password is wrong"))
         setErrorMessage("Your current password is wrong");
-      else setErrorMessage("Something went wrong. Please try again!");
+      else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
     }
   };
 

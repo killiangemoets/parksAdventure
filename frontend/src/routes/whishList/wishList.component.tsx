@@ -4,13 +4,17 @@ import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../components/UIComponents/title/title.component";
 import { UserWishListContainer, WishListCards } from "./wishList.style";
-import { selectUserWishlist } from "../../store/user/user.selector";
+import {
+  selectUserId,
+  selectUserWishlist,
+} from "../../store/user/user.selector";
 import { clearTours, fetchToursAsync } from "../../store/tours/tours.action";
 import { useEffect, useState } from "react";
 import { AppDispatch } from "../../store/store";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   selectTours,
+  selectToursError,
   selectToursIsLoading,
   selectToursTotal,
 } from "../../store/tours/tours.selector";
@@ -22,15 +26,21 @@ import ToursCards from "../../components/allToursPageComponents/toursCards/tours
 
 export const WishList = () => {
   const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const userId = useSelector(selectUserId);
   const wishlist = useSelector(selectUserWishlist);
   const totalResults = useSelector(selectToursTotal);
   const isLoading = useSelector(selectToursIsLoading);
+  const error = useSelector(selectToursError);
   const tours = useSelector(selectTours);
 
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numberOfPages, setNumberOfPages] = useState<number>(1);
+
+  useEffect(() => {
+    if (!userId) navigate("/login?uri=/profile");
+  }, [navigate, userId]);
 
   useEffect(() => {
     const pageParam = searchParams.get("page");
@@ -79,11 +89,13 @@ export const WishList = () => {
   return (
     <UserWishListContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>My Wishlist</Title>
-      {isLoading ? (
-        <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
-      ) : !tours.length ? (
+      {isLoading && <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />}
+      {!isLoading && error && <NoResultsMessage>{error}</NoResultsMessage>}
+
+      {!isLoading && !error && tours.length === 0 && (
         <NoResultsMessage>Your wishlist is empty</NoResultsMessage>
-      ) : (
+      )}
+      {!isLoading && !error && tours.length > 0 && (
         <WishListCards>
           <ToursCards />
         </WishListCards>

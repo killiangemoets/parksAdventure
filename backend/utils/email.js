@@ -95,10 +95,6 @@ module.exports = class Email {
   }
 
   async sendContactEmail(message) {
-    await this.send(
-      'contact',
-      `Your password reset token (valid for only ${process.env.RESET_PASSWORD_TOKEN_EXPIRES_IN} minutes)`,
-      { message }
-    );
+    await this.send('contact', `Someone contacted you!`, { message });
   }
 };

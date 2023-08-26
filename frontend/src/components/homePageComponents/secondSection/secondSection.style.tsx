@@ -7,6 +7,7 @@ import colors from "../../../colors";
 
 export const SecondSecContainer = styled.div`
   width: 100vw;
+  overflow-y: hidden;
   background: url(${secondSectionBackground}) no-repeat left center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -52,26 +53,13 @@ export const SecondSectionContentWrapper = styled.div`
   max-width: 130rem;
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 
   @media (max-width: 580px) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
-  }
-`;
-
-export const SecondSecElement = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1.2rem;
-  &:hover {
-    h4 {
-      color: ${colors.primary} !important;
-    }
   }
 `;
 
@@ -84,8 +72,18 @@ export const ElementTitle = styled.h4`
   transition: all 0.3s;
 `;
 
-export const ElementIconContainer = styled.div`
-  img {
-    width: 12rem;
+export const SecondSecElement = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.2rem;
+  &:hover {
+    ${ElementTitle} {
+      color: ${colors.primary} !important;
+    }
+    .path {
+      fill: ${colors.primary} !important;
+    }
   }
 `;

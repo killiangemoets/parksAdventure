@@ -52,7 +52,7 @@ const ResetPasswordForm = () => {
       !logout
     );
     setLoading(false);
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       setSuccessMessage("Your password has been successfully updated!");
       setTimeout(function () {
@@ -60,7 +60,10 @@ const ResetPasswordForm = () => {
         return navigate("/login");
       }, 3000);
     } else {
-      if (response.message.includes("Token is invalid or has expired"))
+      if (
+        response &&
+        response.message.includes("Token is invalid or has expired")
+      )
         setErrorMessage("This url is invalid or has expired");
       else setErrorMessage("Something went wrong. Please try again!");
     }

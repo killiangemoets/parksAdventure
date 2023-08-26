@@ -136,7 +136,9 @@ const ReservationInfoSection = () => {
             <ReservationInfoTitle>Hiker</ReservationInfoTitle>
             <InfoContent>
               {!isLoading &&
-                `${bookingDetails?.user.firstname} ${bookingDetails?.user.lastname}`}
+                (bookingDetails?.user?.firstname
+                  ? `${bookingDetails?.user?.firstname} ${bookingDetails?.user?.lastname}`
+                  : "deleted user")}
             </InfoContent>
           </Info>
           <Info>

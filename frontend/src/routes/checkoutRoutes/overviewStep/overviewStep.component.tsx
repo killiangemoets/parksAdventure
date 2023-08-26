@@ -40,6 +40,7 @@ const OverviewStep = () => {
 
   const handleGetTourItems = async () => {
     setIsLoading(true);
+    setErrorMessage(undefined);
     const tourIds = items.map((item) => item.tourId);
     const response = await getTourItems(tourIds);
     if (response && response.status === "success") {
@@ -85,7 +86,7 @@ const OverviewStep = () => {
       setItemsWithTourInfo(newItemsWithTourInfo);
     } else {
       setErrorMessage(
-        "An error occured. Please refresh the page or go back to the cart"
+        "An error occured. Please refresh the page or go back to the cart."
       );
     }
     setIsLoading(false);

@@ -56,8 +56,8 @@ export const NoResultsMessage = styled.p`
   align-self: center;
   font-weight: 600;
   margin-right: 2.25rem;
-  font-size: 2rem;
-  letter-spacing: 1px;
+  font-size: 1.8rem;
+  letter-spacing: 0.4px;
 `;
 
 export const FloatButton = styled.div`

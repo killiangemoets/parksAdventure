@@ -81,7 +81,10 @@ const AccountSettings = () => {
         setErrorMessage(
           "The image size is too large. The maximum size is 10 MB."
         );
-      else setErrorMessage("An error occured. Please try again!");
+      else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
     }
   };
 

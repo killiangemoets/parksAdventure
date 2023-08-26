@@ -51,6 +51,12 @@ export const AuthenticationLinkSmall = styled(AuthenticationLink)`
   }
 `;
 
+export const AuthenticationLinksWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
 export const AuthenticationCard = styled.div`
   padding: 5.2rem 6.8rem;
   background-color: ${colors.backgroundLight};
@@ -103,7 +109,7 @@ export const Messages = styled.div`
 
 export const ErrorMessage = styled.p`
   text-align: center;
-  height: 2rem;
+  min-height: 2rem;
   color: ${colors.error};
   font-size: 1.6rem;
   font-weight: 600;

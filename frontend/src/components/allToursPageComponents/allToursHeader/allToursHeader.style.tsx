@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { GreenOpacity } from "../../../routes/home/home.style";
-import allToursHeaderBackground from "../../../assets/alltours-header-bg.webp";
+import allToursHeaderBackground from "../../../assets/images/alltours-header-bg.webp";
 import { RangeDatePickerElement } from "../../UIComponents/rangeDateInput/rangeDateInput.style";
 import {
   Input,

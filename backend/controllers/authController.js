@@ -108,9 +108,10 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     .digest('hex');
 
   const sessionToken = req.cookies.tmp;
-  const decoded = sessionToken
-    ? await util.promisify(jwt.verify)(sessionToken, process.env.JWT_SECRET)
-    : { id: undefined };
+  const decoded =
+    sessionToken && sessionToken !== 'null'
+      ? await util.promisify(jwt.verify)(sessionToken, process.env.JWT_SECRET)
+      : { id: undefined };
 
   res.cookie('tmp', 'null', {
     expires: new Date(Date.now() + 10 * 1000),
@@ -167,6 +168,10 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
   ).select('+emailVerificationTokenResend +emailVerificationTokens');
 
   if (!user) return next(new AppError('No user found for this email', 400));
+  if (user.active)
+    return next(
+      new AppError('The email of this user has already been verified', 508)
+    );
   if (user.emailVerificationTokenResend >= 5)
     return next(
       new AppError(

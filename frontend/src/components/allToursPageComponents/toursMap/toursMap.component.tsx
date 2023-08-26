@@ -109,7 +109,7 @@ const ToursMap: FC<ToursMapProps> = ({
       );
       searchParams.delete("page");
       setSearchParams(searchParams);
-    }, 2000);
+    }, 1000);
 
     setTimout(newTimeout);
   };

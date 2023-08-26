@@ -12,6 +12,7 @@ export const ReviewsSecContainer = styled.div`
 `;
 export const ReviewsSecWrapper = styled.div`
   width: 100vw;
+  overflow-y: hidden;
   display: flex;
   justify-content: center;
 

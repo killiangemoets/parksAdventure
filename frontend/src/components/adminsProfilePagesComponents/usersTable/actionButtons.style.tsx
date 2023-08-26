@@ -23,9 +23,14 @@ export const ActionButtonsWrapper = styled.div`
   }
 `;
 
+export const DeleteMessages = styled.p`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
 export const DeleteMessage = styled.p`
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   gap: 1rem;
   text-align: center;
@@ -33,6 +38,7 @@ export const DeleteMessage = styled.p`
   line-height: 2rem;
   font-weight: 400;
   letter-spacing: 0.4px;
+  max-width: 80rem;
 `;
 
 export const WarningIcon = styled(WarningSVG)`

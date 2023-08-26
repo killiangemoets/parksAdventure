@@ -1,35 +1,46 @@
-import { useNavigate } from "react-router-dom";
-import {
-  ContactConfirmationContainer,
-  ContactConfirmationTextContent,
-  ContactConfirmationTextElement,
-} from "./contactConfirmation.component";
-import Title from "../../UIComponents/title/title.component";
-import Button from "../../UIComponents/button/button.component";
+import styled from "styled-components";
 
-const ContactConfirmation = () => {
-  const navigate = useNavigate();
-  return (
-    <ContactConfirmationContainer>
-      <Title>Thank you for contacting us!</Title>
-      <ContactConfirmationTextContent>
-        <ContactConfirmationTextElement>
-          One of our tour guides will contact you at the email
-          <br />
-          address provided <span>within 24 hours</span>.
-        </ContactConfirmationTextElement>
-        <ContactConfirmationTextElement>
-          Be sure to check your email!
-        </ContactConfirmationTextElement>
-      </ContactConfirmationTextContent>
-      <Button
-        onClick={() => {
-          navigate("/");
-        }}>
-        Back to Home
-      </Button>
-    </ContactConfirmationContainer>
-  );
-};
+import { Link } from "react-router-dom";
+import colors from "../../../colors";
 
-export default ContactConfirmation;
+export const ContactConfirmationContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6.4rem;
+
+  button {
+    font-size: 2rem;
+    padding: 1.6rem 4.8rem;
+  }
+`;
+
+export const ContactConfirmationTextContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+`;
+export const ContactConfirmationTextElement = styled.p`
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: 0.2px;
+
+  span {
+    font-size: 2rem;
+    font-weight: 600;
+  }
+`;
+
+export const ContactConfirmationContactLink = styled(Link)`
+  color: ${colors.primary};
+  text-decoration: underline;
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: ${colors.primaryDark};
+  }
+`;

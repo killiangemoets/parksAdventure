@@ -9,6 +9,7 @@ export const ThirdSecContainer = styled.div`
 export const ThirdSecWrapper = styled.div`
   max-width: 130rem;
   width: 100vw;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;

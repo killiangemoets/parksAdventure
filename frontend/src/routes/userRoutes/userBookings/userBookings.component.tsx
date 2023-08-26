@@ -29,7 +29,7 @@ const UserBookings = () => {
     const handleGetBookings = async () => {
       setIsLoading(true);
       const response = await getMyBookings();
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         const newComingBookings: TBooking[] = [];
         const newPrevisouBookings: TBooking[] = [];
 
@@ -46,7 +46,9 @@ const UserBookings = () => {
         setPreviousBookings(newPrevisouBookings);
         setErrorMessage(undefined);
       } else {
-        setErrorMessage("An error occured. Try to reload the page!");
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
       }
       setIsLoading(false);
     };
@@ -63,6 +65,9 @@ const UserBookings = () => {
       )}
       {errorMessage && (
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
+      )}
+      {comingBookings.length === 0 && previousBookings.length === 0 && (
+        <UserBookingsErrorMessage>No Bookings</UserBookingsErrorMessage>
       )}
       {comingBookings.length > 0 && (
         <Reservations>

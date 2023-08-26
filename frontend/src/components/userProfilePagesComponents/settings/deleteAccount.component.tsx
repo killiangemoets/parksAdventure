@@ -17,6 +17,7 @@ import WarningMessage from "../../UIComponents/warningMessage/waringMessage.comp
 import { DeleteQuestion } from "../../adminsProfilePagesComponents/adminNavbars/adminNavbar.style";
 import {
   DeleteMessage,
+  DeleteMessages,
   WarningIcon,
 } from "../../adminsProfilePagesComponents/usersTable/actionButtons.style";
 import { ChangeEvent, useState } from "react";
@@ -50,7 +51,6 @@ const DeleteAccount = () => {
     setIsLoading(true);
     const response = await deleteMe();
     setIsLoading(false);
-    console.log(response);
     if (response && response.status === "success") {
       setSuccess(true);
       setTimeout(function () {
@@ -68,7 +68,9 @@ const DeleteAccount = () => {
     ) {
       setDeleteErrorMessage(response.message);
     } else {
-      setDeleteErrorMessage("An error occured. Please try again!");
+      setDeleteErrorMessage(
+        "An error occured. Please refresh the page and try again!"
+      );
     }
   };
 
@@ -84,13 +86,8 @@ const DeleteAccount = () => {
         <Title titleType={TITLE_TYPE_CLASSES.section}>Delete Account</Title>
         <SettingsContent>
           <SettingsText>
-            When you account is deactivated, you will be logged out of Natianal
+            When you account is deleted, you will be logged out of Natianal
             Parks Hiking Tours, and this account will no longer be usable.
-            Please note that{" "}
-            <span>
-              you will not be able to create another acount with your same email
-              address.
-            </span>
           </SettingsText>
           <Button onClick={() => setShowDeleteModal(true)}>
             Delete My Account
@@ -103,12 +100,15 @@ const DeleteAccount = () => {
         open={showDeleteModal}>
         <WarningMessage />
         <DeleteQuestion>
-          Are you sure you want to the delete your account?
+          Are you absolutely sure you want to the delete your account?
         </DeleteQuestion>
-        <DeleteMessage>
-          <WarningIcon /> After deleting your account, you won't be able to
-          access your bookings and reviews
-        </DeleteMessage>
+        <DeleteMessages>
+          <DeleteMessage>
+            <WarningIcon /> Please note that there is no option to restore the
+            account or its data once it's deleted.
+          </DeleteMessage>
+        </DeleteMessages>
+
         <TextInput
           label="Write your email address to continue"
           placeholder="email address"

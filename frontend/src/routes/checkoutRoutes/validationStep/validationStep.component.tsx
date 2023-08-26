@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../../components/UIComponents/spinner/spinner.component";
@@ -8,6 +8,7 @@ import { validateOrder } from "../../../api/booking-requests";
 import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { clearCart } from "../../../store/cart/cart.action";
+import { CartMessage } from "../../cart/cart.style";
 
 type ValidationStepRouteParams = {
   token: string;
@@ -19,21 +20,32 @@ const ValidationStep = () => {
   >() as ValidationStepRouteParams;
   const navigate = useNavigate();
   const dispatch: AppDispatch = useDispatch();
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     const handlePaymentValidation = async (token: string) => {
+      setErrorMessage(undefined);
       const response = await validateOrder(token);
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         dispatch(clearCart());
         navigate("/checkout/step4");
-      } else navigate("/checkout/step3");
+      } else
+        setErrorMessage(
+          "An error occured. Please refresh the page or go back to the cart."
+        );
     };
     handlePaymentValidation(token);
-  }, []);
+  }, [dispatch, navigate, token]);
 
   return (
     <ValidationStepContainer>
-      <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+      {errorMessage ? (
+        <CartMessage>{errorMessage}</CartMessage>
+      ) : (
+        <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+      )}
     </ValidationStepContainer>
   );
 };

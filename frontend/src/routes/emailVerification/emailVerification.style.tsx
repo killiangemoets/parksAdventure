@@ -58,6 +58,7 @@ export const EmailVerificationSection = styled.div`
 `;
 
 export const EmailVerificationErrorMessage = styled.p`
+  text-align: center;
   height: 2rem;
   color: ${colors.error};
   font-size: 1.6rem;

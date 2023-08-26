@@ -75,35 +75,6 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.deleteMe = catchAsync(async (req, res, next) => {
-  const comingBookings = await Booking.aggregate([
-    {
-      $match: {
-        user: ObjectId(req.user.id),
-        date: { $gt: new Date() },
-      },
-    },
-    {
-      $count: 'comingBookingsCount',
-    },
-  ]);
-
-  if (comingBookings.length > 0 && comingBookings[0].comingBookingsCount > 0)
-    return next(
-      new AppError(
-        'You cannot delete your account if you have upcoming bookings.',
-        403
-      )
-    );
-
-  await User.findByIdAndUpdate(req.user.id, { active: false });
-
-  res.status(200).json({
-    status: 'success',
-    data: null,
-  });
-});
-
 exports.addToWishList = catchAsync(async (req, res, next) => {
   const updatedUser = await User.findByIdAndUpdate(
     req.user.id,
@@ -289,10 +260,49 @@ exports.getAllGuidesWithDetails = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.checkIfComingBookings = catchAsync(async (req, res, next) => {
+  const comingBookings = await Booking.aggregate([
+    {
+      $match: {
+        user: ObjectId(req.user.id),
+        date: { $gt: new Date() },
+      },
+    },
+    {
+      $count: 'comingBookingsCount',
+    },
+  ]);
+
+  if (comingBookings.length > 0 && comingBookings[0].comingBookingsCount > 0)
+    return next(
+      new AppError(
+        'You cannot delete your account if you have upcoming bookings.',
+        403
+      )
+    );
+
+  req.params.id = req.user.id;
+
+  next();
+});
+
+exports.deleteMe = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndDelete(req.user.id);
+
+  if (user.photo) {
+    await uploadToCloudinary.deleteOneImage(user.photo);
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: null,
+  });
+});
+
 exports.deleteUserReviews = catchAsync(async (req, res, next) => {
   const reviews = await Review.find({ user: ObjectId(req.params.id) });
   reviews.forEach(async (review) => {
-    const deletedReview = await Review.findByIdAndDelete(review._id);
+    await Review.findByIdAndDelete(review._id);
   });
   next();
 });

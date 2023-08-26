@@ -43,6 +43,6 @@ export const ErrorMessage = styled.p`
   height: 2.6rem;
   padding-left: 0.8rem;
   font-size: 1.8rem;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-weight: 600;
+  letter-spacing: 0.4px;
 `;

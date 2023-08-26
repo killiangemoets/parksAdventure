@@ -30,7 +30,7 @@ const ForgotPasswordForm = () => {
     const response = await forgotPassword(email);
     setLoading(false);
 
-    if (response.status === "success") {
+    if (response && response.status === "success") {
       setSuccess(true);
       setSuccessMessage(
         "If an account exists with this email address, we sent you an email with the instructions to reset your password."
@@ -40,6 +40,7 @@ const ForgotPasswordForm = () => {
       }, 2000);
     } else {
       if (
+        response &&
         response.message.includes("There is no user with this email address.")
       ) {
         setSuccess(true);
@@ -49,7 +50,10 @@ const ForgotPasswordForm = () => {
         setTimeout(function () {
           setSuccess(false);
         }, 2000);
-      } else setErrorMessage("Something went wrong. Please try again!");
+      } else
+        setErrorMessage(
+          "An error occured. Please refresh the page and try again!"
+        );
     }
   };
 

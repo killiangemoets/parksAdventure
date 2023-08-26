@@ -42,6 +42,8 @@ import GuideAccountActivation from "./routes/guideRoutes/guideAccountActivation/
 import AdminMyTours from "./routes/adminRoutes/adminMyTours/adminMyTours.component";
 import AdminTourDashboard from "./routes/adminRoutes/adminTourDashboard/adminTourDashboard.component";
 import Contact from "./routes/contact/contact.component";
+import PrivacyPolicy from "./routes/privacyPolicy/privacyPolicy.component";
+import GeneralTermsAndConditions from "./routes/generalTermsAndConditions/generalTermsAndConditions.component";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -50,7 +52,7 @@ function App() {
   useEffect(() => {
     const handleIsLoggedIn = async () => {
       const response = await getUser();
-      if (response.user) {
+      if (response && response.user) {
         const {
           email,
           firstname,
@@ -76,11 +78,10 @@ function App() {
             id,
           })
         );
-      } else {
+      } else if (response) {
         dispatch(removeUser());
       }
     };
-
     if (!window.location.href.includes("/signup/email-confirmation/"))
       handleIsLoggedIn();
   }, [dispatch]);
@@ -91,6 +92,11 @@ function App() {
         <Route index element={<Home />} />
 
         <Route path="contact" element={<Contact />} />
+        <Route path="privacy-policy" element={<PrivacyPolicy />} />
+        <Route
+          path="general-terms-and-conditions"
+          element={<GeneralTermsAndConditions />}
+        />
 
         <Route path="alltours" element={<AllTours />} />
         <Route path="tour/:slug/" element={<AdminTourNavbar />}>
@@ -164,10 +170,7 @@ function App() {
         <Route path="guides" element={<AdminGuides />} />
         <Route path="add-tour" element={<AdminAddTour />} />
         <Route path="my-tours" element={<AdminMyTours />} />
-        {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
       </Route>
-
-      {/* <Route path="*" element={<Navigate to="/" />}></Route> */}
 
       <Route path="/" element={<NavbarAndFooter />}>
         <Route path="*" element={<NotFound />}></Route>

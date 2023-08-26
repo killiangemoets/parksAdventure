@@ -173,7 +173,7 @@ const AdminAddTour = () => {
   useEffect(() => {
     const loadTourGuides = async () => {
       const response = await getTourGuides();
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         setTourGuidesList(response.data);
       }
     };
@@ -238,14 +238,17 @@ const AdminAddTour = () => {
         slug && tour?._id
           ? await updateTour(tourData, tour?._id)
           : await createTour(tourData);
-      if (response.status === "success") {
+      if (response && response.status === "success") {
         navigate(`/tour/${response.data.data.slug}`);
       } else {
-        if (response.message.includes("E11000")) {
+        if (response && response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";
           newErrorsState.name = true;
-        } else {
+        } else if (response && response.message) {
           newErrorsState.generalMessage = response.message;
+        } else {
+          newErrorsState.generalMessage =
+            "An error occured. Please refresh the page and try again!";
         }
       }
     } else {
