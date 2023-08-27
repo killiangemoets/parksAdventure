@@ -67,20 +67,17 @@ export const validateOrder = async (token: string) => {
 export const getMyBookings = async () => {
   try {
     // const response = await axiosInstance.get("/bookings/mine");
-    const response = await axios.get(
-      "https://wild-teal-pelican-shoe.cyclic.cloud/api/v1/bookings/mine",
+    const fetchResponse = await fetch(
+      "http://localhost:3000/api/v1/bookings/mine",
       {
-        headers: {
-          // "Access-Control-Allow-Headers": "Content-Type, Authorization",
-          "Access-Control-Allow-Origin": "http://localhost:3001/",
-          // "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
-          // "Access-Control-Allow-Credentials": "true",
-        },
-        responseType: "json",
+        mode: "cors",
+        credentials: "include",
       }
     );
 
-    return response.data;
+    const response = await fetchResponse.json();
+
+    return response;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;
