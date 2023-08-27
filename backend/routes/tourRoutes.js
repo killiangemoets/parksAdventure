@@ -19,7 +19,7 @@ router
   );
 
 router
-  .route('/all/aggregation')
+  .route('/all')
   .get(
     tourController.aggreagationRequiredFields,
     authController.getLoggedInUser,

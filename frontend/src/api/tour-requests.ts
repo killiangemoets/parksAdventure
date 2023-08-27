@@ -6,9 +6,7 @@ import getTourDataInSendFormat from "../utils/dataManipulation/getTourDataInSend
 
 export const getTours = async (requestString: string = "") => {
   try {
-    const response = await axiosInstance.get(
-      `/tours/all/aggregation${requestString}`
-    );
+    const response = await axiosInstance.get(`/tours/all${requestString}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
