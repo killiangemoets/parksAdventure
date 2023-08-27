@@ -25,42 +25,22 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-// app.use((req, res, next) => {
-//   res.setHeader(
-//     'Access-Control-Allow-Origin',
-//     'https://national-parks-hiking-tours.vercel.app'
-//   );
-//   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-//   next();
-// });
-
 // 1) GLOBAL MIDDLEWARES
 // const whitelist = ['http://localhost:3001'];
-// // const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
-// const corsOptions = {
-//   credentials: true,
-//   origin: function (origin, callback) {
-//     if (!origin || whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-// };
-// app.use(cors(corsOptions));
+const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
 
-// app.options('/', cors());
-
-app.options('/', (req, res) => {
-  res.setHeader(
-    'Access-Control-Allow-Origin',
-    'https://national-parks-hiking-tours.vercel.app'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  res.sendStatus(204);
-});
+app.options('*', cors());
 
 // Set security HTTP headers
 app.use(helmet());

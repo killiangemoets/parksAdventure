@@ -146,6 +146,10 @@ exports.getAll = (Model) =>
 
     const docs = await featuresWithPagination.query;
 
+    res.header(
+      'Access-Control-Allow-Origin',
+      'https://national-parks-hiking-tours.vercel.app/'
+    );
     res.status(200).json({
       status: 'success',
       results: docs.length,
