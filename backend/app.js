@@ -26,7 +26,7 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
-const whitelist = ['http://localhost:3001'];
+const whitelist = ['http://localhost:3001', process.env.WEBSITE_URL];
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
