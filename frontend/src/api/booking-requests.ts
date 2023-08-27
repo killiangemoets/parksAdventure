@@ -67,19 +67,6 @@ export const validateOrder = async (token: string) => {
 export const getMyBookings = async () => {
   try {
     const response = await axiosInstance.get("/bookings/mine");
-    // const fetchResponse = await fetch(
-    //   "http://localhost:3000/api/v1/bookings/mine",
-    //   {
-    //     mode: "cors",
-    //     credentials: "include",
-    //     headers: {
-    //       "Access-Control-Allow-Origin":
-    //         "https://national-parks-hiking-tours.vercel.app/",
-    //     },
-    //   }
-    // );
-
-    // const response = await fetchResponse.json();
 
     return response;
   } catch (err) {
