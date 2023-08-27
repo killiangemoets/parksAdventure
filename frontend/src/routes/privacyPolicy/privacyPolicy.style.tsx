@@ -4,11 +4,15 @@ import colors from "../../colors";
 
 export const PrivacyPolicyContainer = styled.div`
   min-height: calc(100vh - 8rem);
-  padding: calc(8rem + 6.4rem) 6.4rem 6.4rem 6.4rem;
+  padding: calc(8rem + 6.4rem) 4rem 6.4rem 4rem;
   display: flex;
   flex-direction: column;
   gap: 6.4rem;
   align-items: center;
+
+  h2 {
+    text-align: center;
+  }
 `;
 
 export const PrivacyPolicyContent = styled.div`
@@ -28,8 +32,6 @@ export const PrivacyPolicySectionTitle = styled.div`
   text-transform: uppercase;
   font-size: 2rem;
   letter-spacing: 0.6px;
-  width: 16rem;
-  white-space: nowrap;
 `;
 export const PrivacyPolicyText = styled.div`
   font-size: 1.6rem;

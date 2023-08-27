@@ -80,7 +80,7 @@ const UserReviews = () => {
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
       )}
 
-      {reviews.length === 0 && (
+      {!errorMessage && reviews.length === 0 && (
         <UserBookingsErrorMessage>No Reviews</UserBookingsErrorMessage>
       )}
 

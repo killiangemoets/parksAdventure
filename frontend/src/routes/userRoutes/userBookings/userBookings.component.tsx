@@ -66,9 +66,11 @@ const UserBookings = () => {
       {errorMessage && (
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
       )}
-      {comingBookings.length === 0 && previousBookings.length === 0 && (
-        <UserBookingsErrorMessage>No Bookings</UserBookingsErrorMessage>
-      )}
+      {!errorMessage &&
+        comingBookings.length === 0 &&
+        previousBookings.length === 0 && (
+          <UserBookingsErrorMessage>No Bookings</UserBookingsErrorMessage>
+        )}
       {comingBookings.length > 0 && (
         <Reservations>
           <Title titleType={TITLE_TYPE_CLASSES.third}>
