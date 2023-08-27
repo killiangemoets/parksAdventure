@@ -36,8 +36,8 @@ app.set('views', path.join(__dirname, 'views'));
 // });
 
 // 1) GLOBAL MIDDLEWARES
-const whitelist = ['http://localhost:3001'];
-// const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
+// const whitelist = ['http://localhost:3001'];
+const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
 const corsOptions = {
   credentials: true,
   origin: function (origin, callback) {
