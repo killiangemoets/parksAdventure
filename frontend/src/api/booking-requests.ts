@@ -72,6 +72,10 @@ export const getMyBookings = async () => {
       {
         mode: "cors",
         credentials: "include",
+        headers: {
+          "Access-Control-Allow-Origin":
+            "https://national-parks-hiking-tours.vercel.app/",
+        },
       }
     );
 
