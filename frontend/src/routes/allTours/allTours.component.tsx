@@ -149,16 +149,17 @@ const AllTours = () => {
                 {!isLoading && error && (
                   <NoResultsMessage>{error}</NoResultsMessage>
                 )}
-                {!isLoading && !error && !tours.length ? (
+                {!isLoading && !error && tours.length === 0 && (
                   <NoResultsMessage>No Results</NoResultsMessage>
-                ) : (
+                )}
+                {!isLoading && tours.length > 0 && (
                   <ToursCards
                     mapOpen={mapOpen}
                     handleOverTourCard={handleOverTourCard}
                   />
                 )}
               </AllToursResultsCards>
-              {tours.length && numberOfPages > 1 ? (
+              {tours.length > 0 && numberOfPages > 1 ? (
                 <Pagination
                   current={currentPage}
                   total={numberOfPages}

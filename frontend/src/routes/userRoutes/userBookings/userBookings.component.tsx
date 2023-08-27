@@ -63,10 +63,11 @@ const UserBookings = () => {
           <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
         </UserBookingsSpinner>
       )}
-      {errorMessage && (
+      {!isLoading && errorMessage && (
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
       )}
-      {!errorMessage &&
+      {!isLoading &&
+        !errorMessage &&
         comingBookings.length === 0 &&
         previousBookings.length === 0 && (
           <UserBookingsErrorMessage>No Bookings</UserBookingsErrorMessage>

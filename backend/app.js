@@ -26,8 +26,10 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
+// const whitelist = ['http://localhost:3001'];
 const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
 const corsOptions = {
+  credentials: true,
   origin: function (origin, callback) {
     if (!origin || whitelist.indexOf(origin) !== -1) {
       callback(null, true);
@@ -35,7 +37,6 @@ const corsOptions = {
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true,
 };
 app.use(cors(corsOptions));
 

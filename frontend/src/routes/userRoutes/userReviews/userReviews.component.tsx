@@ -76,11 +76,11 @@ const UserReviews = () => {
           <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
         </UserReviewsSpinner>
       )}
-      {errorMessage && (
+      {!isLoading && errorMessage && (
         <UserBookingsErrorMessage>{errorMessage}</UserBookingsErrorMessage>
       )}
 
-      {!errorMessage && reviews.length === 0 && (
+      {!isLoading && !errorMessage && reviews.length === 0 && (
         <UserBookingsErrorMessage>No Reviews</UserBookingsErrorMessage>
       )}
 
