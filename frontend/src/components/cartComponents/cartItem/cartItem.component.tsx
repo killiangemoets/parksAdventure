@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useDatesFromAvailabilities from "../../../hooks/datesFromAvailabilities";
-import useLabelFromGroupInfo from "../../../hooks/labelFromGroupInfo";
+import useDatesFromAvailabilities from "../../../hooks/useDatesFromAvailabilities";
+import useLabelFromGroupInfo from "../../../hooks/useLabelFromGroupInfo";
 import { removeItem, updateItem } from "../../../store/cart/cart.action";
 import { selectCartItems } from "../../../store/cart/cart.selector";
 import { AppDispatch } from "../../../store/store";

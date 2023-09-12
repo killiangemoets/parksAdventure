@@ -110,17 +110,30 @@ export const WishListIcon = styled(HeartSVG)<WishListIconProps>`
   }
 `;
 
-export const TourTitle = styled.h3`
+export const TourTitleWrapper = styled.div`
   position: absolute;
-  right: 1.8rem;
-  top: 15.2rem;
-  width: 70%;
+  right: 1.2rem;
+  top: 12.8rem;
+  height: 12rem;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 100%;
+
+  @media (max-width: 530px) {
+    right: 0.8rem;
+    top: 4.6rem;
+  }
+`;
+
+export const TourTitle = styled.h3`
+  width: 80%;
   color: ${colors.backgroundLight};
 
   text-transform: uppercase;
   font-weight: 300;
   letter-spacing: 1px;
-  font-size: 2.6rem;
+  font-size: 2.5rem;
   text-align: right;
 
   span {
@@ -149,9 +162,7 @@ export const TourTitle = styled.h3`
 
   @media (max-width: 530px) {
     font-size: 1.6rem;
-    right: 0.8rem;
-    top: 8.8rem;
-    width: 80%;
+    width: 85%;
 
     span {
       padding: 0.2rem 0.6rem;
@@ -160,7 +171,7 @@ export const TourTitle = styled.h3`
 `;
 
 export const TourContent = styled.div`
-  padding: 1.2rem 2.4rem 0 2.4rem;
+  padding: 1.4rem 2.4rem 0 2.4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -169,7 +180,7 @@ export const TourContent = styled.div`
 
   @media (max-width: 530px) {
     gap: 0.4rem;
-    padding: 1.2rem 1.6rem 0 1.6rem;
+    padding: 1.4rem 1.6rem 0 1.6rem;
   }
 `;
 

@@ -18,8 +18,8 @@ import { selectTourCurrentAvailabilities } from "../../../store/tour/tour.select
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
-import useDatesFromAvailabilities from "../../../hooks/datesFromAvailabilities";
-import useLabelFromGroupInfo from "../../../hooks/labelFromGroupInfo";
+import useDatesFromAvailabilities from "../../../hooks/useDatesFromAvailabilities";
+import useLabelFromGroupInfo from "../../../hooks/useLabelFromGroupInfo";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;

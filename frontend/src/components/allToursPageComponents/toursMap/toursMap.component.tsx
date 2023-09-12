@@ -86,7 +86,8 @@ const ToursMap: FC<ToursMapProps> = ({
     };
     if (!compareObjects(newInitialViewState, initialViewState))
       setInitialViewState(newInitialViewState);
-  }, [initialViewState, searchParams]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const handleClickMap = () => {
     handleOpenMap && handleOpenMap();

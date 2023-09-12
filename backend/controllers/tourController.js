@@ -88,7 +88,8 @@ exports.tourItemsRequiredFields = (req, res, next) => {
 
 exports.aliasTopRecommendations = (req, res, next) => {
   req.query.limit = '3';
-  req.query.sort = '-popularity,-ratingsAvarage';
+  req.query.sort = '-popularityIndex,-ratingsAvarage';
+
   next();
 };
 

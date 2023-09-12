@@ -23,6 +23,7 @@ import {
   selectTourAvailabilities,
   selectTourIsLoading,
   selectTourMeetingAddress,
+  selectTourStartLocation,
 } from "../../../store/tour/tour.selector";
 import { useEffect, useState } from "react";
 import {
@@ -37,6 +38,7 @@ import getEndDate from "../../../utils/dataManipulation/getEndDate";
 const ReservationInfoSection = () => {
   const bookingDetails = useSelector(selectBookingDetails);
   const availabilities = useSelector(selectTourAvailabilities);
+  const startLocation = useSelector(selectTourStartLocation);
   const address = useSelector(selectTourMeetingAddress);
   const additionalInfo = useSelector(selectTourAdditionalInfo);
   const isLoading = useSelector(selectTourIsLoading);
@@ -98,7 +100,9 @@ const ReservationInfoSection = () => {
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
               <InfoTitle>Address</InfoTitle>
             </InfoHeader>
-            <InfoLink to="https://www.google.com">
+            <InfoLink
+              target="_blank"
+              href={`https://www.google.com/maps/search/?api=1&query=${startLocation?.coordinates[1]},${startLocation?.coordinates[0]}`}>
               {!isLoading && address}
             </InfoLink>
           </Info>

@@ -32,7 +32,7 @@ const tourSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, 'A tour must have a location'],
-      maxlength: [40, 'A tour location cannot have more than 40 characters'],
+      maxlength: [80, 'A tour location cannot have more than 80 characters'],
     },
     imageCover: {
       type: String,
@@ -60,8 +60,18 @@ const tourSchema = new mongoose.Schema(
       type: [String],
       required: [true, 'A tour must have at least one category'],
       enum: {
-        values: ['mountain', 'desert', 'snow', 'cities', 'sea', 'lakes'],
-        message: 'Categories are mountain, desert, snow, cities, sea, or lakes',
+        values: [
+          'mountain',
+          'desert',
+          'snow',
+          'cities',
+          'sea',
+          'lakes',
+          'jungle',
+          ' savannah',
+        ],
+        message:
+          'Categories are mountain, desert, snow, cities, sea, lakes or jungle',
       },
     },
     ratingsAverage: {
@@ -96,8 +106,8 @@ const tourSchema = new mongoose.Schema(
         required: [true, 'A location must have a descripion'],
         trim: true,
         maxlength: [
-          40,
-          'A location description cannot have more than 40 characters',
+          80,
+          'A location description cannot have more than 80 characters',
         ],
       },
     },
@@ -114,8 +124,8 @@ const tourSchema = new mongoose.Schema(
           required: [true, 'A location must have a descripion'],
           trim: true,
           maxlength: [
-            40,
-            'A location description cannot have more than 40 characters',
+            80,
+            'A location description cannot have more than 80 characters',
           ],
         },
       },

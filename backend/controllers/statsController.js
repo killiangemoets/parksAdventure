@@ -5,7 +5,7 @@ const Review = require('./../models/reviewModel');
 const AppError = require('./../utils/appError');
 
 exports.getAllStats = catchAsync(async (req, res, next) => {
-  const userCount = await User.find().count();
+  const userCount = await User.find({ role: 'user' }).count();
   const tourCount = await Tour.find().count();
   const ratingAverage = await Review.aggregate([
     {
@@ -15,6 +15,7 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       },
     },
   ]);
+
   const bookingCounts = await Booking.aggregate([
     {
       $group: {
@@ -69,10 +70,10 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       $match: {
         date: {
           $gte: new Date(
-            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 1}`.slice(-2)}-01`
+            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 2}`.slice(-2)}-01`
           ),
           $lte: new Date(
-            `${currentYear}-${`0${currentMonth + 1}`.slice(-2)}-01`
+            `${currentYear}-${`0${currentMonth + 2}`.slice(-2)}-01`
           ),
         },
       },
@@ -110,10 +111,10 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
       $match: {
         'availabilities.date': {
           $gte: new Date(
-            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 1}`.slice(-2)}-01`
+            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 2}`.slice(-2)}-01`
           ),
           $lte: new Date(
-            `${currentYear}-${`0${currentMonth + 1}`.slice(-2)}-01`
+            `${currentYear}-${`0${currentMonth + 2}`.slice(-2)}-01`
           ),
         },
       },
@@ -231,7 +232,7 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
     'December',
   ];
   const statsByMonth = [];
-  let currentMonthValue = sixMonthsAgoMonth;
+  let currentMonthValue = sixMonthsAgoMonth + 1;
   for (let i = 0; i < 6; i++) {
     const availabilitiesStat = availabilitiesStats.find(
       (availability) => availability.month === currentMonthValue + 1
@@ -301,12 +302,27 @@ exports.getAllStats = catchAsync(async (req, res, next) => {
     data: {
       userCount,
       tourCount,
-      ratingAverage: ratingAverage[0].ratingAverage,
-      bookingsCount: bookingCounts[0].totalCount,
-      availabilitiesCount: totalAvailabilities[0].totalMaxGroupSize,
-      hikersCount: bookingCounts[0].totalKids + bookingCounts[0].totalAdults,
+      ratingAverage:
+        ratingAverage && ratingAverage.length > 0
+          ? ratingAverage[0].ratingAverage
+          : null,
+      bookingsCount:
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0].totalCount
+          : null,
+      availabilitiesCount:
+        totalAvailabilities && totalAvailabilities.length > 0
+          ? totalAvailabilities[0].totalMaxGroupSize
+          : null,
+      hikersCount:
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0].totalKids + bookingCounts[0].totalAdults
+          : null,
       totalRevenue:
-        bookingCounts[0].totalKidsRevenue + bookingCounts[0].totalAdultRevenue,
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0].totalKidsRevenue +
+            bookingCounts[0].totalAdultRevenue
+          : bookingCounts && bookingCounts.length > 0,
       ratingsStats,
       bookingsByUserStats,
       revenueByTour,
@@ -440,10 +456,10 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
         tour: { $eq: tourId },
         date: {
           $gte: new Date(
-            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 1}`.slice(-2)}-01`
+            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 2}`.slice(-2)}-01`
           ),
           $lte: new Date(
-            `${currentYear}-${`0${currentMonth + 1}`.slice(-2)}-01`
+            `${currentYear}-${`0${currentMonth + 2}`.slice(-2)}-01`
           ),
         },
       },
@@ -486,10 +502,10 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
       $match: {
         'availabilities.date': {
           $gte: new Date(
-            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 1}`.slice(-2)}-01`
+            `${sixMonthsAgoYear}-${`0${sixMonthsAgoMonth + 2}`.slice(-2)}-01`
           ),
           $lte: new Date(
-            `${currentYear}-${`0${currentMonth + 1}`.slice(-2)}-01`
+            `${currentYear}-${`0${currentMonth + 2}`.slice(-2)}-01`
           ),
         },
       },
@@ -575,7 +591,7 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
     'December',
   ];
   const statsByMonth = [];
-  let currentMonthValue = sixMonthsAgoMonth;
+  let currentMonthValue = sixMonthsAgoMonth + 1;
   for (let i = 0; i < 6; i++) {
     const availabilitiesStat = availabilitiesStats.find(
       (availability) => availability.month === currentMonthValue + 1
@@ -606,13 +622,27 @@ exports.getTourStats = catchAsync(async (req, res, next) => {
       tourName: tour[0].name,
       userCount,
       startsCount,
-      ratingAverage: ratingAverage[0]?.ratingAverage,
-      bookingsCount: bookingCounts[0]?.totalCount,
-      availabilitiesCount: totalAvailabilities[0]?.totalMaxGroupSize,
-      hikersCount: bookingCounts[0]?.totalKids + bookingCounts[0]?.totalAdults,
+      ratingAverage:
+        ratingAverage && ratingAverage.length > 0
+          ? ratingAverage[0]?.ratingAverage
+          : null,
+      bookingsCount:
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0]?.totalCount
+          : null,
+      availabilitiesCount:
+        totalAvailabilities && totalAvailabilities.length > 0
+          ? totalAvailabilities[0]?.totalMaxGroupSize
+          : null,
+      hikersCount:
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0]?.totalKids + bookingCounts[0]?.totalAdults
+          : null,
       totalRevenue:
-        bookingCounts[0]?.totalKidsRevenue +
-        bookingCounts[0]?.totalAdultRevenue,
+        bookingCounts && bookingCounts.length > 0
+          ? bookingCounts[0]?.totalKidsRevenue +
+            bookingCounts[0]?.totalAdultRevenue
+          : null,
       ratingsStats,
       bookingsByUserStats,
       statsByMonth,

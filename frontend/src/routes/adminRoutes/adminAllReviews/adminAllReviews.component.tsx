@@ -21,7 +21,7 @@ import { getAllTourNames } from "../../../api/tour-requests";
 import { TourNameData } from "../../../types/tour";
 import { getAllUserNames } from "../../../api/user-requests";
 import { UserNameData } from "../../../types/user";
-import useHitBottomPagination from "../../../hooks/useBottomPagination";
+import useHitBottomPagination from "../../../hooks/useHitBottomPagination";
 import { useSearchParams } from "react-router-dom";
 import AdminReview from "../../../components/UIComponents/review/adminReview.component";
 

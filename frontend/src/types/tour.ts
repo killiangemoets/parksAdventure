@@ -60,6 +60,8 @@ export const categoriesInfoList: TInfo<string>[] = [
   { value: "Cities", id: "cities" },
   { value: "Sea", id: "sea" },
   { value: "Lakes", id: "lakes" },
+  { value: "Jungle", id: "jungle" },
+  { value: " Savannah", id: " savannah" },
 ];
 
 export type TDifficulty = "family" | "medium" | "hard" | "expert";

@@ -103,7 +103,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
             : -100,
         latitude:
           locations && locations.length > 0 ? locations[0].coordinates[1] : 40,
-        zoom: 5,
+        zoom: 9,
       });
     }
   }, [locations, type]);

@@ -51,6 +51,11 @@ export const selectTourAvailabilities = createSelector(
   (tourSlice) => tourSlice.tour?.availabilities
 );
 
+export const selectTourStartLocation = createSelector(
+  [selectTourReducer],
+  (tourSlice) => tourSlice.tour?.startLocation
+);
+
 export const selectTourMeetingAddress = createSelector(
   [selectTourReducer],
   (tourSlice) => tourSlice.tour?.meetingAddress

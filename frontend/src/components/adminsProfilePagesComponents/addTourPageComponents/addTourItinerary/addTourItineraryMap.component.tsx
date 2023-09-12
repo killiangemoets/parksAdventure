@@ -93,7 +93,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
     setViewState({
       longitude: stops[0].longitude,
       latitude: stops[0].latitude,
-      zoom: 5,
+      zoom: 9,
     });
   }, [stops]);
 

@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import colors from "../../../colors";
 
@@ -92,7 +91,7 @@ export const InfoContent = styled.p`
   }
 `;
 
-export const InfoLink = styled(Link)`
+export const InfoLink = styled.a`
   font-size: 1.4rem;
   font-weight: 400;
   text-transform: capitalize;

@@ -24,13 +24,14 @@ import {
   TourTag,
   TourTags,
   TourTitle,
+  TourTitleWrapper,
   WishListIcon,
 } from "./tourCard.style";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
 import { AppDispatch } from "../../../store/store";
 import { updateUser } from "../../../store/user/user.action";
-import useIsInWishList from "../../../hooks/isInWishList";
+import useIsInWishList from "../../../hooks/useIsInWishList";
 import {
   selectUserId,
   selectUserRole,
@@ -98,9 +99,11 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
           <GreenOpacity />
         </TourPicture>
       </TourPictureContainer>
-      <TourTitle>
-        <span>{tour.name}</span>
-      </TourTitle>
+      <TourTitleWrapper>
+        <TourTitle>
+          <span>{tour.name}</span>
+        </TourTitle>
+      </TourTitleWrapper>
       <TourContent>
         <TourNextDate>
           {tour.firstAvailability

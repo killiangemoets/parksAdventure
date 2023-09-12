@@ -238,6 +238,7 @@ const AdminAddTour = () => {
         slug && tour?._id
           ? await updateTour(tourData, tour?._id)
           : await createTour(tourData);
+
       if (response && response.status === "success") {
         navigate(`/tour/${response.data.data.slug}`);
       } else {

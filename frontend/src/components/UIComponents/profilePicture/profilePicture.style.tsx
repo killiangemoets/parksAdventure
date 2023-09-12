@@ -14,12 +14,6 @@ export const SmallProfilePicture = styled.div`
     border-radius: 100rem;
     object-fit: cover;
   }
-
-  &:hover {
-    img {
-      background-color: red;
-    }
-  }
 `;
 
 export const MediumProfilePicture = styled.div`

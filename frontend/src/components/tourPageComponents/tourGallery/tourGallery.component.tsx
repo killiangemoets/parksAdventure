@@ -22,7 +22,7 @@ import {
 import { addToWishlist, removeFromWishlist } from "../../../api/user-requests";
 import { AppDispatch } from "../../../store/store";
 import { updateUser } from "../../../store/user/user.action";
-import useIsInWishList from "../../../hooks/isInWishList";
+import useIsInWishList from "../../../hooks/useIsInWishList";
 import getAuthenticationRedictionUri from "../../../utils/formatting/formatAuthenticationUri";
 import { useNavigate } from "react-router-dom";
 import {

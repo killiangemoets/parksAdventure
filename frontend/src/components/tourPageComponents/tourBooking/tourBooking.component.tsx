@@ -81,8 +81,10 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
 
   const handleChangeGroup = (group: CountInputState[]) => {
     const currentCartItem = selectedAvailability
-      ? cartItems.find((item) =>
-          compareDates(item.startingDate, selectedAvailability?.date)
+      ? cartItems.find(
+          (item) =>
+            compareDates(item.startingDate, selectedAvailability?.date) &&
+            item.tourId === tour?._id
         )
       : undefined;
 
