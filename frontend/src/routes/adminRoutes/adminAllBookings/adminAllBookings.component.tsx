@@ -23,7 +23,7 @@ import { getAllUserNames } from "../../../api/user-requests";
 import { UserNameData } from "../../../types/user";
 import { TourNameData } from "../../../types/tour";
 import { useSearchParams } from "react-router-dom";
-import useHitBottomPagination from "../../../hooks/useBottomPagination";
+import useHitBottomPagination from "../../../hooks/useHitBottomPagination";
 
 const AdminAllBookings = () => {
   const [searchParams] = useSearchParams();

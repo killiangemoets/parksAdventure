@@ -32,7 +32,7 @@ export type AllBookingsNavbarProps = {
 
 const sortSelection: Info[] = [
   { id: "-createdAt", value: "Most recent" },
-  { id: "-date", value: "Starting Date" },
+  { id: "date", value: "Starting Date" },
   { id: "-group", value: "Most people" },
 ];
 

@@ -4,6 +4,7 @@ const catchAsync = require('./../utils/catchAsync');
 const factory = require('./handlerFactory');
 const AppError = require('./../utils/appError');
 const Tour = require('../models/tourModel');
+const ReviewAPIFeatures = require('../utils/reviewApiFeatures');
 const ObjectId = require('mongodb').ObjectID;
 
 exports.setTourAndUserId = (req, res, next) => {
@@ -70,6 +71,50 @@ exports.requireAvgRating = (req, res, next) => {
   req.params.getAvgRating = true;
   next();
 };
+
+exports.getReviewsByAggregation = catchAsync(async (req, res, next) => {
+  let features = new ReviewAPIFeatures(Review, req.query, next)
+    .filter()
+    .search()
+    .sort()
+    .limitFields()
+    .createAggregation();
+
+  const featuresWithPagination = new ReviewAPIFeatures(Review, req.query, next)
+    .filter()
+    .search()
+    .sort()
+    .limitFields()
+    .paginate()
+    .createAggregation();
+
+  let avgRating = undefined;
+  if (req.params.getAvgRating) {
+    const allDocs = await features.aggregation;
+    const sum = allDocs[0].data.reduce((acc, review) => acc + review.rating, 0);
+    avgRating = Math.trunc((sum / allDocs[0].data.length) * 100) / 100;
+  }
+
+  const docs = await featuresWithPagination.aggregation;
+
+  const reviews = docs[0].data.map((review) => ({
+    ...review,
+    user: review.user[0],
+    tour: review.tour[0],
+  }));
+
+  const totalResults = docs[0].totalCount[0].total ?? 0;
+
+  res.status(200).json({
+    status: 'success',
+    results: docs.length,
+    totalResults,
+    avgRating,
+    data: {
+      data: reviews,
+    },
+  });
+});
 
 exports.getReview = factory.getOne(Review);
 exports.getAllReviews = factory.getAll(Review);

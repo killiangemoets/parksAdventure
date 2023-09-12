@@ -13,7 +13,15 @@ router.use(authController.protect);
 
 router
   .route('/mine')
-  .get(reviewController.getMe, reviewController.getAllReviews);
+  .get(reviewController.getMe, reviewController.getReviewsByAggregation);
+router
+  .route('/all')
+  .get(
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
+    reviewController.filterOnlyAuthorizedTours,
+    reviewController.requireAvgRating,
+    reviewController.getReviewsByAggregation
+  );
 
 router
   .route('/')

@@ -17,9 +17,18 @@ router.patch('/validate-order/:token', bookingController.validateOrder);
 
 router
   .route('/mine')
-  .get(bookingController.getMe, bookingController.getAllBookings);
+  .get(bookingController.getMe, bookingController.getBookingsByAggregation);
 
 router.route('/mine/:id').get(bookingController.getBookingDetails);
+
+router
+  .route('/all')
+  .get(
+    authController.restrictTo('admin', 'lead-guide', 'guide'),
+    bookingController.filterOnlyAuthorizedTours,
+    bookingController.requireTotalHikers,
+    bookingController.getBookingsByAggregation
+  );
 
 router
   .route('/')

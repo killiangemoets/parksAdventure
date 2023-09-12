@@ -11,6 +11,7 @@ const formating = require('./../utils/formating');
 const uid2 = require('uid2');
 const ObjectId = require('mongodb').ObjectID;
 const Email = require('./../utils/email');
+const BookingAPIFeatures = require('../utils/bookingApiFeatures');
 
 exports.checkAvailabilities = catchAsync(async (req, res, next) => {
   // 1) Check is there is items
@@ -398,6 +399,56 @@ exports.requireTotalHikers = (req, res, next) => {
   req.params.getHikers = true;
   next();
 };
+
+exports.getBookingsByAggregation = catchAsync(async (req, res, next) => {
+  let features = new BookingAPIFeatures(Booking, req.query, next)
+    .filter()
+    .search()
+    .sort()
+    .limitFields()
+    .createAggregation();
+
+  const featuresWithPagination = new BookingAPIFeatures(
+    Booking,
+    req.query,
+    next
+  )
+    .filter()
+    .search()
+    .sort()
+    .limitFields()
+    .paginate()
+    .createAggregation();
+
+  let numberOfHikers = undefined;
+  if (req.params.getHikers) {
+    const allDocs = await features.aggregation;
+    numberOfHikers = allDocs[0].data.reduce(
+      (acc, hiker) => acc + hiker.adults + hiker.kids,
+      0
+    );
+  }
+
+  const docs = await featuresWithPagination.aggregation;
+
+  const bookings = docs[0].data.map((booking) => ({
+    ...booking,
+    user: booking.user[0],
+    tour: booking.tour[0],
+  }));
+
+  const totalResults = docs[0].totalCount[0].total ?? 0;
+
+  res.status(200).json({
+    status: 'success',
+    results: docs.length,
+    totalResults,
+    numberOfHikers,
+    data: {
+      data: bookings,
+    },
+  });
+});
 
 exports.createBooking = factory.createOne(Booking);
 exports.getBooking = factory.getOne(Booking);

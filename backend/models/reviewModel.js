@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Tour = require('./tourModel');
-const ObjectId = require('mongodb').ObjectID;
 
 const reviewSchema = new mongoose.Schema(
   {

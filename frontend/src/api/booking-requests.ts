@@ -67,8 +67,7 @@ export const validateOrder = async (token: string) => {
 export const getMyBookings = async () => {
   try {
     const response = await axiosInstance.get("/bookings/mine");
-
-    return response;
+    return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
       return err.response?.data;
@@ -91,7 +90,7 @@ export const getMyBookingDetails = async (bookingId: string) => {
 
 export const getAllBookings = async (requestString: string = "") => {
   try {
-    const response = await axiosInstance.get(`/bookings${requestString}`);
+    const response = await axiosInstance.get(`/bookings/all${requestString}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
