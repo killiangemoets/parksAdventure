@@ -1,11 +1,8 @@
 const niceDate = (dateToFormat: string | Date) => {
   const date = new Date(dateToFormat);
-
-  date.setUTCHours(0, 0, 0, 0);
-  const day = `0${date.getUTCDate()}`.slice(-2);
-  const month = `0${date.getUTCMonth() + 1}`.slice(-2);
-  const year = date.getUTCFullYear();
-
+  const day = `0${date.getDate()}`.slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2);
+  const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 };
 
@@ -26,15 +23,13 @@ export const niceMonth = (date: string | Date) => {
     "November",
     "December",
   ];
-  return monthsList[new Date(date).getUTCMonth()];
+  return monthsList[new Date(date).getMonth()];
 };
 
 export const niceFullDate = (dateToFormat: string | Date) => {
   const date = new Date(dateToFormat);
-
-  date.setUTCHours(0, 0, 0, 0);
-  const day = date.getUTCDate();
-  const year = date.getUTCFullYear();
+  const day = date.getDate();
+  const year = date.getFullYear();
 
   return `${niceMonth(dateToFormat)} ${day}, ${year}`;
 };
@@ -49,10 +44,9 @@ export const getCreateAvailabilityDateFormat = (
   dateToFormat: Date | string
 ) => {
   const date = new Date(dateToFormat);
-  date.setUTCHours(0, 0, 0, 0);
-  const day = `0${date.getUTCDate()}`.slice(-2);
-  const month = `0${date.getUTCMonth() + 1}`.slice(-2);
-  const year = date.getUTCFullYear();
+  const day = `0${date.getDate()}`.slice(-2);
+  const month = `0${date.getMonth() + 1}`.slice(-2);
+  const year = date.getFullYear();
 
   return `${year}-${month}-${day}`;
 };
