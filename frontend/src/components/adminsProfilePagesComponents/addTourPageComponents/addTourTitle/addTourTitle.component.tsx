@@ -19,7 +19,7 @@ const AddTourTitle: FC<AddTourTitleProps> = ({
 }) => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = e.target;
-    if (value.length >= 40) return;
+    if (value.length > 40) return;
     handleChange(value, name);
   };
   return (

@@ -245,11 +245,14 @@ const AdminAddTour = () => {
         if (response && response.message.includes("E11000")) {
           newErrorsState.generalMessage = "This tour title is already used";
           newErrorsState.name = true;
-        } else if (response && response.message) {
-          newErrorsState.generalMessage = response.message;
-        } else {
+        } else if (
+          response &&
+          response.message.includes("request entity too large")
+        ) {
           newErrorsState.generalMessage =
-            "An error occured. Please refresh the page and try again!";
+            "Images are too large.  Delete some images or reduce their size.";
+        } else {
+          newErrorsState.generalMessage = "An error occured. Please try again!";
         }
       }
     } else {

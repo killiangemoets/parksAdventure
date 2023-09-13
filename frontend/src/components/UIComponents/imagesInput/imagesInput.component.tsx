@@ -18,6 +18,7 @@ import { CREATE_TOUR_DATA, TUploadTourImage } from "../../../types/tour";
 
 import SortableDragAndDrop from "./sortableDragAndDrop";
 import { arrayMove } from "@dnd-kit/sortable";
+import Alert from "../alert/alert.component";
 
 const maxImages = 20;
 
@@ -28,6 +29,9 @@ export type ImagesInputProps = {
 
 const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
   const [previewImage, setPreviewImage] = useState<string | null>();
+  const [alertMessage, setAlertMessage] = useState<string | undefined>(
+    undefined
+  );
 
   const handleChangeImages = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files ? event.target?.files[0] : null;
@@ -37,7 +41,15 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
     let newImageFiles: TUploadTourImage[] = [];
 
     for (const file of event.target.files) {
-      if (images.length + newImageFiles.length < maxImages) {
+      const maxSize = 10 * 1024 * 1024;
+      if (file.size > maxSize) {
+        setAlertMessage(
+          "An image size is too large. The maximum size is 10 MB."
+        );
+        setTimeout(function () {
+          setAlertMessage(undefined);
+        }, 4000);
+      } else if (images.length + newImageFiles.length < maxImages) {
         const img: TUploadTourImage = {
           state: "new",
           file,
@@ -80,75 +92,82 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
   };
 
   return (
-    <ImagesInputContainer>
-      <SortableDragAndDrop
-        handleDragEnd={handleDragEnd}
-        items={images.map((imgFile, index) => {
-          return {
-            id: imgFile.id,
-            first: index === 0,
-            content:
-              index > 0 ? (
-                <TourImage
-                  alt="preview content"
-                  src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
-                />
-              ) : (
-                <LargeTourImage
-                  alt="preview content"
-                  src={imgFile.state === "new" ? imgFile.preview : imgFile.url}
-                />
-              ),
-            contentHover: (
-              <ImageButtons>
-                <Button
-                  buttonType={BUTTON_TYPE_CLASSES.empty}
-                  type="button"
-                  onClick={() => {
-                    handlePreview(
+    <>
+      <ImagesInputContainer>
+        <SortableDragAndDrop
+          handleDragEnd={handleDragEnd}
+          items={images.map((imgFile, index) => {
+            return {
+              id: imgFile.id,
+              first: index === 0,
+              content:
+                index > 0 ? (
+                  <TourImage
+                    alt="preview content"
+                    src={
                       imgFile.state === "new" ? imgFile.preview : imgFile.url
-                    );
-                  }}>
-                  <EyeIcon />
-                </Button>
-                <Button
-                  buttonType={BUTTON_TYPE_CLASSES.empty}
-                  type="button"
-                  onClick={() => {
-                    handleDelete(index);
-                  }}>
-                  <TrashIcon />
-                </Button>
-              </ImageButtons>
-            ),
-          };
-        })}
-      />
+                    }
+                  />
+                ) : (
+                  <LargeTourImage
+                    alt="preview content"
+                    src={
+                      imgFile.state === "new" ? imgFile.preview : imgFile.url
+                    }
+                  />
+                ),
+              contentHover: (
+                <ImageButtons>
+                  <Button
+                    buttonType={BUTTON_TYPE_CLASSES.empty}
+                    type="button"
+                    onClick={() => {
+                      handlePreview(
+                        imgFile.state === "new" ? imgFile.preview : imgFile.url
+                      );
+                    }}>
+                    <EyeIcon />
+                  </Button>
+                  <Button
+                    buttonType={BUTTON_TYPE_CLASSES.empty}
+                    type="button"
+                    onClick={() => {
+                      handleDelete(index);
+                    }}>
+                    <TrashIcon />
+                  </Button>
+                </ImageButtons>
+              ),
+            };
+          })}
+        />
 
-      {images.length < maxImages && (
-        <InputWrapper>
-          <ImagesInputElement
-            type="file"
-            id="files"
-            multiple
-            accept="image/*"
-            name="files[]"
-            onChange={(e) => handleChangeImages(e)}
-            draggable={true}
-          />
-          <ImagesInputText>
-            <PlusIcon />
-            <UploadText>Upload</UploadText>
-          </ImagesInputText>
-        </InputWrapper>
-      )}
-      <Modal
-        handleClose={handleCloseModal}
-        open={Boolean(previewImage)}
-        title={"Tour image preview"}>
-        <img alt="preview content" src={previewImage || ""} />
-      </Modal>
-    </ImagesInputContainer>
+        {images.length < maxImages && (
+          <InputWrapper>
+            <ImagesInputElement
+              type="file"
+              id="files"
+              multiple
+              accept="image/*"
+              name="files[]"
+              onChange={(e) => handleChangeImages(e)}
+              draggable={true}
+            />
+            <ImagesInputText>
+              <PlusIcon />
+              <UploadText>Upload</UploadText>
+            </ImagesInputText>
+          </InputWrapper>
+        )}
+        <Modal
+          handleClose={handleCloseModal}
+          open={Boolean(previewImage)}
+          title={"Tour image preview"}>
+          <img alt="preview content" src={previewImage || ""} />
+        </Modal>
+      </ImagesInputContainer>
+      {alertMessage && <Alert>{alertMessage}</Alert>}
+    </>
   );
 };
 

@@ -102,7 +102,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
 
   const handleChangeSummary = (event: ChangeEvent<HTMLTextAreaElement>) => {
     const { value, name } = event.target;
-    if (value.length >= 700) return;
+    if (value.length > 700) return;
     handleChange(value, name);
   };
 
@@ -151,7 +151,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                 name={CREATE_TOUR_DATA.location}
                 value={location}
                 placeholder="Add a tour location"
-                maxLength={40}
+                maxLength={80}
                 error={locationError}
               />
               <QuickFactInput

@@ -198,6 +198,7 @@ const AddTourItineraryMap: FC<AddTourItineraryMapProps> = ({
                     value={newStop.text}
                     onChange={handleChangePopupInputValue}
                     placeholder={"Day 1: Farview Curve Viewpoint"}
+                    maxLength={80}
                   />
                   <ErrorMessage>{showErrorStopText}</ErrorMessage>
                 </InputWrapper>
