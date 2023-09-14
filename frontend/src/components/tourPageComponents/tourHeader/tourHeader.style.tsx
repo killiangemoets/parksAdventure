@@ -71,6 +71,7 @@ export const TourHeaderLeft = styled.div`
 
   h1 {
     line-height: 3.6rem;
+    min-height: 3.6rem;
   }
 
   .ant-rate {

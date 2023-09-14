@@ -15,12 +15,16 @@ import {
   SelectDateFooterText3,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
-import { selectTourCurrentAvailabilities } from "../../../store/tour/tour.selector";
+import {
+  selectTourCurrentAvailabilities,
+  selectTourIsLoading,
+} from "../../../store/tour/tour.selector";
 import { useSelector } from "react-redux";
 import { TAvailability } from "../../../types/tour";
 import compareDates from "../../../utils/comparison/compareDates";
 import useDatesFromAvailabilities from "../../../hooks/useDatesFromAvailabilities";
 import useLabelFromGroupInfo from "../../../hooks/useLabelFromGroupInfo";
+import { defaultCountInputs } from "./tourBooking.component";
 
 type TourBookingInputsProps = {
   currentAvailability: TAvailability | undefined;
@@ -38,6 +42,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   handleSeeDetails,
 }) => {
   const availabilities = useSelector(selectTourCurrentAvailabilities);
+  const isLoading = useSelector(selectTourIsLoading);
 
   const [groupError, setGroupError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);
@@ -47,6 +52,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   const { label } = useLabelFromGroupInfo({ group: currentGroup });
 
   const handleDropDownEdit = (newState: CountInputState[]): void => {
+    if (isLoading) return;
     groupError && setGroupError(false);
     handleChangeGroup(newState);
   };
@@ -81,7 +87,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
       <Dropdown
         dropdownType={DROPDOWN_TYPE_CLASSES.count}
         buttonType={BUTTON_TYPE_CLASSES.light}
-        countInputsState={currentGroup}
+        countInputsState={isLoading ? defaultCountInputs : currentGroup}
         handleCount={handleDropDownEdit}
         error={groupError}>
         <>
@@ -92,12 +98,13 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
       <DateInput
         currentValue={currentAvailability?.date || null}
         handleChange={(value) => {
+          if (isLoading) return;
           handleChangeDate(value);
         }}
-        enabledDates={availableDates}
-        highlightDates={cheapestDates}
-        highlightDates2={lastSpotsDates}
-        highlightDates3={soldoutDates}
+        enabledDates={isLoading ? [] : availableDates}
+        highlightDates={isLoading ? [] : cheapestDates}
+        highlightDates2={isLoading ? [] : lastSpotsDates}
+        highlightDates3={isLoading ? [] : soldoutDates}
         footer={
           <SelectDateFooter>
             <SelectDateFooterText>Cheapest date(s)</SelectDateFooterText>

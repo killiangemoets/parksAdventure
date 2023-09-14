@@ -1,6 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectTour } from "../../../store/tour/tour.selector";
+import {
+  selectTour,
+  selectTourIsLoading,
+} from "../../../store/tour/tour.selector";
 import Button, {
   BUTTON_TYPE_CLASSES,
 } from "../../UIComponents/button/button.component";
@@ -24,6 +27,7 @@ export type TourReviewsProps = {
 
 const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const isLoading = useSelector(selectTourIsLoading);
   const tour = useSelector(selectTour);
   const [reviews, setReviews] = useState<TReview[]>([]);
 
@@ -44,25 +48,27 @@ const TourReviews: FC<TourReviewsProps> = ({ forwardRef }) => {
       <Title titleType={TITLE_TYPE_CLASSES.section}>
         Customer Reviews <Info onClick={() => setModalOpen(true)} />
       </Title>
-      <ReviewsWrapper>
-        {reviews.length ? (
-          reviews.map((review, i) => (
-            <Review
-              key={i}
-              date={review.createdAt}
-              userImg={review.user?.photo}
-              userName={`${
-                review.user ? review.user?.firstname : "Unkonwn Hiker"
-              } ${review.user ? review.user?.lastname : ""}`}
-              review={review.review}
-              rating={review.rating}
-              edited={review.edited}
-            />
-          ))
-        ) : (
-          <NoReviewsMessage>No reviews yet</NoReviewsMessage>
-        )}
-      </ReviewsWrapper>
+      {!isLoading && (
+        <ReviewsWrapper>
+          {reviews.length ? (
+            reviews.map((review, i) => (
+              <Review
+                key={i}
+                date={review.createdAt}
+                userImg={review.user?.photo}
+                userName={`${
+                  review.user ? review.user?.firstname : "Unkonwn Hiker"
+                } ${review.user ? review.user?.lastname : ""}`}
+                review={review.review}
+                rating={review.rating}
+                edited={review.edited}
+              />
+            ))
+          ) : (
+            <NoReviewsMessage>No reviews yet</NoReviewsMessage>
+          )}
+        </ReviewsWrapper>
+      )}
       {tour?.reviews && tour.reviews.length > reviews.length && (
         <Button
           buttonType={BUTTON_TYPE_CLASSES.inverted}

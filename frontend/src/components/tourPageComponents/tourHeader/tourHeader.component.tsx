@@ -39,29 +39,31 @@ const TourHeader: FC<TourHeaderProps> = ({
           <Title titleType={TITLE_TYPE_CLASSES.main}>
             {!isLoading && tour?.name}
           </Title>
-          {!isLoading && (
+          {
             <StarsRating
               linkOnReviews={true}
               handleLinkTo={handleScrollToReviews}
-              rating={tour?.ratingsAverage || 0}
-              numRatings={tour?.ratingsQuantity || 0}
+              rating={!isLoading ? tour?.ratingsAverage || 0 : 0}
+              numRatings={!isLoading ? tour?.ratingsQuantity || 0 : 0}
             />
-          )}
+          }
         </TourHeaderLeft>
         {!isUserAdminOrGuide(userRole) && (
           <TourHeaderRight>
             <Button onClick={handleScrollToBooking}>Book Now</Button>
-            <Price>
-              <span>
+            {!isLoading && (
+              <Price>
+                <span>
+                  {tour?.currentAvailabilities &&
+                    tour?.currentAvailabilities.length > 0 &&
+                    `From $${tour?.lowerPrice || 0}`}
+                </span>{" "}
                 {tour?.currentAvailabilities &&
-                  tour?.currentAvailabilities.length > 0 &&
-                  `From $${tour?.lowerPrice || 0}`}
-              </span>{" "}
-              {tour?.currentAvailabilities &&
-              tour?.currentAvailabilities.length > 0
-                ? "per person"
-                : "No availabilities at the moment!"}
-            </Price>
+                tour?.currentAvailabilities.length > 0
+                  ? "per person"
+                  : "No availabilities at the moment!"}
+              </Price>
+            )}
           </TourHeaderRight>
         )}
       </TourHeaderWrapper>

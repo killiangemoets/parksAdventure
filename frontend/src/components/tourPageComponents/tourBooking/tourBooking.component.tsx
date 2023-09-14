@@ -169,52 +169,53 @@ const TourBooking: FC<TourBookingProps> = ({ forwardRef }) => {
   return (
     <TourBookingContainer ref={forwardRef}>
       <TourBookingWrapper>
-        {!isLoading && (
-          <TourBookingBox>
-            <Titles>
-              <Title titleType={TITLE_TYPE_CLASSES.section}>
-                What Are You Waiting For?
-              </Title>
+        <TourBookingBox>
+          <Titles>
+            <Title titleType={TITLE_TYPE_CLASSES.section}>
+              What Are You Waiting For?
+            </Title>
+            {!isLoading && (
               <SecondTitle>
                 {tour?.duration && tour.duration > 1
                   ? `${tour?.duration} days.`
                   : `${tour?.duration} day.`}{" "}
                 1 adventure. Infinite Memories. Make it yours today!
               </SecondTitle>
-            </Titles>
-            <TourBookingInputs
-              currentAvailability={selectedAvailability}
-              currentGroup={currentCountInputs}
-              handleChangeAvailability={handleChangeAvailability}
-              handleChangeGroup={handleChangeGroup}
-              handleSeeDetails={() => {
-                setShowDetails(true);
-              }}
-            />
-            {!isSmallScreen && (
-              <TourBookingPictures>
-                <Picture1>
-                  <ProfilePicture
-                    pictureUrl={tour?.imageCover}
-                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                  />
-                </Picture1>
-                <Picture2>
-                  <ProfilePicture
-                    pictureUrl={tour?.images[0]}
-                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                  />
-                </Picture2>
-                <Picture3>
-                  <ProfilePicture
-                    pictureUrl={tour?.images[1]}
-                    pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
-                  />
-                </Picture3>
-              </TourBookingPictures>
             )}
-          </TourBookingBox>
-        )}
+          </Titles>
+          <TourBookingInputs
+            currentAvailability={selectedAvailability}
+            currentGroup={currentCountInputs}
+            handleChangeAvailability={handleChangeAvailability}
+            handleChangeGroup={handleChangeGroup}
+            handleSeeDetails={() => {
+              setShowDetails(true);
+            }}
+          />
+          {!isSmallScreen && !isLoading && (
+            <TourBookingPictures>
+              <Picture1>
+                <ProfilePicture
+                  pictureUrl={tour?.imageCover}
+                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                />
+              </Picture1>
+              <Picture2>
+                <ProfilePicture
+                  pictureUrl={tour?.images[0]}
+                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                />
+              </Picture2>
+              <Picture3>
+                <ProfilePicture
+                  pictureUrl={tour?.images[1]}
+                  pictureSize={PROFILE_PICTURE_SIZE_CLASSES.extraLarge}
+                />
+              </Picture3>
+            </TourBookingPictures>
+          )}
+        </TourBookingBox>
+
         {showDetails && selectedAvailability && (
           <TourBookingDetails
             availability={selectedAvailability}

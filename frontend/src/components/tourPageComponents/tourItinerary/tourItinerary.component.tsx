@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectTour } from "../../../store/tour/tour.selector";
+import {
+  selectTour,
+  selectTourIsLoading,
+} from "../../../store/tour/tour.selector";
 import { TStop } from "../../../types/tour";
 import CustomMap from "../../UIComponents/customMap/customMap.component";
 import Title, {
@@ -35,8 +38,10 @@ export const ItineraryCaption = () => {
 
 const TourItinerary = () => {
   const tour = useSelector(selectTour);
+  const isLoading = useSelector(selectTourIsLoading);
   const [points, setPoints] = useState<string[]>([]);
   const [stops, setStops] = useState<TStop[]>([]);
+
   useEffect(() => {
     let newPoints = [];
     let newStops = [];
@@ -60,19 +65,25 @@ const TourItinerary = () => {
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
         <TourItineraryContent>
           <ItineraryLeftContainer>
-            <ItineraryLine points={points} />
+            <ItineraryLine points={isLoading ? [] : points} />
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
               <CustomMap
-                locations={stops.map((stop) => {
-                  return {
-                    coordinates: stop.coordinates,
-                    popupContent: (
-                      <StopDescription>{stop.description}</StopDescription>
-                    ),
-                  };
-                })}
+                locations={
+                  isLoading
+                    ? []
+                    : stops.map((stop) => {
+                        return {
+                          coordinates: stop.coordinates,
+                          popupContent: (
+                            <StopDescription>
+                              {stop.description}
+                            </StopDescription>
+                          ),
+                        };
+                      })
+                }
                 geolocationControl={true}
                 fullscreenControl={true}
                 navigationControl={true}

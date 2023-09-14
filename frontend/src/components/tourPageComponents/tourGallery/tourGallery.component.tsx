@@ -83,6 +83,7 @@ const TourGallery = () => {
         <TourGalleryGrid>
           <TourMainImage
             onClick={() => {
+              if (isLoading) return;
               setInitialImageIndex(0);
               handleOpenCarousel(true);
             }}>
@@ -92,6 +93,7 @@ const TourGallery = () => {
           </TourMainImage>
           <TourSecondImage
             onClick={() => {
+              if (isLoading) return;
               setInitialImageIndex(1);
               handleOpenCarousel(true);
             }}>
@@ -101,6 +103,7 @@ const TourGallery = () => {
           </TourSecondImage>
           <TourThirdImage
             onClick={() => {
+              if (isLoading) return;
               setInitialImageIndex(2);
               handleOpenCarousel(true);
             }}>
@@ -110,6 +113,7 @@ const TourGallery = () => {
           </TourThirdImage>
           <TourFourthImage
             onClick={() => {
+              if (isLoading) return;
               setInitialImageIndex(4);
               handleOpenCarousel(true);
             }}>
@@ -117,24 +121,26 @@ const TourGallery = () => {
               <img src={tour.images[2]} alt="Tour 4" />
             )}
           </TourFourthImage>
-          <TourGalleryButtons>
-            <Button
-              buttonType={BUTTON_TYPE_CLASSES.gallery}
-              onClick={() => {
-                setInitialImageIndex(0);
-                handleOpenCarousel(true);
-              }}>
-              View all {carouselImages.length} images
-            </Button>
-            {!isUserAdminOrGuide(userRole) && (
+          {!isLoading && (
+            <TourGalleryButtons>
               <Button
                 buttonType={BUTTON_TYPE_CLASSES.gallery}
-                onClick={handleWishlist}>
-                {inwishlist ? "Added to whishlist" : "Add to wishlist"}{" "}
-                <HeartIcon inwishlist={inwishlist} />
+                onClick={() => {
+                  setInitialImageIndex(0);
+                  handleOpenCarousel(true);
+                }}>
+                View all {carouselImages.length} images
               </Button>
-            )}
-          </TourGalleryButtons>
+              {!isUserAdminOrGuide(userRole) && (
+                <Button
+                  buttonType={BUTTON_TYPE_CLASSES.gallery}
+                  onClick={handleWishlist}>
+                  {inwishlist ? "Added to whishlist" : "Add to wishlist"}{" "}
+                  <HeartIcon inwishlist={inwishlist} />
+                </Button>
+              )}
+            </TourGalleryButtons>
+          )}
         </TourGalleryGrid>
       </TourGalleryContainer>
       {picturesCarouselOpen && (

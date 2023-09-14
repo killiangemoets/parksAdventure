@@ -45,7 +45,7 @@ const QuickFactsSection = () => {
         <QuickFact
           iconType={INFO_ICON_TYPE_CLASSES.location}
           name={"Location"}
-          info={tour?.location || ""}
+          info={!isLoading ? tour?.location || "" : ""}
         />
         <QuickFact
           iconType={INFO_ICON_TYPE_CLASSES.category}

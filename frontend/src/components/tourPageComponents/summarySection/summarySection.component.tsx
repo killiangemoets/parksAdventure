@@ -31,7 +31,7 @@ const SummarySection = () => {
     <SummarySectionContainer>
       <Title titleType={TITLE_TYPE_CLASSES.section}>
         {!isLoading ? `About the ${tour?.name}` : "About ..."}{" "}
-        <Info onClick={() => setModalOpen(true)} />
+        {!isLoading && <Info onClick={() => setModalOpen(true)} />}
       </Title>
       <AboutTour>{!isLoading && tour?.description}</AboutTour>
       <Modal

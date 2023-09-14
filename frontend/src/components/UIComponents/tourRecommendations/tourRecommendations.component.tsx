@@ -7,12 +7,15 @@ import {
   TourRecommendationsContainer,
   TourRecommendationsWrapper,
 } from "./tourRecommendations.style";
+import { useSelector } from "react-redux";
+import { selectTourIsLoading } from "../../../store/tour/tour.selector";
 
 type TourRecommendationsProps = {
   tours: TourData[];
 };
 
 const TourRecommendations: FC<TourRecommendationsProps> = ({ tours }) => {
+  const isLoading = useSelector(selectTourIsLoading);
   return (
     <TourRecommendationsContainer>
       <TourRecommendationsWrapper>
@@ -20,7 +23,8 @@ const TourRecommendations: FC<TourRecommendationsProps> = ({ tours }) => {
           You might also like...
         </Title>
         <RecommendationCards>
-          {tours &&
+          {!isLoading &&
+            tours &&
             tours.map((tour) => <TourCard key={tour._id} tour={tour} />)}
         </RecommendationCards>
       </TourRecommendationsWrapper>

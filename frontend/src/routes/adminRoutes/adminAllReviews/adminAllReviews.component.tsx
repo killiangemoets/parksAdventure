@@ -144,11 +144,6 @@ const AdminAllReviews = () => {
         </AdminStatContainer>
       </AdminStatsSection>
       <AdminContent>
-        {isLoading && (
-          <AdminContentSpinner>
-            <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
-          </AdminContentSpinner>
-        )}
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>
         )}
@@ -167,6 +162,11 @@ const AdminAllReviews = () => {
             handlePassDeletedReview={handleDeleteReview}
           />
         ))}
+        {isLoading && (
+          <AdminContentSpinner>
+            <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />
+          </AdminContentSpinner>
+        )}
       </AdminContent>
     </AdminSectionContainer>
   );
