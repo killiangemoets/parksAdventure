@@ -81,7 +81,7 @@ exports.aggreagationRequiredFields = (req, res, next) => {
 
 exports.tourItemsRequiredFields = (req, res, next) => {
   req.query.fields =
-    'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities,maxGroupSizeCapacity';
+    'name,slug,duration,imageCover,ratingsAverage,ratingsQuantity,currentAvailabilities,maxGroupSizeCapacity,categories';
   req.query.hiddenTour = false;
   next();
 };
@@ -118,7 +118,8 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     .createAggregation();
   const doc = await featuresWithPagination.aggregation;
 
-  for (const tour of doc[0].data) {
+  const tours = doc[0].data;
+  for (const tour of tours) {
     if (tour.currentAvailabilities) {
       const bookings = await Booking.aggregate([
         { $match: { tour: tour._id } },
@@ -144,7 +145,7 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     }
   }
 
-  let recommendations = undefined;
+  let limitedRecommendations = undefined;
   if (req.recommendations === 'true') {
     let queryObj = {};
     if (req.query.id) {
@@ -157,7 +158,7 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
         hiddenTour: false,
       };
     }
-    recommendations = await Tour.find(queryObj)
+    const recommendations = await Tour.find(queryObj)
       .populate({
         path: 'bookings',
         populate: {
@@ -165,17 +166,47 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
           select: 'firstname lastname photo',
         },
       })
-      .sort('-popularityIndex -ratingsAvarage')
-      .limit(3);
+      .sort('-popularityIndex -ratingsAvarage');
+
+    recommendations.sort((tourA, tourB) => {
+      const currentTourCategories = [];
+      tours.forEach((tour) => {
+        tour.categories.forEach((category) => {
+          if (!currentTourCategories.includes(category))
+            currentTourCategories.push(category);
+        });
+      });
+      const categoriesA = tourA.categories;
+      const categoriesB = tourB.categories;
+
+      let categoriesMatchCountA = 0;
+      let categoriesMatchCountB = 0;
+
+      currentTourCategories.forEach((currentTourCategory) => {
+        if (categoriesA.includes(currentTourCategory))
+          categoriesMatchCountA += 1;
+        if (categoriesB.includes(currentTourCategory))
+          categoriesMatchCountB += 1;
+      });
+
+      if (categoriesMatchCountA > categoriesMatchCountB) {
+        return -1;
+      } else if (categoriesMatchCountA < categoriesMatchCountB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    limitedRecommendations = recommendations.slice(0, 3);
   }
 
   res.status(200).json({
     status: 'success',
-    results: doc[0].data.length,
+    results: tours.length,
     totalResults: doc[0].totalCount[0]?.total || 0,
-    recommendations,
+    recommendations: limitedRecommendations,
     data: {
-      data: doc[0].data,
+      data: tours,
     },
   });
 });
@@ -223,8 +254,30 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
         select: 'firstname lastname photo',
       },
     })
-    .sort('-popularityIndex -ratingsAvarage')
-    .limit(3);
+    .sort('-popularityIndex -ratingsAvarage');
+
+  recommendations.sort((tourA, tourB) => {
+    const currentTourCategories = tour.categories;
+    const categoriesA = tourA.categories;
+    const categoriesB = tourB.categories;
+
+    let categoriesMatchCountA = 0;
+    let categoriesMatchCountB = 0;
+
+    currentTourCategories.forEach((currentTourCategory) => {
+      if (categoriesA.includes(currentTourCategory)) categoriesMatchCountA += 1;
+      if (categoriesB.includes(currentTourCategory)) categoriesMatchCountB += 1;
+    });
+
+    if (categoriesMatchCountA > categoriesMatchCountB) {
+      return -1;
+    } else if (categoriesMatchCountA < categoriesMatchCountB) {
+      return 1;
+    }
+    return 0;
+  });
+
+  const limitedRecommendations = recommendations.slice(0, 3);
 
   res.status(200).json({
     status: 'success',
@@ -257,7 +310,7 @@ exports.getTourBySlug = catchAsync(async (req, res, next) => {
         startLocation: tour.startLocation,
         _id: tour._id,
       },
-      recommendations,
+      recommendations: limitedRecommendations,
     },
   });
 });

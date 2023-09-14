@@ -1,11 +1,12 @@
+import { FC } from "react";
 import LoginForm from "../../components/authenticationComponents/loginForm.component";
 import { LoginContainer, LoginWrapper } from "./login.style";
 
-export const Login = () => {
+export const Login: FC<{ showLinks?: boolean }> = ({ showLinks }) => {
   return (
     <LoginContainer>
       <LoginWrapper>
-        <LoginForm />
+        <LoginForm showLinks={showLinks} />
       </LoginWrapper>
     </LoginContainer>
   );

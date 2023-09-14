@@ -74,7 +74,7 @@ const EmailConfirmation = () => {
           }, 2000);
         } else {
           setTimeout(function () {
-            return navigate("/login");
+            return navigate("/login-new-user");
           }, 2000);
         }
       } else if (

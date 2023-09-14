@@ -1,5 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import NavbarAndFooter from "./components/navbarAndFooterComponents/navbarAndFooter.component";
+import NavbarAndFooter, {
+  FooterLayout,
+} from "./components/navbarAndFooterComponents/navbarAndFooter.component";
 import AllTours from "./routes/allTours/allTours.component";
 import Home from "./routes/home/home.component";
 import Tour from "./routes/tour/tour.component";
@@ -111,14 +113,9 @@ function App() {
           path="signup/email-verification"
           element={<EmailVerification />}
         />
-        <Route
-          path="signup/email-confirmation/:token"
-          element={<EmailConfirmation />}
-        />
 
         <Route path="login" element={<Login />} />
         <Route path="login/forgot-password" element={<ForgotPassword />} />
-        <Route path="login/reset-password/:token" element={<ResetPassword />} />
 
         <Route path="wishlist" element={<WishList />} />
         <Route path="cart" element={<Cart />} />
@@ -133,11 +130,19 @@ function App() {
         <Route path="checkout/" element={<CheckoutLine step={4} />}>
           <Route path="step4" element={<ConfirmationStep />} />
         </Route>
+      </Route>
 
+      <Route path="/" element={<FooterLayout />}>
+        <Route
+          path="signup/email-confirmation/:token"
+          element={<EmailConfirmation />}
+        />
+        <Route path="login-new-user" element={<Login showLinks={false} />} />
         <Route
           path="guide-activation/:token"
           element={<GuideAccountActivation />}
         />
+        <Route path="login/reset-password/:token" element={<ResetPassword />} />
       </Route>
 
       <Route path="profile/" element={<UserProfile />}>

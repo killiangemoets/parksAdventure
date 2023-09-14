@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from "react";
 import { login } from "../../api/authentication-requests";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import TextInput from "../UIComponents/textInput/textInput.component";
@@ -20,7 +20,9 @@ import { setUser } from "../../store/user/user.action";
 import { selectEmail } from "../../store/user/user.selector";
 import FormButton from "../UIComponents/formButton/formButton.component";
 
-export const LoginForm = () => {
+export const LoginForm: FC<{ showLinks?: boolean }> = ({
+  showLinks = true,
+}) => {
   const [searchParams] = useSearchParams();
   const dispatch: AppDispatch = useDispatch();
   const savedEmail = useSelector(selectEmail);
@@ -121,12 +123,16 @@ export const LoginForm = () => {
         </AuthenticationForm>
         <ErrorMessage>{errorMessage}</ErrorMessage>
       </AuthenticationCard>
-      <AuthenticationLinkSmall to="/login/forgot-password">
-        Forgot password?
-      </AuthenticationLinkSmall>
-      <AuthenticationLink to={uri ? `/signup?uri=${uri}` : "/signup"}>
-        Don't have an account yet?
-      </AuthenticationLink>
+      {showLinks && (
+        <>
+          <AuthenticationLinkSmall to="/login/forgot-password">
+            Forgot password?
+          </AuthenticationLinkSmall>
+          <AuthenticationLink to={uri ? `/signup?uri=${uri}` : "/signup"}>
+            Don't have an account yet?
+          </AuthenticationLink>
+        </>
+      )}
     </AuthenticationContainer>
   );
 };

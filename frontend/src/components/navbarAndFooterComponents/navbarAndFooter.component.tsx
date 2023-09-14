@@ -250,4 +250,23 @@ const NavbarAndFooter = () => {
   );
 };
 
+export const FooterLayout = () => {
+  return (
+    <>
+      <NavBarContainer>
+        <NavBarLogoContainer to="/">
+          <img src={roundLogo} alt="hiking tour logo" />
+        </NavBarLogoContainer>
+        <LinksContainer>
+          <NavBarLink to="/">Home</NavBarLink>
+          <NavBarLink to="/alltours">All tours</NavBarLink>
+          <NavBarLink to="/contact">Contact</NavBarLink>
+        </LinksContainer>
+      </NavBarContainer>
+      <Outlet />
+      <Footer />
+    </>
+  );
+};
+
 export default NavbarAndFooter;

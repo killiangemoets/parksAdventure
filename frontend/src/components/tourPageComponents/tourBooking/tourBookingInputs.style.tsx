@@ -73,7 +73,7 @@ export const SelectDateFooterText = styled.p`
   font-weight: 500;
   &::before {
     position: absolute;
-    top: 46%;
+    top: 40%;
     left: -10%;
     content: "";
     width: 0.5rem;
@@ -92,8 +92,27 @@ export const SelectDateFooterText2 = styled.p`
   font-weight: 500;
   &::before {
     position: absolute;
-    top: 46%;
-    left: -10%;
+    top: 36%;
+    left: -9%;
+    content: "";
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: ${colors.primary};
+    display: inline-block;
+  }
+`;
+
+export const SelectDateFooterText3 = styled.p`
+  position: relative;
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-weight: 500;
+  &::before {
+    position: absolute;
+    top: 36%;
+    left: -20%;
     content: "";
     width: 0.5rem;
     height: 0.5rem;

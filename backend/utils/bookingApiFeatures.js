@@ -55,8 +55,6 @@ class BookingAPIFeatures {
 
     this.aggregateQuery = queryObj;
 
-    console.log('queryObj', queryObj);
-
     return this;
   }
 

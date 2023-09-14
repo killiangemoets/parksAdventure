@@ -88,8 +88,8 @@ const highlightStyle = css`
   bottom: 16%;
   right: 0%;
   content: "";
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.6rem;
+  height: 0.6rem;
   border-radius: 50%;
   background: ${colors.green};
   display: inline-block;
@@ -100,8 +100,20 @@ const highlightStyle2 = css`
   top: 16%;
   right: 0%;
   content: "";
-  width: 0.4rem;
-  height: 0.4rem;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: ${colors.primary};
+  display: inline-block;
+`;
+
+const highlightStyle3 = css`
+  position: absolute;
+  top: 16%;
+  left: 0%;
+  content: "";
+  width: 0.6rem;
+  height: 0.6rem;
   border-radius: 50%;
   background: ${colors.red};
   display: inline-block;
@@ -110,6 +122,7 @@ const highlightStyle2 = css`
 type DateInputValueProps = {
   highlight?: boolean;
   highlight2?: boolean;
+  highlight3?: boolean;
 };
 export const DateInputValue = styled.div<DateInputValueProps>`
   display: flex;
@@ -124,5 +137,9 @@ export const DateInputValue = styled.div<DateInputValueProps>`
 
   &::before {
     ${({ highlight2 }) => highlight2 && highlightStyle2}
+  }
+
+  &::before {
+    ${({ highlight3 }) => highlight3 && highlightStyle3}
   }
 `;

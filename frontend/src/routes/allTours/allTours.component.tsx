@@ -152,7 +152,7 @@ const AllTours = () => {
                 {!isLoading && !error && tours.length === 0 && (
                   <NoResultsMessage>No Results</NoResultsMessage>
                 )}
-                {!isLoading && tours.length > 0 && (
+                {!isLoading && !error && tours.length > 0 && (
                   <ToursCards
                     mapOpen={mapOpen}
                     handleOverTourCard={handleOverTourCard}

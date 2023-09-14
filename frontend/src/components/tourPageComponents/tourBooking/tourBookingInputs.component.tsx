@@ -12,6 +12,7 @@ import {
   SelectDateFooter,
   SelectDateFooterText,
   SelectDateFooterText2,
+  SelectDateFooterText3,
   TourBookingInputsContainer,
 } from "./tourBookingInputs.style";
 import { selectTourCurrentAvailabilities } from "../../../store/tour/tour.selector";
@@ -41,7 +42,7 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
   const [groupError, setGroupError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);
 
-  const { availableDates, cheapestDates, lastSpotsDates } =
+  const { availableDates, cheapestDates, lastSpotsDates, soldoutDates } =
     useDatesFromAvailabilities({ availabilities });
   const { label } = useLabelFromGroupInfo({ group: currentGroup });
 
@@ -96,10 +97,12 @@ const TourBookingInputs: FC<TourBookingInputsProps> = ({
         enabledDates={availableDates}
         highlightDates={cheapestDates}
         highlightDates2={lastSpotsDates}
+        highlightDates3={soldoutDates}
         footer={
           <SelectDateFooter>
             <SelectDateFooterText>Cheapest date(s)</SelectDateFooterText>
             <SelectDateFooterText2>5 or less spots left</SelectDateFooterText2>
+            <SelectDateFooterText3>Soldout</SelectDateFooterText3>
           </SelectDateFooter>
         }
         error={dateError}

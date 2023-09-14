@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import colors from "../../../colors";
+import { FormButtonContainer } from "../../../components/UIComponents/formButton/formButton.style";
 
 export const GuideAccountActivationContainer = styled.div`
   width: 100vw;
@@ -7,7 +8,7 @@ export const GuideAccountActivationContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 12rem;
+  padding: 12rem 2rem 0 2rem;
 `;
 
 export const GuideAccountActivationWrapper = styled.div`
@@ -28,6 +29,12 @@ export const GuideAccountActivationBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 3.2rem;
+
+  & ${FormButtonContainer} {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const GuideAccountActivationBodyTitleContainer = styled.div``;

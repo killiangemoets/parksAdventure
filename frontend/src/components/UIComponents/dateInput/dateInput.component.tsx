@@ -16,6 +16,7 @@ type DateInputProps = {
   enabledDates?: Date[];
   highlightDates?: Date[];
   highlightDates2?: Date[];
+  highlightDates3?: Date[];
   footer?: string | ReactNode;
   error?: boolean;
   label?: string;
@@ -28,6 +29,7 @@ const DateInput: FC<DateInputProps> = ({
   enabledDates,
   highlightDates,
   highlightDates2,
+  highlightDates3,
   footer,
   error,
   label,
@@ -83,6 +85,7 @@ const DateInput: FC<DateInputProps> = ({
           dateRender={(current) => {
             let highlight = false;
             let highlight2 = false;
+            let highlight3 = false;
             if (
               highlightDates?.find(
                 (highlightDate) =>
@@ -99,11 +102,20 @@ const DateInput: FC<DateInputProps> = ({
               )
             )
               highlight2 = true;
+            if (
+              highlightDates3?.find(
+                (highlightDate3) =>
+                  current.isSame(dayjs(highlightDate3), "day") &&
+                  new Date(highlightDate3) > new Date(Date.now())
+              )
+            )
+              highlight3 = true;
             return (
               <DateInputValue
                 className="ant-picker-cell-inner"
                 highlight={highlight}
-                highlight2={highlight2}>
+                highlight2={highlight2}
+                highlight3={highlight3}>
                 {current.date()}
               </DateInputValue>
             );

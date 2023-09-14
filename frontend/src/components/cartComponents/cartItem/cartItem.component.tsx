@@ -17,6 +17,7 @@ import {
   SelectDateFooter,
   SelectDateFooterText,
   SelectDateFooterText2,
+  SelectDateFooterText3,
 } from "../../tourPageComponents/tourBooking/tourBookingInputs.style";
 import Alert from "../../UIComponents/alert/alert.component";
 import Button, {
@@ -99,7 +100,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
   const [groupError, setGroupError] = useState<boolean>(false);
   const [dateError, setDateError] = useState<boolean>(false);
 
-  const { availableDates, cheapestDates, lastSpotsDates } =
+  const { availableDates, cheapestDates, lastSpotsDates, soldoutDates } =
     useDatesFromAvailabilities({ availabilities });
 
   const { label } = useLabelFromGroupInfo({ group: currentCountInputs });
@@ -332,6 +333,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                       enabledDates={availableDates}
                       highlightDates={cheapestDates}
                       highlightDates2={lastSpotsDates}
+                      highlightDates3={soldoutDates}
                       footer={
                         <SelectDateFooter>
                           <SelectDateFooterText>
@@ -340,6 +342,7 @@ const CartItem: FC<CartItemCommonProps & CartItemConditionalProps> = ({
                           <SelectDateFooterText2>
                             5 or less spots left
                           </SelectDateFooterText2>
+                          <SelectDateFooterText3>Soldout</SelectDateFooterText3>
                         </SelectDateFooter>
                       }
                       error={dateError}

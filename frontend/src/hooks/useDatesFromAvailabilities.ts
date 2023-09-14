@@ -5,6 +5,7 @@ type DatesFromAvailabilities = {
   availableDates: Date[];
   cheapestDates: Date[];
   lastSpotsDates: Date[];
+  soldoutDates: Date[];
 };
 
 const useDatesFromAvailabilities = ({
@@ -15,15 +16,20 @@ const useDatesFromAvailabilities = ({
   const [availableDates, setAvailableDates] = useState<Date[]>([]);
   const [cheapestDates, setCheapestDates] = useState<Date[]>([]);
   const [lastSpotsDates, setLastSpotsDates] = useState<Date[]>([]);
+  const [soldoutDates, setSoldoutDates] = useState<Date[]>([]);
 
   useEffect(() => {
     if (!availabilities) return;
     let newAvailableDates: Date[] = [];
     let cheapestDates: Date[] = [];
     let lastSpotsDates: Date[] = [];
+    let soldoutDates: Date[] = [];
     let minPrice = Infinity;
     availabilities.forEach((availability) => {
-      if (new Date(availability.date) > new Date(Date.now())) {
+      if (
+        new Date(availability.date) > new Date(Date.now()) &&
+        availability.maxGroupSize - availability.currentGroupSize > 0
+      ) {
         newAvailableDates.push(availability.date);
       }
       if (
@@ -35,7 +41,13 @@ const useDatesFromAvailabilities = ({
       } else if (availability.price === minPrice) {
         cheapestDates.push(availability.date);
       }
+
       if (
+        availability.maxGroupSize - availability.currentGroupSize === 0 &&
+        new Date(availability.date) > new Date(Date.now())
+      ) {
+        soldoutDates.push(availability.date);
+      } else if (
         availability.maxGroupSize - availability.currentGroupSize <= 5 &&
         new Date(availability.date) > new Date(Date.now())
       ) {
@@ -46,9 +58,10 @@ const useDatesFromAvailabilities = ({
     setAvailableDates(newAvailableDates);
     setCheapestDates(cheapestDates);
     setLastSpotsDates(lastSpotsDates);
+    setSoldoutDates(soldoutDates);
   }, [availabilities]);
 
-  return { availableDates, cheapestDates, lastSpotsDates };
+  return { availableDates, cheapestDates, lastSpotsDates, soldoutDates };
 };
 
 export default useDatesFromAvailabilities;
