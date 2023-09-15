@@ -8,7 +8,7 @@ import {
   SearchInputContainer,
   SearchInputDeleteButton,
   SearchInputForm,
-} from "./searchInput.styled";
+} from "./searchInput.style";
 
 export type SearchInputProps = {
   handleSubmit: () => void;

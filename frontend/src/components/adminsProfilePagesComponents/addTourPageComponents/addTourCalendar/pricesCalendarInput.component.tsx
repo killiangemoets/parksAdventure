@@ -36,7 +36,10 @@ import {
   CREATE_TOUR_DATA,
   TAvailability,
 } from "../../../../types/tour";
-import { niceTime } from "../../../../utils/formatting/formatDates";
+import {
+  getCreateAvailabilityDateFormat,
+  niceTime,
+} from "../../../../utils/formatting/formatDates";
 import compareDates from "../../../../utils/comparison/compareDates";
 import colors from "../../../../colors";
 
@@ -129,7 +132,10 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
       });
       const currentAvailability = tourCurrentAvailabilities?.find(
         (tourCurrentAvailability) =>
-          compareDates(tourCurrentAvailability.date, availability.date)
+          compareDates(
+            getCreateAvailabilityDateFormat(tourCurrentAvailability.date),
+            availability.date
+          )
       );
 
       if (currentAvailability && currentAvailability.currentGroupSize > 0) {
@@ -258,7 +264,7 @@ const PricesCalendarInput: FC<PricesCalendarInputProps> = ({
         tourCurrentAvailabilities?.find(
           (tourCurrentAvailability) =>
             compareDates(
-              tourCurrentAvailability.date,
+              getCreateAvailabilityDateFormat(tourCurrentAvailability.date),
               updatedAvailability.date
             ) &&
             tourCurrentAvailability.currentGroupSize >

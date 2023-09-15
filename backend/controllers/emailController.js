@@ -1,7 +1,7 @@
 const Email = require('../utils/email');
 const AppError = require('./../utils/appError');
 
-exports.sendEmail = catchAsync(async (req, res, next) => {
+exports.sendContactEmail = catchAsync(async (req, res, next) => {
   if (
     !req.body.firstname.trim() ||
     !req.body.lastname.trim() ||

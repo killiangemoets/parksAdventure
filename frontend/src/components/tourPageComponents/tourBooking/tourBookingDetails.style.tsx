@@ -50,7 +50,6 @@ export const InfoTitle = styled.h4`
   text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 1px;
-  /* width: 16.2rem; */
   width: 12rem;
 `;
 

@@ -1,7 +1,7 @@
 import Title, {
   TITLE_TYPE_CLASSES,
 } from "../../../components/UIComponents/title/title.component";
-import AdminBookingsCalendar from "../../../components/adminsProfilePagesComponents/adminTourCalendarElement/adminTourCalendarElement.component";
+import AdminTourCalendarElement from "../../../components/adminsProfilePagesComponents/adminTourCalendarElement/adminTourCalendarElement.component";
 import {
   AdminBookingsCalendarContainer,
   AdminTourCalendarContainer,
@@ -77,7 +77,7 @@ const AdminTourCalendar = () => {
             </Title>
           </AdminTourCalendarTitle>
           <AdminBookingsCalendarContainer>
-            <AdminBookingsCalendar
+            <AdminTourCalendarElement
               availabilities={tourCalendar}
               tourId={tourId}
             />

@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const Booking = require('./bookingModel');
 const formating = require('./../utils/formating');
-const ObjectId = require('mongodb').ObjectID;
 
 const tourSchema = new mongoose.Schema(
   {

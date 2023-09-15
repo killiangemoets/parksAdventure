@@ -98,13 +98,10 @@ exports.aliasRecommendations = (req, res, next) => {
   next();
 };
 
-exports.getAllTours = factory.getAll(Tour);
-
 exports.showHiddenToursIfAllowed = async (req, res, next) => {
   if (!req.user || req.user.role !== 'admin') {
     req.query.hiddenTour = false;
   }
-
   next();
 };
 
@@ -210,16 +207,6 @@ exports.getToursByAggregation = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-exports.getTour = factory.getOne(Tour, [
-  {
-    path: 'reviews',
-    populate: {
-      path: 'user',
-      select: 'firstname lastname photo',
-    },
-  },
-]);
 
 exports.getTourBySlug = catchAsync(async (req, res, next) => {
   const findObj = { slug: req.params.slug };
@@ -439,8 +426,16 @@ exports.getMyTourNames = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getTour = factory.getOne(Tour, [
+  {
+    path: 'reviews',
+    populate: {
+      path: 'user',
+      select: 'firstname lastname photo',
+    },
+  },
+]);
 exports.createTour = factory.createOne(Tour);
-
+exports.getAllTours = factory.getAll(Tour);
 exports.updateTour = factory.updateOne(Tour);
-
 exports.deleteTour = factory.deleteOne(Tour);

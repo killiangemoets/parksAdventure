@@ -103,7 +103,7 @@ exports.getReviewsByAggregation = catchAsync(async (req, res, next) => {
     tour: review.tour[0],
   }));
 
-  const totalResults = docs[0].totalCount[0].total ?? 0;
+  const totalResults = docs[0].totalCount[0]?.total ?? 0;
 
   res.status(200).json({
     status: 'success',

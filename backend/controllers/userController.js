@@ -9,6 +9,19 @@ const Booking = require('../models/bookingModel');
 const Tour = require('../models/tourModel');
 const ObjectId = require('mongodb').ObjectID;
 
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((el) => {
+    if (allowedFields.includes(el)) newObj[el] = obj[el];
+  });
+  return newObj;
+};
+
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
   if (req.body.photo && req.body.photo.length > 0) {
     const response = await uploadToCloudinary.uploadOneImage(
@@ -26,19 +39,6 @@ exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
 
   next();
 });
-
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-
-exports.getMe = (req, res, next) => {
-  req.params.id = req.user.id;
-  next();
-};
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POST password data

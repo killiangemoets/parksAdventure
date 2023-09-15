@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Input } from "../searchInput/searchInput.styled";
+import { Input } from "../searchInput/searchInput.style";
 import colors from "../../../colors";
 
 export const TextInputContainer = styled.div`

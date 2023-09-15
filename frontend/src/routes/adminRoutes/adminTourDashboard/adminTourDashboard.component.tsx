@@ -161,7 +161,6 @@ const AdminTourDashboard = () => {
         label: "Number of ratings",
         data: tourStats?.ratingsStats.map((stat) => stat.count) || [],
         backgroundColor: "rgba(214, 140, 111, 0.8)",
-        // backgroundColor: "rgba(115, 128, 105, 0.8)",
       },
     ],
   };

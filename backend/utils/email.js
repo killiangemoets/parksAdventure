@@ -1,5 +1,4 @@
 const nodemailer = require('nodemailer');
-const pug = require('pug');
 const ejs = require('ejs');
 
 const { htmlToText } = require('html-to-text');
@@ -38,7 +37,7 @@ module.exports = class Email {
   }
 
   async send(template, subject, data) {
-    // 1) Render HTML based on a pug template
+    // 1) Render HTML based on a ejs template
     const filePath = `${__dirname}/../views/email/${template}.ejs`;
     const html = await ejs.renderFile(filePath, {
       email: this.email,

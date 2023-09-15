@@ -437,7 +437,7 @@ exports.getBookingsByAggregation = catchAsync(async (req, res, next) => {
     tour: booking.tour[0],
   }));
 
-  const totalResults = docs[0].totalCount[0].total ?? 0;
+  const totalResults = docs[0].totalCount[0]?.total ?? 0;
 
   res.status(200).json({
     status: 'success',

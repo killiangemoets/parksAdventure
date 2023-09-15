@@ -5,7 +5,7 @@ import { RangeDatePickerElement } from "../../UIComponents/rangeDateInput/rangeD
 import {
   Input,
   SearchInputContainer,
-} from "../../UIComponents/searchInput/searchInput.styled";
+} from "../../UIComponents/searchInput/searchInput.style";
 import colors from "../../../colors";
 
 export const AllToursHeaderContainer = styled.div`

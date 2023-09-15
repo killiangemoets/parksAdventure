@@ -126,31 +126,12 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
-    let numberOfHikers = undefined;
-    if (req.params.getHikers) {
-      const allDocs = await features.query;
-      numberOfHikers = allDocs.reduce(
-        (acc, hiker) => acc + hiker.adults + hiker.kids,
-        0
-      );
-    }
-
-    let avgRating = undefined;
-    if (req.params.getAvgRating) {
-      const allDocs = await features.query;
-      const sum = allDocs.reduce((acc, review) => acc + review.rating, 0);
-      avgRating = Math.trunc((sum / allDocs.length) * 100) / 100;
-    }
-
     const count = await features.query.countDocuments();
-
     const docs = await featuresWithPagination.query;
 
     res.status(200).json({
       status: 'success',
       results: docs.length,
-      numberOfHikers,
-      avgRating,
       totalResults: count,
       data: {
         data: docs,
