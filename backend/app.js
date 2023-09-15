@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const express = require('express');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
@@ -26,20 +25,33 @@ app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
-const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
-const corsOptions = {
-  credentials: true,
-  origin: function (origin, callback) {
-    if (!origin || whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-app.use(cors(corsOptions));
+// const whitelist = ['http://localhost:3001'];
+// // const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
+// const corsOptions = {
+//   credentials: true,
+//   origin: function (origin, callback) {
+//     if (!origin || whitelist.indexOf(origin) !== -1) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+// };
+// app.use(cors(corsOptions));
 
-app.options('*', cors());
+// app.options('*', cors());
+
+// Enable CORS for your domain
+app.use((req, res, next) => {
+  res.header(
+    'Access-Control-Allow-Origin',
+    'https://national-parks-hiking-tours.vercel.app'
+  );
+  // You can also configure other CORS headers as needed
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // Set security HTTP headers
 app.use(helmet());
