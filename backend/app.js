@@ -43,14 +43,18 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Enable CORS for your domain
 app.use((req, res, next) => {
-  res.header(
-    'Access-Control-Allow-Origin',
-    'https://national-parks-hiking-tours.vercel.app'
-  );
-  // You can also configure other CORS headers as needed
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
   next();
+});
+
+app.options('*', (req, res) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3001');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.header('Access-Control-Allow-Credentials', 'true');
 });
 
 // Set security HTTP headers
