@@ -26,51 +26,20 @@ app.set('views', path.join(__dirname, 'views'));
 
 // 1) GLOBAL MIDDLEWARES
 // const whitelist = ['http://localhost:3001'];
-// // const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
-// const corsOptions = {
-//   credentials: true,
-//   origin: function (origin, callback) {
-//     if (!origin || whitelist.indexOf(origin) !== -1) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-// };
-// app.use(cors(corsOptions));
-
-app.use(
-  cors({
-    origin: 'http://localhost:3001',
-    methods: 'GET, POST, PUT, DELETE, PATCH',
-    allowedHeaders: 'Content-Type, Authorization',
-    credentials: true, // Allow credentials (cookies, HTTP authentication)
-  })
-);
+const whitelist = ['https://national-parks-hiking-tours.vercel.app'];
+const corsOptions = {
+  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin || whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+};
+app.use(cors(corsOptions));
 
 app.options('*', cors());
-
-// Enable CORS for your domain
-// app.use((req, res, next) => {
-//   res.header(
-//     'Access-Control-Allow-Origin',
-//     'https://national-parks-hiking-tours.vercel.app'
-//   );
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
-
-// app.options('*', (req, res) => {
-//   res.header(
-//     'Access-Control-Allow-Origin',
-//     'https://national-parks-hiking-tours.vercel.app'
-//   );
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.header('Access-Control-Allow-Credentials', 'true');
-// });
 
 // Set security HTTP headers
 app.use(helmet());
