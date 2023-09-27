@@ -268,7 +268,7 @@ const AdminDashboard = () => {
               title="Income over the last 6 months"
               data={incomeEvolutionData}
             />
-            <MapChart title="Income By Location" data={incomeByLocationData} />
+            <MapChart title="Income by Location" data={incomeByLocationData} />
           </AdminDashboardGrid>
         </AdminMediumContent>
       )}

@@ -15,6 +15,11 @@ class ReviewAPIFeatures {
       delete queryObj[el];
     });
 
+    if (queryObj.hidden) {
+      if (queryObj.hidden === 'false') queryObj.hidden = false;
+      else queryObj.hidden = true;
+    }
+
     if (queryObj.id) {
       const isArray = Array.isArray(queryObj.id);
       let idQuery = [];
