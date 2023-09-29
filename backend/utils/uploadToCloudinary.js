@@ -45,8 +45,8 @@ const uploadImage = async (image, folderPath = '') => {
     // return error;
     return {
       status: 'fail',
-      // message: error.message,
-      error,
+      message: error.message,
+      // error,
       // message:
       //   'An unexpected problem occurred while uploading the pictures. Please try again.',
     };
