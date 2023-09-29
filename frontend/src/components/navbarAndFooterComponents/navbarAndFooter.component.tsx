@@ -46,6 +46,10 @@ export const Navigation = () => {
 
   const handleClickOnLogin = () => {
     const uri = getAuthenticationRedictionUri(window.location.href);
+
+    console.log("URI", uri);
+    console.log("window.location.href", window.location.href);
+
     if (uri.includes("signup") || uri.includes("login")) {
       return navigate(`/login`);
     }
