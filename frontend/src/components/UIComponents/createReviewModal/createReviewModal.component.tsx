@@ -110,7 +110,7 @@ const CreateReviewModal: FC<CreateReviewModalProps> = ({
         setErrorMessage(response.message);
       else if (response.message.includes("E11000 duplicate key")) {
         setErrorMessage("You can only give one review by tour");
-      } else setErrorMessage('"An error occured. Please try again!"');
+      } else setErrorMessage("An error occured. Please try again!");
     }
   };
 
