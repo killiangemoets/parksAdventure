@@ -20,6 +20,7 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ), // the browser will delete the cookie after it has expired
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
+    sameSite: 'none',
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
 
