@@ -5,6 +5,7 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
   // secure: true,
+  secure: false,
 });
 
 // image in base64
@@ -35,6 +36,7 @@ const uploadImage = async (image, folderPath = '') => {
 
     return response;
   } catch (error) {
+    console.log('error', error);
     if (error.message.includes('File size too large.'))
       return {
         status: 'fail',
