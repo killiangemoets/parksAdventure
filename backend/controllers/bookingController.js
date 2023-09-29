@@ -155,10 +155,11 @@ exports.saveCheckoutItems = catchAsync(async (req, res, next) => {
         90 * 1000
     ),
     httpOnly: true,
-    sameSite: 'none',
   };
-
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
 
   res.cookie('cart', token, cookieOptions);
 
@@ -187,10 +188,16 @@ exports.unsaveCheckoutItems = catchAsync(async (req, res, next) => {
   await Booking.deleteMany({ cartId: decoded.cartId, status: 'pending' });
 
   // 4) remove cookie
-  res.cookie('cart', 'clear', {
+  const cookieOptions = {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
-  });
+  };
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
+
+  res.cookie('cart', 'clear', cookieOptions);
 
   next();
 });

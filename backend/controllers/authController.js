@@ -20,9 +20,11 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ), // the browser will delete the cookie after it has expired
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
-    sameSite: 'none',
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -46,9 +48,11 @@ const createSessionToken = (sessionToken, statusCode, res) => {
       Date.now() + process.env.SESSION_COOKIE_EXPIRES_IN * 60 * 1000
     ), // the browser will delete the cookie after it has expired
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
-    sameSite: 'none',
   };
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
 
   res.cookie('tmp', signedToken, cookieOptions);
 
@@ -115,10 +119,16 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
       ? await util.promisify(jwt.verify)(sessionToken, process.env.JWT_SECRET)
       : { id: undefined };
 
-  res.cookie('tmp', 'null', {
+  const cookieOptions = {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
-  });
+  };
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
+
+  res.cookie('tmp', 'null', cookieOptions);
 
   const user = await User.findOne({
     emailVerificationTokens: { $in: [hashedToken] },
@@ -212,11 +222,17 @@ exports.login = catchAsync(async (req, res, next) => {
   createSendToken(user, 200, res);
 });
 
+const cookieOptions = {
+  expires: new Date(Date.now() + 10 * 1000),
+  httpOnly: true,
+};
+if (process.env.NODE_ENV === 'production') {
+  cookieOptions.sameSite = 'none';
+  cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+}
+
 exports.logout = catchAsync(async (req, res) => {
-  res.cookie('jwt', 'logged out', {
-    expires: new Date(Date.now() + 10 * 1000),
-    httpOnly: true,
-  });
+  res.cookie('jwt', 'logged out', cookieOptions);
 
   res.status(200).json({ status: 'success' });
 });
