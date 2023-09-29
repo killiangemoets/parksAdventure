@@ -23,6 +23,7 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.uploadUserPhotoToCloudinary = catchAsync(async (req, res, next) => {
+  if (req.body.photo.includes('res.cloudinary.com')) next();
   if (req.body.photo && req.body.photo.length > 0) {
     const response = await uploadToCloudinary.uploadOneImage(
       req.body.photo,
