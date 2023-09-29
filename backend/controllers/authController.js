@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
     sameSite: 'none',
   };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = false; //  the cookie will only be sent on an encrpyted connection (so when using https)
 
   res.cookie('jwt', token, cookieOptions);
 
@@ -48,7 +48,7 @@ const createSessionToken = (sessionToken, statusCode, res) => {
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
     sameSite: 'none',
   };
-  // if (process.env.NODE_ENV === 'production') cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = false; //  the cookie will only be sent on an encrpyted connection (so when using https)
 
   res.cookie('tmp', signedToken, cookieOptions);
 
