@@ -36,18 +36,18 @@ const uploadImage = async (image, folderPath = '') => {
 
     return response;
   } catch (error) {
-    console.log('error', error);
     if (error.message.includes('File size too large.'))
       return {
         status: 'fail',
         message: 'File size too large. Maximum size is 10 MB.',
       };
 
-    return {
-      status: 'fail',
-      message:
-        'An unexpected problem occurred while uploading the pictures. Please try again.',
-    };
+    return error;
+    // return {
+    //   status: 'fail',
+    //   message:
+    //     'An unexpected problem occurred while uploading the pictures. Please try again.',
+    // };
   }
 };
 
