@@ -158,7 +158,7 @@ exports.saveCheckoutItems = catchAsync(async (req, res, next) => {
     sameSite: 'none',
   };
 
-  if (process.env.NODE_ENV === 'production') cookieOptions.secure = false;
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
 
   res.cookie('cart', token, cookieOptions);
 
