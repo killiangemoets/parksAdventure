@@ -22,10 +22,11 @@ const createSendToken = (user, statusCode, res) => {
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
     maxAge: 43200,
   };
-  // if (process.env.NODE_ENV === 'production') {
-  //   cookieOptions.sameSite = 'none';
-  //   cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    // cookieOptions.sameSite = 'Lax';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
 
   res.cookie('jwt', token, cookieOptions);
 
