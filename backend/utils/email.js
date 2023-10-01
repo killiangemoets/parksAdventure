@@ -52,7 +52,7 @@ module.exports = class Email {
     // 2) Define the email options
     const mailOptions = {
       from: this.from,
-      to: template === 'contact' ? this.from : this.email,
+      to: template === 'contact' ? process.env.EMAIL_FROM : this.email,
       subject,
       html,
       text: htmlToText(html), // convert the html to text

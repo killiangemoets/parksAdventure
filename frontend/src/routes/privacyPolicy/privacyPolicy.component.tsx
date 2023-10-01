@@ -108,11 +108,6 @@ const PrivacyPolicy = () => {
             <DotIconWrapper>
               <DotIcon />
             </DotIconWrapper>
-          </PrivacyPolicyBulletPoint>
-          <PrivacyPolicyBulletPoint>
-            <DotIconWrapper>
-              <DotIcon />
-            </DotIconWrapper>
             <PrivacyPolicyText>
               <span>Improvements:</span> To enhance and personalize your
               experience on our platform, and to develop new features and
