@@ -23,7 +23,7 @@ const createSendToken = (user, statusCode, res) => {
     // maxAge: 43200,
   };
   if (process.env.NODE_ENV === 'production') {
-    cookieOptions.sameSite = 'none';
+    cookieOptions.sameSite = 'None';
     // cookieOptions.sameSite = 'Lax';
     cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
   }
@@ -41,6 +41,25 @@ const createSendToken = (user, statusCode, res) => {
     },
   });
 };
+
+exports.login = catchAsync(async (req, res, next) => {
+  const { email, password } = req.body;
+
+  // 1) Check if email and password exist
+  if (!email || !password) {
+    return next(new AppError('Please provide email and password', 400));
+  }
+
+  // 2) Check if active user exists && password is correct
+  const user = await User.findOne({ email, active: { $ne: false } }).select(
+    '+password'
+  );
+
+  if (!user || !(await user.correctPassword(password, user.password)))
+    return next(new AppError('Incorrect email or password', 401));
+
+  createSendToken(user, 200, res);
+});
 
 const createSessionToken = (sessionToken, statusCode, res) => {
   const signedToken = signToken(sessionToken);
@@ -203,25 +222,6 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'A new verification email has been sent',
   });
-});
-
-exports.login = catchAsync(async (req, res, next) => {
-  const { email, password } = req.body;
-
-  // 1) Check if email and password exist
-  if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
-  }
-
-  // 2) Check if active user exists && password is correct
-  const user = await User.findOne({ email, active: { $ne: false } }).select(
-    '+password'
-  );
-
-  if (!user || !(await user.correctPassword(password, user.password)))
-    return next(new AppError('Incorrect email or password', 401));
-
-  createSendToken(user, 200, res);
 });
 
 const cookieOptions = {
