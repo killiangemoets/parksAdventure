@@ -53,34 +53,38 @@ function App() {
 
   useEffect(() => {
     const handleIsLoggedIn = async () => {
-      const response = await getUser();
-      if (response && response.user) {
-        const {
-          email,
-          firstname,
-          lastname,
-          photo,
-          phoneNumber,
-          birthDate,
-          wishlist,
-          role,
-          _id: id,
-        } = response.user;
-
-        dispatch(
-          setUser({
+      try {
+        const response = await getUser();
+        if (response && response.user) {
+          const {
             email,
             firstname,
             lastname,
             photo,
             phoneNumber,
             birthDate,
-            role,
             wishlist,
-            id,
-          })
-        );
-      } else if (response) {
+            role,
+            _id: id,
+          } = response.user;
+
+          dispatch(
+            setUser({
+              email,
+              firstname,
+              lastname,
+              photo,
+              phoneNumber,
+              birthDate,
+              role,
+              wishlist,
+              id,
+            })
+          );
+        } else if (response) {
+          dispatch(removeUser());
+        }
+      } catch (err) {
         dispatch(removeUser());
       }
     };
