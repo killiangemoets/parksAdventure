@@ -20,13 +20,13 @@ const createSendToken = (user, statusCode, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ), // the browser will delete the cookie after it has expired
     httpOnly: true, //the cookie cannot be accessed or modified in any way by the browser
-    maxAge: 43200,
+    // maxAge: 43200,
   };
-  // if (process.env.NODE_ENV === 'production') {
-  // cookieOptions.sameSite = 'none';
-  // cookieOptions.sameSite = 'Lax';
-  // cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
-  // }
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    // cookieOptions.sameSite = 'Lax';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
 
   res.cookie('jwt', token, cookieOptions);
 
