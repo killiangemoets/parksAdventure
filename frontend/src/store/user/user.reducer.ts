@@ -12,6 +12,7 @@ export type UserState = {
   readonly role?: USER_ROLE_TYPES;
   readonly wishlist?: string[];
   readonly id?: string;
+  readonly token?: string;
 };
 
 export const USER_INITIAL_STATE: UserState = {};

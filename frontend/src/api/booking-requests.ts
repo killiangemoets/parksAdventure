@@ -1,5 +1,5 @@
 import axios from "axios";
-import axiosInstance from "../utils/axios/axios-instance";
+import createAxiosInstance from "../utils/axios/axios-instance";
 import { TItemWithTourInfo } from "../types/booking";
 
 export const getTourItems = async (tourIds: string[]) => {
@@ -11,7 +11,7 @@ export const getTourItems = async (tourIds: string[]) => {
       }, "")
     ).slice(0, -1);
 
-    const response = await axiosInstance.get(
+    const response = await createAxiosInstance().get(
       `/tours/cart-items${tourIdsQuery}`
     );
     return response.data;
@@ -38,9 +38,12 @@ export const getCheckoutSession = async (items: TItemWithTourInfo[]) => {
         kids: item.children,
       };
     });
-    const response = await axiosInstance.post("/bookings/payment-session", {
-      items: formatedItems,
-    });
+    const response = await createAxiosInstance().post(
+      "/bookings/payment-session",
+      {
+        items: formatedItems,
+      }
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -52,7 +55,7 @@ export const getCheckoutSession = async (items: TItemWithTourInfo[]) => {
 
 export const validateOrder = async (token: string) => {
   try {
-    const response = await axiosInstance.patch(
+    const response = await createAxiosInstance().patch(
       `/bookings/validate-order/${token}`
     );
     return response.data;
@@ -66,7 +69,7 @@ export const validateOrder = async (token: string) => {
 
 export const getMyBookings = async () => {
   try {
-    const response = await axiosInstance.get("/bookings/mine");
+    const response = await createAxiosInstance().get("/bookings/mine");
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -78,7 +81,9 @@ export const getMyBookings = async () => {
 
 export const getMyBookingDetails = async (bookingId: string) => {
   try {
-    const response = await axiosInstance.get(`/bookings/mine/${bookingId}`);
+    const response = await createAxiosInstance().get(
+      `/bookings/mine/${bookingId}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -90,7 +95,9 @@ export const getMyBookingDetails = async (bookingId: string) => {
 
 export const getAllBookings = async (requestString: string = "") => {
   try {
-    const response = await axiosInstance.get(`/bookings/all${requestString}`);
+    const response = await createAxiosInstance().get(
+      `/bookings/all${requestString}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

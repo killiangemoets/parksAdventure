@@ -54,6 +54,7 @@ const EmailConfirmation = () => {
             role,
             _id: id,
           } = response.data.user;
+          const token = response.token;
           dispatch(
             setUser({
               email,
@@ -65,6 +66,7 @@ const EmailConfirmation = () => {
               wishlist,
               role,
               id,
+              token,
             })
           );
           setTimeout(function () {

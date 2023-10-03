@@ -56,6 +56,7 @@ const TourCard: FC<TourCardProps> = ({ tour, handleOver }) => {
     if (!userId) {
       const uri = getAuthenticationRedictionUri(window.location.href);
       navigate(`/login?uri=${uri}`);
+      return;
     }
 
     const response = inWishList

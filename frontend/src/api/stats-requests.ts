@@ -1,9 +1,9 @@
-import axiosInstance from "../utils/axios/axios-instance";
+import createAxiosInstance from "../utils/axios/axios-instance";
 import axios from "axios";
 
 export const getGeneralStats = async () => {
   try {
-    const response = await axiosInstance.get(`/stats`);
+    const response = await createAxiosInstance().get(`/stats`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -15,7 +15,7 @@ export const getGeneralStats = async () => {
 
 export const getTourStats = async (slug: string) => {
   try {
-    const response = await axiosInstance.get(`/stats/${slug}`);
+    const response = await createAxiosInstance().get(`/stats/${slug}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

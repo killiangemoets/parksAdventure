@@ -6,6 +6,11 @@ export const selectUserReducer = (state: RootState): UserState => {
   return state.user;
 };
 
+export const selectToken = createSelector(
+  [selectUserReducer],
+  (userSlice) => userSlice.token
+);
+
 export const selectEmail = createSelector(
   [selectUserReducer],
   (userSlice) => userSlice.email

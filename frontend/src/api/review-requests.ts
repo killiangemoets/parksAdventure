@@ -1,11 +1,11 @@
 import axios from "axios";
-import axiosInstance from "../utils/axios/axios-instance";
+import createAxiosInstance from "../utils/axios/axios-instance";
 
 export const getMyReviews = async (tourId?: string) => {
   try {
     let query = "";
     if (tourId) query = `?tour=${tourId}`;
-    const response = await axiosInstance.get(`/reviews/mine${query}`);
+    const response = await createAxiosInstance().get(`/reviews/mine${query}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -21,7 +21,7 @@ export const editMyReview = async (
   review: string
 ) => {
   try {
-    const response = await axiosInstance.patch(`/reviews/${reviewId}`, {
+    const response = await createAxiosInstance().patch(`/reviews/${reviewId}`, {
       rating,
       review,
     });
@@ -36,7 +36,7 @@ export const editMyReview = async (
 
 export const deleteMyReview = async (reviewId: string) => {
   try {
-    const response = await axiosInstance.delete(`/reviews/${reviewId}`);
+    const response = await createAxiosInstance().delete(`/reviews/${reviewId}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -52,10 +52,13 @@ export const createReview = async (
   review?: string
 ) => {
   try {
-    const response = await axiosInstance.post(`/tours/${tourId}/reviews`, {
-      rating,
-      review,
-    });
+    const response = await createAxiosInstance().post(
+      `/tours/${tourId}/reviews`,
+      {
+        rating,
+        review,
+      }
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -67,7 +70,7 @@ export const createReview = async (
 
 export const getTop10Reviews = async () => {
   try {
-    const response = await axiosInstance.get("/reviews/top10");
+    const response = await createAxiosInstance().get("/reviews/top10");
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -79,7 +82,9 @@ export const getTop10Reviews = async () => {
 
 export const getAllReviews = async (requestString: string = "") => {
   try {
-    const response = await axiosInstance.get(`/reviews/all${requestString}`);
+    const response = await createAxiosInstance().get(
+      `/reviews/all${requestString}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

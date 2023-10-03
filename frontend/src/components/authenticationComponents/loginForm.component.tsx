@@ -68,6 +68,7 @@ export const LoginForm: FC<{ showLinks?: boolean }> = ({
         role,
         _id: id,
       } = response.data.user;
+      const token = response.token;
       dispatch(
         setUser({
           email,
@@ -79,6 +80,7 @@ export const LoginForm: FC<{ showLinks?: boolean }> = ({
           wishlist,
           role,
           id,
+          token,
         })
       );
       setTimeout(function () {

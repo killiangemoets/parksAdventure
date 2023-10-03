@@ -5,11 +5,14 @@ import {
   SignUpData,
   UpdateUserPasswordData,
 } from "../types/user";
-import axiosInstance from "../utils/axios/axios-instance";
+import createAxiosInstance from "../utils/axios/axios-instance";
 
 export const login = async (loginData: LoginData) => {
   try {
-    const response = await axiosInstance.post("/users/login", loginData);
+    const response = await createAxiosInstance().post(
+      "/users/login",
+      loginData
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -24,7 +27,7 @@ export const signUp = async (
   redirectUri: string | undefined
 ) => {
   try {
-    const response = await axiosInstance.post("/users/signup", {
+    const response = await createAxiosInstance().post("/users/signup", {
       ...signUpData,
       redirectUri,
     });
@@ -39,7 +42,7 @@ export const signUp = async (
 
 export const verifyEmail = async (token: string) => {
   try {
-    const response = await axiosInstance.patch(
+    const response = await createAxiosInstance().patch(
       `/users/email-verification/${token}`
     );
     return response.data;
@@ -56,7 +59,7 @@ export const resendEmail = async (
   redirectUri: string | null
 ) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await createAxiosInstance().post(
       "/users/resend-email-verification",
       { email, redirectUri }
     );
@@ -71,9 +74,12 @@ export const resendEmail = async (
 
 export const forgotPassword = async (email: string) => {
   try {
-    const response = await axiosInstance.post("/users/forgot-password", {
-      email,
-    });
+    const response = await createAxiosInstance().post(
+      "/users/forgot-password",
+      {
+        email,
+      }
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -90,7 +96,7 @@ export const resetPassword = async (
   stayConnected: boolean
 ) => {
   try {
-    const response = await axiosInstance.patch(
+    const response = await createAxiosInstance().patch(
       `/users/reset-password/${token}`,
       {
         password,
@@ -109,7 +115,7 @@ export const resetPassword = async (
 
 export const logout = async () => {
   try {
-    const response = await axiosInstance.get("/users/logout");
+    const response = await createAxiosInstance().get("/users/logout");
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -121,7 +127,7 @@ export const logout = async () => {
 
 export const getUser = async () => {
   try {
-    const response = await axiosInstance.get("/users/isloggedin");
+    const response = await createAxiosInstance().get("/users/isloggedin");
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -135,7 +141,7 @@ export const updateMyPassword = async (
   userPasswords: UpdateUserPasswordData
 ) => {
   try {
-    const response = await axiosInstance.patch(
+    const response = await createAxiosInstance().patch(
       "/users/updateMyPassword",
       userPasswords
     );
@@ -152,7 +158,7 @@ export const createTourGuide = async (
   createTourGuideData: CreateTourGuideData
 ) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await createAxiosInstance().post(
       "/users/guides/creation",
       createTourGuideData
     );
@@ -171,7 +177,7 @@ export const activateTourGuide = async (
   passwordConfirm: string
 ) => {
   try {
-    const response = await axiosInstance.patch(
+    const response = await createAxiosInstance().patch(
       `/users/guides/activation/${token}`,
       {
         password,

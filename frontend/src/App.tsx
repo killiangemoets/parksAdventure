@@ -56,31 +56,32 @@ function App() {
       try {
         const response = await getUser();
         if (response && response.user) {
-          const {
-            email,
-            firstname,
-            lastname,
-            photo,
-            phoneNumber,
-            birthDate,
-            wishlist,
-            role,
-            _id: id,
-          } = response.user;
-
-          dispatch(
-            setUser({
-              email,
-              firstname,
-              lastname,
-              photo,
-              phoneNumber,
-              birthDate,
-              role,
-              wishlist,
-              id,
-            })
-          );
+          // const {
+          //   email,
+          //   firstname,
+          //   lastname,
+          //   photo,
+          //   phoneNumber,
+          //   birthDate,
+          //   wishlist,
+          //   role,
+          //   _id: id,
+          // } = response.user;
+          // const token = response.token;
+          // dispatch(
+          //   setUser({
+          //     email,
+          //     firstname,
+          //     lastname,
+          //     photo,
+          //     phoneNumber,
+          //     birthDate,
+          //     role,
+          //     wishlist,
+          //     id,
+          //     token,
+          //   })
+          // );
         } else if (response) {
           dispatch(removeUser());
         }

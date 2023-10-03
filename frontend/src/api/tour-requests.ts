@@ -1,12 +1,14 @@
 import axios from "axios";
 import { CreateTourData } from "../types/tour";
 import { TUser } from "../types/user";
-import axiosInstance from "../utils/axios/axios-instance";
+import createAxiosInstance from "../utils/axios/axios-instance";
 import getTourDataInSendFormat from "../utils/dataManipulation/getTourDataInSendFormat";
 
 export const getTours = async (requestString: string = "") => {
   try {
-    const response = await axiosInstance.get(`/tours/all${requestString}`);
+    const response = await createAxiosInstance().get(
+      `/tours/all${requestString}`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -18,7 +20,7 @@ export const getTours = async (requestString: string = "") => {
 
 export const getTour = async (slug: string) => {
   try {
-    const response = await axiosInstance.get(`/tours/slug/${slug}`);
+    const response = await createAxiosInstance().get(`/tours/slug/${slug}`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -32,7 +34,7 @@ export const createTour = async (tourData: CreateTourData) => {
   try {
     const tourBody = await getTourDataInSendFormat(tourData);
 
-    const response = await axiosInstance.post("/tours", tourBody);
+    const response = await createAxiosInstance().post("/tours", tourBody);
 
     return response.data;
   } catch (err) {
@@ -46,7 +48,10 @@ export const createTour = async (tourData: CreateTourData) => {
 export const updateTour = async (tourData: CreateTourData, tourId: string) => {
   try {
     const tourBody = await getTourDataInSendFormat(tourData);
-    const response = await axiosInstance.patch(`/tours/${tourId}`, tourBody);
+    const response = await createAxiosInstance().patch(
+      `/tours/${tourId}`,
+      tourBody
+    );
 
     return response.data;
   } catch (err) {
@@ -59,7 +64,7 @@ export const updateTour = async (tourData: CreateTourData, tourId: string) => {
 
 export const getTourGuides = async () => {
   try {
-    const response = await axiosInstance.get(
+    const response = await createAxiosInstance().get(
       "/users?role=guide&role=lead-guide&active=true"
     );
 
@@ -109,7 +114,9 @@ export const getTourGuides = async () => {
 
 export const getTopTourRecommendations = async () => {
   try {
-    const response = await axiosInstance.get(`/tours/top-recommendations`);
+    const response = await createAxiosInstance().get(
+      `/tours/top-recommendations`
+    );
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -121,7 +128,7 @@ export const getTopTourRecommendations = async () => {
 
 export const deleteTour = async (tourId: string) => {
   try {
-    const response = await axiosInstance.delete(`/tours/${tourId}`);
+    const response = await createAxiosInstance().delete(`/tours/${tourId}`);
 
     return response.data;
   } catch (err) {
@@ -134,7 +141,7 @@ export const deleteTour = async (tourId: string) => {
 
 export const getTourCalendar = async (slug: string) => {
   try {
-    const response = await axiosInstance.get(`/tours/${slug}/calendar`);
+    const response = await createAxiosInstance().get(`/tours/${slug}/calendar`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {
@@ -146,7 +153,7 @@ export const getTourCalendar = async (slug: string) => {
 
 export const getAllTourNames = async () => {
   try {
-    const response = await axiosInstance.get(`/tours/my-tours-names`);
+    const response = await createAxiosInstance().get(`/tours/my-tours-names`);
     return response.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

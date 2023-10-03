@@ -60,6 +60,7 @@ const TourGallery = () => {
     if (!userId) {
       const uri = getAuthenticationRedictionUri(window.location.href);
       navigate(`/login?uri=${uri}`);
+      return;
     }
 
     if (!tour?._id) return;
