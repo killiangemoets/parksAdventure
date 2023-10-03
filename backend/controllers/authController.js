@@ -26,7 +26,7 @@ const createSendToken = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'production') {
     cookieOptions.sameSite = 'none';
     // cookieOptions.sameSite = 'Lax';
-    cookieOptions.secure = false; //  the cookie will only be sent on an encrpyted connection (so when using https)
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
   }
 
   res.cookie('jwt', token, cookieOptions);
