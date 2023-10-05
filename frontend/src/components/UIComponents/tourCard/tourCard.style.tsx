@@ -180,7 +180,7 @@ export const TourContent = styled.div`
 
   @media (max-width: 530px) {
     gap: 0.4rem;
-    padding: 1.4rem 1.6rem 0 1.6rem;
+    padding: 1rem 1.6rem 0 1.6rem;
   }
 `;
 

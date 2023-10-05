@@ -137,10 +137,11 @@ export const TourBookingButtons = styled.div`
     gap: 1rem;
     button {
       border: solid 1.5px ${colors.primary};
-      padding: 1.2rem 1.6rem;
-      width: 12.8rem;
+      padding: 0 1.2rem;
+      height: 4.8rem;
       min-width: 0;
       font-size: 1.6rem;
+      letter-spacing: 0.4px;
 
       &:hover {
         border: solid 1.5px ${colors.primaryDark};

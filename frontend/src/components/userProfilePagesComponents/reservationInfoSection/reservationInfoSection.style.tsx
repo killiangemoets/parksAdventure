@@ -31,7 +31,7 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  min-width: 40rem;
+  min-width: 30rem;
 
   h2 {
     margin-bottom: 1.2rem;
