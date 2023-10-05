@@ -18,8 +18,12 @@ import {
 } from "./settings.style";
 import FormButton from "../../UIComponents/formButton/formButton.component";
 import { updateMyPassword } from "../../../api/authentication-requests";
+import { AppDispatch } from "../../../store/store";
+import { useDispatch } from "react-redux";
+import { setUser } from "../../../store/user/user.action";
 
 const PasswordChange = () => {
+  const dispatch: AppDispatch = useDispatch();
   const [passwordsData, setPasswordsData] = useState<UpdateUserPasswordData>({
     passwordCurrent: "",
     password: "",
@@ -55,6 +59,32 @@ const PasswordChange = () => {
         passwordConfirm: "",
         stayConnected,
       });
+      const {
+        email,
+        firstname,
+        lastname,
+        photo,
+        phoneNumber,
+        birthDate,
+        wishlist,
+        role,
+        _id: id,
+      } = response.data.user;
+      const token = response.token;
+      dispatch(
+        setUser({
+          email,
+          firstname,
+          lastname,
+          photo,
+          phoneNumber,
+          birthDate,
+          wishlist,
+          role,
+          id,
+          token,
+        })
+      );
       setTimeout(function () {
         setSuccess(false);
       }, 2000);

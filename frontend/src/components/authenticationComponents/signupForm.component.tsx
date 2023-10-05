@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { signUp } from "../../api/authentication-requests";
 import { AppDispatch } from "../../store/store";
-import { setEmail } from "../../store/user/user.action";
+import { setEmail, setTmp } from "../../store/user/user.action";
 import { SignUpData } from "../../types/user";
 import FormButton from "../UIComponents/formButton/formButton.component";
 import TextInput from "../UIComponents/textInput/textInput.component";
@@ -60,6 +60,7 @@ export const SignupForm = () => {
     if (response && response.status === "success") {
       setSuccess(true);
       dispatch(setEmail(email));
+      dispatch(setTmp(response.data.tmpToken));
       setTimeout(function () {
         setSuccess(false);
         const uriString = uri ? `?uri=${uri}` : "";

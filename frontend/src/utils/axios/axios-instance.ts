@@ -1,10 +1,5 @@
 import axios from "axios";
 
-// const axiosInstance = axios.create({
-//   withCredentials: true,
-//   baseURL: process.env.REACT_APP_API_URL,
-// });
-
 export const createAxiosInstance = () => {
   // Get token from local storage
   const persistRootString = localStorage.getItem("persist:root");
@@ -12,12 +7,15 @@ export const createAxiosInstance = () => {
   const userObject =
     persistRootObject?.user && JSON.parse(persistRootObject.user);
   const token = userObject?.token;
-  console.log("token", token);
+  const tmpToken = userObject?.tmp;
+  const cartToken = userObject?.cart;
 
   return axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token ? `Bearer ${token}` : undefined,
+      "x-tmp-token": tmpToken,
+      "x-cart-token": cartToken,
     },
   });
 };

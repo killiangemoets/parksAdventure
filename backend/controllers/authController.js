@@ -78,7 +78,7 @@ const createSessionToken = (sessionToken, statusCode, res) => {
   res.status(statusCode).json({
     status: 'success',
     data: {
-      sessionToken,
+      tmpToken: signedToken,
     },
   });
 };
@@ -132,7 +132,13 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
     .update(req.params.token)
     .digest('hex');
 
-  const sessionToken = req.cookies.tmp;
+  let sessionToken;
+  if (req.headers['x-tmp-token']) {
+    sessionToken = req.headers['x-tmp-token'];
+  } else if (req.cookies.tmp) {
+    sessionToken = req.cookies.tmp;
+  }
+
   const decoded =
     sessionToken && sessionToken !== 'null'
       ? await util.promisify(jwt.verify)(sessionToken, process.env.JWT_SECRET)
@@ -222,16 +228,15 @@ exports.resendEmail = catchAsync(async (req, res, next) => {
   });
 });
 
-const cookieOptions = {
-  expires: new Date(Date.now() + 10 * 1000),
-  httpOnly: true,
-};
-if (process.env.NODE_ENV === 'production') {
-  cookieOptions.sameSite = 'none';
-  cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
-}
-
 exports.logout = catchAsync(async (req, res) => {
+  const cookieOptions = {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  };
+  if (process.env.NODE_ENV === 'production') {
+    cookieOptions.sameSite = 'none';
+    cookieOptions.secure = true; //  the cookie will only be sent on an encrpyted connection (so when using https)
+  }
   res.cookie('jwt', 'logged out', cookieOptions);
 
   res.status(200).json({ status: 'success' });
@@ -239,17 +244,16 @@ exports.logout = catchAsync(async (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
-  console.log(req.headers.authorization);
   let token;
+
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
     token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies?.jwt) {
+    token = req.cookies.jwt;
   }
-  // else if (req.cookies.jwt) {
-  //   token = req.cookies.jwt;
-  // }
 
   if (!token || token === 'logged out') {
     return next(
@@ -272,7 +276,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   if (!currentUser) {
     return next(
       new AppError(
-        'The user belonging to this token does no longer exist.',
+        'The user belonging to this token does no longer exist or the token has expired.',
         401
       )
     );
@@ -361,8 +365,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   if (!req.body.stayConnected) user.passwordChangedAt = Date.now() - 1000;
   await user.save();
 
-  // 3) Log the user in, send JWT
-  createSendToken(user, 200, res);
+  // 3) Send user info
+  res.status(statusCode).json({
+    status: 'success',
+    data: {
+      user,
+    },
+  });
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -396,7 +405,15 @@ exports.isLoggedIn = catchAsync(async (req, res, next) => {
 
 exports.getLoggedInUser = catchAsync(async (req, res, next) => {
   // 1) Getting token and check if it's there
-  let token = req.cookies.jwt;
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies?.jwt) {
+    token = req.cookies.jwt;
+  }
 
   if (!token || token === 'logged out') {
     return next();

@@ -6,7 +6,6 @@ import { removeUser } from "../../../store/user/user.action";
 import { UserLogoutContainer } from "./userLogout.style";
 import { AppDispatch } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../../api/authentication-requests";
 import { useEffect } from "react";
 
 const UserLogout = () => {
@@ -14,16 +13,10 @@ const UserLogout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleLogout = async () => {
-      const response = await logout();
-      if (response.status === "success") {
-        navigate("/");
-        setTimeout(() => {
-          dispatch(removeUser());
-        }, 200);
-      }
-    };
-    handleLogout();
+    navigate("/");
+    setTimeout(() => {
+      dispatch(removeUser());
+    }, 200);
   }, [dispatch, navigate]);
 
   return (

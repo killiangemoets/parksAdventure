@@ -30,6 +30,9 @@ import { getCheckoutSession } from "../../../api/booking-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../UIComponents/spinner/spinner.component";
+import { setCart } from "../../../store/user/user.action";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store/store";
 
 type OrderSummaryItemProps = {
   item: TItemWithTourInfo;
@@ -95,6 +98,7 @@ type OrderSummaryProps = {
   items: TItemWithTourInfo[];
 };
 const OrderSummary: FC<OrderSummaryProps> = ({ items }) => {
+  const dispatch: AppDispatch = useDispatch();
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -103,6 +107,7 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items }) => {
     const response = await getCheckoutSession(items);
     setLoading(false);
     if (response && response.status === "success") {
+      dispatch(setCart(response.token));
       return (window.location.href = response.data.session);
     } else if (
       response &&

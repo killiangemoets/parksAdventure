@@ -175,7 +175,12 @@ exports.saveCheckoutItems = catchAsync(async (req, res, next) => {
 
 exports.unsaveCheckoutItems = catchAsync(async (req, res, next) => {
   // 1) Check if there is a cart id
-  let cart = req.cookies.cart;
+  let cart;
+  if (req.headers['x-cart-token']) {
+    cart = req.headers['x-cart-token'];
+  } else if (req.cookies.tmp) {
+    cart = req.cookies.tmp;
+  }
   if (!cart || cart === 'clear') return next();
 
   // 2) Verification token

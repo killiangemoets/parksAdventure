@@ -19,6 +19,8 @@ export type TUser = {
   id: string;
   _id?: string;
   token: string;
+  tmp?: string;
+  cart?: string;
 };
 
 export type TExtendedUser = TUser & {

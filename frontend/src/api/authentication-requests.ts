@@ -113,18 +113,6 @@ export const resetPassword = async (
   }
 };
 
-export const logout = async () => {
-  try {
-    const response = await createAxiosInstance().get("/users/logout");
-    return response.data;
-  } catch (err) {
-    if (axios.isAxiosError(err)) {
-      return err.response?.data;
-    }
-    return err;
-  }
-};
-
 export const getUser = async () => {
   try {
     const response = await createAxiosInstance().get("/users/isloggedin");

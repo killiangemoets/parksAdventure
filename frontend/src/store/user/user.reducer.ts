@@ -13,6 +13,8 @@ export type UserState = {
   readonly wishlist?: string[];
   readonly id?: string;
   readonly token?: string;
+  readonly tmp?: string;
+  readonly cart?: string;
 };
 
 export const USER_INITIAL_STATE: UserState = {};
@@ -24,7 +26,6 @@ export const userReducer = (
   switch (action.type) {
     case USER_ACTION_TYPES.SET_USER:
       return {
-        ...state,
         ...action.payload,
       };
     case USER_ACTION_TYPES.SET_EMAIL:
@@ -32,8 +33,19 @@ export const userReducer = (
         ...state,
         email: action.payload,
       };
+    case USER_ACTION_TYPES.SET_TMP:
+      return {
+        ...state,
+        tmp: action.payload,
+      };
+    case USER_ACTION_TYPES.SET_CART:
+      return {
+        ...state,
+        cart: action.payload,
+      };
     case USER_ACTION_TYPES.REMOVE_USER:
       return {
+        ...state,
         email: undefined,
         firstname: undefined,
         lastname: undefined,
@@ -43,6 +55,17 @@ export const userReducer = (
         role: undefined,
         wishlist: undefined,
         id: undefined,
+        token: undefined,
+      };
+    case USER_ACTION_TYPES.REMOVE_TMP:
+      return {
+        ...state,
+        tmp: undefined,
+      };
+    case USER_ACTION_TYPES.REMOVE_CART:
+      return {
+        ...state,
+        cart: undefined,
       };
     case USER_ACTION_TYPES.UPDATE_USER:
       return { ...state, ...action.payload };
