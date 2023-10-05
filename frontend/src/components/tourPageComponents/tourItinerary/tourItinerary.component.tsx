@@ -77,7 +77,7 @@ const TourItinerary = () => {
                         return {
                           coordinates: stop.coordinates,
                           popupContent: (
-                            <StopDescription>
+                            <StopDescription key={stop._id}>
                               {stop.description}
                             </StopDescription>
                           ),

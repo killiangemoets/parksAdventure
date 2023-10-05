@@ -103,6 +103,7 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
               content:
                 index > 0 ? (
                   <TourImage
+                    key={index}
                     alt="preview content"
                     src={
                       imgFile.state === "new" ? imgFile.preview : imgFile.url
@@ -110,6 +111,7 @@ const ImagesInput: FC<ImagesInputProps> = ({ images, handleChange }) => {
                   />
                 ) : (
                   <LargeTourImage
+                    key={index}
                     alt="preview content"
                     src={
                       imgFile.state === "new" ? imgFile.preview : imgFile.url

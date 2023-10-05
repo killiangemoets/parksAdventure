@@ -164,7 +164,7 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
     const newData: GuideTableInfo[] = guides.map((guide) => ({
       key: guide._id || "",
       role: (
-        <Role onClick={() => handleOpenModal(guide)}>
+        <Role key={guide._id} onClick={() => handleOpenModal(guide)}>
           {capitalizeString(guide.role)}
         </Role>
       ),
@@ -183,7 +183,9 @@ const GuidesTable: FC<GuidesTableProps> = ({ guides, handleChange }) => {
       tours: (
         <Tours>
           {guide.tours.map((tour) => (
-            <Tour to={`/tour/${tour.slug}`}>{tour.name.toLowerCase()}</Tour>
+            <Tour key={tour._id} to={`/tour/${tour.slug}`}>
+              {tour.name.toLowerCase()}
+            </Tour>
           ))}
         </Tours>
       ),

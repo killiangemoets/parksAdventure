@@ -21,7 +21,7 @@ const SelectInput: FC<SelectInputProps> = ({
         {list.map((listEl) => {
           if (listEl.id === current)
             return (
-              <Option value={listEl.id} selected>
+              <Option key={listEl.id} value={listEl.id} selected>
                 {listEl.value}
               </Option>
             );

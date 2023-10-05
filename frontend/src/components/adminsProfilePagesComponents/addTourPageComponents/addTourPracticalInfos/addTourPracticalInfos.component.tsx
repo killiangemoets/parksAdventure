@@ -80,6 +80,7 @@ const AddTourPracticalInfos: FC<AddTourPracticalInfosProps> = ({
                 const name = "additionalInfo" + (i + 2).toString();
                 return (
                   <QuickFactInput
+                    key={i}
                     type={QUICK_FACT_INPUT_TYPE.text}
                     handleChange={handleChangeAdditionalInfo}
                     infoName=""

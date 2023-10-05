@@ -59,11 +59,11 @@ const ToursMap: FC<ToursMapProps> = ({
 
   useEffect(() => {
     if (!tours || !mapOpen) return setMarkers([]);
-    const newMarkers = tours.map((tour) => {
+    const newMarkers = tours.map((tour, i) => {
       return {
         coordinates: tour.startLocation.coordinates,
         highlight: highlightMarker === tour._id,
-        popupContent: <TourPopup tour={tour} />,
+        popupContent: <TourPopup key={i} tour={tour} />,
       };
     });
     setMarkers(newMarkers);

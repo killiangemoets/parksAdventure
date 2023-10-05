@@ -36,8 +36,9 @@ const MainHeader = () => {
   const [bgImages, setBgImages] = useState<React.ReactNode[]>([]);
 
   useEffect(() => {
-    const bgImagesEl = bgImagesUrl.map((backgroundImage) => (
+    const bgImagesEl = bgImagesUrl.map((backgroundImage, i) => (
       <MainHeaderContainer
+        key={i}
         className="bg-img"
         style={{
           backgroundImage: `url(${backgroundImage})`,

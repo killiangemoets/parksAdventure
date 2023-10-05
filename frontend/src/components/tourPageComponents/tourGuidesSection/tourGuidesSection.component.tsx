@@ -24,6 +24,7 @@ const TourGuidesSection = () => {
             {tour?.guides &&
               tour?.guides.map((guide) => (
                 <TourGuide
+                  key={guide._id}
                   pictureUrl={guide.photo}
                   position={guide.role}
                   name={`${guide.firstname} ${guide.lastname}`}

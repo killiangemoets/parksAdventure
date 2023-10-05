@@ -106,7 +106,7 @@ const AllBookingsNavbar: FC<AllBookingsNavbarProps> = ({
     const newUserSelection = userNames.map((user) => ({
       id: user._id,
       value: (
-        <UserContainer>
+        <UserContainer key={user._id}>
           <UserName>{`${user.firstname} ${user.lastname}`}</UserName>
           <UserEmail>{user.email}</UserEmail>
         </UserContainer>

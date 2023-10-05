@@ -44,6 +44,7 @@ const ProfileDropdown: FC<ProfileDropdownProps> = ({ handleClose }) => {
         if (i === 0)
           return (
             <ProfileDropdownElement
+              key={i}
               to={section.link}
               onClick={() => {
                 handleClose && handleClose();

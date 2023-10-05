@@ -39,11 +39,6 @@ export const userReducer = (
         ...state,
         tmp: action.payload,
       };
-    case USER_ACTION_TYPES.SET_CART:
-      return {
-        ...state,
-        cart: action.payload,
-      };
     case USER_ACTION_TYPES.REMOVE_USER:
       return {
         ...state,
@@ -62,11 +57,6 @@ export const userReducer = (
       return {
         ...state,
         tmp: undefined,
-      };
-    case USER_ACTION_TYPES.REMOVE_CART:
-      return {
-        ...state,
-        cart: undefined,
       };
     case USER_ACTION_TYPES.UPDATE_USER:
       return { ...state, ...action.payload };

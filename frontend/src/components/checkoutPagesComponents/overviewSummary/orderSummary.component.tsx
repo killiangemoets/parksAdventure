@@ -31,9 +31,9 @@ import { getCheckoutSession } from "../../../api/booking-requests";
 import Spinner, {
   SPINNER_TYPE_CLASSES,
 } from "../../UIComponents/spinner/spinner.component";
-import { setCart } from "../../../store/user/user.action";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../../store/store";
+import { setCart } from "../../../store/payment/payment.action";
 
 type OrderSummaryItemProps = {
   item: TItemWithTourInfo;

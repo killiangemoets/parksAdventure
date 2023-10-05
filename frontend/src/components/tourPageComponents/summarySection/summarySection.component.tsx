@@ -42,8 +42,8 @@ const SummarySection = () => {
         open={modalOpen}>
         <AdditionalInfoModalContent>
           {additionalInfo && additionalInfo?.length > 0 ? (
-            additionalInfo?.map((info) => (
-              <AdditionalInfoModalTextElement>
+            additionalInfo?.map((info, i) => (
+              <AdditionalInfoModalTextElement key={i}>
                 <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.bullet} />
                 <AdditionalInfoModalText>{info}</AdditionalInfoModalText>
               </AdditionalInfoModalTextElement>

@@ -141,7 +141,7 @@ const UsersTable: FC<UsersTableProps> = ({ users, handleChange }) => {
     const newData: UserTableInfo[] = users.map((user) => ({
       key: user._id || "",
       name: (
-        <UserPictureContainer>
+        <UserPictureContainer key={user._id}>
           <ProfilePicture
             pictureSize={PROFILE_PICTURE_SIZE_CLASSES.small}
             pictureUrl={user.photo}

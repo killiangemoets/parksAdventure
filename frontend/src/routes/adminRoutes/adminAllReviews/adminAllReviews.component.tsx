@@ -149,6 +149,7 @@ const AdminAllReviews = () => {
         )}
         {reviews.map((review) => (
           <AdminReview
+            key={review._id}
             date={review.createdAt}
             review={review.review}
             rating={review.rating}

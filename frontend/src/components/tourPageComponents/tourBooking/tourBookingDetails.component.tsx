@@ -102,7 +102,7 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
     <TourBookingDetailsContainer>
       {!isLoading && availability && (
         <>
-          <TourBookingTitle>{tour && tour.name}</TourBookingTitle>
+          <TourBookingTitle>{tour && tour.name.toLowerCase()}</TourBookingTitle>
           <TourBookingInfo>
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.time} />

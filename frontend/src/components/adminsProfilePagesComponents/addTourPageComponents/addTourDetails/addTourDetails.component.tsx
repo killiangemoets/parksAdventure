@@ -196,6 +196,7 @@ const AddTourDetails: FC<AddTourDetailsProps> = ({
                   id: tourGuide.id,
                   value: (
                     <TourGuide
+                      key={tourGuide.id}
                       pictureUrl={tourGuide.photo}
                       position={
                         tourGuide.role === "guide" ? "Guide" : "Lead-Guide"

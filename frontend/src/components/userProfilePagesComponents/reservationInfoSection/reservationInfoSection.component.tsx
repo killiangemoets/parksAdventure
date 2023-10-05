@@ -114,8 +114,8 @@ const ReservationInfoSection = () => {
             <InfoBlockContent>
               {!isLoading ? (
                 additionalInfo && additionalInfo?.length > 0 ? (
-                  additionalInfo.map((info) => (
-                    <InfoContent>{info}</InfoContent>
+                  additionalInfo.map((info, i) => (
+                    <InfoContent key={i}>{info}</InfoContent>
                   ))
                 ) : (
                   <InfoContent>/</InfoContent>
