@@ -18,7 +18,7 @@ export type TUser = {
   wishlist: string[];
   id: string;
   _id?: string;
-  token: string;
+  token?: string;
   tmp?: string;
   cart?: string;
 };

@@ -26,6 +26,7 @@ export const userReducer = (
   switch (action.type) {
     case USER_ACTION_TYPES.SET_USER:
       return {
+        ...state,
         ...action.payload,
       };
     case USER_ACTION_TYPES.SET_EMAIL:

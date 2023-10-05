@@ -67,7 +67,6 @@ function App() {
             role,
             _id: id,
           } = response.user;
-          const token = response.token;
 
           dispatch(
             setUser({
@@ -80,10 +79,9 @@ function App() {
               role,
               wishlist,
               id,
-              token,
             })
           );
-        } else if (response) {
+        } else {
           dispatch(removeUser());
         }
       } catch (err) {
