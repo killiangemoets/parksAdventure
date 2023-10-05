@@ -116,7 +116,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'There was an error sending the verification email. Try again or contact us!',
-        500
+        400
       )
     );
   }
@@ -124,7 +124,7 @@ exports.signup = catchAsync(async (req, res, next) => {
 
 exports.verifyEmail = catchAsync(async (req, res, next) => {
   // 1) Verify that token is present
-  if (!req.params.token) return next(new AppError('token is missing', 500));
+  if (!req.params.token) return next(new AppError('token is missing', 400));
 
   // 2) Get user based on the token
   const hashedToken = crypto
@@ -339,7 +339,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'There was an error sending the email. Try again later!',
-        500
+        400
       )
     );
   }
@@ -486,7 +486,7 @@ exports.createTourGuide = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'There was an error sending the verification email. Try again or contact us!',
-        500
+        400
       )
     );
   }
@@ -494,7 +494,7 @@ exports.createTourGuide = catchAsync(async (req, res, next) => {
 
 exports.activateTourGuide = catchAsync(async (req, res, next) => {
   // 1) Verify that token is present
-  if (!req.params.token) return next(new AppError('token is missing', 500));
+  if (!req.params.token) return next(new AppError('token is missing', 400));
 
   // 2) Get user based on the token
   const hashedToken = crypto

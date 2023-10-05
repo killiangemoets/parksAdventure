@@ -145,6 +145,12 @@ export const OrderSummaryPriceNote = styled.p`
   text-align: right;
 `;
 
+export const ValidatePaymentErrorCopntainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 export const ValidatePaymentError = styled.p`
   text-align: center;
   height: 2rem;

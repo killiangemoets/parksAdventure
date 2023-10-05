@@ -20,6 +20,7 @@ import {
   OrderSummaryTotalText,
   OrderSummaryTotalValue,
   ValidatePaymentError,
+  ValidatePaymentErrorCopntainer,
 } from "./orderSummary.style";
 import { TItemWithTourInfo } from "../../../types/booking";
 import { FC, useState } from "react";
@@ -154,7 +155,9 @@ const OrderSummary: FC<OrderSummaryProps> = ({ items }) => {
           </Button>
         </OrderSummaryFooter>
       </OrderSummaryContainer>
-      <ValidatePaymentError>{errorMessage}</ValidatePaymentError>
+      <ValidatePaymentErrorCopntainer>
+        <ValidatePaymentError>{errorMessage}</ValidatePaymentError>
+      </ValidatePaymentErrorCopntainer>
     </>
   );
 };

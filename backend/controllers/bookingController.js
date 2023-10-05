@@ -16,7 +16,7 @@ const BookingAPIFeatures = require('../utils/bookingApiFeatures');
 exports.checkAvailabilities = catchAsync(async (req, res, next) => {
   // 1) Check is there is items
   if (!req.body.items) {
-    return next(new AppError('No items', 500));
+    return next(new AppError('No items', 400));
   }
 
   // 2) Check that all the tour ids exist
@@ -35,7 +35,7 @@ exports.checkAvailabilities = catchAsync(async (req, res, next) => {
   req.body.items.forEach((item) => {
     const tour = toursList.find((tour) => tour.id === item.tourId);
     if (!tour) {
-      return next(new AppError('A tour id is not correct', 500));
+      return next(new AppError('A tour id is not correct', 400));
     }
 
     // 3) Check if it's not sold out
@@ -63,7 +63,7 @@ exports.checkAvailabilities = catchAsync(async (req, res, next) => {
           selectedAvailability?.currentGroupSize ||
       new Date(selectedAvailability.date) < new Date(Date.now())
     ) {
-      return next(new AppError('A tour is not available anymore', 500));
+      return next(new AppError('A tour is not available anymore', 400));
     }
   });
 
@@ -209,7 +209,7 @@ exports.unsaveCheckoutItems = catchAsync(async (req, res, next) => {
 
 exports.validateOrder = catchAsync(async (req, res, next) => {
   // 1) Verify that token is present
-  if (!req.params.token) return next(new AppError('token is missing', 500));
+  if (!req.params.token) return next(new AppError('token is missing', 400));
 
   // 2) Crypt token
   const cryptedPaymentToken = crypto
@@ -245,7 +245,7 @@ exports.validateOrder = catchAsync(async (req, res, next) => {
 
   // 4) If no bookings updated -> error
   if (!bookings.nModified) {
-    return next(new AppError('No booking found with this token', 500));
+    return next(new AppError('No booking found with this token', 400));
   }
 
   await Promise.all(
@@ -322,7 +322,7 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
 
   const bookings = await Booking.find(queryObj);
 
-  if (!bookings.length) return next(new AppError('No booking found', 500));
+  if (!bookings.length) return next(new AppError('No booking found', 400));
 
   const booking = bookings[0];
 

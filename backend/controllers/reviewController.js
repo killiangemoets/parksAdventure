@@ -32,7 +32,7 @@ exports.checkIfTourIsCompleted = catchAsync(async (req, res, next) => {
     return next(
       new AppError(
         'Reviews can only be left once the activity is completed.',
-        500
+        400
       )
     );
 
