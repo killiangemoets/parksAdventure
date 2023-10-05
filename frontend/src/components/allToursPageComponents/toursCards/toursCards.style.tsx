@@ -34,11 +34,11 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
     gap: 3.2rem;
   }
   @media (max-width: 560px) {
-    gap: 1.6rem;
+    gap: 1rem;
   }
 
   @media (max-width: 530px) {
-    grid-template-columns: repeat(2, 22rem);
+    grid-template-columns: repeat(2, 20rem);
   }
 
   ${({ mapOpen }) =>
@@ -67,7 +67,7 @@ export const ToursCardsWrapper = styled.div<ToursCardWrapperProps>`
     ${({ mapOpen }) =>
       mapOpen &&
       css`
-        grid-template-columns: repeat(2, 22rem);
+        grid-template-columns: repeat(2, 20rem);
       `}
   }
 `;

@@ -21,6 +21,7 @@ export const AuthenticationContainer = styled.div`
 
 export const AuthenticationLink = styled(Link)`
   cursor: pointer;
+  text-align: center;
   font-weight: 600;
   font-size: 2.4rem;
   letter-spacing: 1px;

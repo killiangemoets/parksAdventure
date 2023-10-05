@@ -45,6 +45,7 @@ export const Navigation = () => {
     useState<boolean>(false);
 
   const handleClickOnLogin = () => {
+    setShowPhoneNavbar(false);
     const uri = getAuthenticationRedictionUri(window.location.href);
 
     if (uri.includes("signup") || uri.includes("login")) {
@@ -53,6 +54,7 @@ export const Navigation = () => {
     navigate(`/login?uri=${uri}`);
   };
   const handleClickOnSignUp = () => {
+    setShowPhoneNavbar(false);
     const uri = getAuthenticationRedictionUri(window.location.href);
     if (uri.includes("signup") || uri.includes("login")) {
       return navigate(`/signup`);

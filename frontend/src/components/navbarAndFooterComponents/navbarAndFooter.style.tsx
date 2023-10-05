@@ -174,7 +174,7 @@ export const FooterContainer = styled.div`
   background-color: ${colors.background};
 
   @media (max-width: 500px) {
-    padding: 0 2rem;
+    padding: 0 1rem;
   }
 `;
 
@@ -185,7 +185,7 @@ export const FooterLogo = styled.div`
 
   @media (max-width: 500px) {
     img {
-      height: 4.2rem;
+      height: 3.6rem;
     }
   }
 `;
@@ -197,6 +197,7 @@ export const Copyright = styled.p`
 
   @media (max-width: 500px) {
     max-width: 9rem;
+    font-size: 1rem;
   }
 `;
 
@@ -231,6 +232,7 @@ export const FooterLink = styled(Link)`
   }
 
   @media (max-width: 500px) {
+    font-size: 1rem;
     &:nth-child(2) {
       grid-row: 2;
       grid-column: span 2;

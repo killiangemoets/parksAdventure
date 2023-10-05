@@ -43,7 +43,7 @@ type InputProps = {
 };
 export const Input = styled.input<InputProps>`
   width: 52rem;
-  padding: 0 5rem;
+  padding: 0 4rem;
   height: 5.2rem;
   font-size: 1.6rem;
   font-family: inherit;

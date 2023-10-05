@@ -68,7 +68,7 @@ export const TourCardContainer = styled(Link)`
   }
 
   @media (max-width: 530px) {
-    width: 22rem;
+    width: 20rem;
     gap: 1.2rem;
     border-radius: 8px;
   }
@@ -225,7 +225,7 @@ export const TourInfos = styled.div`
   gap: 1.8rem;
 
   @media (max-width: 530px) {
-    row-gap: 1.2rem;
+    row-gap: 0.6rem;
     column-gap: 0.4rem;
   }
 `;
@@ -277,6 +277,7 @@ export const TourFooter = styled.div`
   }
 
   @media (max-width: 530px) {
+    margin-top: 0.4rem;
     padding: 1rem 1.6rem;
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;

@@ -55,7 +55,7 @@ module.exports = class Email {
       to:
         template === 'contact'
           ? [process.env.EMAIL_CONTACT_TO, process.env.EMAIL_FROM]
-          : this.email,
+          : [this.email],
       subject,
       html,
       text: htmlToText(html), // convert the html to text
