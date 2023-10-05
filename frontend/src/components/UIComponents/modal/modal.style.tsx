@@ -31,6 +31,7 @@ export const ModalContainer = styled.div`
   @media (max-width: 500px) {
     width: 100%;
     border-radius: 12px;
+    max-height: 64vh;
   }
 `;
 export const ModalTitleSection = styled.div`

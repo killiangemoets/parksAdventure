@@ -75,15 +75,15 @@ export const ItineraryMapContainer = styled.div`
   width: 64rem;
   height: 48rem;
 
-  @media (max-width: 770px) {
-    width: 50rem;
-    height: 37.5rem;
-  }
-  @media (max-width: 420px) {
+  @media (max-width: 800px) {
     width: 45rem;
     height: 33.75rem;
   }
-  @media (max-width: 374px) {
+  @media (max-width: 440px) {
+    width: 42rem;
+    height: 31.5rem;
+  }
+  @media (max-width: 380px) {
     width: 40rem;
     height: 30rem;
   }
