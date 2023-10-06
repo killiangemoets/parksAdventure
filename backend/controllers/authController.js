@@ -114,10 +114,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     newUser.emailVerificationTokens = undefined;
     await newUser.save({ validateBeforeSave: false });
     return next(
-      new AppError(
-        'There was an error sending the verification email. Try again or contact us!',
-        400
-      )
+      new AppError('there was an error sending the verification email', 400)
     );
   }
 });

@@ -35,11 +35,11 @@ export type AllReviewsNavbarProps = {
 
 const ratingSelection: Info[] = [
   { id: "allRatings", value: "All Ratings" },
-  { id: "0-1", value: "0-1" },
-  { id: "1-2", value: "1-2" },
-  { id: "2-3", value: "2-3" },
-  { id: "3-4", value: "3-4" },
-  { id: "4-5", value: "4-5" },
+  { id: "0.5-1", value: "0.5 - 1" },
+  { id: "1.5-2", value: "1.5 - 2" },
+  { id: "2.5-3", value: "2.5 - 3" },
+  { id: "3.5-4", value: "3.5 - 4" },
+  { id: "4.5-5", value: "4.5 - 5" },
 ];
 
 const sortSelection: Info[] = [

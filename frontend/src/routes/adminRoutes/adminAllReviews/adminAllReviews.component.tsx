@@ -53,6 +53,7 @@ const AdminAllReviews = () => {
       if (requestStringFromUrl) requestString += `&${requestStringFromUrl}`;
 
       const response = await getAllReviews(requestString);
+      console.log("response", response);
 
       if (response && response.status === "success") {
         if (response.totalResults === 0) setErrorMessage("No results!");
@@ -147,22 +148,23 @@ const AdminAllReviews = () => {
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>
         )}
-        {reviews.map((review) => (
-          <AdminReview
-            key={review._id}
-            date={review.createdAt}
-            review={review.review}
-            rating={review.rating}
-            userImg={review.user?.photo}
-            userName={`${review.user?.firstname} ${review.user?.lastname}`}
-            tourImg={review.tour?.imageCover}
-            hidden={review.hidden}
-            tourName={review.tour?.name}
-            edited={review.edited}
-            reviewId={review._id}
-            handlePassDeletedReview={handleDeleteReview}
-          />
-        ))}
+        {(!errorMessage || errorMessage?.length < 0) &&
+          reviews.map((review) => (
+            <AdminReview
+              key={review._id}
+              date={review.createdAt}
+              review={review.review}
+              rating={review.rating}
+              userImg={review.user?.photo}
+              userName={`${review.user?.firstname} ${review.user?.lastname}`}
+              tourImg={review.tour?.imageCover}
+              hidden={review.hidden}
+              tourName={review.tour?.name}
+              edited={review.edited}
+              reviewId={review._id}
+              handlePassDeletedReview={handleDeleteReview}
+            />
+          ))}
         {isLoading && (
           <AdminContentSpinner>
             <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />

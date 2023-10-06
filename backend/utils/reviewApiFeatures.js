@@ -49,22 +49,13 @@ class ReviewAPIFeatures {
     }
 
     if (queryObj.rating) {
-      queryObj.currentAvailabilities['$elemMatch'].rating = {};
-      if (queryObj.rating?.lte)
-        queryObj.currentAvailabilities['$elemMatch'].rating['$lte'] =
-          +queryObj.rating.lte;
-      if (queryObj.rating?.lt)
-        queryObj.currentAvailabilities['$elemMatch'].rating['$lt'] =
-          +queryObj.rating.lt;
-      if (queryObj.rating?.gte)
-        queryObj.currentAvailabilities['$elemMatch'].rating['$gte'] =
-          +queryObj.rating.gte;
-      if (queryObj.rating?.gt)
-        queryObj.currentAvailabilities['$elemMatch'].rating['$gt'] =
-          +queryObj.rating.gt;
-      if (queryObj.rating?.eq)
-        queryObj.currentAvailabilities['$elemMatch'].rating['$eq'] =
-          +queryObj.rating.eq;
+      const rating = { ...queryObj.rating };
+      queryObj.rating = {};
+      if (rating?.lte) queryObj.rating['$lte'] = +rating.lte;
+      if (rating?.lt) queryObj.rating['$lt'] = +rating.lt;
+      if (rating?.gte) queryObj.rating['$gte'] = +rating.gte;
+      if (rating?.gt) queryObj.rating['$gt'] = +rating.gt;
+      if (rating?.eq) queryObj.rating['$eq'] = +rating.eq;
     }
 
     if (queryObj.createdAt) {

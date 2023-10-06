@@ -144,14 +144,15 @@ const AdminAllBookings = () => {
         {errorMessage && (
           <AdminContentErrorMessage>{errorMessage}</AdminContentErrorMessage>
         )}
-        {bookings.map((booking, i) => (
-          <BookingCard
-            key={i}
-            booking={booking}
-            allowReview={false}
-            showUserInfo={true}
-          />
-        ))}
+        {(!errorMessage || errorMessage?.length < 0) &&
+          bookings.map((booking, i) => (
+            <BookingCard
+              key={i}
+              booking={booking}
+              allowReview={false}
+              showUserInfo={true}
+            />
+          ))}
         {isLoading && (
           <AdminContentSpinner>
             <Spinner spinnerType={SPINNER_TYPE_CLASSES.large} />

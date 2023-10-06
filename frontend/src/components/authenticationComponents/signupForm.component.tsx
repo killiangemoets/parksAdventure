@@ -69,6 +69,14 @@ export const SignupForm = () => {
     } else {
       if (response && response.message.includes("E11000"))
         setErrorMessage("This email address is already used");
+      else if (
+        response &&
+        response.message.includes("error sending the verification email")
+      )
+        setErrorMessage(
+          "There was an error sending the verification email. Try again or contact us!"
+        );
+      else if (response) setErrorMessage(response.message);
       else
         setErrorMessage(
           "An error occured. Please refresh the page and try again!"
