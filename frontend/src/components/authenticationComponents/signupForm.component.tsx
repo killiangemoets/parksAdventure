@@ -67,7 +67,11 @@ export const SignupForm = () => {
         return navigate(`/signup/email-verification${uriString}`);
       }, 2000);
     } else {
-      if (response && response.message.includes("E11000"))
+      if (
+        response &&
+        (response.message.includes("E11000") ||
+          response.message.toLowerCase().includes("duplicate field value"))
+      )
         setErrorMessage("This email address is already used");
       else if (
         response &&
