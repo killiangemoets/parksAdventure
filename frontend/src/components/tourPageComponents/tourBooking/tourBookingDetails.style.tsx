@@ -139,7 +139,7 @@ export const TourBookingButtons = styled.div`
       border: solid 1.5px ${colors.primary};
       padding: 0 1.2rem;
       height: 4.8rem;
-      min-width: 0;
+      min-width: 0 !important;
       font-size: 1.6rem;
       letter-spacing: 0.4px;
 

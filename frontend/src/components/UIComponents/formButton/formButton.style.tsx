@@ -4,7 +4,7 @@ import colors from "../../../colors";
 
 export const FormButtonContainer = styled.div`
   button {
-    min-width: 19.4rem;
+    min-width: 16rem;
     padding: 0rem 3.2rem;
     height: 5rem;
   }

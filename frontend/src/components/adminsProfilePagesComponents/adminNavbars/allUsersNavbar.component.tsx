@@ -45,13 +45,13 @@ const AllUsersNavbar = () => {
         <SearchInput
           handleDelete={handleDeleteSearchUser}
           handleSubmit={handleSubmitSearchUser}
-          placeholder={"firstname, lastname, email, ..."}
+          placeholder={"name, email, ..."}
           value={searchUser}
           onChange={(e) => {
             setSearchUser(e.target.value);
           }}
           adminStyle={true}
-          style={{ width: isSmallScreen ? "42.8rem" : "52rem" }}
+          style={{ width: isSmallScreen ? "38rem" : "50rem" }}
         />
       </AdminNavbarCenterContainer>
     </AdminNavbarContainer>

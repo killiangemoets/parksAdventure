@@ -144,13 +144,13 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
         <SearchInput
           handleDelete={handleDeleteSearchGuide}
           handleSubmit={handleSubmitSearchGuide}
-          placeholder={"firstname, lastname, email, ..."}
+          placeholder={"name, email, ..."}
           value={searchGuide}
           onChange={(e) => {
             setSearchGuide(e.target.value);
           }}
           adminStyle={true}
-          style={{ width: isVerySmallScreen ? "42.8rem" : "52rem" }}
+          style={{ width: isVerySmallScreen ? "38rem" : "50rem" }}
         />
         {userRole === USER_ROLE_TYPES.ADMIN && isSmallScreen && (
           <Button

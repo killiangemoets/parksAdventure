@@ -147,11 +147,16 @@ export const ModalSuccessMessageElement = styled.p`
 export const AddTourGuideForm = styled(AuthenticationForm)`
   @media (max-width: 480px) {
     button {
-      padding: 0rem 2rem;
-      height: 5rem;
+      padding: 0rem 1.2rem;
+      height: 4.6rem;
+      min-width: 0 !important;
 
       font-size: 1.4rem;
-      letter-spacing: 1px;
+      letter-spacing: 0.4px;
+    }
+
+    select {
+      min-height: 5.4rem !important;
     }
   }
 `;
