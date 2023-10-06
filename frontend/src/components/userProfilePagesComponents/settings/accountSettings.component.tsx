@@ -66,6 +66,7 @@ const AccountSettings = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
+    setErrorMessage("");
     const response = await updateMe(userInputsData);
     setLoading(false);
     if (response && response.status === "success") {

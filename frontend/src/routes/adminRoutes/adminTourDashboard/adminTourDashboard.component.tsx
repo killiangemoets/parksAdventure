@@ -16,7 +16,6 @@ import {
   LoadingDashboardContainer,
   LoadingMessage,
 } from "../adminDashboard/adminDashboard.style";
-import { AdminMediumContent } from "../adminRoutes.style";
 import {
   AdminTourCalendarContainer,
   AdminTourCalendarTitle,
@@ -32,6 +31,7 @@ import { AppDispatch } from "../../../store/store";
 import { useDispatch } from "react-redux";
 import { fetchTourAsync } from "../../../store/tour/tour.action";
 import colors from "../../../colors";
+import { AdminTourDashboardContent } from "./adminTourDashboard.style";
 
 type TourSlugRouteParams = {
   slug: string;
@@ -193,8 +193,7 @@ const AdminTourDashboard = () => {
               {tourStats?.tourName} - Quick Stats
             </Title>
           </AdminTourCalendarTitle>
-
-          <AdminMediumContent>
+          <AdminTourDashboardContent>
             <AdminDashboardGrid>
               <Counter
                 iconType={STAT_ICON_TYPE_CLASSES.users}
@@ -247,7 +246,7 @@ const AdminTourDashboard = () => {
                 data={incomeEvolutionData}
               />
             </AdminDashboardGrid>
-          </AdminMediumContent>
+          </AdminTourDashboardContent>
         </>
       )}
       {errorMessage.length > 0 && <ErrorMessage>{errorMessage}</ErrorMessage>}

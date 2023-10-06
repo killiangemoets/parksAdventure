@@ -447,29 +447,28 @@ export const AdminGuidesNavbarCenterContainer = styled(
 
 // TOUR
 export const AdminTourNavbarContainer = styled(AdminNavbarContainer)`
-  @media (max-width: 580px) {
-    gap: 2rem;
+  @media (max-width: 680px) {
     height: 8rem;
     gap: 1rem;
 
     button {
       font-size: 1.4rem;
       white-space: nowrap;
-      padding: 1rem 1.6rem;
-      min-width: 8rem;
+      padding: 1rem;
+      min-width: 6.4rem;
     }
   }
 `;
 
 export const AdminTourNavbarLeftContainer = styled(AdminNavbarLeftContainer)`
-  @media (max-width: 580px) {
-    left: 2rem;
-    gap: 1rem;
+  @media (max-width: 680px) {
+    left: 1rem;
+    gap: 0.4rem;
   }
 `;
 export const AdminTourNavbarRightContainer = styled(AdminNavbarRightContainer)`
-  @media (max-width: 580px) {
-    right: 2rem;
-    gap: 1rem;
+  @media (max-width: 680px) {
+    right: 1rem;
+    gap: 0.4rem;
   }
 `;

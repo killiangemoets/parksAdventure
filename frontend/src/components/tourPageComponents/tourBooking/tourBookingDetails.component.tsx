@@ -117,7 +117,9 @@ const TourBookingDetails: FC<TourBookingDetailsProps> = ({
             <Info>
               <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.location} />
               <InfoTitle>Address</InfoTitle>
-              <InfoLink to="https://www.google.com">
+              <InfoLink
+                target="_blank"
+                href={`https://www.google.com/maps/search/?api=1&query=${tour?.startLocation?.coordinates[1]},${tour?.startLocation?.coordinates[0]}`}>
                 {tour?.meetingAddress}
               </InfoLink>
             </Info>

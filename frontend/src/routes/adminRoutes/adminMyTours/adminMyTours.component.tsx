@@ -68,7 +68,7 @@ export const AdminMyTours = () => {
           <ToursCards />
         </MyToursCards>
       )}
-      {tours.length && numberOfPages > 1 && (
+      {tours.length > 0 && numberOfPages > 1 && (
         <Pagination
           current={currentPage}
           total={numberOfPages}

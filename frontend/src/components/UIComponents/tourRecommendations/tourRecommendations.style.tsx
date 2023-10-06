@@ -17,7 +17,7 @@ export const TourRecommendationsWrapper = styled.div`
 
 export const RecommendationCards = styled.div`
   width: 100%;
-  overflow: scroll;
+  overflow-x: scroll;
   height: 100%;
   display: grid;
   grid-template-columns: repeat(3, auto);
@@ -27,6 +27,11 @@ export const RecommendationCards = styled.div`
 
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  height: 54rem;
+  @media (max-width: 530px) {
+    height: 36rem;
   }
 
   @media (max-width: 930px) {

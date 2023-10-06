@@ -79,10 +79,11 @@ const deleteImage = (secureUrl) => {
       if (result && result.result === 'ok') {
         return resolve('Image deleted successfully.');
       }
-      return reject({
-        message:
-          'A problem occurred while deleting the image. Please try again.',
-      });
+      return resolve('Image not found.');
+      // return reject({
+      //   message:
+      //     'A problem occurred while deleting the image. Please try again.',
+      // });
     });
   });
 };

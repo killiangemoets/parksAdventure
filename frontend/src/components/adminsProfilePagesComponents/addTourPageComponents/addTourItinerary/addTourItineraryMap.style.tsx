@@ -63,6 +63,13 @@ export const PopupInputContainer = styled.div<InputItineraryProps>`
       outline: none;
     }
   }
+
+  @media (max-width: 800px) {
+    gap: 0.4rem;
+    .ant-input {
+      min-width: 20rem;
+    }
+  }
 `;
 
 export const PopupButton = styled.div`
@@ -77,6 +84,15 @@ export const PopupButton = styled.div`
     font-size: 1.4rem;
     letter-spacing: 0.6px;
   }
+
+  @media (max-width: 800px) {
+    & ${BaseButton} {
+      padding: 0.6rem 0;
+      width: 6.4rem;
+      font-size: 1.2rem;
+      letter-spacing: 0.4px;
+    }
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -90,6 +106,6 @@ export const ErrorMessage = styled.p`
   color: ${colors.error};
   font-size: 1.4rem;
   font-weight: 500;
-  letter-spacing: 1px;
+  letter-spacing: 0.4px;
   height: 2rem;
 `;

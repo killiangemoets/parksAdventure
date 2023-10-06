@@ -97,6 +97,10 @@ export const QuickFactInputContainer = styled.div<QuickInputContainerProps>`
         borderColor: colors.error,
       }}
   }
+
+  @media (max-width: 600px) {
+    gap: 0;
+  }
 `;
 
 export const QuickFactDescription = styled.p`

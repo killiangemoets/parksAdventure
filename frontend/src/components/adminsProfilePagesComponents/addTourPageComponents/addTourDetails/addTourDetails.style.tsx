@@ -37,7 +37,7 @@ export const AddTourDetailsContainer = styled.div`
   }
   @media (max-width: 450px) {
     & > * {
-      padding: 6.4rem 3.2rem;
+      padding: 6.4rem 2.4rem;
     }
     flex-direction: column;
     padding: 0;

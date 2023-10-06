@@ -11,7 +11,7 @@ export const Content = styled.div`
   min-height: calc(100vh - 24rem);
 
   @media (max-width: 1000px) {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 0rem;
+    padding-right: 0rem;
   }
 `;

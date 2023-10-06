@@ -44,11 +44,10 @@ export const AuthenticationLinkSmall = styled(AuthenticationLink)`
   font-size: 1.6rem;
   letter-spacing: 1px;
   border-bottom: none;
-  border-bottom: solid 1px rgba(204, 112, 75, 0);
 
   &:hover {
-    color: ${colors.primary};
-    border-bottom: solid 1px ${colors.primary};
+    border-bottom: none;
+    text-decoration: underline;
   }
 `;
 

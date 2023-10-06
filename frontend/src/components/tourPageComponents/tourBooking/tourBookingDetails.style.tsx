@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 import colors from "../../../colors";
 
 export const TourBookingDetailsContainer = styled.div`
@@ -73,7 +72,7 @@ export const InfoPriceName = styled(InfoContent)`
   width: 4rem;
 `;
 
-export const InfoLink = styled(Link)`
+export const InfoLink = styled.a`
   font-size: 1.4rem;
   font-weight: 400;
   text-transform: capitalize;
@@ -137,8 +136,9 @@ export const TourBookingButtons = styled.div`
     gap: 1rem;
     button {
       border: solid 1.5px ${colors.primary};
-      padding: 0 1.2rem;
+      padding: 0;
       height: 4.8rem;
+      width: 11rem;
       min-width: 0 !important;
       font-size: 1.6rem;
       letter-spacing: 0.4px;

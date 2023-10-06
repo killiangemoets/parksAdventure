@@ -43,6 +43,7 @@ export const TourCardContainer = styled(Link)`
   cursor: pointer;
   width: 32rem;
   height: 100%;
+  max-height: 54rem;
   border-radius: 12px;
   background-color: ${colors.backgroundLight};
   -webkit-box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.1);
@@ -68,6 +69,7 @@ export const TourCardContainer = styled(Link)`
   }
 
   @media (max-width: 530px) {
+    max-height: 36rem;
     width: 20rem;
     gap: 1.2rem;
     border-radius: 8px;

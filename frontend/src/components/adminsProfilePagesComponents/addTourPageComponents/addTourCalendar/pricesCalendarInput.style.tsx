@@ -112,11 +112,12 @@ export const CalendarInputTopBarContainer = styled.div`
     align-items: center;
     justify-content: center;
     row-gap: 2rem;
-    column-gap: 3.2rem;
+    column-gap: 2rem;
 
     & ${BaseButton} {
       grid-row: 2/3;
-      grid-column: 3/5;
+      grid-column: 2/4;
+      width: fit-content;
     }
   }
 `;
