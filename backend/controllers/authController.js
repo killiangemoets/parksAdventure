@@ -365,7 +365,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   // 3) Send user info
-  res.status(statusCode).json({
+  res.status(200).json({
     status: 'success',
     data: {
       user,
