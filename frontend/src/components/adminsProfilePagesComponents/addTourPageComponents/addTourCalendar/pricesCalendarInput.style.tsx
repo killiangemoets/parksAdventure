@@ -21,7 +21,7 @@ export const CalendarInputContainer = styled.div`
   }
 
   & ${QuickFactName} {
-    width: 12rem;
+    width: 6.8rem;
   }
 
   .ant-input-number-group-addon,

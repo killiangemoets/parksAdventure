@@ -329,22 +329,18 @@ exports.getBookingDetails = catchAsync(async (req, res, next) => {
   const tour = await Tour.findById(booking.tour._id)
     .populate({
       path: 'reviews',
-      populate: {
-        path: 'user',
-        select: 'firstname lastname photo',
-      },
     })
     .populate({
       path: 'bookings',
       populate: {
-        path: 'user',
-        select: 'firstname lastname photo',
+        path: 'tour',
+        select: 'adults kids',
       },
     });
 
-  tour.availabilities = tour.availabilities.filter((availability) =>
-    formating.compareDates(availability.date, booking.date)
-  );
+  if (!tour) {
+    return next(new AppError('No tour found with that id', 404));
+  }
 
   const recommendations = await Tour.find({
     _id: { $ne: tour._id },
