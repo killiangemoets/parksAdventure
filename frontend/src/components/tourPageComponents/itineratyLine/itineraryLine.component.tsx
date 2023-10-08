@@ -7,9 +7,14 @@ import { ItineraryLineContainer, Line } from "./itineraryLine.style";
 export type ItineraryLineProps = {
   points: string[];
   handleDelete?: (name: string) => void;
+  handleSelectStop?: (name: string) => void;
 };
 
-const ItineraryLine: FC<ItineraryLineProps> = ({ points, handleDelete }) => {
+const ItineraryLine: FC<ItineraryLineProps> = ({
+  points,
+  handleDelete,
+  handleSelectStop,
+}) => {
   return (
     <ItineraryLineContainer>
       {points.map((point, i) => (
@@ -23,6 +28,7 @@ const ItineraryLine: FC<ItineraryLineProps> = ({ points, handleDelete }) => {
             }
             name={point}
             handleDelete={handleDelete}
+            handleSelectStop={handleSelectStop}
           />
           {i !== points.length - 1 && <Line />}
         </>

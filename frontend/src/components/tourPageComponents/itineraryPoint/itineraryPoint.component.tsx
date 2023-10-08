@@ -20,15 +20,20 @@ export type ItineraryPointProps = {
   type?: ITINERARY_POINT_TYPE_CLASSES;
   name: string;
   handleDelete?: (name: string) => void;
+  handleSelectStop?: (name: string) => void;
 };
 
 const ItineraryPoint: FC<ItineraryPointProps> = ({
   type = ITINERARY_POINT_TYPE_CLASSES.stopOverPoint,
   name,
   handleDelete,
+  handleSelectStop,
 }) => {
   return (
-    <PointContainer>
+    <PointContainer
+      onClick={() => {
+        handleSelectStop && handleSelectStop(name);
+      }}>
       <InfoIcon
         iconType={
           type === ITINERARY_POINT_TYPE_CLASSES.startingPoint
@@ -44,8 +49,7 @@ const ItineraryPoint: FC<ItineraryPointProps> = ({
       {handleDelete && (
         <Button
           buttonType={BUTTON_TYPE_CLASSES.empty}
-          onClick={() => handleDelete(name)}
-        >
+          onClick={() => handleDelete(name)}>
           <InfoIcon iconType={INFO_ICON_TYPE_CLASSES.close} />
         </Button>
       )}

@@ -41,6 +41,7 @@ const TourItinerary = () => {
   const isLoading = useSelector(selectTourIsLoading);
   const [points, setPoints] = useState<string[]>([]);
   const [stops, setStops] = useState<TStop[]>([]);
+  const [selectedStop, setSelectedStop] = useState<TStop>();
 
   useEffect(() => {
     let newPoints = [];
@@ -59,17 +60,37 @@ const TourItinerary = () => {
     setStops(newStops);
   }, [tour]);
 
+  const handleSelectStop = (name: string) => {
+    const newSelectedStop = stops.find((stop) => stop.description === name);
+    if (newSelectedStop) setSelectedStop(newSelectedStop);
+  };
+
   return (
     <TourItineraryContainer>
       <TourItineraryWrapper>
         <Title titleType={TITLE_TYPE_CLASSES.section}>Itinerary</Title>
         <TourItineraryContent>
           <ItineraryLeftContainer>
-            <ItineraryLine points={isLoading ? [] : points} />
+            <ItineraryLine
+              points={isLoading ? [] : points}
+              handleSelectStop={handleSelectStop}
+            />
           </ItineraryLeftContainer>
           <ItineraryRightContainer>
             <ItineraryMapContainer>
               <CustomMap
+                selectedLocation={
+                  selectedStop
+                    ? {
+                        coordinates: selectedStop.coordinates,
+                        popupContent: (
+                          <StopDescription key={selectedStop._id}>
+                            {selectedStop.description}
+                          </StopDescription>
+                        ),
+                      }
+                    : undefined
+                }
                 locations={
                   isLoading
                     ? []

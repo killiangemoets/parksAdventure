@@ -1,4 +1,4 @@
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, useRef } from "react";
 
 import Map, {
   Marker,
@@ -6,6 +6,7 @@ import Map, {
   FullscreenControl,
   GeolocateControl,
   ViewStateChangeEvent,
+  MapRef,
 } from "react-map-gl";
 import { TCoordinatesBox, TLocation, TViewState } from "../../../types/map";
 import InfoIcon, {
@@ -27,6 +28,7 @@ type MapCommonProps = {
   geolocationControl?: boolean;
   fullscreenControl?: boolean;
   navigationControl?: boolean;
+  selectedLocation?: TLocation;
   handleCoordinatesBox?: (
     CoordinatesBox: TCoordinatesBox,
     viewState: TViewState
@@ -54,6 +56,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
   type = MAP_TYPE_CLASSES.tourItinerary,
   mapOpen,
   initialViewState,
+  selectedLocation,
 }) => {
   const [viewState, setViewState] = useState<TViewState>(
     initialViewState || {
@@ -66,6 +69,8 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
   );
   const [pins, setPins] = useState<JSX.Element[]>([]);
   const [popupInfo, setPopupInfo] = useState<TLocation | null>(null);
+
+  const mapRef = useRef<MapRef>(null);
 
   useEffect(() => {
     if (!locations) return;
@@ -113,6 +118,20 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
     setViewState(initialViewState);
   }, [initialViewState]);
 
+  useEffect(() => {
+    if (selectedLocation) {
+      setPopupInfo(selectedLocation);
+
+      mapRef.current?.flyTo({
+        center: [
+          selectedLocation.coordinates[0],
+          selectedLocation.coordinates[1],
+        ],
+        speed: 0.5,
+      });
+    }
+  }, [selectedLocation]);
+
   const handleOnMove = (evt: ViewStateChangeEvent) => {
     if (handleCoordinatesBox) {
       const mapBounds = evt.target.getBounds();
@@ -140,6 +159,7 @@ const CustomMap: FC<MapCommonProps & MapConditionalProps> = ({
 
   return (
     <Map
+      ref={mapRef}
       {...viewState}
       onMove={(evt) => {
         setViewState(evt.viewState);
