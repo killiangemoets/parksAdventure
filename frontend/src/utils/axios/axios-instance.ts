@@ -6,14 +6,16 @@ export const createAxiosInstance = () => {
   const persistRootObject = persistRootString && JSON.parse(persistRootString);
   const userObject =
     persistRootObject?.user && JSON.parse(persistRootObject.user);
-  const token = userObject?.token;
-  const tmpToken = userObject?.tmp;
+  const token = userObject ? userObject?.token : undefined;
+  const tmpToken = userObject ? userObject?.tmp : undefined;
 
   // Get cartToken from session storage
   const persistPaymentString = sessionStorage.getItem("persist:payment");
   const persistPaymentObject =
     persistPaymentString && JSON.parse(persistPaymentString);
-  const cartToken = persistPaymentObject.cart
+  const cartToken = persistPaymentObject
+    ? persistPaymentObject.cart
+    : undefined
     ? JSON.parse(persistPaymentObject.cart)
     : undefined;
 
