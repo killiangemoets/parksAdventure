@@ -14,8 +14,6 @@ export const createAxiosInstance = () => {
   const persistPaymentObject =
     persistPaymentString && JSON.parse(persistPaymentString);
   const cartToken = persistPaymentObject
-    ? persistPaymentObject.cart
-    : undefined
     ? JSON.parse(persistPaymentObject.cart)
     : undefined;
 
