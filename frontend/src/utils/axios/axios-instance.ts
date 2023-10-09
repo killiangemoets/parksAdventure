@@ -13,9 +13,10 @@ export const createAxiosInstance = () => {
   const persistPaymentString = sessionStorage.getItem("persist:payment");
   const persistPaymentObject =
     persistPaymentString && JSON.parse(persistPaymentString);
-  const cartToken = persistPaymentObject
-    ? JSON.parse(persistPaymentObject.cart)
-    : undefined;
+  const cartToken =
+    persistPaymentObject && persistPaymentObject.cart
+      ? JSON.parse(persistPaymentObject.cart)
+      : undefined;
 
   return axios.create({
     baseURL: process.env.REACT_APP_API_URL,
