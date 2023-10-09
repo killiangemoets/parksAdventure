@@ -112,7 +112,10 @@ const TourGuidesNavbar: FC<TourGuidesNavbarProps> = ({ onCreateGuide }) => {
       setSuccess(true);
       setIsANewGuideCreated(true);
     } else {
-      if (response && response.message.includes("E11000"))
+      if (
+        (response && response.message.includes("E11000")) ||
+        response.message.toLowerCase().includes("duplicate field value")
+      )
         setErrorMessage("This email address is already used");
       else
         setErrorMessage(
