@@ -50,7 +50,7 @@ const CreateReviewModal: FC<CreateReviewModalProps> = ({
       ) {
         setReview(response.data.data[0].review);
         setRating(response.data.data[0].rating);
-        setExistingReview(response.data.data[0].id);
+        setExistingReview(response.data.data[0]._id);
       }
       setIsGetReviewLoading(false);
     };
