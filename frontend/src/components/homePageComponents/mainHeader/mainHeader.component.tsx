@@ -46,7 +46,7 @@ const MainHeader = () => {
         <GreenOpacity>
           <MainHeaderContentContainer>
             <MainHeaderLogoContainer className="logo" />
-            <MainHeaderText className="text">Explort Our Nature</MainHeaderText>
+            <MainHeaderText className="text">Explore Our Nature</MainHeaderText>
           </MainHeaderContentContainer>
         </GreenOpacity>
       </MainHeaderContainer>
