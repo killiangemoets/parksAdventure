@@ -51,8 +51,8 @@
   "devDependencies": {
     "parcel-bundler": "^1.12.5"
   },
-  {
   "engines": {
     "node": "16.0.0"
   }
 }
+
